@@ -1,0 +1,96 @@
+<c:FragmentDefinition xmlns="sap.m" xmlns:u="sap.ui.unified" xmlns:l="sap.ui.layout" xmlns:c="sap.ui.core">
+									<Toolbar>
+											<ToolbarSpacer></ToolbarSpacer>
+											<Button text="{i18n>lblSchViewRat}" press="onCreateSchedule"  enabled="{path:'dealMemoDetailModel>/Dmst',formatter:'.Formatter.formatEditableStatus'}" ></Button>
+										</Toolbar>
+										<Table id="oTblSchedule" items="{dealMemoDetailModel>/scheduleInfo}" mode="MultiSelect">
+											<infoToolbar>
+												<Toolbar>
+													<ToolbarSpacer></ToolbarSpacer>
+													<Button text="{i18n>Btn_Delete}" press="onDeleteScheduleConfirm"  enabled="{path:'dealMemoDetailModel>/Dmst',formatter:'.Formatter.formatEditableStatus'}" />
+												</Toolbar>
+											</infoToolbar>
+											<columns>
+												<Column>
+													<Label text="{i18n>lblDay}">
+													</Label>
+												</Column>
+												<Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline">
+													<Label text="{i18n>lblTimeFrom}"></Label>
+												</Column>
+												<Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline">
+													<Label text="{i18n>lblTimeTo}"></Label>
+												</Column>
+												<Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline">
+													<Label text="{i18n>lblDuration}"></Label>
+												</Column>
+												<Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline">
+													<Label text="{i18n>lblNoOfweeks}"></Label>
+												</Column>
+												<Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline">
+													<Label text="{i18n>lblEstTRP}"></Label>
+												</Column>
+												<Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" visible="false">			<!--Added "visible" property as "false" By Lakshmana on 19.06.2020 for Deal memo changes V2-->
+													<Label text="{i18n>lblBudgetedTRP}"></Label>
+												</Column>
+											</columns>
+											<items>
+												<ColumnListItem>
+													<Input value="{dealMemoDetailModel>Bcschnm}" editable="false"/>
+													<TimePicker dateValue="{dealMemoDetailModel>TimeslotfmDt}" value="{dealMemoDetailModel>Timeslotfm}" class="sapUiLargeMarginEnd" valueFormat="HH:mm:ss" displayFormat="HH:mm" change="onTimeChange"
+														placeholder="hh:mm:ss" width="100%" maxLength="8" />
+													<!-- <Input value="{dealMemoDetailModel>Timeslotto}" enabled="false"/> -->
+													<TimePicker value="{dealMemoDetailModel>Timeslotto}" class="sapUiLargeMarginEnd" valueFormat="HH:mm:ss" displayFormat="HH:mm" editable="false"
+														placeholder="hh:mm:ss" width="100%" maxLength="8" />
+													<TimePicker dateValue="{dealMemoDetailModel>DurationDt}" value="{dealMemoDetailModel>Duration}" class="sapUiLargeMarginEnd" valueFormat="HH:mm:ss" displayFormat="HH:mm" change="onTimeChange"
+														placeholder="{i18n>plc_time}" width="100%" maxLength="8"/>
+													<Input value="{dealMemoDetailModel>Noofweeks}" type="Number" textAlign="Right" liveChange="weekValidation" enabled="true" change="onScheduleChange"/>
+													<Input value="{dealMemoDetailModel>Trpestrntg}" type="Number" liveChange="schValidation" textAlign="Right" change="onScheduleChange"/>
+													<Input value="{dealMemoDetailModel>Trpbudrntg}" type="Number" liveChange="schValidation" textAlign="Right" visible="false"/>			<!--Added By Lakshmana on 19.06.2020 for Deal memo changes V2-->
+												</ColumnListItem>
+											</items>
+										</Table>
+										<l:Grid hSpacing="0.5" vSpacing="0" visible="{dealMemoDetailModel>/ScheduleDetVisibility}">
+											<Label text="{i18n>lblTotContHrs}" design="Bold" class="sapUiTinyMarginTop">
+												<layoutData>
+													<l:GridData span="XL2 L2 M6 S12"/>
+												</layoutData>
+											</Label>
+											<Input value="{dealMemoDetailModel>/Totcnthrs}" width="50%" editable="false"  class="sapUiTinyMarginTop">
+												<layoutData>
+													<l:GridData span="XL4 L4 M6 S12"/>
+												</layoutData>
+											</Input>
+											<Label text="{i18n>lblTot30MinSlots}" design="Bold" class="sapUiTinyMarginTop">
+												<layoutData>
+													<l:GridData span="XL2 L2 M6 S12"/>
+												</layoutData>
+											</Label>
+											<Input value="{dealMemoDetailModel>/Noofslots}" width="50%" editable="false" class="sapUiTinyMarginTop">
+												<layoutData>
+													<l:GridData span="XL4 L4 M6 S12"/>
+												</layoutData>
+											</Input>
+											<Label text="{i18n>lblEstAvgTRP}" design="Bold"   class="sapUiTinyMarginTop">
+												<layoutData>
+													<l:GridData span="XL2 L2 M6 S12"/>
+												</layoutData>
+											</Label>
+											<Input value="{dealMemoDetailModel>/Estavgrtng}" width="50%" editable="false"  class="sapUiTinyMarginTop">
+												<layoutData>
+													<l:GridData span="XL4 L4 M6 S12"/>
+												</layoutData>
+											</Input>
+											<Label text="{i18n>lblTotEpisodes}" design="Bold" class="sapUiTinyMarginTop">
+												<layoutData>
+													<l:GridData span="XL2 L2 M6 S12"/>
+												</layoutData>
+											</Label>
+											<Input value="{dealMemoDetailModel>/Noofepi}"  width="50%" editable="false" class="sapUiTinyMarginTop">
+												<layoutData>
+													<l:GridData span="XL4 L4 M6 S12"/>
+												</layoutData>
+											</Input>
+										</l:Grid>
+
+</c:FragmentDefinition>

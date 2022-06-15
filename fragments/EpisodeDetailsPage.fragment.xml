@@ -1,0 +1,115 @@
+
+<c:FragmentDefinition xmlns="sap.m" xmlns:u="sap.ui.unified" xmlns:l="sap.ui.layout" xmlns:c="sap.ui.core">
+	<Panel expandable="false" backgroundDesign="Transparent" expanded="true"> 			<!--Made expandable="false" By  Lakshmana on 27.05.2020  for Deal Memo Changes-->
+						<ObjectHeader backgroundDesign="Translucent" title="{dealMemoEpisodeModel>/Epinm}"
+							responsive="true" fullScreenOptimized="false" numberState="Success">
+							
+								
+						<headerContainer>
+						    <HeaderContainer class="sapUiSmallMarginTop">
+								        <content>
+												<VBox >
+													<HBox>
+														<Label text="{i18n>Lbl_CostPerMin}" design="Bold"/>
+														<Text text="" class="sapUiTinyMarginBegin"/>
+													</HBox>
+													<HBox>
+														<Label text="{i18n>Lbl_WBSElement}" design="Bold"/>
+														<Text text="{dealMemoEpisodeModel>/Posid}" class="sapUiTinyMarginBegin"/>
+													</HBox>
+												</VBox>
+												<VBox>
+													<HBox>
+														<Label text="{i18n>Lbl_MainAsset}" design="Bold"/>
+														<Text text="{dealMemoEpisodeModel>/Anln1}" class="sapUiTinyMarginBegin"/>
+													</HBox>
+													<HBox>
+														<Label text="{i18n>Lbl_SubAssetNo}" design="Bold"/>
+														<Text text="{dealMemoEpisodeModel>/Anln2}" class="sapUiTinyMarginBegin"/>
+													</HBox>
+											</VBox>
+											<VBox>
+												<HBox>
+													<Label text="{i18n>Lbl_SecAsset}" design="Bold"/>
+													<Text text="{dealMemoEpisodeModel>/Sanln1}" class="sapUiTinyMarginBegin"/>
+												</HBox>
+												<HBox>
+													<Label text="{i18n>Lbl_SubAssetNo}" design="Bold"/>
+													<Text text="{dealMemoEpisodeModel>/Sanln2}" class="sapUiTinyMarginBegin"/>
+												</HBox>
+											</VBox>
+											
+											</content>
+								</HeaderContainer>				
+							</headerContainer>
+							</ObjectHeader>
+						
+					</Panel>
+					<l:Grid hSpacing="1" vSpacing="0">
+						<Label text="{i18n>Lbl_TRPTVT}" design="Bold" class="sapUiTinyMarginTop">
+								<layoutData>
+									<l:GridData span="XL2 L2 M6 S12"/>
+								</layoutData>
+							</Label>
+							<Input width="80%" value="{dealMemoEpisodeModel>/Trp}" change="onChangeTrpValue" >
+								<layoutData>
+									<l:GridData span="XL4 L4 M6 S12"/>
+								</layoutData>
+							</Input>
+							
+							<Label text="{i18n>Lbl_Duration}" design="Bold" class="sapUiTinyMarginTop">
+								<layoutData>
+									<l:GridData span="XL2 L2 M6 S12"/>
+								</layoutData>
+							</Label>
+							<TimePicker width="80%" change="onChangeEpiDur" value="{dealMemoEpisodeModel>/Epidur}" valueFormat="HH:mm:ss" displayFormat="HH:mm:ss" placeholder="hh:mm:ss">
+								<layoutData>
+									<l:GridData span="XL4 L4 M6 S12"/>
+								</layoutData>
+							</TimePicker>
+								
+					</l:Grid>
+	<Panel expandable="false" backgroundDesign="Transparent" expanded="true"> 	
+	<Table id="oTable_Epibudgetdetail" items="{dealMemoEpisodeModel>/epiSodeCostSheet}" >
+	 <infoToolbar>
+		<Toolbar>
+			<Label text="{i18n>lbl_BudgetDtls}"/>
+		</Toolbar>
+	</infoToolbar>
+		<columns>
+			<Column width="200px" mergeDuplicates="true">
+				<Label text="{i18n>lblColHeadBudgetHead}" design="Bold"></Label>
+			</Column>
+			<Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" hAlign="Right" width="200px">
+				<Label text="{i18n>lblColHeadAcqBudget}" design="Bold"></Label>
+			</Column>
+			<Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" hAlign="Right" width="200px">
+				<Label text="{i18n>lblColHeadExtBudget}" design="Bold"></Label>
+			</Column>
+			<Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" hAlign="Right" width="200px">
+				<Label text="{i18n>lblColHeadInhBudget}" design="Bold"></Label>
+			</Column>
+			<Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" hAlign="Right" width="200px">
+				<Label text="{i18n>lblColHeadTotBudget}" design="Bold"></Label>
+			</Column>
+		</columns>	
+		<items>
+			<ColumnListItem visible="true" unread="false" selected="true" counter="0">	
+				 <HBox>
+					<c:Icon src="{= ${dealMemoEpisodeModel>isExpanded} === true ? 'sap-icon://navigation-down-arrow' : 'sap-icon://navigation-right-arrow'}" visible="{dealMemoEpisodeModel>hasChild}" press="onNodeExpand"/>
+					<ObjectIdentifier title="{dealMemoEpisodeModel>Costdesc}" class="sapUiSmallMarginBegin"/>
+					<ObjectIdentifier title="{dealMemoEpisodeModel>Scostdesc}" class="sapUiMediumMarginBegin"/>
+			
+				</HBox>
+				
+				 <Input textAlign="Right" change="onChangeAcquisitionAmount" enabled="{dealMemoEpisodeModel>enableAcquisition}" value="{ parts: [ {path: 'dealMemoEpisodeModel>Prdhsamt'}, {path: 'dealMemoEpisodeModel>Waers'} ], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false,minFractionDigits: 2, maxFractionDigits: 2 } }"/>
+				<Input textAlign="Right"  change="onChangeExternalAmount" enabled="{dealMemoEpisodeModel>enableExternal}" value="{parts: [ { path:'dealMemoEpisodeModel>Inhsamt'},{path: 'dealMemoEpisodeModel>Waers'}],type: 'sap.ui.model.type.Currency',formatOptions: { showMeasure: false,minFractionDigits: 2, maxFractionDigits: 2 }}"/>
+				<Input textAlign="Right" change="onChangeInHouseAmount" enabled="{dealMemoEpisodeModel>enableInhouse}" value="{parts: [ { path:'dealMemoEpisodeModel>Inhouseamt'},{path: 'dealMemoEpisodeModel>Waers'}],type: 'sap.ui.model.type.Currency',formatOptions: { showMeasure: false,minFractionDigits: 2, maxFractionDigits: 2 }}"/>
+				<Input textAlign="Right" enabled="{dealMemoEpisodeModel>enableTotal}" value="{parts: [ { path:'dealMemoEpisodeModel>Totcostamt'},{path: 'dealMemoEpisodeModel>Waers'}],type: 'sap.ui.model.type.Currency',formatOptions: { showMeasure: false,minFractionDigits: 2, maxFractionDigits: 2 }}"/>
+			</ColumnListItem>
+		</items>									
+	</Table>
+	</Panel>
+	
+
+</c:FragmentDefinition>

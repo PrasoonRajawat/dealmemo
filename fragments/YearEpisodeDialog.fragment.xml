@@ -1,0 +1,79 @@
+
+
+<c:FragmentDefinition
+	xmlns="sap.m" xmlns:l="sap.ui.layout"
+	xmlns:c="sap.ui.core"
+>
+<Dialog class="sapUiContentPadding">
+<customHeader>
+    <Toolbar>
+        <content>
+        <ToolbarSpacer/>
+        <Label text="Select Year/Episode" design="Bold"/>
+         <ToolbarSpacer/>
+        </content>
+    </Toolbar>
+</customHeader>
+     <content>
+      <l:Grid hSpacing="0.5" vSpacing="0">
+      	<MessageStrip
+				type="Error"
+                text="{dealMemoDetailModel>/errorMsg}"
+				showCloseButton="true"
+                visible="{dealMemoDetailModel>/msgVisible}"
+				class="sapUiMediumMarginBottom">
+                 <layoutData>
+            	<l:GridData span="XL12 L12 M12 S12"/>
+            </layoutData>
+	    </MessageStrip>
+    </l:Grid>
+   
+        <VBox items="{dealMemoDetailModel>/YearEpisodes}">
+        <items>
+             <l:Grid hSpacing="0.5" vSpacing="0">
+             <HBox justifyContent="Center">
+                   <Label text="{i18n>lblYear}" design="Bold" class="sapUiTinyMarginTop"/>
+                  <layoutData>
+            	<l:GridData span="XL2 L2 M12 S12"/>
+            </layoutData>
+               
+                </HBox>
+                <Input placeholder="{i18n>lblplaceholderYear}" editable="false" value="{dealMemoDetailModel>Year}">
+                <layoutData>
+            	<l:GridData span="XL3 L3 M6 S6"/>
+            </layoutData></Input>
+            <Input  placeholder="{parts:[{value:'lblplaceoderNoOfEpi'},{path:'dealMemoDetailModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" value="{dealMemoDetailModel>noOfEpisodes}" textAlign="Right">
+                <layoutData>
+            	<l:GridData span="XL6 L6 M6 S6"/>
+            </layoutData></Input>
+            </l:Grid>
+                   
+        </items>
+     
+        </VBox>
+        <l:Grid hSpacing="0.5" vSpacing="0" class="sapUiTinyMarginTop classTopBorder">
+            <HBox justifyContent="Center" class="sapUiSmallMarginTop">
+                   <Label text="Total:" design="Bold" class="sapUiTinyMarginTop"/>
+                  <layoutData>
+            	<l:GridData span="XL2 L2 M12 S12"/>
+            </layoutData>
+               
+            </HBox>
+              <Text text=" " class="sapUiSmallMarginTop">
+                <layoutData>
+            	<l:GridData span="XL3 L3 M6 S6"/>
+            </layoutData></Text>
+            <Input editable="false" value="{dealMemoDetailModel>/Noofepi}" textAlign="Right" class="sapUiSmallMarginTop">
+                <layoutData>
+            	<l:GridData span="XL6 L6 M6 S6"/>
+            </layoutData></Input>
+        </l:Grid>
+    </content>
+    <beginButton >
+        <Button text="Push" press="onPressPush"/>
+    </beginButton>
+    <endButton>
+        <Button text="Cancel" press="onCloseYearEpiDialog"/>
+    </endButton>
+</Dialog>
+</c:FragmentDefinition>

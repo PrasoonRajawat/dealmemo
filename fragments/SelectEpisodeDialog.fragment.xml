@@ -1,0 +1,64 @@
+<c:FragmentDefinition xmlns="sap.m" xmlns:u="sap.ui.unified" xmlns:l="sap.ui.layout" xmlns:c="sap.ui.core">
+<Dialog type="Message"  title="{parts:[{value:'lblSelEpisode'},{path:'vendorContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" >
+
+	<content>
+	<MessageStrip
+				type="Error"
+                text="{vendorContractModel>/vcEpiDataErrorMsg}"
+				showCloseButton="true"
+                visible="{vendorContractModel>/vcEpiDataMsgVisible}"
+				class="sapUiSmallMarginBottom">
+               
+	    </MessageStrip>
+	    
+		<HBox>
+			<items>
+			<RadioButtonGroup  columns="2" selectedIndex="{vendorContractModel>/episodeMode}" select="onSelectEpisodeMode">
+				<RadioButton text="{parts:[{value:'lblAllEpisode'},{path:'vendorContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" />
+				<RadioButton text="{i18n>lblSelectFromRange}" />
+			</RadioButtonGroup>
+			<!-- 	<RadioButton text="{i18n>lblAllEpisode}" groupName="episodes" selected="true" select=""/>
+				<RadioButton text="{i18n>lblSelectFromRange}" groupName="episodes" select=""/> -->
+			</items>
+		</HBox>
+		<HBox visible="{vendorContractModel>/episodeRangeVisible}">
+			<items>
+				<VBox>
+					<Label required="true" text="{parts:[{value:'lblSelectEpiFrom'},{path:'vendorContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" width="100%"/>
+					<ComboBox width="95%" items="{vendorContractModel>/episodeDataList}" selectedKey="{vendorContractModel>/epiFromId}">
+						<c:Item text="{vendorContractModel>Epinm}" key="{vendorContractModel>Epiid}"/>
+					</ComboBox>
+				</VBox>
+				<VBox>
+					<Label required="true" text="{parts:[{value:'lblSelectEpiTo'},{path:'vendorContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" width="100%"/>
+					<ComboBox width="95%" items="{vendorContractModel>/episodeDataList}" selectedKey="{vendorContractModel>/epiToId}">
+						<c:Item text="{vendorContractModel>Epinm}" key="{vendorContractModel>Epiid}"/>
+					</ComboBox>
+				</VBox>
+			</items>
+		
+		</HBox>
+		<VBox class="sapUiTinyMarginTop">
+			<Label required="true" text="{i18n>lblSelectTaxCode}" width="100%"/>
+			<Input width="95%" showValueHelp="true" value="{vendorContractModel>/taxCodeName}" valueHelpRequest="onvaluHelpTaxcode"/>
+		</VBox>
+		<VBox class="sapUiTinyMarginTop">
+			<Label required="true" text="{parts:[{value:'lblSelectCostCode'},{path:'vendorContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" width="100%"/>
+			<List id="list_costcodeVC" mode="MultiSelect" width="99%" class="classBoxBorder" items="{vendorContractModel>/costCodeList}">
+				<items>
+					<StandardListItem title="{vendorContractModel>Costdesc}"/>
+				</items>
+			</List>
+			
+		</VBox>
+	</content>
+	<beginButton>
+		<Button text="{i18n>btnOk}" press="onLoadEpiDataTab"/>
+	</beginButton>
+	<endButton>
+		<Button  text="{i18n>btnCancel}" press="onCancelSelectEpisode" />
+	</endButton>
+
+</Dialog>
+
+</c:FragmentDefinition>

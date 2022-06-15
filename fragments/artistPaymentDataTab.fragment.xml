@@ -1,0 +1,72 @@
+<c:FragmentDefinition xmlns="sap.m" xmlns:u="sap.ui.unified" xmlns:l="sap.ui.layout" xmlns:c="sap.ui.core">
+								<Toolbar>
+										<ToolbarSpacer></ToolbarSpacer>
+										<Button press="onEnterPayment" text="{i18n>lblEnterPaymentDetails}" visible="{artistContractModel>/saveVisible}"/>
+									</Toolbar>
+									<Table items="{artistContractModel>/acPaymentData}" id="oTbl_acepiData" visible="true">
+										
+										<infoToolbar>
+											<Toolbar>
+												<Label text="{i18n>lblMilestonedata}"/>
+												<ToolbarSpacer></ToolbarSpacer>
+												<!--	<Button press="onEpisodes" text="Enter Payment Details"/>-->
+											</Toolbar>
+										</infoToolbar>
+										<columns>
+											
+											<Column>
+												<ObjectIdentifier title="{parts:[{value:'lblEpisodeDesc'},{path:'artistContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}"></ObjectIdentifier>
+										   </Column>
+											<Column minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
+												<ObjectIdentifier title="{i18n>lblMilestoneCode}"></ObjectIdentifier>
+											</Column>
+											
+												<Column minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
+												<ObjectIdentifier title="{i18n>lblVersion}"></ObjectIdentifier>
+											</Column>
+											
+											<Column>
+												<ObjectIdentifier title="{i18n>lblPaymentTerm}"></ObjectIdentifier>
+											</Column>
+											<Column hAlign="Right" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
+												<ObjectIdentifier title="{i18n>lblPercentage}"></ObjectIdentifier>
+											</Column>
+											<Column hAlign="Right" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
+												<ObjectIdentifier title="{i18n>lblAmountDue}"></ObjectIdentifier>
+											</Column>
+											<Column minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
+												<ObjectIdentifier title="{i18n>lblMilestoneCompletionDate}"></ObjectIdentifier>
+											</Column>
+											<Column minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
+												<ObjectIdentifier title="{i18n>lblProvisionDocumentNumber}"></ObjectIdentifier>
+											</Column>
+											<Column minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
+												<ObjectIdentifier title="{i18n>lblProvisionDocumentFiscal}"></ObjectIdentifier>
+											</Column>
+											<Column minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
+												<ObjectIdentifier title="{i18n>lblInvoiceDocument}"></ObjectIdentifier>
+											</Column>
+											<Column minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
+												<ObjectIdentifier title="{i18n>lblInvoiceDocumentFiscal}"></ObjectIdentifier>
+											</Column>
+										</columns>
+										<items>
+											<ColumnListItem>
+												<cells>
+												<!--	<ObjectIdentifier title="{Seqnr}"></ObjectIdentifier>-->
+													<ObjectIdentifier title="{artistContractModel>Epinm}"></ObjectIdentifier>
+													<ObjectIdentifier text="{artistContractModel>Msidnm}"></ObjectIdentifier>
+															<Label text="{artistContractModel>Dmver}"></Label>
+													<ObjectIdentifier text="{artistContractModel>Ztermt}"></ObjectIdentifier>
+													<ObjectIdentifier text="{artistContractModel>Amtper}"></ObjectIdentifier>
+													<ObjectIdentifier text="{path:'artistContractModel>Dueamt', type:'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 2 }}"></ObjectIdentifier>
+													<DatePicker dateValue="{artistContractModel>Mscompdt}" valueFormat="yyyy-MM-dd" displayFormat="dd-MM-yyyy" placeholder="dd-mm-yyyy" editable="false"></DatePicker>
+													<Label text="{artistContractModel>Prodocno}"></Label>
+													<Label text="{artistContractModel>Provdocyr}"></Label>
+													<Label text="{artistContractModel>Invdocno}"></Label>
+													<Label text="{artistContractModel>Invdocyr}"></Label>
+												</cells>
+											</ColumnListItem>
+										</items>
+									</Table>
+</c:FragmentDefinition>

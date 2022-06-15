@@ -1,0 +1,52 @@
+<c:FragmentDefinition xmlns="sap.m" xmlns:u="sap.ui.unified" xmlns:l="sap.ui.layout" xmlns:c="sap.ui.core">
+	<!--<Toolbar>-->
+	<!--	<ToolbarSpacer></ToolbarSpacer>-->
+	<!--	<Button press="onEnterPayment" visible="{vendorContractModel>/saveVisible}" text="{i18n>lblEnterPaymentDetails}"/>-->
+	<!--</Toolbar>-->
+	<Table items="{vendorContractModel>/mileWiseList}" visible="true">
+		<infoToolbar>
+			<Toolbar>
+				<Label text="{i18n>lblMilestonedata}"/>
+				<ToolbarSpacer></ToolbarSpacer>
+			</Toolbar>
+		</infoToolbar>
+		<columns>
+			<!--<Column>-->
+			<!--	<ObjectIdentifier title="{parts:[{value:'lblEpisodeDesc'},{path:'vendorContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}"></ObjectIdentifier>-->
+			<!--</Column>-->
+			<Column minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
+				<ObjectIdentifier title="{i18n>lblMilestoneCode}"></ObjectIdentifier>
+			</Column>
+			<Column minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
+				<ObjectIdentifier title="{i18n>lblVersion}"></ObjectIdentifier>
+			</Column>
+			<Column width="8em" minScreenWidth="Desktop" hAlign="Right" demandPopin="true" popinDisplay="Inline">
+				<Label
+					text="{parts:[{value:'lblTblColEpisodesYearWise'},{path:'vendorContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}"
+					design="Bold"/>
+			</Column>
+			<!--<Column minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">-->
+			<!--	<ObjectIdentifier title="{i18n>lblPaymentTerm}"></ObjectIdentifier>-->
+			<!--</Column>-->
+			<Column hAlign="Right" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
+				<ObjectIdentifier title="{i18n>lblPercentage}"></ObjectIdentifier>
+			</Column>
+			<Column hAlign="Right" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
+				<ObjectIdentifier title="{i18n>lblAmountDue}"></ObjectIdentifier>
+			</Column>
+		</columns>
+		<items>
+			<ColumnListItem mergeDuplicates="true">
+				<cells>
+					<!--<ObjectIdentifier title="{vendorContractModel>Epinm}"></ObjectIdentifier>-->
+					<ObjectIdentifier text="{vendorContractModel>Msidnm}"></ObjectIdentifier>
+					<Label text="{vendorContractModel>Dmver}"></Label>
+					 <Text text="{vendorContractModel>Epiid}" class="sapUiSizeCompact"/>
+					<!--<ObjectIdentifier text="{vendorContractModel>Ztermt}"></ObjectIdentifier>-->
+					<Label text="{vendorContractModel>Amtper}"></Label>
+					<Label text="{path:'vendorContractModel>Dueamt', type:'sap.ui.model.type.Float',formatOptions: { maxFractionDigits: 2 }}"></Label>
+				</cells>
+			</ColumnListItem>
+		</items>
+	</Table>
+</c:FragmentDefinition>

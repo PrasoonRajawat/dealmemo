@@ -1,0 +1,13 @@
+<c:FragmentDefinition xmlns="sap.m" xmlns:c="sap.ui.core">
+	<ViewSettingsDialog confirm="handleDMFilter" filterItems="{dealMemoModel>/filterItemsList}" >
+		<filterItems>
+			<ViewSettingsFilterItem  text="{dealMemoModel>filterItemText}" key="{dealMemoModel>filterItemKey}" items="{dealMemoModel>itemList}">
+				<items>
+					<ViewSettingsItem text="{dealMemoModel>itemText}" key="{dealMemoModel>itemKey}"/>
+				</items>
+			</ViewSettingsFilterItem>
+			
+		</filterItems>
+	</ViewSettingsDialog>
+
+</c:FragmentDefinition>

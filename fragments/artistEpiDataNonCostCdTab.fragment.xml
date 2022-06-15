@@ -1,0 +1,48 @@
+<c:FragmentDefinition xmlns="sap.m" xmlns:u="sap.ui.unified" xmlns:l="sap.ui.layout" xmlns:c="sap.ui.core">
+<!-- 	<Toolbar>
+										<ToolbarSpacer></ToolbarSpacer>
+										<Button text="{parts:[{value:'lblSelEpisode'},{path:'artistContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" press="onSelectEpisodeAC" visible="{artistContractModel>/saveVisible}"/>
+										
+									</Toolbar> -->
+									<Table items="{artistContractModel>/epiNonCostCodeTabData}" id="oTbl_acepiDataNoCostcd" visible="true" mode="None" select="onSeletEpiTbl">
+										<infoToolbar> 
+											<Toolbar>
+												<Label text="{parts:[{value:'lblEpisodeData'},{path:'artistContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}"/>
+											<ToolbarSpacer></ToolbarSpacer>
+												<Button id="idBdelNoCostcd" press="onDeleteEpi" text="{i18n>lblDelete}" enabled="{artistContractModel>/epiDeleteEnable}" visible="false"/>
+											</Toolbar>
+										</infoToolbar>
+										<columns>
+											<Column>
+												<ObjectIdentifier title="{parts:[{value:'lblEpisodeDesc'},{path:'artistContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}"></ObjectIdentifier>
+											</Column>
+										<!-- 	<Column  demandPopin="true" popinDisplay="Inline">
+												<ObjectIdentifier title="{i18n>lblCostCode}"></ObjectIdentifier>
+											</Column> -->
+											<Column  hAlign="Right">
+												<ObjectIdentifier title="{parts:[{value:'lblEpisodeCost'},{path:'artistContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}"></ObjectIdentifier>
+											</Column>
+											<Column hAlign="Right" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
+												<ObjectIdentifier title="{i18n>lblTaxAmount}"></ObjectIdentifier>
+											</Column>
+											<Column  hAlign="Right" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
+												<ObjectIdentifier title="{i18n>lblGrossAmount}"></ObjectIdentifier>
+											</Column>
+											<Column hAlign="Right" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
+												<ObjectIdentifier title="{i18n>lblDifferences}"></ObjectIdentifier>
+											</Column>
+										</columns>
+										<items>
+											<ColumnListItem>
+												<cells>
+													<ObjectIdentifier title="{artistContractModel>Epinm}"></ObjectIdentifier>
+												<!-- 	<ObjectIdentifier title="{artistContractModel>Costdesc}"/> -->
+													<Input change="onEpisodeCostChange" editable="false" value="{parts: [ {path: 'artistContractModel>Coepiamt'}, {path: 'artistContractModel>Waers'} ], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false,minFractionDigits: 2,	maxFractionDigits: 2 } }" textAlign="Right" ></Input>
+													<Label text="{path:'artistContractModel>Wmwst', type:'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 2 }}"></Label>
+													<Label text="{path:'artistContractModel>Baseamt', type:'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 2 }}"></Label>
+													<Label text="{path:'artistContractModel>Balamt', type:'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 2 }}"></Label>
+												</cells>
+											</ColumnListItem>
+										</items>
+									</Table>
+</c:FragmentDefinition>

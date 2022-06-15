@@ -1,0 +1,12 @@
+<c:FragmentDefinition
+	xmlns="sap.m" xmlns:l="sap.ui.layout"
+	xmlns:c="sap.ui.core">
+	<SelectDialog
+		noDataText="{i18n>msgNoData}"
+		title="Select Delivery Code"
+		search="onSearchSelection"
+		confirm="onConfirmDeliverySelection"
+		cancel="onSelectionDialogDeliveryClose"
+		multiSelect="true"> 	<!--Added MultiSelect on 19/05/2022 by Dhiraj Sarang-->
+	</SelectDialog>
+</c:FragmentDefinition>

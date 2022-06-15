@@ -1,0 +1,66 @@
+<c:FragmentDefinition xmlns="sap.m" xmlns:u="sap.ui.unified" xmlns:l="sap.ui.layout" xmlns:c="sap.ui.core">
+								<Toolbar>
+									<ToolbarSpacer></ToolbarSpacer>
+									<Button press="onEnterPayment" visible="{vendorContractModel>/saveVisible}" text="{i18n>lblEnterPaymentDetails}"/>
+								</Toolbar>
+								<Table items="{vendorContractModel>/vcPaymentData}" visible="true">
+									<infoToolbar>
+										<Toolbar>
+											<Label text="{i18n>lblMilestonedata}"/>
+											<ToolbarSpacer></ToolbarSpacer>
+										</Toolbar>
+									</infoToolbar>
+									<columns>
+										<Column>
+											<ObjectIdentifier title="{parts:[{value:'lblEpisodeDesc'},{path:'vendorContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}"></ObjectIdentifier>
+										</Column>
+										<Column minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
+											<ObjectIdentifier title="{i18n>lblMilestoneCode}"></ObjectIdentifier>
+										</Column>
+										<Column minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
+											<ObjectIdentifier title="{i18n>lblVersion}"></ObjectIdentifier>
+										</Column>
+										<Column minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
+											<ObjectIdentifier title="{i18n>lblPaymentTerm}"></ObjectIdentifier>
+										</Column>
+										<Column hAlign="Right" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
+											<ObjectIdentifier title="{i18n>lblPercentage}"></ObjectIdentifier>
+										</Column>
+										<Column hAlign="Right" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
+											<ObjectIdentifier title="{i18n>lblAmountDue}"></ObjectIdentifier>
+										</Column>
+										<Column minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" width="13%">
+											<ObjectIdentifier title="{i18n>lblMilestoneCompletionDate}"></ObjectIdentifier>
+										</Column>
+										<Column minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
+											<ObjectIdentifier title="{i18n>lblProvisionDocumentNumber}"></ObjectIdentifier>
+										</Column>
+										<Column minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
+											<ObjectIdentifier title="{i18n>lblProvisionDocumentFiscal}"></ObjectIdentifier>
+										</Column>
+										<Column minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
+											<ObjectIdentifier title="{i18n>lblInvoiceDocument}"></ObjectIdentifier>
+										</Column>
+										<Column minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
+											<ObjectIdentifier title="{i18n>lblInvoiceDocumentFiscal}"></ObjectIdentifier>
+										</Column>
+									</columns>
+									<items>
+										<ColumnListItem>
+											<cells>
+												<ObjectIdentifier title="{vendorContractModel>Epinm}"></ObjectIdentifier>
+												<ObjectIdentifier text="{vendorContractModel>Msidnm}"></ObjectIdentifier>
+												<Label text="{vendorContractModel>Dmver}"></Label>
+												<ObjectIdentifier text="{vendorContractModel>Ztermt}"></ObjectIdentifier>
+												<Label text="{vendorContractModel>Amtper}"></Label> 
+												<Label text="{path:'vendorContractModel>Dueamt', type:'sap.ui.model.type.Float',formatOptions: { maxFractionDigits: 2 }}"></Label>
+												<DatePicker value="{path:'vendorContractModel>Mscompdt',formatter:'.Formatter.formateDate'}" valueFormat="yyyy-MM-dd" displayFormat="dd-MM-yyyy" placeholder="dd-mm-yyyy" editable="false"></DatePicker>
+												<Label text="{vendorContractModel>Prodocno}"></Label>
+												<Label text="{vendorContractModel>Provdocyr}"></Label>
+												<Label text="{vendorContractModel>Invdocno}"></Label>
+												<Label text="{vendorContractModel>Invdocyr}"></Label>
+											</cells>
+										</ColumnListItem>
+									</items>
+								</Table>
+</c:FragmentDefinition>

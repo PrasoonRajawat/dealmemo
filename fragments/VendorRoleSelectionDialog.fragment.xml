@@ -1,0 +1,20 @@
+<c:FragmentDefinition xmlns="sap.m" xmlns:u="sap.ui.unified" xmlns:l="sap.ui.layout" xmlns:c="sap.ui.core">
+
+	<Dialog>
+
+		<ScrollContainer
+			height="50%"
+			width="100%"
+			vertical="true"
+			focusable="true">
+				<List>
+					
+				</List>
+			
+			
+			
+		</ScrollContainer>
+
+	</Dialog>
+		
+</c:FragmentDefinition>

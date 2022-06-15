@@ -1,0 +1,18 @@
+<c:FragmentDefinition xmlns="sap.m" xmlns:u="sap.ui.unified" xmlns:l="sap.ui.layout" xmlns:c="sap.ui.core">
+<Dialog title="{i18n>lblUploadCostSheet}" type="Message">
+<HBox>
+	<u:FileUploader
+			id="fileUploader"
+			tooltip="Upload cost sheet"
+		 	sameFilenameAllowed ="true"
+			/>
+	
+</HBox>
+<beginButton>
+	<Button text="{i18n>lblOk}" press="handleUploadPress"></Button>
+</beginButton>
+<endButton>
+	<Button text="{i18n>lblCancel}" press="handleUploadCostSheetCancel"></Button>
+</endButton>
+</Dialog>	
+</c:FragmentDefinition>

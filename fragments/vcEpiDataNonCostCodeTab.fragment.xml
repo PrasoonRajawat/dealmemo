@@ -1,0 +1,45 @@
+<c:FragmentDefinition xmlns="sap.m" xmlns:u="sap.ui.unified" xmlns:l="sap.ui.layout" xmlns:c="sap.ui.core">
+
+	<Table id="oTbl_vcepiDataBal" items="{vendorContractModel>/epiVCBalTabData}"  visible="true" mode="None" enableBusyIndicator="true" select="onSeletEpiTblVC">
+									<infoToolbar>
+										<Toolbar>
+											<Label text="{parts:[{value:'lblEpisodeData'},{path:'vendorContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}"/>
+											<ToolbarSpacer></ToolbarSpacer>
+											<Button id="idBdeleteBal"  visible="false" press="onDeletevcEpi" text="{i18n>Btn_Delete}" icon="sap-icon://delete/" enabled="{vendorContractModel>/epiDeleteEnable}"/>
+										</Toolbar>
+									</infoToolbar>
+									<columns>
+										<Column  >
+											<ObjectIdentifier title="{parts:[{value:'lblEpisodeDesc'},{path:'vendorContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}"></ObjectIdentifier>
+										</Column>
+										<Column hAlign="Right" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
+											<ObjectIdentifier title="{parts:[{value:'lblEpisodeCost'},{path:'vendorContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}"></ObjectIdentifier>
+										</Column>
+										
+										<Column hAlign="Right" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
+											<ObjectIdentifier title="{i18n>lblTaxAmount}"></ObjectIdentifier>
+										</Column>
+										<Column hAlign="Right" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
+											<ObjectIdentifier title="{i18n>lblGrossAmount}"></ObjectIdentifier>
+										</Column>
+										<Column hAlign="Right" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
+											<ObjectIdentifier title="{i18n>lblDifferences}"></ObjectIdentifier>
+										</Column>
+										<Column minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" visible="false">
+											<ObjectIdentifier title="{i18n>TDSGrossUp}"></ObjectIdentifier>
+										</Column>
+									</columns>
+									<items>
+										<ColumnListItem>
+											<cells>
+												<ObjectIdentifier title="{vendorContractModel>Epinm}"></ObjectIdentifier>
+												<Label textAlign="Right" text="{path:'vendorContractModel>Coepiamt', type:'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 2 }}"></Label>
+												<Label textAlign="Right" text="{path:'vendorContractModel>Wmwst', type:'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 2 }}"></Label>
+												<Label textAlign="Right" text="{path:'vendorContractModel>Baseamt', type:'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 2 }}"></Label>
+												<Label textAlign="Right" text="{path:'vendorContractModel>Balamt', type:'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 2 }}"></Label>
+												<Label textAlign="Right" text="{vendorContractModel>TDSgrp}"></Label>
+											</cells>
+										</ColumnListItem>
+									</items>
+								</Table>
+</c:FragmentDefinition>

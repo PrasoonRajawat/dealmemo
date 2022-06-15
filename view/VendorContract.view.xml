@@ -1,0 +1,129 @@
+<mvc:View controllerName="com.ui.dealmemolocal.controller.VendorContract" xmlns:mvc="sap.ui.core.mvc" xmlns:c="sap.ui.core"
+	displayBlock="true" xmlns="sap.m" xmlns:u="sap.uxap" xmlns:core="sap.ui.core">
+	<App>
+		<Page title="{i18n>titleVendorContract}" id="vendorContractDetail" navButtonPress="onNavBackFromVendorContractDetail" showNavButton="true">
+			<content>
+				<Panel expandable="false" expanded="true" backgroundDesign="Transparent" id="idObjHd">
+					<!--Made expandable="false" and added "id" property By  Lakshmana on 27.05.2020  for Deal Memo Changes-->
+					<headerToolbar visible="false">
+						<!--Added "visible" property By  Lakshmana on 27.05.2020-->
+						<Toolbar visible="false">
+							<!--Added "visible" property By  Lakshmana on 27.05.2020-->
+							<Title text="{i18n>lblVendorContract}"/>
+							<ToolbarSpacer/>
+							<!--<Button id="bEdit" icon="sap-icon://edit" tooltip="{i18n>btn_bEdit_tooltip}" visible="true" press="editHeader1"/>-->
+						</Toolbar>
+					</headerToolbar>
+					<ObjectHeader title="{i18n>lblVendorContract} : {vendorContractModel>/vendorName} ({vendorContractModel>/vendorRoleName})" text=""
+						number="{ parts: [ {path: 'vendorContractModel>/Totcost'}, {path: 'vendorContractModel>/Waers'} ], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false,minFractionDigits: 2, maxFractionDigits: 2 } }"
+						intro="{vendorContractModel>/Contno}({vendorContractModel>/Contver})" numberUnit="{vendorContractModel>/Waers}" responsive="true"
+						fullScreenOptimized="true" numberState="Success">
+						<statuses>
+							<!--<ObjectStatus text="{vendorContractModel>/Dmstdesc}" state="{path:'vendorContractModel>/Dmst',formatter:'.Formatter.formatDealMemoStatus'}"/>-->
+							<ObjectStatus title="{i18n>lblDealMemo}" text="{vendorContractModel>/Dmno}"/>
+							<ObjectStatus id="oSChannel" title="{i18n>lbl_Channel}" text="{vendorContractModel>/Chnlnm}"/>
+							<ObjectStatus id="oSProgram"
+								title="{parts:[{value:'lblVCContent'},{path:'vendorContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}"
+								text="{vendorContractModel>/Cntnm}"/>
+							<ObjectStatus id="Contdt" title="{i18n>lblDate}" text="{vendorContractModel>/vcDate}"/>
+							<ObjectStatus id="oSPurchaseOrder" title="{i18n>lblPurchaseOrder}" text="{vendorContractModel>/Ebeln}"/>
+							<ObjectStatus id="department" title="Department" text="{vendorContractModel>/createParams/Zltext}"/>
+							<ObjectStatus id="zprrequest" title="PR Request" text="{vendorContractModel>/createParams/Prreq}"/>
+							<ObjectStatus id="DeparmentHead" title="Deparment Head" text="{vendorContractModel>/createParams/Depthd}"/>
+							<ObjectStatus id="grsescreate" title="GR SES Creator" text="{vendorContractModel>/createParams/Grsescr}"/>
+						</statuses>
+						<statuses>
+							<ObjectStatus id="bEdit" icon="sap-icon://edit" press="editDepartment" active="true" visible="false"/>
+						</statuses>
+					</ObjectHeader>
+					<ObjectAttribute/>
+				</Panel>
+				<IconTabBar id="idVCTabBar" expanded="{device>/isNoPhone}" visible="true" selectedKey="vcEpiData" select="onTabSelectionVC"
+					class="sapUiResponsiveContentPadding" expandable="false">
+					<items>
+						<IconTabFilter key="vcEpiData"
+							text="{parts:[{value:'lblEpisodeData'},{path:'vendorContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}"
+							design="Horizontal" icon="sap-icon://list" iconColor="{vendorContractModel>/vcEpiDataColor}">
+							<IconTabBar id="idIconSubTabBar2" expandable="false">
+								<items>
+									<IconTabFilter key="vcSubEpiDataNoCostCd"
+										text="{parts:[{value:'lblEpisodeDetails'},{path:'vendorContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}"
+										design="Horizontal" icon="sap-icon://list" iconColor="{vendorContractModel>/vcEpiNonCostCdDataColor}"
+										visible="{vendorContractModel>/enablevcEpiNonCostCdTab}">
+										<content>
+											<c:Fragment id="vcSubEpiTabNoCostCd" fragmentName="com.ui.dealmemolocal.fragments.vcEpiDataNonCostCodeTab" type="XML"/>
+										</content>
+									</IconTabFilter>
+									<IconTabFilter key="vcSubEpiData" text="{i18n>lblCostCodeBreakup}" design="Horizontal" icon="sap-icon://list"
+										iconColor="{vendorContractModel>/vcEpiDataColor}">
+										<content>
+											<c:Fragment id="vcEpiTab" fragmentName="com.ui.dealmemolocal.fragments.vcEpiDataTab" type="XML"/>
+										</content>
+									</IconTabFilter>
+								</items>
+							</IconTabBar>
+						</IconTabFilter>
+						<IconTabSeparator icon="sap-icon://open-command-field"/>
+						<IconTabFilter key="vcPaymentData"
+							text="{parts:[{value:'lblEpisodePayment'},{path:'vendorContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}"
+							design="Horizontal" icon="sap-icon://money-bills" iconColor="{vendorContractModel>/vcPaymentDataColor}" class="sapMITBHead"
+							enabled="{vendorContractModel>/vcTabEnable}">
+							<IconTabBar id="idVCPayTabBar2" expandable="false" select="onTabSelectionVC">
+								<items>
+									<IconTabFilter key="vcPaymentData1"
+										text="{parts:[{value:'lblEpisodePayment'},{path:'vendorContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}"
+										design="Horizontal" icon="sap-icon://money-bills" iconColor="{vendorContractModel>/vcPaymentDataColor}" class="sapMITBHead"
+										enabled="{vendorContractModel>/vcTabEnable}">
+										<content>
+											<c:Fragment fragmentName="com.ui.dealmemolocal.fragments.vcPaymentDataTab" type="XML"/>
+										</content>
+									</IconTabFilter>
+									<IconTabFilter key="milestoneTab"
+										text="{parts:[{value:'lblEpisodeSummary'},{path:'vendorContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}"
+										design="Horizontal" icon="sap-icon://money-bills" iconColor="{vendorContractModel>/vcPaymentDataColor}" class="sapMITBHead"
+										enabled="{vendorContractModel>/vcTabEnable}">
+										<content>
+											<c:Fragment fragmentName="com.ui.dealmemolocal.fragments.vcMilestoneDataTab" type="XML"/>
+										</content>
+									</IconTabFilter>
+								</items>
+							</IconTabBar>
+						</IconTabFilter>
+						<IconTabSeparator icon="sap-icon://open-command-field"/>
+						<IconTabFilter id="vcDelTab" key="vcDeliveryData" text="{i18n>lblDeliverables}" design="Horizontal" icon="sap-icon://activity-items"
+							iconColor="{vendorContractModel>/vcDeliveryDataColor}" class="sapMITBHead" enabled="{vendorContractModel>/vcTabEnable}">
+							<content>
+								<c:Fragment fragmentName="com.ui.dealmemolocal.fragments.vcDeliveryDataTab" type="XML"/>
+							</content>
+						</IconTabFilter>
+						<IconTabSeparator icon="sap-icon://open-command-field"/>
+						<IconTabFilter key="vcIPRData" text="{i18n>lblRightsInformation}" design="Horizontal" icon="sap-icon://message-information"
+							iconColor="{vendorContractModel>/vcIPRDataColor}" class="sapMITBHead" enabled="{vendorContractModel>/vcTabEnable}">
+							<content>
+								<c:Fragment fragmentName="com.ui.dealmemolocal.fragments.vcIPRDataTab" type="XML"/>
+							</content>
+						</IconTabFilter>
+						<IconTabFilter id="idReleaseStatusTab" text="{i18n>lblReleaseSt}" key="releaseStatus" icon="sap-icon://order-status" class="sapMITBHead"
+							iconColor="{path:'vendorContractModel>/relStatustabcolor'}" design="Horizontal"
+							enabled="{= ${vendorContractModel>/Dmst} !== '01' ? true : false }" visible="{vendorContractModel>/releaseTabVisible}">
+							<content>
+								<core:Fragment fragmentName="com.ui.dealmemolocal.fragments.DealMemoTabs.ReleaseStatus.ReleaseStatusTabVC" type="XML"/>
+							</content>
+						</IconTabFilter>
+					</items>
+				</IconTabBar>
+			</content>
+			<footer>
+				<Toolbar>
+					<ToolbarSpacer/>
+					<Button id="btnSaveVC" text="{i18n>btnTxtSave}" enabled="{path:'vendorContractModel>/Dmst',formatter:'.Formatter.formatEditableStatus'}"
+						visible="{vendorContractModel>/saveVisible}" press="onSaveVendorContract"/>
+					<Button id="btnEditVC" text="{i18n>btnTxtEdit}" enabled="{path:'vendorContractModel>/Dmst',formatter:'.Formatter.formatEditableStatus'}"
+						press="onEditVendorContract"/>
+					<Button id="btnChangeVC" text="{i18n>btnTxtChange}" visible="{vendorContractModel>/changeVisible}" press="onChangeVC"/>
+					<Button id="btnSubmitVC" text="{i18n>btnTxtSubmit}" press="onSubmitVC" visible="{vendorContractModel>/submitVisible}"/>
+				</Toolbar>
+			</footer>
+		</Page>
+	</App>
+</mvc:View>

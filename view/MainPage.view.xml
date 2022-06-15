@@ -1,0 +1,195 @@
+<mvc:View
+    controllerName="com.ui.dealmemolocal.controller.MainPage"
+    xmlns:mvc="sap.ui.core.mvc"
+    displayBlock="true"
+    xmlns="sap.m" xmlns:u="sap.uxap" xmlns:core="sap.ui.core">
+        
+    <SplitApp id="splitApp">
+        <masterPages>
+            <Page height="auto" title="{i18n>mstrTitle}" id="dealMemoMaster" navButtonPress="onHideMaster" showNavButton="true" showHeader="true">
+            <subHeader>
+					<Toolbar>
+						<SearchField id="searchFieldMaster" showRefreshButton="{device>/isNoTouch}" placeholder="{i18n>phSearch}" liveChange="handleSearch" search="handleSearch"
+							tooltip="{i18n>phSearch}" width="100%"></SearchField>
+					</Toolbar>
+			</subHeader>
+            <content>
+            	<List id="list_dealmemo_master" headerText="" items="{dealMemoModel>/dealmemolist}" growing="true" growingScrollToLoad="true">
+						<items>
+							<ObjectListItem title="{dealMemoModel>Dmno}({dealMemoModel>Dmver})" intro="{dealMemoModel>Cntnm}" type="Active" press="onDealMemoItemPress"
+								number="{ parts:[{path:'dealMemoModel>Totdmamt'},{path:'dealMemoModel>Waers'}], type: 'sap.ui.model.type.Currency', formatOptions: {showMeasure: false} }"
+								numberUnit="{dealMemoModel>Waers}">
+								<firstStatus>
+									<ObjectStatus text="{dealMemoModel>Dmstdesc}" state="{path:'dealMemoModel>Dmst',formatter:'.Formatter.formatDealMemoStatus'}"/>
+								</firstStatus>
+							</ObjectListItem>
+						</items>
+					</List>
+				</content>
+				<footer>
+					<Toolbar>
+						<ToolbarSpacer/>
+						<Button icon="sap-icon://filter" press="onDMFilter" visible="true"/>
+						<Button icon="sap-icon://sort" press="onDMSort" visible="true"/>
+						<Button icon="sap-icon://add" press="onAddDealMemo" visible="true"/>			<!--Changed "id" property By  Lakshmana on 27.05.2020  for Deal Memo Changes-->
+					</Toolbar>
+				</footer>
+            </Page>
+        </masterPages>
+        <detailPages>
+             <Page title="{i18n>detTitle}" id="dealMemoDetail"  navButtonPress="onShowMatser" showNavButton="true">
+              	<core:Fragment fragmentName="com.ui.dealmemolocal.fragments.DetailPageHeader" type="XML" />
+              	<Panel expandable="false" backgroundDesign="Transparent" expanded="true"> 
+	              	<IconTabBar id="idIconTabBar" expandable="false" expanded="true" visible="true" setSelectedKey="idtab1" select="onMainTabSelect">
+								<items>
+									<IconTabFilter id="idDetTab" key="detail"  editable="false" text="{i18n>txtIcnTbFlt_Detail}" icon="sap-icon://detail-view" class="sapMITBHead" iconColor="{path:'dealMemoDetailModel>/Dmno',formatter:'.Formatter.formatIconTabColor'}" visible="true" design="Horizontal">
+										<content>
+											 <core:Fragment fragmentName="com.ui.dealmemolocal.fragments.DetailTab" type="XML" />
+										</content>
+									</IconTabFilter>
+									
+									<IconTabSeparator icon="sap-icon://abc"/>
+									
+									<IconTabFilter text="{i18n>txtIcnTbFlt_BudgetDet}" visible="{= ${dealMemoDetailModel>/Dmno} !== '' ? true : false }" headerMode="Inline" id="idCostTab" key="cost" icon="sap-icon://money-bills" class="sapMITBHead" enabled="true" iconColor="{dealMemoDetailModel>/budgetMainTabColor}" design="Horizontal"> 
+										<content>
+											 <IconTabBar id="idIconTabBar2" select="onSelectTabCostDetail" expandable="false">
+												<items>
+
+													<IconTabFilter id="costDetTab" key="costDet" text="{i18n>txtIcnTbFlt_Budget}" class="sapMITBHead" enabled="{dealMemoDetailModel>/costDetTabEnable}" iconColor="{dealMemoDetailModel>/budgetTabColor}" visible="true">
+														<content>
+															 <core:Fragment fragmentName="com.ui.dealmemolocal.fragments.BudgetTab" type="XML" />
+														</content>
+													</IconTabFilter>
+													<IconTabFilter id="yearCostDetTab" key="yearCostDet" text="{i18n>txtIcnTbFlt_YearBudget}" class="sapMITBHead" enabled="{dealMemoDetailModel>/yearWiseTabEnable}" iconColor="{dealMemoDetailModel>/yearWiseTabColor}" visible="true">
+														<content>
+															 <core:Fragment fragmentName="com.ui.dealmemolocal.fragments.YearWiseTab" type="XML" />
+														</content>
+													</IconTabFilter>
+													<IconTabFilter id="epiDetTab" key="epiDet" text="{parts:[{value:'lblIconTabEpiDet'},{path:'dealMemoDetailModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" class="sapMITBHead" enabled="{dealMemoDetailModel>/episodeDetTabEnable}" iconColor="{dealMemoDetailModel>/episodeDetTabColor}" visible="true">
+														<content>
+															 <core:Fragment id="epiDetailTab" fragmentName="com.ui.dealmemolocal.fragments.EpisodeDetTab" type="XML" />
+														</content>
+													</IconTabFilter>
+												</items>
+											</IconTabBar>
+										</content>
+									</IconTabFilter>
+									
+									<IconTabSeparator icon="sap-icon://abc"/>
+									
+									<IconTabFilter id="idVCTab" key="vendorContract" text="{i18n>txtIcnTbFlt_VC}" icon="sap-icon://switch-classes" class="sapMITBHead" iconColor="{path:'dealMemoDetailModel>/vctabcolor'}" visible="{= ${dealMemoDetailModel>/Dmno} !== '' ? true : false }" design="Horizontal">
+										<content>
+											 <core:Fragment fragmentName="com.ui.dealmemolocal.fragments.VendorContractTab" type="XML" />
+										</content>
+									</IconTabFilter>
+									
+									<IconTabSeparator icon="sap-icon://abc"/>
+									
+									<IconTabFilter id="idACTab" text="{i18n>lblIcnTbFltAC}" key="ArtContract" icon="sap-icon://group" class="sapMITBHead" enabled="true"	iconColor="{path:'dealMemoDetailModel>/actabcolor'}" design="Horizontal" visible="{= ${dealMemoDetailModel>/Dmno} !== '' ? true : false }">
+										<!--{= ${dealMemoDetailModel>/Dmno} !== '' &amp;&amp;  ${dealMemoDetailModel>/Cntnt} === '03' ? true : false /Added for content nature commision. Commented code by dhiraj on 12/06/2022}-->
+										<content>
+											 <core:Fragment fragmentName="com.ui.dealmemolocal.fragments.ArtistContractTab" type="XML" />
+										</content>
+									</IconTabFilter>
+									<IconTabFilter id="idScheduleTab" text="{i18n>lblSchViewRat}" key="schedule" icon="sap-icon://hr-approval" class="sapMITBHead" enabled="true"	iconColor="{path:'dealMemoDetailModel>/scheduletabcolor'}" design="Horizontal" visible="{= ${dealMemoDetailModel>/Dmno} !== '' ? true : false }">
+										<content>
+										 	 <core:Fragment fragmentName="com.ui.dealmemolocal.fragments.DealMemoTabs.Schedule.ScheduleTab" type="XML" />
+									 	</content>
+									</IconTabFilter>
+									<IconTabFilter id="idReleaseStatusTab" text="{i18n>lblReleaseSt}" key="releaseStatus" icon="sap-icon://order-status" class="sapMITBHead" iconColor="{path:'dealMemoDetailModel>/relStatustabcolor'}" design="Horizontal"  enabled="{= ${dealMemoDetailModel>/Dmst} !== '01' ? true : false }" visible="{= ${dealMemoDetailModel>/Dmno} !==  '' ? true : false }">
+										<content>
+										 	 <core:Fragment fragmentName="com.ui.dealmemolocal.fragments.DealMemoTabs.ReleaseStatus.ReleaseStatusTab" type="XML" />
+									 	</content>
+									</IconTabFilter>
+									<IconTabFilter id="idAttachmentTab" key="attachment" text="{i18n>lblAttach}" icon="sap-icon://attachment" class="sapMITBHead" visible="{= ${dealMemoDetailModel>/Dmno} !==  '' ? true : false }" iconColor="{dealMemoDetailModel>/attachmentTabColor}" design="Horizontal">
+										<content>
+										<UploadCollection
+											id="UploadCollection"
+											maximumFilenameLength="55"
+											maximumFileSize="1000"
+											multiple="true" 
+											showSeparators="All" 
+											mode="SingleSelectMaster" 
+											sameFilenameAllowed="true"
+											change="onChange"
+											uploadComplete="onUploadComplete"
+											beforeUploadStarts="onBeforeUploadStarts"
+											uploadEnabled="true"
+											uploadButtonInvisible="false"
+											fileType="{dealMemoDetailModel>/fileTypeList}"
+											typeMissmatch="onTypeMissmatch"
+											fileSizeExceed="onFileSizeExceed"
+											filenameLengthExceed="onFilenameLengthExceed"
+											fileDeleted="onFileDeleted"
+											items="{dealMemoDetailModel>/AttachmentDetails}">
+												<items>
+													<UploadCollectionItem
+														documentId="{dealMemoDetailModel>Instanceid}"
+														fileName="{dealMemoDetailModel>Filename}"
+														mimeType="{dealMemoDetailModel>mimeType}"
+														url="{dealMemoDetailModel>Docurl}"
+														enableEdit="false"
+														enableDelete="true"
+														visibleDelete="true"
+														visibleEdit="false">
+														
+													</UploadCollectionItem>
+												</items>
+											
+											</UploadCollection>
+											<!-- <UploadCollection items="{/AttDetSet/results}" selectionChange="onChange" 	beforeUploadStarts="onBeforeUploadStarts" uploadComplete="onUploadComplete"
+											uploadUrl="{dealMemoDetailModel>/attachURL}"	maximumFilenameLength="55" maximumFileSize="10" multiple="true" showSeparators="All" mode="SingleSelectMaster" sameFilenameAllowed="true"
+										   	 fileType="['Doc','Docx','Xls','Xlsx','Pdf','Jpg']">     
+											<UploadCollectionItem contributor="{AttBy}" fileName="{Filename}" mimeType="{Mimetype}" uploadedDate="{Erfdt}"
+												enableEdit="false" enableDelete="{Enbdele}" visibleEdit="false" visibleDelete="{Visdel}" documentId="{Instanceid}" url="{DocUrl}"></UploadCollectionItem>
+											</UploadCollection> -->
+										</content>
+								</IconTabFilter>
+									
+									
+								</items>
+					</IconTabBar>
+					
+					
+				</Panel>
+				<footer>
+					<Toolbar>
+						<ToolbarSpacer/>
+						<Button id="btnChangeDM" text="{i18n>btnTxtChange}" press="onConfirmChangeDm" visible="false"  />
+						<Button id="btnSaveDM" text="{i18n>btnTxtSave}" press="onSavePress"/>
+						<Button id="btnSubmitDM" text="{i18n>btnTxtSubmit}" press="onSubmitDm" enabled="false"/>
+					</Toolbar>
+				</footer>
+             </Page>
+             <Page title="{parts:[{value:'lblIconTabEpiDet'},{path:'dealMemoDetailModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" id="episodeDetail" navButtonPress="onNavBackFromEpisodeDetail" showNavButton="true">
+               <content>
+                	<core:Fragment fragmentName="com.ui.dealmemolocal.fragments.EpisodeDetailsPage" type="XML" />
+               </content>
+               <footer>
+					<Toolbar>
+						<ToolbarSpacer/>
+						<Button id="btnOk" text="{i18n>btnOk}" visible="true" press="onChangeEpisodeCost"/>
+						
+					</Toolbar>
+				</footer>
+             </Page>
+             
+              <Page title="{i18n>titleVendorContract}" id="vendorContractDetail" navButtonPress="onNavBackFromVendorContractDetail" showNavButton="true">
+               <content>
+                	<core:Fragment fragmentName="com.ui.dealmemolocal.fragments.VendorContractDetailPage" type="XML" />
+               </content>
+               <footer>
+					<Toolbar>
+						<ToolbarSpacer/>
+						<Button id="btnSaveVC"  text="{i18n>btnTxtSave}" enabled="{path:'dealMemoDetailModel>/Dmst',formatter:'.Formatter.formatEditableStatus'}" visible="{dealMemoDetailModel>/VCInfo/saveVisible}" press="onSaveVendorContract"/>
+						<Button id="btnChangeVC"   text="{i18n>btnTxtChange}" enabled="{path:'dealMemoDetailModel>/Dmst',formatter:'.Formatter.formatEditableStatus'}" press="onChangeVendorContract"/>
+						
+					</Toolbar>
+				</footer>
+             </Page>
+             
+        </detailPages>
+    </SplitApp>
+       
+  
+</mvc:View>

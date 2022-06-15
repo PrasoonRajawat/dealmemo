@@ -1,0 +1,56 @@
+
+<c:FragmentDefinition xmlns="sap.m" xmlns:u="sap.ui.unified" xmlns:l="sap.ui.layout" xmlns:c="sap.ui.core">
+<Table id="artistTab" items="{dealMemoDetailModel>/artistContractData}" itemPress="toArtistContract">
+											<infoToolbar>
+												<Toolbar>
+													<Label text="{i18n>lblIcnTbFltAC}"/>
+													<ToolbarSpacer></ToolbarSpacer>
+													<Button id="idArtCre" text="{i18n>lblBtnCreateTalentCrewContract}" press="toArtistContractCreate" enabled="{path:'dealMemoDetailModel>/Dmst',formatter:'.Formatter.formatEditableStatus'}"/>
+												</Toolbar>
+											</infoToolbar>
+											<columns>
+												<Column width="17%">
+													<ObjectIdentifier title="{i18n>lblTalentCrewContractNo} "></ObjectIdentifier>
+												</Column>
+												<Column >
+													<ObjectIdentifier title="{i18n>lblVersion}"></ObjectIdentifier>
+												</Column>
+												<Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline">
+													<ObjectIdentifier title="{i18n>lblTalentCrewType}"></ObjectIdentifier>
+												</Column>
+												<!--<Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline">-->
+												<!--	<ObjectIdentifier title="Artist Code "></ObjectIdentifier>-->
+												<!--</Column>-->
+												<Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" width="15%">
+													<ObjectIdentifier title="{i18n>lblTalentCrewName}"></ObjectIdentifier>
+												</Column>
+												<Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline">
+													<ObjectIdentifier title="{parts:[{value:'lblTotEpisodeCount'},{path:'dealMemoDetailModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" wrapping="true"/>
+												</Column>
+												<Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline">
+													<ObjectIdentifier title="{i18n>lblCurrency}"></ObjectIdentifier>
+												</Column>
+												<Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" width="15%">
+													<ObjectIdentifier title="{i18n>lblTotalCost}"></ObjectIdentifier>
+												</Column>
+												<Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" width="15%">
+													<ObjectIdentifier title="{i18n>lblContractDate}"></ObjectIdentifier>
+												</Column>
+											</columns>
+											<items >
+												<ColumnListItem type="Navigation">
+													<cells>
+														<Text text="{dealMemoDetailModel>Contno}" editable="false"/>
+														<Text text="{dealMemoDetailModel>Contver}" editable="false" textAlign="Right"/>
+														<Text text="{dealMemoDetailModel>Artpnm}"/>
+														<Text text="{dealMemoDetailModel>Name1}" editable="false"/>
+														<Text text="{dealMemoDetailModel>Totcontepi}" editable="false" textAlign="Right"/>
+														<Text text="{dealMemoDetailModel>Waers}" editable="false"/>
+														<Text text="{ parts: [ {path: 'dealMemoDetailModel>Totcost'}, {path: 'dealMemoDetailModel>Waers'} ], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false } }" />
+														<Text text="{path:'dealMemoDetailModel>Contdt',formatter:'.Formatter.formatDateVal'}" editable="false"/>
+						
+													</cells>
+												</ColumnListItem>
+											</items>
+										</Table>
+</c:FragmentDefinition>

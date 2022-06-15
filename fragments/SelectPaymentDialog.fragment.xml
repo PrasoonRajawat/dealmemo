@@ -1,0 +1,126 @@
+<c:FragmentDefinition xmlns="sap.m" xmlns:tnt="sap.tnt" xmlns:u="sap.ui.unified" xmlns:l="sap.ui.layout" xmlns:c="sap.ui.core">
+<Dialog title="{i18n>lblSelectPaymentDetails}" contentWidth="90%">
+
+	
+	<Panel backgroundDesign="Transparent" expanded="true" expandable="false">
+		<l:Grid hSpacing="0.5" vSpacing="0">
+		<MessageStrip
+				type="Error"
+                text="{vendorContractModel>/vcPaymentDataErrorMsg}"
+				showCloseButton="true"
+                visible="{vendorContractModel>/vcPaymentDataMsgVisible}"
+				class="sapUiSmallMarginBottom">
+               <layoutData>
+				<l:GridData span="XL12 L12 M12 S12"/>
+			</layoutData>
+	    </MessageStrip>
+		<ObjectIdentifier title="{parts:[{value:'lblSelectEpiForPayment'},{path:'vendorContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}">
+			<layoutData>
+				<l:GridData span="XL12 L12 M12 S12"/>
+			</layoutData>
+		</ObjectIdentifier>
+		<RadioButtonGroup id="rbepiModePayment" class="sapUiTinyMarginTop" columns="2" selectedIndex="{vendorContractModel>/episodeModePayment}" select="onSelectEpisodeModePayment">
+				<RadioButton text="{parts:[{value:'lblAllEpisode'},{path:'vendorContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" />
+				<RadioButton text="{i18n>lblSelectFromRange}" />
+			<layoutData>
+				<l:GridData span="XL4 L4 M4 S12"/>
+			</layoutData>
+		</RadioButtonGroup>
+		<HBox visible="{vendorContractModel>/episodeRangeVisiblePayment}">
+			<layoutData>
+				<l:GridData span="XL6 L6 M6 S12"/>
+			</layoutData>
+			<items>
+				<VBox>
+					<Label text="{parts:[{value:'lblSelectEpiFrom'},{path:'vendorContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" required="true" width="100%"/>
+					<ComboBox width="95%" items="{vendorContractModel>/epPaymentList}" selectedKey="{vendorContractModel>/epiPaymentFromId}">
+						<c:Item text="{vendorContractModel>Epinm}" key="{vendorContractModel>Epiid}"/>
+					</ComboBox>
+				</VBox>
+				<VBox>
+					<Label  text="{parts:[{value:'lblSelectEpiTo'},{path:'vendorContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" required="true" width="100%"/>
+					<ComboBox width="95%" items="{vendorContractModel>/epPaymentList}" selectedKey="{vendorContractModel>/epiPaymentToId}">
+						<c:Item text="{vendorContractModel>Epinm}" key="{vendorContractModel>Epiid}"/>
+					</ComboBox>
+				</VBox>
+			</items>
+		
+		</HBox>
+		<ObjectIdentifier title="{i18n>lblSelectMilestoneForPayment}">
+			<layoutData>
+				<l:GridData span="XL9 L9 M6 S12"/>
+			</layoutData>
+		</ObjectIdentifier>
+		<RadioButtonGroup id="rbAmntType"  columns="2" selectedIndex="0"  select="onSelectAmntType">
+				<RadioButton text="{i18n>lblAmtPerc}" />
+				<RadioButton text="{i18n>lblAmtNo}" />
+				<layoutData>
+				<l:GridData span="XL3 L3 M6 S12"/>
+			</layoutData>
+		</RadioButtonGroup>
+			<ScrollContainer height="20rem" vertical="true" horizontal="false" class="classBoxBorder sapUiTinyMarginTop">
+				<layoutData>
+					<l:GridData span="XL3 L3 M3 S12"/>
+				</layoutData>
+				<List id="list_mlList" items="{vendorContractModel>/mileStoneList}" mode="MultiSelect">
+					<StandardListItem title="{vendorContractModel>Mstcdnm}" description="{vendorContractModel>Mstcd}"/>
+				</List>
+			</ScrollContainer>
+			
+			<FlexBox height="20rem" alignItems="Center" justifyContent="Center">
+						<Button icon="sap-icon://open-command-field" press="onMileStoneSelectionToDetail"/>
+				<layoutData>
+					<l:GridData span="XL1 L1 M1 S12"/>
+				</layoutData>
+			</FlexBox>
+				
+		
+			<ScrollContainer height="20rem" vertical="true" horizontal="false"  class="classBoxBorder">
+			<layoutData>
+					<l:GridData span="XL8 L8 M8 S12"/>
+				</layoutData>
+				<Table items="{vendorContractModel>/mileStonesForEpi}"  visible="true" mode="None" enableBusyIndicator="true" select="">
+									<columns>
+										<Column >
+											<ObjectIdentifier title="{i18n>lblMilestone}"></ObjectIdentifier>
+										</Column>
+										<Column  demandPopin="true" popinDisplay="Inline">
+											<ObjectIdentifier title="{i18n>lblPayee}"></ObjectIdentifier>
+										</Column>
+										<Column hAlign="Right" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
+											<ObjectIdentifier title="{i18n>lblPaymentTerm}"></ObjectIdentifier>
+										</Column>
+										
+										<Column hAlign="Right" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
+											<ObjectIdentifier title="{vendorContractModel>/colPercAmntLabel}"></ObjectIdentifier>
+										</Column>
+										<Column hAlign="Right" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
+											<ObjectIdentifier title="{i18n>lblEstimatedDate}"></ObjectIdentifier>
+										</Column>
+						
+									</columns>
+									<items>
+										<ColumnListItem>
+											<cells>
+												<ObjectIdentifier title="{vendorContractModel>Mstcdnm}"/>
+												<Text text="{vendorContractModel>payee}"/>
+												<Input value="{vendorContractModel>Zterm}" showValueHelp="true" valueHelpRequest="onValueHelpPayterm"/>
+												<Input value="{vendorContractModel>Dueamt}" showValueHelp="false"/>
+												<DatePicker dateValue="{vendorContractModel>estDate}" displayFormat="dd-MM-yyyy" valueFormat="yyyy-MM-dd"/>
+											</cells>
+										</ColumnListItem>
+									</items>
+								</Table>
+			</ScrollContainer>
+		</l:Grid>
+	</Panel>
+	<beginButton>
+		<Button text="{i18n>Push}" press="onPushPayment" enabled="{vendorContractModel>/pushBtnEnable}"/>
+		
+	</beginButton>
+	<endButton>
+		<Button text="{i18n>Cancel}" press="onCancelPayment" ></Button>
+	</endButton>
+</Dialog>
+
+</c:FragmentDefinition>

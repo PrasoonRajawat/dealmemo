@@ -1,0 +1,12 @@
+	
+<c:FragmentDefinition
+	xmlns="sap.m" xmlns:l="sap.ui.layout"
+	xmlns:c="sap.ui.core">
+	<SelectDialog
+		noDataText="{i18n>msgNoData}"
+		title=""
+		search="onSearchSelection"
+		confirm="onConfirmSelection"
+		cancel="onSelectionDialogClose">
+	</SelectDialog>
+</c:FragmentDefinition>

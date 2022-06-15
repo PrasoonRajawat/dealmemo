@@ -1,0 +1,112 @@
+<c:FragmentDefinition xmlns="sap.m" xmlns:u="sap.ui.unified" xmlns:l="sap.ui.layout" xmlns:c="sap.ui.core">
+<Dialog type="Message" title="{parts:[{value:'lblSelectEpisodeIPR'},{path:'vendorContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}"  contentWidth="40%">
+
+	<content>
+		<MessageStrip
+				type="Error"
+                text="{vendorContractModel>/vcIPRDataErrorMsg}"
+				showCloseButton="true"
+                visible="{vendorContractModel>/vcIPRDataMsgVisible}"
+				class="sapUiSmallMarginBottom">
+               <layoutData>
+				<l:GridData span="XL12 L12 M12 S12"/>
+			</layoutData>
+	    </MessageStrip>
+		<HBox>
+			<items>
+				<RadioButtonGroup  columns="2" selectedIndex="{vendorContractModel>/episodeModeIPR}" select="onSelectEpisodeModeIPR">
+					<RadioButton text="{parts:[{value:'lblAllEpisode'},{path:'vendorContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}"  />
+					<RadioButton text="{i18n>lblSelectFromRange}" />
+				</RadioButtonGroup>
+			
+			</items>
+		</HBox>
+		<HBox visible="{vendorContractModel>/episodeRangeVisibleIPR}">
+			<items>
+				<VBox width="50%">
+					<Label  text="{parts:[{value:'lblSelectEpiFrom'},{path:'vendorContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" required="true" width="100%"/>
+					<ComboBox width="100%" items="{vendorContractModel>/epIPRList}" selectedKey="{vendorContractModel>/epiIPRFromId}">
+						<c:Item text="{vendorContractModel>Epinm}" key="{vendorContractModel>Epiid}"/>
+					</ComboBox>
+				</VBox>
+				<VBox width="50%" class="sapUiTinyMarginBegin">
+					<Label  text="{parts:[{value:'lblSelectEpiTo'},{path:'vendorContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" required="true" width="100%"/>
+					<ComboBox width="100%" items="{vendorContractModel>/epIPRList}" selectedKey="{vendorContractModel>/epiIPRToId}">
+						<c:Item text="{vendorContractModel>Epinm}" key="{vendorContractModel>Epiid}"/>
+					</ComboBox>
+				</VBox>
+			</items>
+		
+		</HBox>
+		<HBox>
+		
+		<VBox width="50%">
+			<Label text="{i18n>lblIPRRights}" required="true"/>
+			<ComboBox width="100%" items="{vendorContractModel>/IPRRightsList}" change="onIPRRightChange" selectedItemId ="{vendorContractModel>/IPRItem}" selectedKey="{vendorContractModel>/IPRRight}"
+			enabled="{vendorContractModel>/IPRRightEnable}" value="{vendorContractModel>/IPRValue}"> <!--Added By dhiraj for commission rights selcted to be all ipr-->
+				<c:Item text="{vendorContractModel>Mstcdnm}" key="{vendorContractModel>Mstcd}"/>
+			</ComboBox>
+		</VBox>
+		<VBox width="50%" class="sapUiTinyMarginBegin">
+			<Label text="{i18n>lblPlatform}" required="true"/>
+			<ComboBox width="100%" items="{vendorContractModel>/platformList}"  selectedItemId ="{vendorContractModel>/PlatformItem}" selectedKey="{vendorContractModel>/PlatformKey}">
+				<c:Item text="{vendorContractModel>Mstcdnm}" key="{vendorContractModel>Mstcd}"/>
+			</ComboBox>
+		</VBox>
+		</HBox>
+		<HBox>
+		<VBox width="50%">
+			<Label text="{i18n>lblRightStartDate}" required="true"/>
+			<DatePicker dateValue="{vendorContractModel>/rightStDate}" displayFormat="dd-MM-yyyy" valueFormat="dd-MM-yyyy" width="100%"/>
+		</VBox>
+		<VBox width="50%" class="sapUiTinyMarginBegin">
+			<Label text="{i18n>lblRightEndDate}" required="true"/>
+			<DatePicker enabled="{vendorContractModel>/rightendDtEnable}" dateValue="{vendorContractModel>/rightendDate}" displayFormat="dd-MM-yyyy" valueFormat="dd-MM-yyyy" width="100%"/>
+		</VBox>
+		</HBox>
+		<HBox>
+			<VBox width="50%">
+				<Label text="{i18n>lblTotRuns}" required="true"/> 
+				<Input enabled="{vendorContractModel>/totRunsEnable}" value="{vendorContractModel>/totRuns}"/> 
+			</VBox>
+			
+			<VBox width="50%" class="sapUiTinyMarginBegin">
+				<Label text="{i18n>lblTerritory}" required="true"/>
+				<ComboBox width="100%" items="{vendorContractModel>/teritoryList}"  selectedItemId ="{vendorContractModel>/TeritoryItem}" selectedKey="{vendorContractModel>/territoryKey}">
+					<c:Item text="{vendorContractModel>Mstcdnm}" key="{vendorContractModel>Mstcd}"/>
+				</ComboBox>
+			</VBox>
+		</HBox>
+		<HBox>
+			<VBox width="50%">
+				<Label text="{i18n>lblLeadingAmortPattern}" required="true"/>
+				<ComboBox width="100%" items="{vendorContractModel>/amortPatternList}"  selectedItemId ="{vendorContractModel>/AmortItem}" selectedKey="{vendorContractModel>/amortKey}">
+					<c:Item text="{vendorContractModel>Mstcdnm}" key="{vendorContractModel>Mstcd}"/>
+				</ComboBox>
+			</VBox>
+			<VBox width="50%" class="sapUiTinyMarginBegin">
+				<Label text="{i18n>lblNonLeadingAmortPattern}" required="true"/>
+				<ComboBox width="100%" items="{vendorContractModel>/nonAmmortPatternList}"  selectedItemId ="{vendorContractModel>/NonAmortItem}" selectedKey="{vendorContractModel>/nonAmortKey}">
+					<c:Item text="{vendorContractModel>Mstcdnm}" key="{vendorContractModel>Mstcd}"/>
+				</ComboBox>
+			</VBox>
+		</HBox>
+		<VBox>
+			<Label text="{i18n>lblAdditionalRights}"/>
+			<MultiComboBox width="100%" items="{vendorContractModel>/additionalRights}" selectedKeys="{vendorContractModel>/selAdditionalRights}">
+				<c:Item text="{vendorContractModel>Mstcdnm}" key="{vendorContractModel>Mstcd}"/>
+			</MultiComboBox>
+		</VBox>
+		
+		
+	</content>
+	<beginButton>
+		<Button text="{i18n>lblBtnPush}" press="onPushIPR"/>
+	</beginButton>
+	<endButton>
+		<Button  text="{i18n>btnCancel}" press="onCancelIPRSelection" />
+	</endButton>
+
+</Dialog>
+
+</c:FragmentDefinition>

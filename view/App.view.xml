@@ -1,0 +1,6 @@
+<mvc:View
+    controllerName="com.ui.dealmemolocal.controller.App" id="appView"
+    xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:core="sap.ui.core">
+    <App  id="app">
+		</App>
+</mvc:View>

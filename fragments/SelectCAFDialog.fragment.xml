@@ -1,0 +1,20 @@
+<c:FragmentDefinition xmlns="sap.m" xmlns:c="sap.ui.core">
+<Dialog type="Message" title="{i18n>titleCAFDetails}" contentWidth="30%">
+
+	<content>
+		<VBox>
+			<Label text="{i18n>lblCAFNo}"/>
+			<Input value="{dealMemoModel>/CAFDmno}" showValueHelp="true" valueHelpRequest="onSelectCAFNo"/>
+		</VBox>
+		
+	</content>
+	<beginButton>
+		<Button text="{i18n>btnTxtSave}" press="onSaveCAF"/>
+	</beginButton>
+	<endButton>
+		<Button  text="{i18n>btnTxtCancel}" press="onCancelCAF" />
+	</endButton>
+
+</Dialog>
+
+</c:FragmentDefinition>

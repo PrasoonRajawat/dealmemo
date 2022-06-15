@@ -1,0 +1,72 @@
+<c:FragmentDefinition
+	xmlns="sap.m" xmlns:l="sap.ui.layout"
+	xmlns:c="sap.ui.core">
+
+<Dialog title="{i18n>lbl_createParam}" type="Message" contentWidth="25%" class="sapUiContentPadding">
+
+		<l:Grid hSpacing="0" vSpacing="0.5" position="Center">
+		
+			<Label text="Department" design="Bold" class="sapUiTinyMarginTop" required="true">
+				<layoutData>
+					<l:GridData span="XL12 L12 M12 S12"/>
+				</layoutData>
+			</Label>
+			<Input width="100%" id="Dept" value="{vendorContractModel>/createParams/Zltext}" showValueHelp="true" valueHelpRequest="onValueHelpDept">
+				<layoutData>
+					<l:GridData span="XL12 L12 M12 S12"/>
+				</layoutData>
+			</Input>
+			
+			<Label text="PR Requestor " design="Bold" class="sapUiTinyMarginTop" required="true">
+				<layoutData>
+					<l:GridData span="XL12 L12 M12 S12"/>
+				</layoutData>
+			</Label>
+			<Input width="100%" id="Prreq" value="{vendorContractModel>/createParams/Prreq}" showValueHelp="true" valueHelpRequest="onValueHelpPrRequestor">
+				<layoutData>
+					<l:GridData span="XL12 L12 M12 S12"/>
+				</layoutData>
+			</Input>
+			
+			<Label text="Department Head" design="Bold" class="sapUiTinyMarginTop" required="true">
+				<layoutData>
+					<l:GridData span="XL12 L12 M12 S12"/>
+				</layoutData>
+			</Label>
+			<Input width="100%" id="Depthd" value="{vendorContractModel>/createParams/Depthd}" showValueHelp="true" valueHelpRequest="onValueHelpDeptHead">
+				<layoutData>
+					<l:GridData span="XL12 L12 M12 S12"/>
+				</layoutData>
+			</Input>
+			
+			<Label text="GR SES Creator" design="Bold" class="sapUiTinyMarginTop" required="true">
+				<layoutData>
+					<l:GridData span="XL12 L12 M12 S12"/>
+				</layoutData>
+			</Label>
+			<Input width="100%" id="Grsescr" value="{vendorContractModel>/createParams/Grsescr}" showValueHelp="true" valueHelpRequest="onValueHelpGrCreater">
+				<layoutData>
+					<l:GridData span="XL12 L12 M12 S12"/>
+				</layoutData>
+			</Input>
+			
+			<!--<Label text="{i18n>lbl_ContNature}" design="Bold" class="sapUiTinyMarginTop" required="true">-->
+			<!--	<layoutData>-->
+			<!--		<l:GridData span="XL12 L12 M12 S12"/>-->
+			<!--	</layoutData>-->
+			<!--</Label>-->
+			<!--<Input width="100%" value="{dealMemoModel>/createParams/ContentNature}" showValueHelp="true" valueHelpRequest="onValueHelpContentNature">-->
+			<!--	<layoutData>-->
+			<!--		<l:GridData span="XL12 L12 M12 S12"/>-->
+			<!--	</layoutData>-->
+			<!--</Input>-->
+			
+			</l:Grid>
+			<beginButton>
+				<Button text="{i18n>lblOk}" press="onCreateParamOk"></Button>
+			</beginButton>
+			<endButton>
+				<Button text="{i18n>lblCancel}" press="onCreateParamCancel"></Button>
+			</endButton>
+</Dialog>
+</c:FragmentDefinition>

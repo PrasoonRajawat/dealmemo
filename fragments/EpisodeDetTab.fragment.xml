@@ -1,0 +1,99 @@
+
+<c:FragmentDefinition xmlns="sap.m" xmlns:u="sap.ui.unified" xmlns:l="sap.ui.layout" xmlns:c="sap.ui.core">
+				<Table  items="{dealMemoDetailModel>/episodeTotalData}">
+					<infoToolbar>
+																<Toolbar>
+																	<Label text="{i18n>Lbl_TotalBudget}"/>
+																</Toolbar>
+															</infoToolbar>
+															<columns>
+																<Column>
+																	<ObjectIdentifier title="{i18n>ObjIden_ProdHouseCost}"/>
+																</Column>
+																<!--added by swapnil for new coulmn -->
+																<Column minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
+																	<ObjectIdentifier title="{i18n>ObjIden_InHouseCost}"/>
+																</Column>
+																<Column minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
+																	<ObjectIdentifier title="{i18n>ObjIden_InHouseamt}"/>
+																</Column>
+																<Column minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
+																	<ObjectIdentifier title="{i18n>ObjIden_TotalCost}"/>
+																</Column>
+															</columns>
+															<items>
+																<ColumnListItem >
+																	<cells>
+																		<!--	<Label id="totalProdCost" 
+																										textAlign="Right"/>
+																		<Label id="totalInhCost"  textAlign="Right"/>
+																		<Label id="totalCost" />-->
+																		<Label text="{ parts: [ {path: 'dealMemoDetailModel>AcquisitionTot'}, {path: 'dealMemoDetailModel>Waers'} ], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false,minFractionDigits: 2, maxFractionDigits: 2 } }"
+																			textAlign="Right"/>
+																		<Label text="{ parts: [ {path: 'dealMemoDetailModel>ExternalTot'}, {path: 'dealMemoDetailModel>Waers'} ], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false,minFractionDigits: 2, maxFractionDigits: 2 } }"
+																			textAlign="Right"/>
+																		<Label text="{ parts: [ {path: 'dealMemoDetailModel>InhouseTot'}, {path: 'dealMemoDetailModel>Waers'} ], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false,minFractionDigits: 2, maxFractionDigits: 2 } }"
+																			textAlign="Right"/>
+																		<Label text="{ parts: [ {path: 'dealMemoDetailModel>Tot'}, {path: 'dealMemoDetailModel>Waers'} ], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false,minFractionDigits: 2, maxFractionDigits: 2 } }"
+																			textAlign="Right"/>
+																	</cells>
+																</ColumnListItem>
+															</items>
+														</Table>
+														<Table id="oTable_epiDetail" visible="true" itemPress="onPressEpisodeDetail" items="{dealMemoDetailModel>/episodeData}" mode="{= ${dealMemoDetailModel>/tableMode} === true ? 'MultiSelect' : 'None'}" selectionChange="handleEpiRowSelection">
+															<infoToolbar>
+																<Toolbar>
+																	<Label text="{parts:[{value:'lblIconTabEpiDet'},{path:'dealMemoDetailModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}"/>
+																	<ToolbarSpacer></ToolbarSpacer>
+																	<Button visible="{dealMemoDetailModel>/UploadBtnVisibility}" text="{i18n>Export}" press="onExport" enabled="{path:'dealMemoDetailModel>/Dmst',formatter:'.Formatter.formatEditableStatus'}"/>
+																	<Button visible="{dealMemoDetailModel>/UploadBtnVisibility}" icon="sap-icon://upload" press="onUploadDialog" enabled="{path:'dealMemoDetailModel>/Dmst',formatter:'.Formatter.formatEditableStatus'}"/>
+																	<Button visible="{dealMemoDetailModel>/deleteEpiVisibility}" text="{i18n>Btn_Delete}" press="onDeleteEpisodeConfirm" enabled="{path:'dealMemoDetailModel>/Dmst',formatter:'.Formatter.formatEditableStatus'}" />
+																	<Button visible="{dealMemoDetailModel>/ChangeEpiVisibility}" text="{parts:[{value:'lblBtnChangeCostEpiDet'},{path:'dealMemoDetailModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" press="onEpisodeCostChange" enabled="{path:'dealMemoDetailModel>/Dmst',formatter:'.Formatter.formatEditableStatus'}"/>
+																	<Button  press="onCreateAdditionalEpisode"  text="{parts:[{value:'lblBtnCreateEpiDet'},{path:'dealMemoDetailModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" visible="{dealMemoDetailModel>/AddEpiVisibility}" enabled="{path:'dealMemoDetailModel>/Dmst',formatter:'.Formatter.formatEditableStatus'}"/>
+																</Toolbar>
+															</infoToolbar>
+															<columns>
+																<Column width="40%" >
+																	<ObjectIdentifier title="{i18n>ObjIden_Desc}" />
+																</Column>
+																<Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" width="15%">
+																	<ObjectIdentifier title="{i18n>ObjIden_Duration}"/>
+																</Column>
+																 <Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" width="10%">
+																	<ObjectIdentifier title="{i18n>ObjIden_Year}"/>
+																</Column> 
+																<Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" width="10%">
+																	<ObjectIdentifier title="{i18n>ObjIden_TRPTVT}"/>
+																</Column>
+																<Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" width="25%">
+																	<!-- <ObjectIdentifier title="{i18n>ObjIden_TotalEpiCost}"/> -->
+																	<ObjectIdentifier title="{parts:[{value:'lblTblColTotEpiCost'},{path:'dealMemoDetailModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}"/>
+																</Column>
+																<Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" visible="{= ${dealMemoDetailModel>/Cnttp} === '02' || ${dealMemoDetailModel>/Cnttp} === '05' ? true : false }" width="20%">
+																	<ObjectIdentifier title="{i18n>ObjIden_LeadingValue}"/>
+																</Column>
+																<Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" width="20%">
+																	<ObjectIdentifier title="{i18n>ObjIden_Status}"/>
+																</Column>
+															</columns>
+															<items >
+																<ColumnListItem type="Navigation">
+																	<cells>
+																		<Input showValueHelp="true" valueHelpRequest="onValueHelpEpiDesc" editable="{dealMemoDetailModel>epiDescEditable}" change="" value="{dealMemoDetailModel>Epinm}" tooltip="{Epinm}"/>
+																		<TimePicker valueFormat="HH:mm:ss" displayFormat="HH:mm:ss" value="{dealMemoDetailModel>Epidur}" editable="false" placeholder="hh:mm:ss"/>
+																		 <Input value="{dealMemoDetailModel>Gjahr}" editable="{dealMemoDetailModel>epiDescEditable}"  change="handleYearChange"/>
+																		<Input editable="false" value= "{dealMemoDetailModel>Trp}" />
+																		
+																		
+																		<Input
+																			value="{ parts: [ {path: 'dealMemoDetailModel>Totepiamt'}, {path: 'dealMemoDetailModel>Waers'} ], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false,minFractionDigits: 2, maxFractionDigits: 2 } }"
+																			textAlign="Right" editable="false"/>
+																		<Input
+																			value="{ parts: [ {path: 'dealMemoDetailModel>Leadcost'}, {path: 'dealMemoDetailModel>Waers'} ], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false,minFractionDigits: 2, maxFractionDigits: 2 } }"
+																			textAlign="Right" change="onLeadingValueChange" editable="{dealMemoDetailModel>epiDescEditable}"/>
+																		<Input value="{dealMemoDetailModel>Epistdsc}" editable="false"/>
+																	</cells>
+																</ColumnListItem>
+															</items>
+														</Table>
+</c:FragmentDefinition>

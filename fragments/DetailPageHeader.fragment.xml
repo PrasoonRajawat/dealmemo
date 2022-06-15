@@ -1,0 +1,63 @@
+
+<c:FragmentDefinition
+	xmlns="sap.m" xmlns:l="sap.ui.layout"
+	xmlns:c="sap.ui.core"
+>
+
+<Panel expandable="false" backgroundDesign="Transparent" expanded="true"> 			<!--Made expandable="false" By  Lakshmana on 27.05.2020  for Deal Memo Changes-->
+						<ObjectHeader backgroundDesign="Translucent" title="{i18n>lbldealmemohdr}{dealMemoDetailModel>/Dmno}({dealMemoDetailModel>/Dmver})"
+							number="{parts:[{path:'dealMemoDetailModel>/Totdmamt'},{path:'dealMemoDetailModel>/Waers'}], type: 'sap.ui.model.type.Currency', formatOptions: {showMeasure: false}}"
+							numberUnit="{dealMemoDetailModel>/Waers}" responsive="true" fullScreenOptimized="false" numberState="Success">
+							
+							<statuses>
+								<ObjectStatus text="{dealMemoDetailModel>/Dmstdesc}" state="{path:'dealMemoDetailModel>/Dmst',formatter:'.Formatter.formatDealMemoStatus'}"/>
+							</statuses>
+								
+						
+						<headerContainer>
+						    <HeaderContainer class="sapUiSmallMarginTop">
+								        <content>
+												<VBox >
+													<HBox>
+														<Label text="{i18n>lbl_ownerChannel}" design="Bold"/>
+														<Text text="{dealMemoDetailModel>/Chnlnm}" class="sapUiTinyMarginBegin"/>
+													</HBox>
+													<HBox>
+														<Label text="{i18n>lbl_contType}" design="Bold"/>
+														<Text text="{dealMemoDetailModel>/Cnttpnm}" class="sapUiTinyMarginBegin"/>
+													</HBox>
+												</VBox>
+												<VBox>
+													<HBox>
+														<Label text="{i18n>lbl_ContName}" design="Bold"/>
+														<Text text="{dealMemoDetailModel>/Cntnm}" class="sapUiTinyMarginBegin"/>
+													</HBox>
+													<HBox>
+														<Label text="{i18n>lbl_ContCategory}" design="Bold"/>
+														<Text text="{dealMemoDetailModel>/Cntcatnm}" class="sapUiTinyMarginBegin"/>
+													</HBox>
+											</VBox>
+											<VBox>
+												<HBox>
+													<Label text="{i18n>lbl_CreationDate}" design="Bold"/>
+													<Text text="{path:'dealMemoDetailModel>/Dmdt',formatter:'.Formatter.formatDateVal'}" class="sapUiTinyMarginBegin"/>
+												</HBox>
+												<HBox>
+													<Label text="{i18n>lbl_ContNature}" design="Bold"/>
+													<Text text="{dealMemoDetailModel>/Cntntnm}" class="sapUiTinyMarginBegin"/>
+												</HBox>
+											</VBox>
+											<VBox>
+												<HBox>
+													<Label text="{i18n>lbl_RefDocumentNo}" design="Bold"/>
+													<Text text="{dealMemoDetailModel>/Cafrefno}" class="sapUiTinyMarginBegin"/>
+												</HBox>
+											</VBox>
+											</content>
+								</HeaderContainer>				
+							</headerContainer>
+							</ObjectHeader>
+						
+					</Panel>
+					
+</c:FragmentDefinition>

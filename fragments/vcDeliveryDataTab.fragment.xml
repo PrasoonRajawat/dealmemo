@@ -1,0 +1,56 @@
+<c:FragmentDefinition xmlns="sap.m" xmlns:u="sap.ui.unified" xmlns:l="sap.ui.layout" xmlns:c="sap.ui.core">
+<Toolbar>
+									<ToolbarSpacer></ToolbarSpacer>
+									<Button press="onEnterDelivery" visible="{vendorContractModel>/saveVisible}" text="{i18n>lblEnterDeliverableDetails}" type="Default"/>
+								</Toolbar>
+								<Table id="oTbl_vcdelData" items="{vendorContractModel>/vcDeliveryData}"  visible="true" mode="MultiSelect" select="onSeletDelTblVC">
+									<infoToolbar>
+										<Toolbar>
+											<Label text="{i18n>lbldeliverabledata}"/>
+											<ToolbarSpacer></ToolbarSpacer>
+											<Button  press="onDeleteDeliveryData" text="{i18n>lblDelete}" icon="sap-icon://delete/" enabled="{vendorContractModel>/epiDelDeleteEnable}"  visible="{vendorContractModel>/saveVisible}"/>
+										</Toolbar>
+									</infoToolbar>
+									<!-- <headerToolbar> <Toolbar> <ToolbarSpacer /> </Toolbar> </headerToolbar> -->
+									<columns>
+										<Column>
+											<ObjectIdentifier  title="{parts:[{value:'lblEpisodeDesc'},{path:'vendorContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}"></ObjectIdentifier>
+										</Column>
+										<Column minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
+											<ObjectIdentifier title="{i18n>lblDeliverableCode}"></ObjectIdentifier>
+										</Column>
+										<Column minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
+											<ObjectIdentifier title="{i18n>lblPayment}"></ObjectIdentifier>
+										</Column>
+										<Column minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
+											<ObjectIdentifier title="{i18n>lblEstimatedDelvDate}"></ObjectIdentifier>
+										</Column>
+										<Column minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
+											<ObjectIdentifier title="{i18n>lblDeliveryDate}"></ObjectIdentifier>
+										</Column>
+										<Column minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
+											<ObjectIdentifier title="{i18n>lblDeliveryTime}"></ObjectIdentifier>
+										</Column>
+										<Column minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
+											<ObjectIdentifier title="{i18n>lblMilestoneCompletionDate}"></ObjectIdentifier>
+										</Column>
+										<Column minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
+											<ObjectIdentifier title="{i18n>lblDeliveryDocument}"></ObjectIdentifier>
+										</Column>
+									</columns>
+									<items>
+										<ColumnListItem>
+											<cells>
+												<ObjectIdentifier title="{vendorContractModel>Epinm}"></ObjectIdentifier>
+												<Label text="{vendorContractModel>Delvcdnm}"></Label>
+												<CheckBox selected="{vendorContractModel>Delvpay}" enabled="false"></CheckBox>
+												<Label text="{path:'vendorContractModel>Estdelvdt',formatter:'.Formatter.formateDate'}"></Label>
+												<Label text="{path:'vendorContractModel>Delvdt',formatter:'.Formatter.formateDate'}"></Label>
+												<Label text="{path:'vendorContractModel>Delvtm',formatter:'.Formatter.formatTimeDuration'}"/>
+												<Label text="{path:'vendorContractModel>Mscompdt',formatter:'.Formatter.formateDate'}"></Label>
+												<Label text="{vendorContractModel>Delvdoc}"></Label>
+											</cells>
+										</ColumnListItem>
+									</items>
+								</Table>
+</c:FragmentDefinition>

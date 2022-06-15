@@ -1,0 +1,53 @@
+
+<c:FragmentDefinition
+	xmlns="sap.m" xmlns:l="sap.ui.layout"
+	xmlns:c="sap.ui.core">
+
+<Dialog title="{i18n>lblcreateSchedule}" type="Message" contentWidth="18%" class="sapUiContentPadding">
+
+		<l:Grid hSpacing="0" vSpacing="0" position="Center">
+		
+			<Label text="{i18n>lblTimeFrom}" class="sapUiTinyMarginTop" required="true">
+				<layoutData>
+					<l:GridData span="XL12 L12 M12 S12"/>
+				</layoutData>
+			</Label>
+			<TimePicker valueFormat="HH:mm:ss" dateValue="{dealMemoDetailModel>/scheduleTimeFromDt}" value="{dealMemoDetailModel>/scheduleTimeFrom}"	displayFormat="HH:mm" width="100%">
+				<layoutData>
+					<l:GridData span="XL12 L12 M12 S12"/>
+				</layoutData>
+			</TimePicker>
+			
+			<Label text="{i18n>lblDuration}" design="Bold" class="sapUiTinyMarginTop" required="true">
+				<layoutData>
+					<l:GridData span="XL12 L12 M12 S12"/>
+				</layoutData>
+			</Label>
+			<TimePicker valueFormat="HH:mm:ss" dateValue="{dealMemoDetailModel>/scheduleDurDt}" value="{dealMemoDetailModel>/scheduleDur}" displayFormat="HH:mm" width="100%">
+				<layoutData>
+					<l:GridData span="XL12 L12 M12 S12"/>
+				</layoutData>
+			</TimePicker>
+			
+			
+			<Label text="{i18n>lblDays}" design="Bold" class="sapUiTinyMarginTop" required="true">
+				<layoutData>
+					<l:GridData span="XL12 L12 M12 S12"/>
+				</layoutData>
+			</Label>
+			<MultiComboBox items="{dealMemoModel>/daysList}" selectedKeys="{dealMemoDetailModel>/scheduleDays}">
+				<c:ListItem key="{dealMemoModel>Mstcd}" text="{dealMemoModel>Mstcdnm}"/>
+				<layoutData>
+					<l:GridData span="XL12 L12 M12 S12"/>
+				</layoutData>
+			</MultiComboBox>
+			
+			</l:Grid>
+			<beginButton>
+				<Button text="{i18n>lblOk}" press="onCreateScheduleOk"></Button>
+			</beginButton>
+			<endButton>
+				<Button text="{i18n>lblCancel}" press="onCreateScheduleCancel"></Button>
+			</endButton>
+</Dialog>
+</c:FragmentDefinition>
