@@ -1931,7 +1931,7 @@ sap.ui.define([
 				}
 				return true;
 			},
-			onSearchDeliverables:function() {
+			onSearchDeliverables:function(oEvent) {
 					var sValue = oEvent.getParameter("value");
 				var oFilter =
 					new Filter([
