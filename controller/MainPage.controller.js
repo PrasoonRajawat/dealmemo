@@ -3670,7 +3670,7 @@ sap.ui.define([
 			beforeDelete: function() {
 				var detailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = detailModel.getData();
-				var episodeDataLen = dealMemoDetailInfo.episodeData.filter(v=> v.Epist != '05').length - 1;
+				var episodeDataLen = dealMemoDetailInfo.episodeData.length - 1;
 
 				var selectedIndices = this.selEpisodePaths.map(function(oPath) {
 					var arr = oPath.split("/");
