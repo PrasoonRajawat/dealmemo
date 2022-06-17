@@ -1935,8 +1935,8 @@ sap.ui.define([
 					var sValue = oEvent.getParameter("value");
 				var oFilter =
 					new Filter([
-					new Filter(Mstcdnm, FilterOperator.Contains, sValue),
-						new Filter(Mstcd, FilterOperator.Contains, sValue)
+					new Filter(this._oSelectDeliveryCodeDialog.propName, FilterOperator.Contains, sValue),
+						new Filter(this._oSelectDeliveryCodeDialog.keyName, FilterOperator.Contains, sValue)
 					], false);
 
 				// var oBinding = oEvent.getParameter("itemsBinding");
