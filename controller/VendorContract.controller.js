@@ -1931,6 +1931,17 @@ sap.ui.define([
 				}
 				return true;
 			},
+			onSearchDeliverables:function() {
+					var sValue = oEvent.getParameter("value");
+				var oFilter =
+					new Filter([
+						new Filter(this._oSelectDeliveryCodeDialog.Mstcdnm, FilterOperator.Contains, sValue),
+						new Filter(this._oSelectDeliveryCodeDialog.Mstcd, FilterOperator.Contains, sValue)
+					], false);
+
+				var oBinding = oEvent.getParameter("itemsBinding");
+				oBinding.filter([oFilter]);
+			},
 			onNextDeliveryVC: function() {
 				var validateDelEp = this.validateEpisodeSelection();
 				if (validateDelEp) {
