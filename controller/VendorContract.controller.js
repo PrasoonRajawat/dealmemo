@@ -1935,8 +1935,13 @@ sap.ui.define([
 					var sValue = oEvent.getParameter("value");
 				var oFilter =
 					new Filter([
+<<<<<<< HEAD
 					new Filter(Mstcdnm, FilterOperator.Contains, sValue),
 						new Filter(Mstcd, FilterOperator.Contains, sValue)
+=======
+            	new Filter(this._oSelectDeliveryCodeDialog.Mstcdnm, FilterOperator.Contains, sValue),
+						new Filter(this._oSelectDeliveryCodeDialog.Mstcd, FilterOperator.Contains, sValue)
+>>>>>>> branch 'DS-Branch' of https://github.com/basimwangde/dealmemo.git
 					], false);
 
 				// var oBinding = oEvent.getParameter("itemsBinding");
