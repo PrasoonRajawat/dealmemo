@@ -52,7 +52,7 @@
 			</layoutData>
 		</ObjectIdentifier>
 		<RadioButtonGroup id="rbAmntTypeAC"  columns="2" selectedIndex="0" select="onSelectAmntType">
-				<RadioButton text="{i18n>lblAmtPerc}" />
+				<RadioButton id ="rbAmtPerc" text="{i18n>lblAmtPerc}" />
 				<RadioButton text="{i18n>lblAmtNo}" />
 				<layoutData>
 				<l:GridData span="XL3 L3 M6 S12"/>
