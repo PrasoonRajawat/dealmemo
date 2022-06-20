@@ -54,7 +54,7 @@
 					<l:GridData span="XL12 L12 M12 S12"/>
 				</layoutData>
 			</Label>
-				<CheckBox text="Replacement Content" id="recont">
+				<CheckBox id="recont">
 				<layoutData>
 					<l:GridData span="XL12 L12 M12 S12"/>
 				</layoutData>
