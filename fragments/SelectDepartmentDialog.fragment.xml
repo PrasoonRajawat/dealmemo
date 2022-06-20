@@ -49,17 +49,18 @@
 					<l:GridData span="XL12 L12 M12 S12"/>
 				</layoutData>
 			</Input>
-				<CheckBox text="Replacement Content" id="recont">
+				<Label text="Replacement Content" design="Bold" class="sapUiTinyMarginTop">
+				<layoutData>
+					<l:GridData span="XL12 L12 M12 S12"/>
+				</layoutData>
+			</Label>
+				<CheckBox id="recont">
 				<layoutData>
 					<l:GridData span="XL12 L12 M12 S12"/>
 				</layoutData>
 			</CheckBox>
 			
-			<!--<Label text="Replacement Content" design="Bold" class="sapUiTinyMarginTop">-->
-			<!--	<layoutData>-->
-			<!--		<l:GridData span="XL12 L12 M12 S12"/>-->
-			<!--	</layoutData>-->
-			<!--</Label>-->
+		
 			 
 			<!--<Input width="100%" value="{dealMemoModel>/createParams/ContentNature}" showValueHelp="true" valueHelpRequest="onValueHelpContentNature">-->
 			<!--	<layoutData>-->
