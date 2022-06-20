@@ -1484,12 +1484,14 @@ sap.ui.define([
 						this.getView().addDependent(this._oSelectPaymentDialog);
 						this.byId(sap.ui.core.Fragment.createId("vcPaymentDialog", "list_mlList")).removeSelections();
 						this.byId(sap.ui.core.Fragment.createId("vcPaymentDialog", "rbAmntType")).setSelectedIndex(1);
+						this.byId(sap.ui.core.Fragment.createId("vcPaymentDialog", "rbAmtPerc")).setEditable(vendorContractDetailInfo.Contver == 1);	
 						this._oSelectPaymentDialog.open();
 					}.bind(this));
 
 				} else {
 					this.byId(sap.ui.core.Fragment.createId("vcPaymentDialog", "list_mlList")).removeSelections();
 					this.byId(sap.ui.core.Fragment.createId("vcPaymentDialog", "rbAmntType")).setSelectedIndex(1);
+					this.byId(sap.ui.core.Fragment.createId("vcPaymentDialog", "rbAmtPerc")).setEditable(vendorContractDetailInfo.Contver == 1);
 					this._oSelectPaymentDialog.open();
 				}
 			},
