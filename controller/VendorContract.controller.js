@@ -1453,7 +1453,7 @@ sap.ui.define([
 				vendorContractModel.setProperty("/mileStonesForEpi", []);
 				vendorContractModel.setProperty("/selContextsData", []);
 				vendorContractDetailInfo.pushBtnEnable = false;
-				vendorContractDetailInfo.colPercAmntLabel = "Percentage";
+				vendorContractDetailInfo.colPercAmntLabel = "Amount";
 				vendorContractDetailInfo.vcPaymentDataMsgVisible = false;
 				vendorContractDetailInfo.vcPaymentDataErrorMsg = "";
 				var DmCmSetData = vendorContractDetailInfo.DmCmSet.results;
@@ -1483,13 +1483,13 @@ sap.ui.define([
 						this._oSelectPaymentDialog = oFragment; //sap.ui.xmlfragment("com.ui.dealmemolocal.fragments.SelectPaymentDialog", this);
 						this.getView().addDependent(this._oSelectPaymentDialog);
 						this.byId(sap.ui.core.Fragment.createId("vcPaymentDialog", "list_mlList")).removeSelections();
-						this.byId(sap.ui.core.Fragment.createId("vcPaymentDialog", "rbAmntType")).setSelectedIndex(0);
+						this.byId(sap.ui.core.Fragment.createId("vcPaymentDialog", "rbAmntType")).setSelectedIndex(1);
 						this._oSelectPaymentDialog.open();
 					}.bind(this));
 
 				} else {
 					this.byId(sap.ui.core.Fragment.createId("vcPaymentDialog", "list_mlList")).removeSelections();
-					this.byId(sap.ui.core.Fragment.createId("vcPaymentDialog", "rbAmntType")).setSelectedIndex(0);
+					this.byId(sap.ui.core.Fragment.createId("vcPaymentDialog", "rbAmntType")).setSelectedIndex(1);
 					this._oSelectPaymentDialog.open();
 				}
 			},
