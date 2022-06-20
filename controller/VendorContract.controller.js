@@ -216,7 +216,7 @@ sap.ui.define([
 					"enablevcEpiNonCostCdTab": false
 
 				};
-				// if (vendorContractDetailInfo.S === "S") { // added by dhiraj on 20/05/2022 for submit butn.
+				// if (vendorContractDetailInfo.App === "App") { // added by dhiraj on 20/05/2022 for submit butn.
 				// 	vendorContractDetailInfo.setProperty("/submitVisible", true);
 				// }
 				Object.assign(vendorContractDetailInfo, vcCreateObj);
@@ -3353,7 +3353,7 @@ sap.ui.define([
 					"Dmver": vendorContractDetailInfo.Dmver,
 					"Contno": vendorContractDetailInfo.Contno,
 					"Contver": vendorContractDetailInfo.Contver,
-					"S": "S"
+					"App": "App"
 				});
 			},
 			//Release Status
