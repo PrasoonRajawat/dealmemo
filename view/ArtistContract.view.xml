@@ -10,6 +10,7 @@
 						intro="{artistContractModel>/Contno}({artistContractModel>/Contver})" numberUnit="{artistContractMode>/Waers}" responsive="true"
 						fullScreenOptimized="true" numberState="Success">
 						<statuses>
+								<ObjectStatus text="{artistContractModel>/Contstatdesc}" state="{path:'artistContractModel>/Contstat',formatter:'.Formatter.formatDealMemoStatus'}" visible="{artistContractModel>/App}"/>
 							<ObjectStatus title="{i18n>lblTotBudget}"
 								text="{path:'artistContractModel>/Totartbud', type:'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 2 }}"/>
 							<ObjectStatus title="{i18n>lblContent}" text="{artistContractModel>/Cntnm}"/>
