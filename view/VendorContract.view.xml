@@ -19,7 +19,7 @@
 						intro="{vendorContractModel>/Contno}({vendorContractModel>/Contver})" numberUnit="{vendorContractModel>/Waers}" responsive="true"
 						fullScreenOptimized="true" numberState="Success">
 						<statuses>
-							<ObjectStatus text="{vendorContractModel>/Contstatdesc}" state="{path:'vendorContractModel>/Contstat',formatter:'.Formatter.formatDealMemoStatus'}" visible="{vendorContractModel>/App}"/>
+							<ObjectStatus text="{vendorContractModel>/Contstatdesc}" state="{path:'vendorContractModel>/Contstat',formatter:'.Formatter.formatDealMemoStatus'}" />
 							<ObjectStatus title="{i18n>lblDealMemo}" text="{vendorContractModel>/Dmno}"/>
 							<ObjectStatus id="oSChannel" title="{i18n>lbl_Channel}" text="{vendorContractModel>/Chnlnm}"/>
 							<ObjectStatus id="oSProgram"
