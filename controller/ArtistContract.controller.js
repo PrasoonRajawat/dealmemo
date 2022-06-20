@@ -33,7 +33,7 @@ sap.ui.define([
 					oModel.setProperty("/Dmver", oContxtFrom.Dmver);
 					oModel.setProperty("/Contno", oContxtFrom.Contno);
 					oModel.setProperty("/Contver", oContxtFrom.Contver);
-					oModel.setProperty("/S", oContxtFrom.S); // added by dhiraj on 20/05/2022 for submit butn.
+					oModel.setProperty("/App", oContxtFrom.App); // added by dhiraj on 20/05/2022 for submit butn.
 
 					oModel.refresh(true);
 					if (!this.newContractCreated) {
@@ -164,17 +164,17 @@ sap.ui.define([
 						artistContractModel.setProperty("/Ebeln", oData.Ebeln);
 						artistContractModel.setProperty("/epiDeleteEnable", false);
 						artistContractModel.setProperty("/saveVisible", true);
-						if (artistContractDetailInfo.S === "S") { // added by dhiraj on 20/05/2022 for submit butn.
+						if (artistContractDetailInfo.App === "App") { // added by dhiraj on 20/05/2022 for submit butn.
 							artistContractModel.setProperty("/submitVisible", true);
 						} else {
 							artistContractModel.setProperty("/submitVisible", false);
 						}
-						if (artistContractDetailInfo.S === "S" && artistContractDetailInfo.Contno !== "new") {
+						if (artistContractDetailInfo.App === "App" && artistContractDetailInfo.Contno !== "new") {
 							artistContractModel.setProperty("/releaseTabVisible", true);
 						} else {
 							artistContractModel.setProperty("/releaseTabVisible", false);
 						}
-						if (artistContractDetailInfo.S === "S" && artistContractDetailInfo.Dmst === "04") {
+						if (artistContractDetailInfo.App === "App" && artistContractDetailInfo.Dmst === "04") {
 							artistContractModel.setProperty("/changeVisible", true);
 						} else {
 							artistContractModel.setProperty("/changeVisible", false);
@@ -1268,17 +1268,17 @@ sap.ui.define([
 						artistContractDetailInfo.ContDate = Formatter.formatDateVal(oData.Contdt),
 							oData.Cntnm = artistContractDetailInfo.Cntnm;
 						artistContractDetailInfo.saveVisible = true;
-						if (artistContractDetailInfo.S === "S") { // added by dhiraj on 20/05/2022 for submit butn.
+						if (artistContractDetailInfo.App === "App") { // added by dhiraj on 20/05/2022 for submit butn.
 							artistContractModel.setProperty("/submitVisible", true);
 						} else {
 							artistContractModel.setProperty("/submitVisible", false);
 						}
-						if (artistContractDetailInfo.S === "S" && artistContractDetailInfo.Contno !== "new") {
+						if (artistContractDetailInfo.App === "App" && artistContractDetailInfo.Contno !== "new") {
 							artistContractModel.setProperty("/releaseTabVisible", true);
 						} else {
 							artistContractModel.setProperty("/releaseTabVisible", false);
 						}
-						if (artistContractDetailInfo.S === "S" && artistContractDetailInfo.Dmst === "04") {
+						if (artistContractDetailInfo.App === "App" && artistContractDetailInfo.Dmst === "04") {
 							artistContractModel.setProperty("/changeVisible", true);
 						} else {
 							artistContractModel.setProperty("/changeVisible", false);
@@ -1848,7 +1848,7 @@ sap.ui.define([
 					"Dmver": artistContractDetailInfo.Dmver,
 					"Contno": artistContractDetailInfo.Contno,
 					"Contver": artistContractDetailInfo.Contver,
-					"S": "S"
+					"App": "App"
 				});
 			},
 			//Release Status
