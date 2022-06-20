@@ -224,7 +224,7 @@ sap.ui.define([
 				this.getView().byId("btnEditVC").setVisible(false);
 				this.getView().byId("idIconSubTabBar2").setSelectedKey("vcSubEpiData");
 				if (vendorContractDetailInfo.Dmst !== "04") {
-				this.loadVendors();
+					this.loadVendors();
 				}
 
 			},
@@ -957,7 +957,7 @@ sap.ui.define([
 							oData.vcTabEnable = false;
 						}
 						oData.submitVisible = false;
-						if (vendorContractDetailInfo.App === "App") { // added by dhiraj on 20/05/2022 for submit butn.
+						if (vendorContractDetailInfo.App === "App" && vendorContractDetailInfo.Contstat === "01") { // added by dhiraj on 20/05/2022 for submit butn.
 							oData.submitVisible = true;
 						}
 						oData.releaseTabVisible = false;
@@ -1931,16 +1931,16 @@ sap.ui.define([
 				}
 				return true;
 			},
-			onSearchDeliverables:function(oEvent) {
-					var sValue = oEvent.getParameter("value");
+			onSearchDeliverables: function(oEvent) {
+				var sValue = oEvent.getParameter("value");
 				var oFilter =
 					new Filter([
-					new Filter(this._oSelectDeliveryCodeDialog.propName, FilterOperator.Contains, sValue),
+						new Filter(this._oSelectDeliveryCodeDialog.propName, FilterOperator.Contains, sValue),
 						new Filter(this._oSelectDeliveryCodeDialog.keyName, FilterOperator.Contains, sValue)
 					], false);
 
 				// var oBinding = oEvent.getParameter("itemsBinding");
-					var oBinding = oEvent.getSource().getBinding("items");
+				var oBinding = oEvent.getSource().getBinding("items");
 				oBinding.filter([oFilter]);
 			},
 			onNextDeliveryVC: function() {
@@ -3282,12 +3282,31 @@ sap.ui.define([
 				if (oTab === "releaseStatus") {
 					this.loadReleaseStatusDetails();
 				}
-				if(oSubTab === "milestoneTab"){
+				if (oSubTab === "milestoneTab") {
 					this.loadMileTabDetails();
 				}
 
 			},
-			
+			onConfirmChangeDm: function() {
+				var oModel = this.getView().getModel();
+				var vendorContractModel = this.getView().getModel("vendorContractModel");
+				var vendorContractDetailInfo = vendorContractModel.getData();
+
+				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
+				MessageBox.confirm(oSourceBundle.getText("msgcreateNewVersion"), {
+					actions: [oSourceBundle.getText("lblYes"), oSourceBundle.getText("lblNo")],
+					emphasizedAction: "Yes",
+					onClose: function(sAction) {
+						if (sAction === oSourceBundle.getText("lblYes")) {
+
+							this.onChangeVC();
+						} else if (sAction === oSourceBundle.getText("lblNo")) {
+
+						}
+					}.bind(this)
+				});
+
+			},
 
 			onChangeVC: function() {
 				var oModel = this.getView().getModel();
@@ -3318,17 +3337,17 @@ sap.ui.define([
 					}
 				})
 			},
-			RouteVendorContractAfterChange : function() { 
+			RouteVendorContractAfterChange: function() {
 				var oRouter = this.getOwnerComponent().getRouter();
-					var vendorContractModel = this.getView().getModel("vendorContractModel");
+				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
 				// var oContractItem = oEvent.getParameters()['listItem'].getBindingContext("dealMemoDetailModel").getObject();
 				var newVersionCv = parseInt(vendorContractDetailInfo.Contver) + parseInt("1");
 				vendorContractDetailInfo.Contver = "00" + newVersionCv;
-				
-					var newVersionDv = parseInt(vendorContractDetailInfo.Dmver) + parseInt("1");
+
+				var newVersionDv = parseInt(vendorContractDetailInfo.Dmver) + parseInt("1");
 				vendorContractDetailInfo.Dmver = "00" + newVersionDv;
-				
+
 				oRouter.navTo("VendorContract", {
 					"Dmno": vendorContractDetailInfo.Dmno,
 					"Dmver": vendorContractDetailInfo.Dmver,
@@ -3347,32 +3366,32 @@ sap.ui.define([
 				return DtTime;
 
 			},
-			loadMileTabDetails:function(){
-					var vendorContractModel = this.getView().getModel("vendorContractModel");
+			loadMileTabDetails: function() {
+				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
-					var srvUrl = "/sap/opu/odata/IBSCMS/DEALMEMO_SRV";
-			var oModelSav = new sap.ui.model.odata.ODataModel(srvUrl, true, "", "");
-				var oPath = "/DmCmMileWiseSet?$filter=Tentid eq 'IBS'and Dmno eq '" + vendorContractDetailInfo.Dmno + "' and Dmver eq '" + vendorContractDetailInfo.Dmver +
+				var srvUrl = "/sap/opu/odata/IBSCMS/DEALMEMO_SRV";
+				var oModelSav = new sap.ui.model.odata.ODataModel(srvUrl, true, "", "");
+				var oPath = "/DmCmMileWiseSet?$filter=Tentid eq 'IBS'and Dmno eq '" + vendorContractDetailInfo.Dmno + "' and Dmver eq '" +
+					vendorContractDetailInfo.Dmver +
 					"' and Contno eq '" + vendorContractDetailInfo.Contno + "' and Conttp eq '01' and Contver eq'" + vendorContractDetailInfo.Contver +
 					"'";
 				var oModel = this.getView().getModel();
-			oModelSav.read(oPath, null, null, true, function(oData) {
-				var oModel = new sap.ui.model.json.JSONModel(oData);
-				oModel.setSizeLimit("999999");
-					
-						vendorContractModel.setProperty("/mileWiseList", oData.results);
-						vendorContractModel.refresh(true);
-			}, function(value) {
-				sap.ui.core.BusyIndicator.hide();
-				console.log(value);
-				//alert("fail");
-			});
-			// var count = {};
-			// vendorContractDetailInfo.DmCmSet.results.forEach(v =>{
-			// 	count[v] = (count[v] || 0 ) + 1
-			// })		
-			
-				
+				oModelSav.read(oPath, null, null, true, function(oData) {
+					var oModel = new sap.ui.model.json.JSONModel(oData);
+					oModel.setSizeLimit("999999");
+
+					vendorContractModel.setProperty("/mileWiseList", oData.results);
+					vendorContractModel.refresh(true);
+				}, function(value) {
+					sap.ui.core.BusyIndicator.hide();
+					console.log(value);
+					//alert("fail");
+				});
+				// var count = {};
+				// vendorContractDetailInfo.DmCmSet.results.forEach(v =>{
+				// 	count[v] = (count[v] || 0 ) + 1
+				// })		
+
 			},
 			loadReleaseStatusDetails: function() {
 				var oModel = this.getView().getModel();
