@@ -251,6 +251,9 @@ sap.ui.define([
 				dealMemoModel.setProperty("/daysList", oData.results.filter(function(item) {
 					return item.Mstpcd === "15";
 				}));
+				dealMemoModel.setProperty("/contentSubCategoryList", oData.results.filter(function(item) {
+					return item.Mstpcd === "23";
+				}));
 				dealMemoModel.refresh(true);
 			},
 
@@ -343,7 +346,10 @@ sap.ui.define([
 				}, {
 					"key": "Mstpcd",
 					"val": "19"
-				}, ];
+				}, {
+					"key": "Mstpcd",
+					"val": "23"
+				},];
 
 				var aFilters = basicFiilters.concat(this.getFilterArray(additionalFilters));
 				var oModel = this.getView().getModel();
