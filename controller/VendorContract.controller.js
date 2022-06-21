@@ -691,6 +691,15 @@ sap.ui.define([
 					MessageBox.information(oSourceBundle.getText("msgDeptCheck"));
 				}
 			},
+			onActionCB: function() {
+				var vendorContractModel = this.getView().getModel("vendorContractModel");
+				var vendorContractDetailInfo = vendorContractModel.getData();
+				if (this.getView().byId("recont").getSelected() === true) {
+					vendorContractModel.setProperty("/Recont","X");
+				} else {
+					vendorContractModel.setProperty("/Recont","");
+				}
+			},             
 			onSelectionDialogClose: function() {
 				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
 				if (this.oValueHelpSelectionParams.dialogTitle === oSourceBundle.getText("titleVendor")) {
@@ -957,7 +966,7 @@ sap.ui.define([
 							oData.vcTabEnable = false;
 						}
 						oData.submitVisible = false;
-						if (vendorContractDetailInfo.App === "App" && vendorContractDetailInfo.Contstat === "01") { // added by dhiraj on 20/05/2022 for submit butn.
+						if (vendorContractDetailInfo.App === "App" && oData.Contstat === "01") { // added by dhiraj on 20/05/2022 for submit butn.
 							oData.submitVisible = true;
 						}
 						oData.releaseTabVisible = false;
@@ -965,7 +974,7 @@ sap.ui.define([
 							oData.releaseTabVisible = true
 						}
 						oData.changeVisible = false;
-						if (vendorContractDetailInfo.App === "App" && vendorContractDetailInfo.Dmst === "04") {
+						if (vendorContractDetailInfo.App === "App" && oData.Dmst === "04") {
 							oData.changeVisible = true
 						}
 						oData.editDepartmentVisible = false; // added by dhiraj on 30/05/2022
