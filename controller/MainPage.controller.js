@@ -1298,6 +1298,7 @@ sap.ui.define([
 					Cntgn: dealMemoDetailInfo.Cntgn,
 					Cntsgn: dealMemoDetailInfo.Cntsgn,
 					Cntstp: dealMemoDetailInfo.Cntstp,
+					Cntsc: dealMemoDetailInfo.Cntsc,
 					Dmdt: Formatter.formatDateValForBackend(dealMemoDetailInfo.DmdtFormatted),
 					Dmrefno: "",
 					Dmst: "",
