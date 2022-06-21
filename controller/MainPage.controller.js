@@ -59,7 +59,7 @@ sap.ui.define([
 						var oModel = new sap.ui.model.json.JSONModel();
 						this.getView().setModel(oModel, "dealMemoModel");
 						var warplStr = window.location.href.split("?")[1];
-						if (warplStr !== undefined) {
+						if (warplStr !== undefined && warplStr.includes("WARPL=") === true) {
 							warplStr = warplStr.replaceAll("%20", "");
 							warplStr = warplStr.split("WARPL=")[1];
 							warplStr = warplStr.substr(3, warplStr.length);
@@ -758,6 +758,8 @@ sap.ui.define([
 					"Cntstp": this.autoPopulateValueList.Cntsb,
 					"Cntsgn": this.autoPopulateValueList.Subgr,
 					"Cntsc": this.autoPopulateValueList.Cntsc,
+					"Langu": this.autoPopulateValueList.Langu,
+					"Langud" : this.autoPopulateValueList.Langud,
 					"Noofepi": "",
 					"Amrtpercost": "0.00",
 					"Estprgreldt": "",
@@ -804,6 +806,8 @@ sap.ui.define([
 					"Cntstp": this.autoPopulateValueList.Cntsb,
 					"Cntsgn": this.autoPopulateValueList.Subgr,
 					"Cntsc": this.autoPopulateValueList.Cntsc,
+					"Langu": this.autoPopulateValueList.Langu,
+					"Langud" : this.autoPopulateValueList.Langud,
 					"Noofepi": "",
 					"Amrtpercost": "0.00",
 					"Estprgreldt": "",

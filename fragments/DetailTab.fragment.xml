@@ -109,7 +109,7 @@
 					<l:GridData span="XL2 L2 M6 S12"/>
 				</layoutData>
 			</Label>
-			<ComboBox width="80%" selectedKey="{dealMemoDetailModel>/Spras}" items="{dealMemoModel>/contentLanguageList}" editable="{path:'dealMemoDetailModel>/Dmst',formatter:'.Formatter.formatEditableStatus'}">
+			<ComboBox width="80%" selectedKey="{dealMemoDetailModel>/Langu}" items="{dealMemoModel>/contentLanguageList}" editable="false">
 				<c:Item key="{dealMemoModel>Mstcd}" text="{dealMemoModel>Mstcdnm}"/>
 				<layoutData>
 				<l:GridData span="XL4 L4 M6 S12"/>
