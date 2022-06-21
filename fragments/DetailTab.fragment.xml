@@ -109,12 +109,11 @@
 					<l:GridData span="XL2 L2 M6 S12"/>
 				</layoutData>
 			</Label>
-			<ComboBox width="80%" selectedKey="{dealMemoDetailModel>/Langu}" items="{dealMemoModel>/contentLanguageList}" editable="false">
-				<c:Item key="{dealMemoModel>Mstcd}" text="{dealMemoModel>Mstcdnm}"/>
+			<Input width="80%" value="{dealMemoDetailModel>/Langud}" editable="false">
 				<layoutData>
-				<l:GridData span="XL4 L4 M6 S12"/>
+					<l:GridData span="XL4 L4 M6 S12"/>
 				</layoutData>
-			</ComboBox>
+			</Input>
 			<Label text="{parts:[{value:'lblAvgEpDur'},{path:'dealMemoDetailModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" design="Bold" class="sapUiTinyMarginTop">
 				<layoutData>
 					<l:GridData span="XL2 L2 M6 S12"/>
