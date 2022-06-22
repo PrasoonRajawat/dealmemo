@@ -404,7 +404,8 @@ sap.ui.define([
 					"Prreq": "",
 					"Depthd": "",
 					"Dept": "",
-					"Grsescr": ""
+					"Grsescr": "",
+					"Recont": false
 				});
 				if (artistContractModel.oData.contractMode === "Ch") {
 					artistContractModel.oData.createParams.Zstext = artistContractModel.oData.DmCoSet.results.find(d => d.Contno ===
@@ -611,6 +612,15 @@ sap.ui.define([
 					MessageBox.information(oSourceBundle.getText("msgDeptCheck"));
 				}
 			},
+				onActionCB: function() {   // FOr replacement Checkbox.
+				var artistContractModel = this.getView().getModel("vendorContractModel");
+				var vendorContractDetailInfo = artistContractModel.getData();
+				if (sap.ui.getCore().byId("recont").getSelected() === true) {
+					artistContractModel.setProperty("/createParams/Recont", true);
+				} else {
+					artistContractModel.setProperty("/createParams/Recont", false);
+				}
+			},             
 			onSelectionDialogClose: function() {
 				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
 				if (this.oValueHelpSelectionParams.dialogTitle === oSourceBundle.getText("titleVendor")) {
@@ -1040,7 +1050,8 @@ sap.ui.define([
 					"Dept": artistContractDetailInfo.createParams.Zstext,
 					"Prreq": artistContractDetailInfo.createParams.Prreq,
 					"Depthd": artistContractDetailInfo.createParams.Depthd,
-					"Grsescr": artistContractDetailInfo.createParams.Grsescr
+					"Grsescr": artistContractDetailInfo.createParams.Grsescr,
+					"Recont": artistContractDetailInfo.createParams.Recont
 
 				};
 				return oPayload;
