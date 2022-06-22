@@ -696,9 +696,9 @@ sap.ui.define([
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
 				if (sap.ui.getCore().byId("recont").getSelected() === true) {
-					vendorContractModel.setProperty("/createParams/Recont","X");
+					vendorContractModel.setProperty("/createParams/Recont", true);
 				} else {
-					vendorContractModel.setProperty("/createParams/Recont","");
+					vendorContractModel.setProperty("/createParams/Recont", false);
 				}
 			},             
 			onSelectionDialogClose: function() {
@@ -1327,7 +1327,8 @@ sap.ui.define([
 					"Dept": vendorContractDetailInfo.createParams.Zstext,
 					"Prreq": vendorContractDetailInfo.createParams.Prreq,
 					"Depthd": vendorContractDetailInfo.createParams.Depthd,
-					"Grsescr": vendorContractDetailInfo.createParams.Grsescr
+					"Grsescr": vendorContractDetailInfo.createParams.Grsescr,
+					"Recont": vendorContractDetailInfo.createParams.Recont,
 					
 				};
 				return oPayload;
