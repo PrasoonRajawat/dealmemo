@@ -480,7 +480,8 @@ sap.ui.define([
 					"Prreq": "",
 					"Depthd": "",
 					"Dept": "",
-					"Grsescr": ""
+					"Grsescr": "",
+					"Recont": ""
 				});
 				if (vendorContractModel.oData.contractMode === "Ch") {
 					vendorContractModel.oData.createParams.Zstext = vendorContractModel.oData.DmCoSet.results.find(d => d.Contno ===
@@ -695,9 +696,9 @@ sap.ui.define([
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
 				if (sap.ui.getCore().byId("recont").getSelected() === true) {
-					vendorContractModel.setProperty("/Recont","X");
+					vendorContractModel.setProperty("/createParams/Recont","X");
 				} else {
-					vendorContractModel.setProperty("/Recont","");
+					vendorContractModel.setProperty("/createParams/Recont","");
 				}
 			},             
 			onSelectionDialogClose: function() {
@@ -1326,7 +1327,8 @@ sap.ui.define([
 					"Dept": vendorContractDetailInfo.createParams.Zstext,
 					"Prreq": vendorContractDetailInfo.createParams.Prreq,
 					"Depthd": vendorContractDetailInfo.createParams.Depthd,
-					"Grsescr": vendorContractDetailInfo.createParams.Grsescr
+					"Grsescr": vendorContractDetailInfo.createParams.Grsescr,
+					"Recont": vendorContractDetailInfo.createParams.Recont
 				};
 				return oPayload;
 
