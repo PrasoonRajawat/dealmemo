@@ -1327,8 +1327,8 @@ sap.ui.define([
 					"Dept": vendorContractDetailInfo.createParams.Zstext,
 					"Prreq": vendorContractDetailInfo.createParams.Prreq,
 					"Depthd": vendorContractDetailInfo.createParams.Depthd,
-					"Grsescr": vendorContractDetailInfo.createParams.Grsescr,
-					"Recont": vendorContractDetailInfo.createParams.Recont
+					"Grsescr": vendorContractDetailInfo.createParams.Grsescr
+					
 				};
 				return oPayload;
 
