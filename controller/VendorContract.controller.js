@@ -698,7 +698,7 @@ sap.ui.define([
 				if (sap.ui.getCore().byId("recont").getSelected() === true) {
 					vendorContractModel.setProperty("/createParams/Recont", true);
 				} else {
-					vendorContractModel.setProperty("/createParams/Recont", false);
+					vendorContractModel.setProperty("/createParams/Recont", "");
 				}
 			},             
 			onSelectionDialogClose: function() {
