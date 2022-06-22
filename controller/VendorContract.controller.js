@@ -481,7 +481,7 @@ sap.ui.define([
 					"Depthd": "",
 					"Dept": "",
 					"Grsescr": "",
-					"Recont": ""
+					"Recont": false
 				});
 				if (vendorContractModel.oData.contractMode === "Ch") {
 					vendorContractModel.oData.createParams.Zstext = vendorContractModel.oData.DmCoSet.results.find(d => d.Contno ===
@@ -698,7 +698,7 @@ sap.ui.define([
 				if (sap.ui.getCore().byId("recont").getSelected() === true) {
 					vendorContractModel.setProperty("/createParams/Recont", true);
 				} else {
-					vendorContractModel.setProperty("/createParams/Recont", "");
+					vendorContractModel.setProperty("/createParams/Recont", false);
 				}
 			},             
 			onSelectionDialogClose: function() {
