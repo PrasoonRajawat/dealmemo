@@ -121,7 +121,8 @@ sap.ui.define([
         	   }
            },
            formatLabelContentBased:function(lblName,ContType){
-        	   var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
+        	   //var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
+        	   var oSourceBundle = sap.ui.component(sap.ui.core.Component.getOwnerIdFor(this.getView())).getModel('i18n').getResourceBundle();
         	   return oSourceBundle.getText(lblName + ContType);
         	  
            }
