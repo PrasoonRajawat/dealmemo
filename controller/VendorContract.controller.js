@@ -691,10 +691,10 @@ sap.ui.define([
 					MessageBox.information(oSourceBundle.getText("msgDeptCheck"));
 				}
 			},
-			onActionCB: function() {
+			onActionCB: function() {   // FOr replacement Checkbox.
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
-				if (this.getView().byId("recont").getSelected() === true) {
+				if (sap.ui.getCore().byId("recont").getSelected() === true) {
 					vendorContractModel.setProperty("/Recont","X");
 				} else {
 					vendorContractModel.setProperty("/Recont","");
