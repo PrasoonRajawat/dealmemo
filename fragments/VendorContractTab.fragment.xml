@@ -1,4 +1,3 @@
-
 <c:FragmentDefinition xmlns="sap.m" xmlns:u="sap.ui.unified" xmlns:l="sap.ui.layout" xmlns:c="sap.ui.core">
 <Table id="venTab" items="{dealMemoDetailModel>/vendorContractData}" itemPress="toVendorContractDisplay">
 											<infoToolbar>
@@ -24,17 +23,17 @@
 												<Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline">
 													<ObjectIdentifier title="{i18n>lblProdHouse}"/>
 												</Column>
-												<Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline">
-													<ObjectIdentifier title="{i18n>lblTRPTVT}" wrapping="true"/>
-												</Column>
+												<!--<Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline">-->
+												<!--	<ObjectIdentifier title="{i18n>lblTRPTVT}" wrapping="true"/>-->
+												<!--</Column>-->
 												<Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline">
 													<ObjectIdentifier title="{parts:[{value:'lblTotEpisodeCount'},{path:'dealMemoDetailModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" wrapping="true"/>
 												</Column>
 												<Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline">
-													<ObjectIdentifier title="{i18n>lblCurrency}"/>
+													<ObjectIdentifier title="{i18n>lblTotalCost}"/>
 												</Column>
 												<Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline">
-													<ObjectIdentifier title="{i18n>lblTotalCost}"/>
+													<ObjectIdentifier title="{i18n>lblCurrency}"/>
 												</Column>
 												<Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline">
 													<ObjectIdentifier title="{i18n>lblTaxAmt}"/>
@@ -47,11 +46,11 @@
 														<Text text="{dealMemoDetailModel>Contver}" textAlign="Right"/>
 														<Text text="{dealMemoDetailModel>Artpnm}"/>
 														<Text text="{dealMemoDetailModel>Name1}"/>
-														<Text text=""/>
+														<!--<Text text=""/>-->
 														<Text text="{dealMemoDetailModel>Totcontepi}" textAlign="Right"/>
-														<Text text="{dealMemoDetailModel>Waers}"/>
 														<!--<Text text="{Totcost}" textAlign="Right"/>-->
 														<Text text="{ parts: [ {path: 'dealMemoDetailModel>Totcost'}, {path: 'dealMemoDetailModel>Waers'} ], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false,minFractionDigits: 2,maxFractionDigits: 2 } }" />
+														<Text text="{dealMemoDetailModel>Waers}"/>
 														<Text text="{dealMemoDetailModel>Tottaxamt}" textAlign="Right"/>
 													</cells>
 												</ColumnListItem>
