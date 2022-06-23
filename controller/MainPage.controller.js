@@ -422,32 +422,32 @@ sap.ui.define([
 					}
 				});
 				var oMatchModel = this.getView().getModel("CONTENT_MAST");
-				additionalFilters = [new Filter("Cntty", "EQ", "05"), new Filter("Mlevel", "EQ", "02")];
-				var oPath = "/es_content_list?$filter=Tentid eq 'IBS' and Cntty eq '05' and Mlevel eq '02'";
-				oMatchModel.read(oPath, {
-					// filters:   basicFiilters.concat(additionalFilters), // added by dhiraj on 24/05/2022
-					success: function(oData) {
-						var cnt = oData.results.filter(function(obj) {
-							return obj.Mlevel === "02" && obj.Cntty === "05"
-						}.bind(this));
-						this.storeMatchListInfo(cnt);
-					}.bind(this),
-					error: function(oError) {
-							var oErrorResponse = JSON.parse(oError.responseText);
-							var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
-							MessageBox.error(oMsg);
-						}
-						// 	var additionalFilters = [new Filter("Mstcd", "EQ", "05")];
-						// oModel.read("/F4CntIDSet", {
-						// 	filters: basicFiilters.concat(additionalFilters),
-						// 	success: function(oData) {
-						// 		this.storeMatchListInfo(oData);
-						// 	}.bind(this),
-						// 	error: function(oError) {
-						// 		var oErrorResponse = JSON.parse(oError.responseText);
-						// 		var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
-						// 		MessageBox.error(oMsg);
-						// 	}
+				// additionalFilters = [new Filter("Cntty", "EQ", "05"), new Filter("Mlevel", "EQ", "02")];
+				// var oPath = "/es_content_list?$filter=Tentid eq 'IBS' and Cntty eq '05' and Mlevel eq '02'";
+				// oMatchModel.read(oPath, {
+				// 	// filters:   basicFiilters.concat(additionalFilters), // added by dhiraj on 24/05/2022
+				// 	success: function(oData) {
+				// 		var cnt = oData.results.filter(function(obj) {
+				// 			return obj.Mlevel === "02" && obj.Cntty === "05"
+				// 		}.bind(this));
+				// 		this.storeMatchListInfo(cnt);
+				// 	}.bind(this),
+				// 	error: function(oError) {
+				// 			var oErrorResponse = JSON.parse(oError.responseText);
+				// 			var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
+				// 			MessageBox.error(oMsg);
+				// 		}
+							var additionalFilters = [new Filter("Mstcd", "EQ", "05")];
+						oModel.read("/F4CntIDSet", {
+							filters: basicFiilters.concat(additionalFilters),
+							success: function(oData) {
+								this.storeMatchListInfo(oData);
+							}.bind(this),
+							error: function(oError) {
+								var oErrorResponse = JSON.parse(oError.responseText);
+								var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
+								MessageBox.error(oMsg);
+							}
 				});
 
 			},
