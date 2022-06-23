@@ -3136,6 +3136,11 @@ sap.ui.define([
 					});
 				} else if (dealMemoDetailInfo.Cnttp === "02") {
 					episodeList = dealMemoModel.getProperty("/movieList");
+					for (var i = 0; i < episodeData.length; i++) { //Added By Dhiraj For converting mvid
+						var epiidSplit = episodeData[i].Epinm.split("-");
+						episodeData[i].Epiid = epiidSplit[0].trim();
+						episodeData[i].Mvid = epiidSplit[0].trim();
+					}
 					episodeIds = episodeList.map(function(obj) {
 						return obj.Mvid
 					});
