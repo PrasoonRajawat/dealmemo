@@ -134,7 +134,7 @@ sap.ui.define([
 							if (linkDM.length) {
 								this.selectedDealMemoObj = linkDM[0];
 							}
-						
+
 							this.loadDetailDealMemo(this.selectedDealMemoObj);
 							this.onHideMaster();
 							//-----------------------------------------------------------------------
@@ -149,7 +149,7 @@ sap.ui.define([
 									this.selectedDealMemoObj = newVersionDM[0];
 								}
 
-							} else if(this.rejectedDm) {
+							} else if (this.rejectedDm) {
 								this.rejectedDm = false;
 								var rejectDM = oData.results.filter(function(obj) {
 									return obj.Dmno === this.selectedDealMemoObj.Dmno && this.selectedDealMemoObj.Dmver;
@@ -285,15 +285,24 @@ sap.ui.define([
 				dealMemoModel.setProperty("/movieList", oData.results);
 				dealMemoModel.refresh(true);
 			},
-			storeMatchListInfo: function(cnt) {
+			// storeMatchListInfo: function(cnt) {
+			// 	var dealMemoModel = this.getView().getModel("dealMemoModel");
+			// 	cnt.map(function(mvObj) {
+			// 		// oData.results.map(function(mvObj) {
+			// 		// mvObj.Matnm = mvObj.Matid + "-" + mvObj.Matds;
+			// 		mvObj.Matnm = mvObj.Cntid + "-" + mvObj.Cntdesc; // added by dhiraj on 23/05/2022
+			// 	});
+
+			// 	dealMemoModel.setProperty("/matchList", cnt);
+			// 	dealMemoModel.refresh(true);
+			// },
+			storeMatchListInfo: function(oData) {
 				var dealMemoModel = this.getView().getModel("dealMemoModel");
-				cnt.map(function(mvObj) {
-					// oData.results.map(function(mvObj) {
-					// mvObj.Matnm = mvObj.Matid + "-" + mvObj.Matds;
-					mvObj.Matnm = mvObj.Cntid + "-" + mvObj.Cntdesc; // added by dhiraj on 23/05/2022
+				oData.results.map(function(mvObj) {
+					mvObj.Matnm = mvObj.Matid + "-" + mvObj.Matds;
 				});
 
-				dealMemoModel.setProperty("/matchList", cnt);
+				dealMemoModel.setProperty("/matchList", oData.results);
 				dealMemoModel.refresh(true);
 			},
 
@@ -421,7 +430,7 @@ sap.ui.define([
 						MessageBox.error(oMsg);
 					}
 				});
-				var oMatchModel = this.getView().getModel("CONTENT_MAST");
+				// var oMatchModel = this.getView().getModel("CONTENT_MAST");
 				// additionalFilters = [new Filter("Cntty", "EQ", "05"), new Filter("Mlevel", "EQ", "02")];
 				// var oPath = "/es_content_list?$filter=Tentid eq 'IBS' and Cntty eq '05' and Mlevel eq '02'";
 				// oMatchModel.read(oPath, {
@@ -437,17 +446,28 @@ sap.ui.define([
 				// 			var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
 				// 			MessageBox.error(oMsg);
 				// 		}
-							var additionalFilters = [new Filter("Mstcd", "EQ", "05")];
-						oModel.read("/F4CntIDSet", {
-							filters: basicFiilters.concat(additionalFilters),
-							success: function(oData) {
-								this.storeMatchListInfo(oData);
-							}.bind(this),
-							error: function(oError) {
-								var oErrorResponse = JSON.parse(oError.responseText);
-								var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
-								MessageBox.error(oMsg);
-							}
+				// 	var additionalFilters = [new Filter("Mstcd", "EQ", "05")];
+				// oModel.read("/F4CntIDSet", {
+				// 	filters: basicFiilters.concat(additionalFilters),
+				// 	success: function(oData) {
+				// 		this.storeMatchListInfo(oData);
+				// 	}.bind(this),
+				// 	error: function(oError) {
+				// 		var oErrorResponse = JSON.parse(oError.responseText);
+				// 		var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
+				// 		MessageBox.error(oMsg);
+				// 	}
+				// });
+				var oMatchModel = this.getView().getModel("MATCH_MAST"); // Added by dhiraj for level 3 on 23/06/2022
+				oMatchModel.read("/es_match_master", {
+					success: function(oData) {
+						this.storeMatchListInfo(oData);
+					}.bind(this),
+					error: function(oError) {
+						var oErrorResponse = JSON.parse(oError.responseText);
+						var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
+						MessageBox.error(oMsg);
+					}
 				});
 
 			},
@@ -759,7 +779,7 @@ sap.ui.define([
 					"Cntsgn": this.autoPopulateValueList.Subgr,
 					"Cntsc": this.autoPopulateValueList.Cntsc,
 					"Langu": this.autoPopulateValueList.Langu,
-					"Langud" : this.autoPopulateValueList.Langud,
+					"Langud": this.autoPopulateValueList.Langud,
 					"Noofepi": "",
 					"Amrtpercost": "0.00",
 					"Estprgreldt": "",
@@ -807,7 +827,7 @@ sap.ui.define([
 					"Cntsgn": this.autoPopulateValueList.Subgr,
 					"Cntsc": this.autoPopulateValueList.Cntsc,
 					"Langu": this.autoPopulateValueList.Langu,
-					"Langud" : this.autoPopulateValueList.Langud,
+					"Langud": this.autoPopulateValueList.Langud,
 					"Noofepi": "",
 					"Amrtpercost": "0.00",
 					"Estprgreldt": "",
@@ -3018,6 +3038,85 @@ sap.ui.define([
 					}
 				}
 			},
+			// validateMovieDetails: function() {  //Commented By dhiraj on 23/06/2022 . Please do not replace / delete it
+			// 	var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
+			// 	var dealMemoModel = this.getView().getModel("dealMemoModel");
+			// 	var dealMemoDetailInfo = dealMemoDetailModel.getData();
+			// 	var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
+			// 	var oMsg = "";
+			// 	var statusFlag = true;
+			// 	var episodeData = dealMemoDetailInfo.episodeData;
+			// 	var Epids = [],
+			// 		episodeList = [],
+			// 		episodeIds = [];
+
+			// 	if (dealMemoDetailInfo.Cnttp === "05") {
+			// 		episodeList = dealMemoModel.getProperty("/matchList");
+
+			// 		for (var i = 0; i < episodeData.length; i++) { //Added By Dhiraj For converting matid
+			// 			var epiidSplit = episodeData[i].Epinm.split("-");
+			// 			episodeData[i].Epiid = epiidSplit[0].trim();
+			// 			episodeData[i].Mvid = epiidSplit[0].trim();
+			// 		}
+
+			// 		episodeIds = episodeList.map(function(obj) {
+			// 			return obj.Cntid // Removed Matid by Dhiraj on 23/05/2022 to cntid 
+			// 		});
+			// 	} else if (dealMemoDetailInfo.Cnttp === "02") {
+			// 		episodeList = dealMemoModel.getProperty("/movieList");
+
+			// 		for (var i = 0; i < episodeData.length; i++) { //Added By Dhiraj For converting mvid
+			// 			var epiidSplit = episodeData[i].Epinm.split("-");
+			// 			episodeData[i].Epiid = epiidSplit[0].trim();
+			// 			episodeData[i].Mvid = epiidSplit[0].trim();
+			// 		}
+
+			// 		episodeIds = episodeList.map(function(obj) {
+			// 			return obj.Mvid
+			// 		});
+			// 	}
+
+			// 	for (var oInd = 0; oInd < episodeData.length; oInd++) {
+			// 		var epObj = episodeData[oInd];
+
+			// 		if (epObj.Epinm === "" || epObj.Epinm === undefined || epObj.Epinm === null) {
+			// 			statusFlag = false;
+			// 			oMsg = oSourceBundle.getText("msgEpDescBlank" + dealMemoDetailInfo.Cnttp);
+			// 			break;
+
+			// 		} else if (episodeList[episodeIds.indexOf(epObj.Epiid)].Mpmid === "") {
+			// 			statusFlag = false;
+			// 			oMsg = oSourceBundle.getText("msgNOMPMExist" + dealMemoDetailInfo.Cnttp, epObj.Epiid);
+			// 			break;
+			// 		} else if (Epids.indexOf(epObj.Epiid) >= 0) {
+			// 			statusFlag = false;
+			// 			oMsg = oSourceBundle.getText("msgDuplicateEpId" + dealMemoDetailInfo.Cnttp);
+			// 			break;
+			// 		} else if (!(parseInt(epObj.Gjahr) >= parseInt(dealMemoDetailInfo.FromYr) && parseInt(epObj.Gjahr) <= parseInt(dealMemoDetailInfo.ToYr))) {
+			// 			statusFlag = false;
+			// 			oMsg = oSourceBundle.getText("msgYearNotInRange");
+			// 			break;
+			// 		} else if (parseInt(epObj.Totepiamt) <= 0) {
+			// 			statusFlag = false;
+			// 			oMsg = oSourceBundle.getText("msgtotEpiCostNonZero" + dealMemoDetailInfo.Cnttp);
+			// 			break;
+			// 		}
+
+			// 		if (Epids.indexOf(epObj.Epiid) === -1) {
+			// 			Epids.push(epObj.Epiid);
+			// 		}
+			// 	}
+			// 	if (!statusFlag && oMsg !== "") {
+			// 		MessageBox.error(oMsg);
+			// 	}
+			// 	for (var i = 0; i < episodeData.length; i++) { //Added By Dhiraj For converting matid or mvid to epiid of 5 digits
+			// 		// var epiidSplit = episodeData[i].Epinm.split("."); //comented by dhiraj for mvid demo
+			// 		// episodeData[i].Epiid = epiidSplit[0].trim()
+			// 		const a = i + 1;
+			// 		episodeData[i].Epiid = "000" + a;
+			// 	}
+			// 	return statusFlag;
+			// },
 			validateMovieDetails: function() {
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoModel = this.getView().getModel("dealMemoModel");
@@ -3032,25 +3131,11 @@ sap.ui.define([
 
 				if (dealMemoDetailInfo.Cnttp === "05") {
 					episodeList = dealMemoModel.getProperty("/matchList");
-
-					for (var i = 0; i < episodeData.length; i++) { //Added By Dhiraj For converting matid
-						var epiidSplit = episodeData[i].Epinm.split("-");
-						episodeData[i].Epiid = epiidSplit[0].trim();
-						episodeData[i].Mvid = epiidSplit[0].trim();
-					}
-
 					episodeIds = episodeList.map(function(obj) {
-						return obj.Cntid // Removed Matid by Dhiraj on 23/05/2022 to cntid 
+						return obj.Matid
 					});
 				} else if (dealMemoDetailInfo.Cnttp === "02") {
 					episodeList = dealMemoModel.getProperty("/movieList");
-
-					for (var i = 0; i < episodeData.length; i++) { //Added By Dhiraj For converting mvid
-						var epiidSplit = episodeData[i].Epinm.split("-");
-						episodeData[i].Epiid = epiidSplit[0].trim();
-						episodeData[i].Mvid = epiidSplit[0].trim();
-					}
-
 					episodeIds = episodeList.map(function(obj) {
 						return obj.Mvid
 					});
@@ -3088,12 +3173,6 @@ sap.ui.define([
 				}
 				if (!statusFlag && oMsg !== "") {
 					MessageBox.error(oMsg);
-				}
-				for (var i = 0; i < episodeData.length; i++) { //Added By Dhiraj For converting matid or mvid to epiid of 5 digits
-					// var epiidSplit = episodeData[i].Epinm.split("."); //comented by dhiraj for mvid demo
-					// episodeData[i].Epiid = epiidSplit[0].trim()
-					const a = i + 1;
-					episodeData[i].Epiid = "000" + a;
 				}
 				return statusFlag;
 			},
@@ -3866,25 +3945,25 @@ sap.ui.define([
 				});
 			},
 			onConfirmChangeDm: function() {
-					var oModel = this.getView().getModel();
+				var oModel = this.getView().getModel();
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
-				if(dealMemoDetailInfo.Dmst === "03"){
+				if (dealMemoDetailInfo.Dmst === "03") {
 					this.onRejectedDm();
 				} else {
-				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
-				MessageBox.confirm(oSourceBundle.getText("msgcreateNewVersion"), {
-					actions: [oSourceBundle.getText("lblYes"), oSourceBundle.getText("lblNo")],
-					emphasizedAction: "Yes",
-					onClose: function(sAction) {
-						if (sAction === oSourceBundle.getText("lblYes")) {
+					var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
+					MessageBox.confirm(oSourceBundle.getText("msgcreateNewVersion"), {
+						actions: [oSourceBundle.getText("lblYes"), oSourceBundle.getText("lblNo")],
+						emphasizedAction: "Yes",
+						onClose: function(sAction) {
+							if (sAction === oSourceBundle.getText("lblYes")) {
 
-							this.onChangeDm();
-						} else if (sAction === oSourceBundle.getText("lblNo")) {
+								this.onChangeDm();
+							} else if (sAction === oSourceBundle.getText("lblNo")) {
 
-						}
-					}.bind(this)
-				});
+							}
+						}.bind(this)
+					});
 				}
 			},
 			onRejectedDm: function() {
@@ -3916,7 +3995,7 @@ sap.ui.define([
 
 					}
 				})
-				
+
 			},
 			onChangeDm: function() {
 				var oModel = this.getView().getModel();
