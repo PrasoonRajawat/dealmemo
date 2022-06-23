@@ -123,7 +123,7 @@ sap.ui.define([
 						dealMemoModel.setProperty("/dealmemolist", oData.results);
 						dealMemoModel.refresh(true);
 						sap.ui.core.BusyIndicator.hide();
-						if (this.loadDefaultDealMemo) {
+						if (this.loadDefaultDealMemo && this.getView().byId("list_dealmemo_master").getItems().length > 0) {
 							this.getView().byId("list_dealmemo_master").getItems()[0].firePress();
 							this.loadDefaultDealMemo = false;
 						} else if (!this.loadDefaultDealMemo && this.linkMemo) { // Added by Dhiraj for link function in dealmemo

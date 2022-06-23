@@ -1165,6 +1165,33 @@ sap.ui.define([
 
 									vcEpiTabData.push(oEpiDataObj)
 								}
+							} else if (epiSodeCostodeData.length && vendorContractDetailInfo.Cntsc === "Z0") { //Added by dhiraj on 23/06/2022	
+									if (epiSodeCostodeData.length) {											//for zero cost code
+									var oEpiDataObj = {
+										Tentid: "IBS",
+										Dmno: vendorContractDetailInfo.Dmno,
+										Dmver: vendorContractDetailInfo.Dmver,
+										Contno: "",
+										Contver: "",
+										Epiid: epObj.Epiid,
+										Epinm: epObj.Epinm,
+										Conttp: "01",
+										Baseamt: "00.0",
+										Totepiamt: epiSodeCostodeData[0].Totcostamt.toString(),
+										Wmwst: "00.0",
+										Mwskz: vendorContractDetailInfo.taxCodeKey,
+										Coepiamt: epiSodeCostodeData[0].Totcostamt.toString(),
+										Costcd: oCostCodeObj.Costcode,
+										Costdesc: oCostCodeObj.Costdesc
+
+									};
+									if (vendorContractDetailInfo.contractMode === "Ch") {
+										oEpiDataObj.Contno = vendorContractDetailInfo.Contno;
+										oEpiDataObj.Contver = vendorContractDetailInfo.Contver;
+									}
+
+									vcEpiTabData.push(oEpiDataObj)
+								}
 							}
 
 						}.bind(this));
