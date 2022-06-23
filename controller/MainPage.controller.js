@@ -3174,6 +3174,10 @@ sap.ui.define([
 				if (!statusFlag && oMsg !== "") {
 					MessageBox.error(oMsg);
 				}
+				for (var i = 0; i < episodeData.length; i++) { //Added By Dhiraj For converting matid or mvid to epiid of 5 digits
+					const a = i + 1;
+					episodeData[i].Epiid = "000" + a;
+				}
 				return statusFlag;
 			},
 			saveMovieCostDetails: function() {
