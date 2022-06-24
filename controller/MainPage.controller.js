@@ -3171,7 +3171,7 @@ sap.ui.define([
 						statusFlag = false;
 						oMsg = oSourceBundle.getText("msgYearNotInRange");
 						break;
-					} else if (parseInt(epObj.Totepiamt) <= 0) {
+					} else if (parseInt(epObj.Totepiamt) <= 0 && dealMemoDetailInfo.Cntsc !== "Z0") {
 						statusFlag = false;
 						oMsg = oSourceBundle.getText("msgtotEpiCostNonZero" + dealMemoDetailInfo.Cnttp);
 						break;
