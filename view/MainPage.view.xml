@@ -104,8 +104,8 @@
 
 									
 									
-									<IconTabFilter id="idRevenue" key="revTRP" text="{i18n>IcnTbFlt_RevperTRPTVT}" icon="sap-icon://loan" class="sapMITBHead" enabled="false"
-									iconColor="Critical" design="Horizontal" visible="false">
+									<IconTabFilter id="idRevenue" key="revTRP" text="{i18n>IcnTbFlt_RevperTRPTVT}" icon="sap-icon://loan" class="sapMITBHead"
+									iconColor="Critical" design="Horizontal" >
 									<content>
 										<f:Form>
 											<f:layout>
