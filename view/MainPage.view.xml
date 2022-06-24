@@ -101,6 +101,7 @@
 										 	 <core:Fragment fragmentName="com.ui.dealmemolocal.fragments.DealMemoTabs.ReleaseStatus.ReleaseStatusTab" type="XML" />
 									 	</content>
 									</IconTabFilter>
+
 									
 									
 									<IconTabFilter id="idRevenue" key="revTRP" text="{i18n>IcnTbFlt_RevperTRPTVT}" icon="sap-icon://loan" class="sapMITBHead" enabled="false"
@@ -144,6 +145,7 @@
 								</IconTabFilter>
 								
 								
+
 									<IconTabFilter id="idAttachmentTab" key="attachment" text="{i18n>lblAttach}" icon="sap-icon://attachment" class="sapMITBHead" visible="{= ${dealMemoDetailModel>/Dmno} !==  '' ? true : false }" iconColor="{dealMemoDetailModel>/attachmentTabColor}" design="Horizontal">
 										<content>
 										<UploadCollection
