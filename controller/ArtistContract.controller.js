@@ -1050,8 +1050,7 @@ sap.ui.define([
 					"Dept": artistContractDetailInfo.createParams.Zstext,
 					"Prreq": artistContractDetailInfo.createParams.Prreq,
 					"Depthd": artistContractDetailInfo.createParams.Depthd,
-					"Grsescr": artistContractDetailInfo.createParams.Grsescr,
-					"Recont": artistContractDetailInfo.createParams.Recont
+					"Grsescr": artistContractDetailInfo.createParams.Grsescr
 
 				};
 				return oPayload;

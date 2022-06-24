@@ -49,18 +49,18 @@
 					<l:GridData span="XL12 L12 M12 S12"/>
 				</layoutData>
 			</Input>
-				<Hbox>
-				<Label text="Replacement Content" design="Bold" class="sapUiTinyMarginTop">
-				<layoutData>
-					<l:GridData span="XL12 L12 M12 S12"/>
-				</layoutData>
-			</Label>
-				<CheckBox id="recont" select="onActionCB">
-				<layoutData>
-					<l:GridData span="L1 M1 S1"/>
-				</layoutData>
-			</CheckBox>
-			</Hbox>
+			<!--	<Hbox>-->
+			<!--	<Label text="Replacement Content" design="Bold" class="sapUiTinyMarginTop">-->
+			<!--	<layoutData>-->
+			<!--		<l:GridData span="XL12 L12 M12 S12"/>-->
+			<!--	</layoutData>-->
+			<!--</Label>-->
+			<!--	<CheckBox id="recont" select="onActionCB">-->
+			<!--	<layoutData>-->
+			<!--		<l:GridData span="L1 M1 S1"/>-->
+			<!--	</layoutData>-->
+			<!--</CheckBox>-->
+			<!--</Hbox>-->
 		
 			
 			<!--<Label text="{i18n>lbl_ContNature}" design="Bold" class="sapUiTinyMarginTop" required="true">-->
