@@ -220,6 +220,7 @@ sap.ui.define([
 				// 	vendorContractDetailInfo.setProperty("/submitVisible", true);
 				// }
 				Object.assign(vendorContractDetailInfo, vcCreateObj);
+				vendorContractModel.saveVisible = true;
 				vendorContractModel.refresh(true);
 				this.getView().byId("btnEditVC").setVisible(false);
 				this.getView().byId("idIconSubTabBar2").setSelectedKey("vcSubEpiData");
