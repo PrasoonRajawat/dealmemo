@@ -223,9 +223,9 @@ sap.ui.define([
 				vendorContractModel.refresh(true);
 				this.getView().byId("btnEditVC").setVisible(false);
 				this.getView().byId("idIconSubTabBar2").setSelectedKey("vcSubEpiData");
-				if (vendorContractDetailInfo.Dmst !== "04") {
+				// if (vendorContractDetailInfo.Dmst !== "04") {
 					this.loadVendors();
-				}
+				// }
 
 			},
 			onSubmitVC: function() { // Adde by dhiraj on 19/05/2022
