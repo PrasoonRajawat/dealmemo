@@ -120,7 +120,7 @@
 						visible="{vendorContractModel>/saveVisible}" press="onSaveVendorContract"/>
 					<Button id="btnEditVC" text="{i18n>btnTxtEdit}" enabled="{path:'vendorContractModel>/Dmst',formatter:'.Formatter.formatEditableStatus'}"
 						press="onEditVendorContract"/>
-					<Button id="btnChangeVC" text="{i18n>btnTxtChange}" visible="{vendorContractModel>/changeVisible}" press="onConfirmChangeDm"/>
+					<Button id="btnChangeVC" text="{i18n>btnTxtChange}" visible="false" press="onConfirmChangeDm"/>
 					<Button id="btnSubmitVC" text="{i18n>btnTxtSubmit}" press="onSubmitVC" visible="{vendorContractModel>/submitVisible}"/>
 				</Toolbar>
 			</footer>
