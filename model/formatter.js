@@ -95,7 +95,6 @@ sap.ui.define([
         	   if(oVal && oVal !== null && oVal !== undefined){
         		   return "Positive";
         	   }
-        	   else{}
         	   return  "Neutral";
            },
            enableChannelPerc:function(secChanl){
@@ -113,7 +112,7 @@ sap.ui.define([
         	   
            },
            formatEditableStatus:function(Dmst){
-        	   if(Dmst === "01" || Dmst === undefined || Dmst === "" || Dmst === null){
+        	   if(Dmst === "01" || Dmst === undefined || Dmst === "" || Dmst === null || Dmst === "04"){
         		   return true;
         	   }
         	   else{
