@@ -107,24 +107,24 @@
 									<IconTabFilter id="idRev30" key="rev30" text="{i18n>IcnTbFlt_Revper30min}" icon="sap-icon://history" class="sapMITBHead" 
 									iconColor="Critical" design="Horizontal" >
 									<content>
-										<f:Form>
-											<f:layout>
-												<f:ResponsiveGridLayout columnsL="1" columnsM="1" columnsS="12"/>
-											</f:layout>
-											<f:FormContainer>
-												<f:formElements>
-													<f:FormElement>
-														<f:fields>
-															<Label id="amtDesc2" class="sapUiSmallMarginTop" design="Bold">
-																<layoutData>
-																	<l:GridData span="L2 M2 S7" linebreakL="true" linebreakM="true"/>
-																</layoutData>
-															</Label>
-														</f:fields>
-													</f:FormElement>
-												</f:formElements>
-											</f:FormContainer>
-										</f:Form>
+										<!--<f:Form>-->
+										<!--	<f:layout>-->
+										<!--		<f:ResponsiveGridLayout columnsL="1" columnsM="1" columnsS="12"/>-->
+										<!--	</f:layout>-->
+										<!--	<f:FormContainer>-->
+										<!--		<f:formElements>-->
+										<!--			<f:FormElement>-->
+										<!--				<f:fields>-->
+										<!--					<Label id="amtDesc2" class="sapUiSmallMarginTop" design="Bold">-->
+										<!--						<layoutData>-->
+										<!--							<l:GridData span="L2 M2 S7" linebreakL="true" linebreakM="true"/>-->
+										<!--						</layoutData>-->
+										<!--					</Label>-->
+										<!--				</f:fields>-->
+										<!--			</f:FormElement>-->
+										<!--		</f:formElements>-->
+										<!--	</f:FormContainer>-->
+										<!--</f:Form>-->
 										<Table id="Rev30Table" items="{dealMemoDetailModel>/DmafSet}">
 											<columns>
 												<Column width="70%">
@@ -136,12 +136,28 @@
 											</columns>
 											<items>
 												<ColumnListItem>
-													<Text text="{skey}" class="sapUiTinyMarginTop"></Text>
-													<!--<Input value="{sinput}" type="Number" enabled="{enab}" textAlign="Right" liveChange="calRev30"/>-->
+													<Text text="Total 30 min slots" class="sapUiTinyMarginTop"></Text>
 													<Input
-														value="{ parts: [ {path: 'sinput'}, {path: 'curr'} ], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false,minFractionDigits: 2,maxFractionDigits: 2 } }"
+														value="{ parts: [ {path: 'Noofslots'}, {path: 'curr'} ], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false,minFractionDigits: 2,maxFractionDigits: 2 } }"
 														textAlign="Right"   change="calRev30"/>
-														<!--enabled="{enab}"-->
+												</ColumnListItem>
+													<ColumnListItem>
+													<Text text="Average Broadcast Revenue per 30 min." class="sapUiTinyMarginTop"></Text>
+													<Input
+														value="{ parts: [ {path: 'Avgbcrevamt'}, {path: 'curr'} ], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false,minFractionDigits: 2,maxFractionDigits: 2 } }"
+														textAlign="Right"   change="calRev30"/>
+												</ColumnListItem>
+													<ColumnListItem>
+													<Text text="Total Broadcast Revenue Total Run" class="sapUiTinyMarginTop"></Text>
+													<Input
+														value="{ parts: [ {path: 'Totavgbcrevamt'}, {path: 'curr'} ], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false,minFractionDigits: 2,maxFractionDigits: 2 } }"
+														textAlign="Right"   change="calRev30"/>
+												</ColumnListItem>
+													<ColumnListItem>
+													<Text text="Total Other Revenue Total Run" class="sapUiTinyMarginTop"></Text>
+													<Input
+														value="{ parts: [ {path: 'Totothrevamt'}, {path: 'curr'} ], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false,minFractionDigits: 2,maxFractionDigits: 2 } }"
+														textAlign="Right"   change="calRev30"/>
 												</ColumnListItem>
 											</items>
 										</Table>
