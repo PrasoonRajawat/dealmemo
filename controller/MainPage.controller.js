@@ -5216,10 +5216,10 @@ sap.ui.define([
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
 					sap.ui.core.BusyIndicator.show(0);
 				var bModel = this.getView().byId("Rev30Table").getModel();
-				var dmNo = this.getDmNo();
+				var dmNo = dealMemoDetailInfo.Dmno
 				var srvUrl = "/sap/opu/odata/IBSCMS/DEALMEMO_SRV/";
 				var oModelSav = new sap.ui.model.odata.ODataModel(srvUrl, true, "", "");
-				var pValue = "/DmafSet(Tentid='IBS',Dmno='" + dmNo[0] + "')";
+				var pValue = "/DmafSet(Tentid='IBS',Dmno='" + dmNo + "')";
 				oModelSav.read(pValue, null, null, true, function(oData) {
 					sap.ui.core.BusyIndicator.hide();
 					var oModel = new sap.ui.model.json.JSONModel(oData);
