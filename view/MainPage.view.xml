@@ -125,7 +125,7 @@
 												</f:formElements>
 											</f:FormContainer>
 										</f:Form>
-										<Table id="Rev30Table" items="{/DmafSet}">
+										<Table id="Rev30Table" items="{dealMemoDetailModel>/DmafSet}">
 											<columns>
 												<Column width="70%">
 													<ObjectIdentifier title=""/>
