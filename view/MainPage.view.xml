@@ -125,7 +125,7 @@
 										<!--		</f:formElements>-->
 										<!--	</f:FormContainer>-->
 										<!--</f:Form>-->
-										<Table id="Rev30Table" items="{dealMemoDetailModel>/DmafSet}">
+										<Table id="Rev30Table">
 											<columns>
 												<Column width="70%">
 													<ObjectIdentifier title=""/>
@@ -138,25 +138,25 @@
 												<ColumnListItem>
 													<Text text="Total 30 min slots" class="sapUiTinyMarginTop"></Text>
 													<Input
-														value="{ parts: [ {path: 'Noofslots'}, {path: 'curr'} ], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false,minFractionDigits: 2,maxFractionDigits: 2 } }"
+														value="{ parts: [ {path: 'dealMemoDetailModel>/Dmaf/Noofslots'}, {path: 'dealMemoDetailModel>Waers'} ], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false,minFractionDigits: 2,maxFractionDigits: 2 } }"
 														textAlign="Right"   change="calRev30"/>
 												</ColumnListItem>
 													<ColumnListItem>
 													<Text text="Average Broadcast Revenue per 30 min." class="sapUiTinyMarginTop"></Text>
 													<Input
-														value="{ parts: [ {path: 'Avgbcrevamt'}, {path: 'curr'} ], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false,minFractionDigits: 2,maxFractionDigits: 2 } }"
+														value="{ parts: [ {path: 'dealMemoDetailModel>/Dmaf/Avgbcrevamt'}, {path: 'dealMemoDetailModel>Waers'} ], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false,minFractionDigits: 2,maxFractionDigits: 2 } }"
 														textAlign="Right"   change="calRev30"/>
 												</ColumnListItem>
 													<ColumnListItem>
 													<Text text="Total Broadcast Revenue Total Run" class="sapUiTinyMarginTop"></Text>
 													<Input
-														value="{ parts: [ {path: 'Totavgbcrevamt'}, {path: 'curr'} ], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false,minFractionDigits: 2,maxFractionDigits: 2 } }"
+														value="{ parts: [ {path: 'dealMemoDetailModel>/Dmaf/Totavgbcrevamt'}, {path: 'dealMemoDetailModel>Waers'} ], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false,minFractionDigits: 2,maxFractionDigits: 2 } }"
 														textAlign="Right"   change="calRev30"/>
 												</ColumnListItem>
 													<ColumnListItem>
 													<Text text="Total Other Revenue Total Run" class="sapUiTinyMarginTop"></Text>
 													<Input
-														value="{ parts: [ {path: 'Totothrevamt'}, {path: 'curr'} ], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false,minFractionDigits: 2,maxFractionDigits: 2 } }"
+														value="{ parts: [ {path: 'dealMemoDetailModel>/Dmaf/Totothrevamt'}, {path: 'dealMemoDetailModel>Waers'} ], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false,minFractionDigits: 2,maxFractionDigits: 2 } }"
 														textAlign="Right"   change="calRev30"/>
 												</ColumnListItem>
 											</items>
