@@ -146,6 +146,30 @@
 									</content>
 								</IconTabFilter>
 								
+									<IconTabFilter id="idMarketing" key="makt" text="{i18n>IcnTbFlt_MarketBudget}" icon="sap-icon://marketing-campaign" class="sapMITBHead" 
+									enabled="{dealMemoDetailModel>/marketTabEnable}" iconColor="{path:'dealMemoDetailModel>/marketTabColor'}" design="Horizontal" visible="{= ${dealMemoDetailModel>/Dmno} !== '' ? true : false }">
+									<content>
+										<Table id="marketTable">
+											<columns>
+												<Column width="70%">
+													<ObjectIdentifier title=""/>
+												</Column>
+												<Column minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" hAlign="Center">
+													<ObjectIdentifier title="{i18n>ObjIden_Est}"/>
+												</Column>
+											</columns>
+											<items>
+												<ColumnListItem>
+													<Text text="Advertising costs off-air(Full Run)" class="sapUiTinyMarginTop"></Text>
+													<Input
+														value="{ parts: [ {path: 'dealMemoDetailModel>/Dmaf/Advoffairamt'}, {path: 'dealMemoDetailModel>Waers'} ], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false,minFractionDigits: 2, maxFractionDigits: 2 } }"
+														textAlign="Right" change="calcMarket"/>
+													<!--	<Input value="{sinput}" type="Number" textAlign="Right" liveChange="calcMarket"/>-->
+												</ColumnListItem>
+											</items>
+										</Table>
+									</content>
+								</IconTabFilter>
 								
 
 									<IconTabFilter id="idAttachmentTab" key="attachment" text="{i18n>lblAttach}" icon="sap-icon://attachment" class="sapMITBHead" visible="{= ${dealMemoDetailModel>/Dmno} !==  '' ? true : false }" iconColor="{dealMemoDetailModel>/attachmentTabColor}" design="Horizontal">
