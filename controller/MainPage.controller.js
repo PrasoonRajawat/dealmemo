@@ -5222,7 +5222,7 @@ sap.ui.define([
 				var pValue = "/DmafSet(Tentid='IBS',Dmno='" + dmNo + "')";
 				oModelSav.read(pValue, null, null, true, function(oData) {
 					sap.ui.core.BusyIndicator.hide();
-					vendorContractModel.setProperty("/DmafSet", oData);
+					dealMemoDetailModel.setProperty("/DmafSet", oData);
 				
 					
 				}, function() {
