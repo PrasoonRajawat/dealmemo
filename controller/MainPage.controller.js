@@ -1082,6 +1082,8 @@ sap.ui.define([
 					this.loadAttachments();
 				} else if (mainSelectedKey == "rev30") {
 					this.loadRevenueTab();
+				} else if (mainSelectedKey == "makt") {
+					this.loadMarketingTab();
 				}
 
 			},
@@ -1129,6 +1131,7 @@ sap.ui.define([
 				dealMemoDetailModel.setProperty("/actabcolor", "Critical");
 				dealMemoDetailModel.setProperty("/scheduletabcolor", "Critical");
 				dealMemoDetailModel.setProperty("/revenueTabColor", "Critical");
+				dealMemoDetailModel.setProperty("/marketTabColor", "Critical");
 				this.getView().byId("btnSubmitDM").setEnabled(false);
 				if (dealMemoDetailInfo.enableFlow === "M") {
 					dealMemoDetailModel.setProperty("/episodeDetTabEnable", true);
@@ -1203,11 +1206,16 @@ sap.ui.define([
 				if (oData.DmbsSet.results.length) {
 					dealMemoDetailModel.setProperty("/scheduletabcolor", "Positive");
 					dealMemoDetailModel.setProperty("/revenueTabEnable", true);
+					dealMemoDetailModel.setProperty("/marketTabEnable", true);
 				} else {
 					dealMemoDetailModel.setProperty("/revenueTabEnable", false);
+						dealMemoDetailModel.setProperty("/marketTabEnable", false);
 				}
 				if (oData.Dmaf.Avgbcrevamt !== "0.00") {
 					dealMemoDetailModel.setProperty("/revenueTabColor", "Positive");
+				}
+				if(oData.Dmaf.Advoffairamt !== "0.00") {
+						dealMemoDetailModel.setProperty("/marketTabColor", "Positive");
 				}
 				dealMemoDetailModel.refresh(true);
 				this.handleDmStatus(oData);
@@ -5235,16 +5243,29 @@ sap.ui.define([
 					
 				}, function() {
 					sap.ui.core.BusyIndicator.hide();
-					var oModel = this.getView().byId("mLabel").getModel();
-					bModel.oData.results[1].sinput = oModel.oData.Avgbcrevamt;
-					bModel.oData.results[2].sinput = oModel.oData.Totavgbcrevamt;
-					bModel.oData.results[3].sinput = oModel.oData.Totothrevamt;
-					bModel.oData.results[0].sinput = oModel.oData.Noofslots;
-					bModel.oData.results[0].curr = this.getView().byId("inpCurr").getValue();
-					bModel.refresh();
+					
 				});
 			},
-			
+			loadMarketingTab: function() {
+					var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
+				var dealMemoDetailInfo = dealMemoDetailModel.getData();
+					sap.ui.core.BusyIndicator.show(0);
+				var bModel = this.getView().byId("marketTable").getModel();
+				var dmNo = dealMemoDetailInfo.Dmno
+				var srvUrl = "/sap/opu/odata/IBSCMS/DEALMEMO_SRV/";
+				var oModelSav = new sap.ui.model.odata.ODataModel(srvUrl, true, "", "");
+				var pValue = "/DmafSet(Tentid='IBS',Dmno='" + dmNo + "')";
+				oModelSav.read(pValue, null, null, true, function(oData) {
+					sap.ui.core.BusyIndicator.hide();
+					dealMemoDetailModel.setProperty("/DmafSet", oData);
+					dealMemoDetailModel.refresh(true);
+				
+					
+				}, function() {
+					sap.ui.core.BusyIndicator.hide();
+					
+				});
+			},
 			/************** Vendor Contract Code ********************/
 			toVendorContractCreate: function() {
 				var oRouter = this.getOwnerComponent().getRouter();
