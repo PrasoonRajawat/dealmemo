@@ -5223,6 +5223,7 @@ sap.ui.define([
 				oModelSav.read(pValue, null, null, true, function(oData) {
 					sap.ui.core.BusyIndicator.hide();
 					dealMemoDetailModel.setProperty("/DmafSet", oData);
+					dealMemoDetailModel.refresh(true);
 				
 					
 				}, function() {
