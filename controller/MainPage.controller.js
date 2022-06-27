@@ -5216,37 +5216,37 @@ sap.ui.define([
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
 				sap.ui.core.BusyIndicator.show(0);
 						var dmno = dealMemoDetailInfo.Dmno;
-						var bModel = that.getView().byId("Rev30Table").getModel();
-						var state1 = that.getView().byId("Rev30Table").getItems()[1].getCells()[1].getValueState();
-						var state2 = that.getView().byId("Rev30Table").getItems()[3].getCells()[1].getValueState();
-						if (bModel.oData.results[1].sinput !== "" && bModel.oData.results[1].sinput !== "0.00" && bModel.oData.results[3].sinput !== "" &&
-							bModel.oData.results[3].sinput !== "0.00" && state1 === "None" && state2 === "None") {
-							var aModel = that.getView().byId("mLabel").getModel();
+						// var bModel = this.getView().byId("Rev30Table").getModel();
+						// var state1 = this.getView().byId("Rev30Table").getItems()[1].getCells()[1].getValueState();
+						// var state2 = this.getView().byId("Rev30Table").getItems()[3].getCells()[1].getValueState();
+						// if (bModel.oData.results[1].sinput !== "" && bModel.oData.results[1].sinput !== "0.00" && bModel.oData.results[3].sinput !== "" &&
+						// 	bModel.oData.results[3].sinput !== "0.00" && state1 === "None" && state2 === "None") {
+						// 	var aModel = that.getView().byId("mLabel").getModel();
 							var pValue = "/DmafSet(Tentid='IBS',Dmno='" + dmno + "')";
 							oModelSave.read(pValue, null, null, true, dSuccRev30, eFailRev30);
 
-						} else {
-							sap.ui.core.BusyIndicator.hide();
-							if (state1 == "Error" || state2 == "Error") {
-								sap.m.MessageBox.show(that._oResourceBundle.getText("msg_highlighterror"), {
-									icon: sap.m.MessageBox.Icon.ERROR,
-									title: "{i18n>Error}"
-								});
-							} else {
-								if (bModel.oData.results[1].sinput == "" || bModel.oData.results[1].sinput == "0.00") {
-									sap.m.MessageBox.show(that._oResourceBundle.getText("msg_avgbroadrev"), {
-										icon: sap.m.MessageBox.Icon.ERROR,
-										title: "{i18n>Error}"
-									});
+						// } else {
+						// 	sap.ui.core.BusyIndicator.hide();
+						// 	if (state1 == "Error" || state2 == "Error") {
+						// 		sap.m.MessageBox.show(that._oResourceBundle.getText("msg_highlighterror"), {
+						// 			icon: sap.m.MessageBox.Icon.ERROR,
+						// 			title: "{i18n>Error}"
+						// 		});
+						// 	} else {
+						// 		if (bModel.oData.results[1].sinput == "" || bModel.oData.results[1].sinput == "0.00") {
+						// 			sap.m.MessageBox.show(that._oResourceBundle.getText("msg_avgbroadrev"), {
+						// 				icon: sap.m.MessageBox.Icon.ERROR,
+						// 				title: "{i18n>Error}"
+						// 			});
 
-								} else {
-									sap.m.MessageBox.show(that._oResourceBundle.getText("msg_totalotherrev"), {
-										icon: sap.m.MessageBox.Icon.ERROR,
-										title: "{i18n>Error}"
-									});
-								}
-							}
-						}
+						// 		} else {
+						// 			sap.m.MessageBox.show(that._oResourceBundle.getText("msg_totalotherrev"), {
+						// 				icon: sap.m.MessageBox.Icon.ERROR,
+						// 				title: "{i18n>Error}"
+						// 			});
+						// 		}
+						// 	}
+						// }
 			},
 			
 			/************** Vendor Contract Code ********************/
