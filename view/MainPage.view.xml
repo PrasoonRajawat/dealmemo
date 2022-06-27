@@ -103,7 +103,46 @@
 									</IconTabFilter>
 
 									
-							
+									
+									<IconTabFilter id="idRevenue" key="revTRP" text="{i18n>IcnTbFlt_RevperTRPTVT}" icon="sap-icon://loan" class="sapMITBHead"
+									iconColor="Critical" design="Horizontal" >
+									<content>
+										<f:Form>
+											<f:layout>
+												<f:ResponsiveGridLayout columnsL="1" columnsM="1" columnsS="12"/>
+											</f:layout>
+											<f:FormContainer>
+												<f:formElements>
+													<f:FormElement>
+														<f:fields>
+															<Label id="amtDesc1" class="sapUiSmallMarginTop" design="Bold">
+																<layoutData>
+																	<l:GridData span="L2 M2 S7" linebreakL="true" linebreakM="true"/>
+																</layoutData>
+															</Label>
+														</f:fields>
+													</f:FormElement>
+												</f:formElements>
+											</f:FormContainer>
+										</f:Form>
+										<Table id="RevTvtTable" items="{/results}">
+											<columns>
+												<Column width="70%">
+													<ObjectIdentifier title=""/>
+												</Column>
+												<Column minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" hAlign="Center">
+													<ObjectIdentifier title="{i18n>ObjIden_Est}"/>
+												</Column>
+											</columns>
+											<items>
+												<ColumnListItem>
+													<Text text="{skey}" class="sapUiTinyMarginTop"></Text>
+													<Input value="{sinput}" enabled="false" textAlign="Right"/>
+												</ColumnListItem>
+											</items>
+										</Table>
+									</content>
+								</IconTabFilter>
 								
 								
 
