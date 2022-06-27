@@ -5214,39 +5214,33 @@ sap.ui.define([
 			loadRevenueTab: function() {
 					var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
-				sap.ui.core.BusyIndicator.show(0);
-						var dmno = dealMemoDetailInfo.Dmno;
-						// var bModel = this.getView().byId("Rev30Table").getModel();
-						// var state1 = this.getView().byId("Rev30Table").getItems()[1].getCells()[1].getValueState();
-						// var state2 = this.getView().byId("Rev30Table").getItems()[3].getCells()[1].getValueState();
-						// if (bModel.oData.results[1].sinput !== "" && bModel.oData.results[1].sinput !== "0.00" && bModel.oData.results[3].sinput !== "" &&
-						// 	bModel.oData.results[3].sinput !== "0.00" && state1 === "None" && state2 === "None") {
-						// 	var aModel = that.getView().byId("mLabel").getModel();
-							var pValue = "/DmafSet(Tentid='IBS',Dmno='" + dmno + "')";
-							oModelSave.read(pValue, null, null, true, dSuccRev30, eFailRev30);
-
-						// } else {
-						// 	sap.ui.core.BusyIndicator.hide();
-						// 	if (state1 == "Error" || state2 == "Error") {
-						// 		sap.m.MessageBox.show(that._oResourceBundle.getText("msg_highlighterror"), {
-						// 			icon: sap.m.MessageBox.Icon.ERROR,
-						// 			title: "{i18n>Error}"
-						// 		});
-						// 	} else {
-						// 		if (bModel.oData.results[1].sinput == "" || bModel.oData.results[1].sinput == "0.00") {
-						// 			sap.m.MessageBox.show(that._oResourceBundle.getText("msg_avgbroadrev"), {
-						// 				icon: sap.m.MessageBox.Icon.ERROR,
-						// 				title: "{i18n>Error}"
-						// 			});
-
-						// 		} else {
-						// 			sap.m.MessageBox.show(that._oResourceBundle.getText("msg_totalotherrev"), {
-						// 				icon: sap.m.MessageBox.Icon.ERROR,
-						// 				title: "{i18n>Error}"
-						// 			});
-						// 		}
-						// 	}
-						// }
+					sap.ui.core.BusyIndicator.show(0);
+				var bModel = this.getView().byId("Rev30Table").getModel();
+				var dmNo = dealMemoDetailInfo.Dmno
+				var srvUrl = "/sap/opu/odata/IBSCMS/DEALMEMO_SRV/";
+				var oModelSav = new sap.ui.model.odata.ODataModel(srvUrl, true, "", "");
+				var pValue = "/DmafSet(Tentid='IBS',Dmno='" + dmNo + "')";
+				oModelSav.read(pValue, null, null, true, function(oData) {
+					sap.ui.core.BusyIndicator.hide();
+					var oModel = new sap.ui.model.json.JSONModel(oData);
+					this.getView().byId("lblBudgetGet").setModel(oModel);
+					bModel.oData.results[1].sinput = oData.Avgbcrevamt;
+					bModel.oData.results[2].sinput = oData.Totavgbcrevamt;
+					bModel.oData.results[3].sinput = oData.Totothrevamt;
+					bModel.oData.results[0].sinput = oData.Noofslots;
+					bModel.oData.results[0].curr = bModel.oData.results[1].curr = bModel.oData.results[1].curr = bModel.oData.results[3].curr =
+						this.getView().byId("inpCurr").getValue();
+					bModel.refresh();
+				}, function() {
+					sap.ui.core.BusyIndicator.hide();
+					var oModel = this.getView().byId("mLabel").getModel();
+					bModel.oData.results[1].sinput = oModel.oData.Avgbcrevamt;
+					bModel.oData.results[2].sinput = oModel.oData.Totavgbcrevamt;
+					bModel.oData.results[3].sinput = oModel.oData.Totothrevamt;
+					bModel.oData.results[0].sinput = oModel.oData.Noofslots;
+					bModel.oData.results[0].curr = this.getView().byId("inpCurr").getValue();
+					bModel.refresh();
+				});
 			},
 			
 			/************** Vendor Contract Code ********************/
