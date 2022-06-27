@@ -5222,15 +5222,9 @@ sap.ui.define([
 				var pValue = "/DmafSet(Tentid='IBS',Dmno='" + dmNo + "')";
 				oModelSav.read(pValue, null, null, true, function(oData) {
 					sap.ui.core.BusyIndicator.hide();
-					var oModel = new sap.ui.model.json.JSONModel(oData);
-					// this.getView().byId("lblBudgetGet").setModel(oModel);
-					bModel.oData.results[1].sinput = oData.Avgbcrevamt;
-					bModel.oData.results[2].sinput = oData.Totavgbcrevamt;
-					bModel.oData.results[3].sinput = oData.Totothrevamt;
-					bModel.oData.results[0].sinput = oData.Noofslots;
-					bModel.oData.results[0].curr = bModel.oData.results[1].curr = bModel.oData.results[1].curr = bModel.oData.results[3].curr 
-					// =	this.getView().byId("inpCurr").getValue();
-					bModel.refresh();
+					vendorContractModel.setProperty("/DmafSet", oData);
+				
+					
 				}, function() {
 					sap.ui.core.BusyIndicator.hide();
 					var oModel = this.getView().byId("mLabel").getModel();

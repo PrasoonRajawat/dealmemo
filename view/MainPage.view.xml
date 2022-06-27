@@ -125,7 +125,7 @@
 												</f:formElements>
 											</f:FormContainer>
 										</f:Form>
-										<Table id="Rev30Table" items="{/results}">
+										<Table id="Rev30Table" items="{/DmafSet}">
 											<columns>
 												<Column width="70%">
 													<ObjectIdentifier title=""/>
@@ -140,7 +140,8 @@
 													<!--<Input value="{sinput}" type="Number" enabled="{enab}" textAlign="Right" liveChange="calRev30"/>-->
 													<Input
 														value="{ parts: [ {path: 'sinput'}, {path: 'curr'} ], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false,minFractionDigits: 2,maxFractionDigits: 2 } }"
-														textAlign="Right" enabled="{enab}"  change="calRev30"/>
+														textAlign="Right"   change="calRev30"/>
+														<!--enabled="{enab}"-->
 												</ColumnListItem>
 											</items>
 										</Table>
