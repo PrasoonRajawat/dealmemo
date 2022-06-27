@@ -1128,6 +1128,7 @@ sap.ui.define([
 				dealMemoDetailModel.setProperty("/vctabcolor", "Critical");
 				dealMemoDetailModel.setProperty("/actabcolor", "Critical");
 				dealMemoDetailModel.setProperty("/scheduletabcolor", "Critical");
+				dealMemoDetailModel.setProperty("/revenueTabColor", "Critical");
 				this.getView().byId("btnSubmitDM").setEnabled(false);
 				if (dealMemoDetailInfo.enableFlow === "M") {
 					dealMemoDetailModel.setProperty("/episodeDetTabEnable", true);
@@ -1201,6 +1202,10 @@ sap.ui.define([
 
 				if (oData.DmbsSet.results.length) {
 					dealMemoDetailModel.setProperty("/scheduletabcolor", "Positive");
+				} 
+				if (oData.Dmaf.Avgbcrevamt !== "0.00") {
+					dealMemoDetailModel.setProperty("/revenueTabColor", "Positive");
+						dealMemoDetailModel.setProperty("/revenueTabEnable", true);
 				}
 				dealMemoDetailModel.refresh(true);
 				this.handleDmStatus(oData);

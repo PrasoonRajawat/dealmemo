@@ -105,26 +105,8 @@
 									
 									
 									<IconTabFilter id="idRev30" key="rev30" text="{i18n>IcnTbFlt_Revper30min}" icon="sap-icon://history" class="sapMITBHead" 
-									iconColor="Critical" design="Horizontal" >
+									enabled="{dealMemoDetailModel>/revenueTabEnable}"	iconColor="{path:'dealMemoDetailModel>/revenueTabColor'}" design="Horizontal" visible="{= ${dealMemoDetailModel>/Dmno} !== '' ? true : false }" >
 									<content>
-										<!--<f:Form>-->
-										<!--	<f:layout>-->
-										<!--		<f:ResponsiveGridLayout columnsL="1" columnsM="1" columnsS="12"/>-->
-										<!--	</f:layout>-->
-										<!--	<f:FormContainer>-->
-										<!--		<f:formElements>-->
-										<!--			<f:FormElement>-->
-										<!--				<f:fields>-->
-										<!--					<Label id="amtDesc2" class="sapUiSmallMarginTop" design="Bold">-->
-										<!--						<layoutData>-->
-										<!--							<l:GridData span="L2 M2 S7" linebreakL="true" linebreakM="true"/>-->
-										<!--						</layoutData>-->
-										<!--					</Label>-->
-										<!--				</f:fields>-->
-										<!--			</f:FormElement>-->
-										<!--		</f:formElements>-->
-										<!--	</f:FormContainer>-->
-										<!--</f:Form>-->
 										<Table id="Rev30Table">
 											<columns>
 												<Column width="70%">
