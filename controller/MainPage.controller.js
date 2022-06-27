@@ -1202,10 +1202,10 @@ sap.ui.define([
 
 				if (oData.DmbsSet.results.length) {
 					dealMemoDetailModel.setProperty("/scheduletabcolor", "Positive");
+					dealMemoDetailModel.setProperty("/revenueTabEnable", true);
 				} 
 				if (oData.Dmaf.Avgbcrevamt !== "0.00") {
 					dealMemoDetailModel.setProperty("/revenueTabColor", "Positive");
-						dealMemoDetailModel.setProperty("/revenueTabEnable", true);
 				}
 				dealMemoDetailModel.refresh(true);
 				this.handleDmStatus(oData);
