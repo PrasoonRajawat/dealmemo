@@ -5262,20 +5262,24 @@ sap.ui.define([
 				oModelSav.read(pValue, null, null, true, function(oData) {
 					sap.ui.core.BusyIndicator.hide();
 					var oModel = new sap.ui.model.json.JSONModel(oData);
+					if(	bModel.oData.results.length > 0) {
 					bModel.oData.results[1].sinput = oData.Avgbcrevamt;
 					bModel.oData.results[2].sinput = oData.Totavgbcrevamt;
 					bModel.oData.results[3].sinput = oData.Totothrevamt;
 					bModel.oData.results[0].sinput = oData.Noofslots;
 					bModel.oData.results[0].curr = bModel.oData.results[1].curr = bModel.oData.results[1].curr = bModel.oData.results[3].curr =
 						dealMemoDetailInfo.Waers ;
+					}
 					bModel.refresh();
 				}, function() {
 					sap.ui.core.BusyIndicator.hide();
+						if(	bModel.oData.results.length > 0) {
 					bModel.oData.results[1].sinput = dealMemoDetailInfo.Dmaf.Avgbcrevamt;
 					bModel.oData.results[2].sinput = dealMemoDetailInfo.Dmaf.Totavgbcrevamt;
 					bModel.oData.results[3].sinput = dealMemoDetailInfo.Dmaf.Totothrevamt;
 					bModel.oData.results[0].sinput = dealMemoDetailInfo.Dmaf.Noofslots;
 					bModel.oData.results[0].curr = dealMemoDetailInfo.Waers;
+						}
 					bModel.refresh();
 				});
 			},
@@ -5290,14 +5294,18 @@ sap.ui.define([
 				var pValue = "/DmafSet(Tentid='IBS',Dmno='" + dmNo[0] + "')";
 				oModelSav.read(pValue, null, null, true, function(oData) {
 					sap.ui.core.BusyIndicator.hide();
+						if(	bModel.oData.results.length > 0) {
 					bModel.oData.results[0].sinput = oData.Advoffairamt;
 					bModel.oData.results[0].curr = dealMemoDetailInfo.Waers;
+						}
 					bModel.refresh();
 				}, function() {
 					//	alert("fail");
 					sap.ui.core.BusyIndicator.hide();
+						if(	bModel.oData.results.length > 0) {
 					bModel.oData.results[0].sinput = dealMemoDetailInfo.Dmaf.Advoffairamt;
 					bModel.oData.results[0].curr = dealMemoDetailInfo.Waers;
+						}
 					bModel.refresh();
 				});
 			},
@@ -5359,7 +5367,7 @@ sap.ui.define([
 				lessmakt = lessmakt.toFixed(2);
 				contaftoffair = contaftoffair.toFixed(2);
 				contper = contper.toFixed(2);
-
+	if(	bModel.oData.results.length > 0) {
 				bModel.oData.results[0].sinput1 = netbcrevag;
 				bModel.oData.results[1].sinput1 = netOthrev;
 				bModel.oData.results[2].sinput1 = amrContCost;
@@ -5371,6 +5379,7 @@ sap.ui.define([
 				bModel.oData.results[1].curr = bModel.oData.results[2].curr = bModel.oData.results[0].curr;
 				bModel.oData.results[3].curr = bModel.oData.results[4].curr = bModel.oData.results[0].curr;
 				bModel.oData.results[5].curr = bModel.oData.results[6].curr = bModel.oData.results[0].curr;
+	}
 				/*---------------------------slot budgets for per 30 min----------------------------------------*/
 				var slotbudavgbcrevamt = +oData.Avgbcrevamt; // +oData.Budavgbcrevamt;
 				var slotbudnetothrev = +oData.Totothrevamt / slots; //Budtotothvamt
@@ -5387,7 +5396,7 @@ sap.ui.define([
 				slotbudlessmakt = slotbudlessmakt.toFixed(2);
 				slotbudcontraft = slotbudcontraft.toFixed(2);
 				slotbudcontper = slotbudcontper.toFixed(2);
-
+	if(	bModel.oData.results.length > 0) {
 				bModel.oData.results[0].sinput2 = slotbudavgbcrevamt;
 				bModel.oData.results[1].sinput2 = slotbudnetothrev;
 				bModel.oData.results[2].sinput2 = amrContCost //slotbudcontamrcost;
@@ -5395,7 +5404,7 @@ sap.ui.define([
 				bModel.oData.results[4].sinput2 = slotbudlessmakt;
 				bModel.oData.results[5].sinput2 = slotbudcontraft;
 				bModel.oData.results[6].sinput2 = slotbudcontper;
-
+}
 				bModel.refresh();
 
 				//per TRP
@@ -5412,13 +5421,13 @@ sap.ui.define([
 				contrbefoffairTrp = contrbefoffairTrp.toFixed(2);
 				lessmaktTrp = lessmaktTrp.toFixed(2);
 				contaftairmktTrp = contaftairmktTrp.toFixed(2);
-
+	if(	cModel.oData.results.length > 0) {
 				cModel.oData.results[0].sinput1 = netrevaftcomm;
 				cModel.oData.results[1].sinput1 = amrcontcosttrp;
 				cModel.oData.results[2].sinput1 = contrbefoffairTrp;
 				cModel.oData.results[3].sinput1 = lessmaktTrp;
 				cModel.oData.results[4].sinput1 = contaftairmktTrp;
-
+}
 				/*---------------------------slot budgets for per 30 min----------------------------------------*/
 				var slotnetrevaftcommTrp = +oData.Avgbcrevamt / +oData.Budavgrtng; //+oData.Budavgbcrevamt / +oData.Budavgrtng;
 				var slotbudcontcostTrp = (+oData.Budcashamt * costamramt) / +oData.Budavgrtng;
@@ -5431,7 +5440,7 @@ sap.ui.define([
 				slotbudcontribefTrp = slotbudcontribefTrp.toFixed(2);
 				slotbudlessmaktTrp = slotbudlessmaktTrp.toFixed(2);
 				slotbudcontraftTrp = slotbudcontraftTrp.toFixed(2);
-
+	if(	cModel.oData.results.length > 0) {
 				cModel.oData.results[0].sinput2 = slotnetrevaftcommTrp;
 				cModel.oData.results[1].sinput2 = amrcontcosttrp //slotbudcontcostTrp;
 				cModel.oData.results[2].sinput2 = slotbudcontribefTrp;
@@ -5440,6 +5449,7 @@ sap.ui.define([
 				cModel.oData.results[0].curr = oData.Waers;
 				cModel.oData.results[1].curr = cModel.oData.results[2].curr = cModel.oData.results[0].curr;
 				cModel.oData.results[3].curr = cModel.oData.results[4].curr = cModel.oData.results[0].curr;
+	}
 				cModel.refresh();
 				sap.ui.core.BusyIndicator.hide();
 			},
