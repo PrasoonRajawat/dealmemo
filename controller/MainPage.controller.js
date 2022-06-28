@@ -5469,7 +5469,7 @@ function(Controller, Filter, FilterOperator, Formatter, MessageBox, MessageToast
 				}
 
 			},
-		},
+		
 		saveMarketingTab: function() {
 
 			sap.ui.core.BusyIndicator.show(0);
