@@ -1081,11 +1081,12 @@ sap.ui.define([
 				} else if (mainSelectedKey == "attachment") {
 					this.loadAttachments();
 				} else if (mainSelectedKey == "rev30") {
-					var orev30Model = new sap.ui.model.json.JSONModel(jQuery.sap.getModulePath("Dealmemoappln.json", "/rev30Tab.json"));
+					var orev30Model = new sap.ui.model.json.JSONModel(jQuery.sap.getModulePath("com.ui.dealmemolocal.json", "/rev30Tab.json"));
 					this.getView().byId("Rev30Table").setModel(orev30Model);
 					this.loadRevenueTab();
 				} else if (mainSelectedKey == "makt") {
-					var txt_makt = this._oResourceBundle.getText("txt_advcostoffair");
+					var txt_makt = this.getView().getModel("i18n").getResourceBundle().getText("txt_advcostoffair");
+				
 					var maktData = {
 						"results": [{
 							"skey": txt_makt,
