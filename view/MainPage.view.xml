@@ -171,64 +171,6 @@
 									</content>
 								</IconTabFilter>
 								
-									<IconTabFilter id="idPl" key="progPL" text="{i18n>IcnTbFlt_ProgPandL}" icon="sap-icon://loan" class="sapMITBHead" enabled="false" iconColor="Critical"
-									design="Horizontal" visible="false">
-									<content>
-										<Table id="prog30Table" items="{/results}">
-											<columns>
-												<Column>
-													<ObjectIdentifier title="{i18n>ObjIden_Per30min}"/>
-												</Column>
-												<Column minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" hAlign="Center">
-													<ObjectIdentifier title="{i18n>ObjIden_Est}"/>
-												</Column>
-												<Column minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" hAlign="Center">
-													<ObjectIdentifier title="{i18n>ObjIden_Slotbudgets}"/>
-												</Column>
-												<!--<Column minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
-														<ObjectIdentifier title="Estimated as per CAF"/>
-												</Column>-->
-											</columns>
-											<items>
-												<ColumnListItem>
-													<Text text="{skey}" class="sapUiTinyMarginTop"></Text>
-												<!--	<Input value="{sinput1}" enabled="false" textAlign="Right"/>-->
-													<Input value="{ parts: [ {path: 'sinput1'}, {path: 'curr'} ], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false } }"
-														textAlign="Right" enabled="false"/>
-													<!--	<Input value="{sinput2}" enabled="false" textAlign="Right"/>-->
-													<Input value="{ parts: [ {path: 'sinput2'}, {path: 'curr'} ], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false } }"
-														textAlign="Right" enabled="false"/>
-													<!--<Input value="" />-->
-												</ColumnListItem>
-											</items>
-										</Table>
-										<Table id="progTRPTable" items="{/results}">
-											<columns>
-												<Column>
-													<ObjectIdentifier title="{i18n>ObjIden_PerTRPmin}"/>
-												</Column>
-												<Column minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" hAlign="Center">
-													<ObjectIdentifier title="{i18n>ObjIden_Est}"/>
-												</Column>
-												<Column minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" hAlign="Center">
-													<ObjectIdentifier title="{i18n>ObjIden_Slotbudgets}"/>
-												</Column>
-											</columns>
-											<items>
-												<ColumnListItem>
-													<Text text="{skey}" class="sapUiTinyMarginTop"></Text>
-													<!--	<Input value="{sinput1}" enabled="false" textAlign="Right"/>-->
-													<Input value="{ parts: [ {path: 'sinput1'}, {path: 'curr'} ], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false } }"
-														textAlign="Right" enabled="false"/>
-													<!--	<Input value="{sinput2}" enabled="false" textAlign="Right"/>-->
-													<Input value="{ parts: [ {path: 'sinput2'}, {path: 'curr'} ], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false } }"
-														textAlign="Right" enabled="false"/>
-													<!--<Input value="" />-->
-												</ColumnListItem>
-											</items>
-										</Table>
-									</content>
-								</IconTabFilter>
 
 									<IconTabFilter id="idAttachmentTab" key="attachment" text="{i18n>lblAttach}" icon="sap-icon://attachment" class="sapMITBHead" visible="{= ${dealMemoDetailModel>/Dmno} !==  '' ? true : false }" iconColor="{dealMemoDetailModel>/attachmentTabColor}" design="Horizontal">
 										<content>
