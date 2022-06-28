@@ -1090,9 +1090,12 @@ sap.ui.define([
 				this.getView().byId("prog30Table").setModel(progModel);
 				this.getView().byId("progTRPTable").setModel(progTRPModel);
 					this.loadProgPL();
-
 				}
-
+				if (mainSelectedKey == "progPL")  {
+					this.getView().byId("btnSaveDM").setEnabled(false);
+				} else {
+					this.getView().byId("btnSaveDM").setEnabled(true);
+				}
 			},
 
 			getYearEpisodes: function(FromYr, ToYr) {
@@ -1139,6 +1142,7 @@ sap.ui.define([
 				dealMemoDetailModel.setProperty("/scheduletabcolor", "Critical");
 				dealMemoDetailModel.setProperty("/revenueTabColor", "Critical");
 				dealMemoDetailModel.setProperty("/marketTabColor", "Critical");
+					dealMemoDetailModel.setProperty("/progTabColor", "Critical");
 				this.getView().byId("btnSubmitDM").setEnabled(false);
 				if (dealMemoDetailInfo.enableFlow === "M") {
 					dealMemoDetailModel.setProperty("/episodeDetTabEnable", true);
@@ -1214,6 +1218,7 @@ sap.ui.define([
 					dealMemoDetailModel.setProperty("/scheduletabcolor", "Positive");
 					dealMemoDetailModel.setProperty("/revenueTabEnable", true);
 					dealMemoDetailModel.setProperty("/marketTabEnable", true);
+						dealMemoDetailModel.setProperty("/progTabEnable", true);
 				} else {
 					dealMemoDetailModel.setProperty("/revenueTabEnable", false);
 						dealMemoDetailModel.setProperty("/marketTabEnable", false);
