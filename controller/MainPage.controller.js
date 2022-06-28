@@ -5291,7 +5291,7 @@ sap.ui.define([
 				}.bind(this), function() {});
 			},
 			calcProgPL: function(oData) {
-			sap.ui.core.BusyIndicator.show(0
+			sap.ui.core.BusyIndicator.show(0);
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
 			// var coreModel = sap.ui.getCore().getModel("modelForDm");
