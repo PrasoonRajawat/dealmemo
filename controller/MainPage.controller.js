@@ -5242,40 +5242,50 @@ sap.ui.define([
 					var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
 					sap.ui.core.BusyIndicator.show(0);
-				var bModel = this.getView().byId("Rev30Table").getModel();
-				var dmNo = dealMemoDetailInfo.Dmno
+				var bModel = that.getView().byId("Rev30Table").getModel();
 				var srvUrl = "/sap/opu/odata/IBSCMS/DEALMEMO_SRV/";
 				var oModelSav = new sap.ui.model.odata.ODataModel(srvUrl, true, "", "");
-				var pValue = "/DmafSet(Tentid='IBS',Dmno='" + dmNo + "')";
+				var pValue = "/DmafSet(Tentid='IBS',Dmno='" + dmNo[0] + "')";
 				oModelSav.read(pValue, null, null, true, function(oData) {
 					sap.ui.core.BusyIndicator.hide();
-					dealMemoDetailModel.setProperty("/DmafSet", oData);
-					dealMemoDetailModel.refresh(true);
-				
-					
+					var oModel = new sap.ui.model.json.JSONModel(oData);
+					bModel.oData.results[1].sinput = oData.Avgbcrevamt;
+					bModel.oData.results[2].sinput = oData.Totavgbcrevamt;
+					bModel.oData.results[3].sinput = oData.Totothrevamt;
+					bModel.oData.results[0].sinput = oData.Noofslots;
+					bModel.oData.results[0].curr = bModel.oData.results[1].curr = bModel.oData.results[1].curr = bModel.oData.results[3].curr =
+						dealMemoDetailInfo.Waers;
+					bModel.refresh();
 				}, function() {
 					sap.ui.core.BusyIndicator.hide();
-					
+					bModel.oData.results[1].sinput = dealMemoDetailInfo.Dmaf.Avgbcrevamt;
+					bModel.oData.results[2].sinput =dealMemoDetailInfo.Dmaf.Totavgbcrevamt;
+					bModel.oData.results[3].sinput = dealMemoDetailInfo.Dmaf.Totothrevamt;
+					bModel.oData.results[0].sinput = dealMemoDetailInfo.Dmaf.Noofslots;
+					bModel.oData.results[0].curr = dealMemoDetailInfo.Waers;
+					bModel.refresh();
 				});
 			},
 			loadMarketingTab: function() {
 					var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
 					sap.ui.core.BusyIndicator.show(0);
-				var bModel = this.getView().byId("marketTable").getModel();
-				var dmNo = dealMemoDetailInfo.Dmno
+				var bModel = that.getView().byId("marketTable").getModel();
+				var dmNo = that.getDmNo();
 				var srvUrl = "/sap/opu/odata/IBSCMS/DEALMEMO_SRV/";
 				var oModelSav = new sap.ui.model.odata.ODataModel(srvUrl, true, "", "");
-				var pValue = "/DmafSet(Tentid='IBS',Dmno='" + dmNo + "')";
+				var pValue = "/DmafSet(Tentid='IBS',Dmno='" + dmNo[0] + "')";
 				oModelSav.read(pValue, null, null, true, function(oData) {
 					sap.ui.core.BusyIndicator.hide();
-					dealMemoDetailModel.setProperty("/DmafSet", oData);
-					dealMemoDetailModel.refresh(true);
-				
-					
+					bModel.oData.results[0].sinput = oData.Advoffairamt;
+					bModel.oData.results[0].curr = 	dealMemoDetailInfo.Waers;
+					bModel.refresh();
 				}, function() {
+					//	alert("fail");
 					sap.ui.core.BusyIndicator.hide();
-					
+					bModel.oData.results[0].sinput = dealMemoDetailInfo.Dmaf.Advoffairamt;
+					bModel.oData.results[0].curr = 	dealMemoDetailInfo.Waers;
+					bModel.refresh();
 				});
 			},
 				//ProgPL tab in dealmemo

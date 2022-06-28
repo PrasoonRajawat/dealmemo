@@ -1,0 +1,30 @@
+{
+	"results": [{
+			"skey": "Total 30 min slots",
+			"sinput": "0.00",
+			"curr": "",
+			"enab":false
+			},
+		{
+			"skey": "Average Broadcast Revenue per 30 min.",
+			"sinput": "0.00",
+			"curr":"",
+			"enab":true
+		},
+		{
+			"skey": "Total Broadcast Revenue Total Run",
+			"sinput": "0.00",
+			"curr":"",
+			"enab":false
+		},{
+			"skey": "Total Other Revenue Total Run",
+			"sinput": "0.00",
+			"curr":"",
+			"enab":true
+			
+		}
+		
+		
+	
+	]
+}
