@@ -1084,6 +1084,10 @@ sap.ui.define([
 					this.loadRevenueTab();
 				} else if (mainSelectedKey == "makt") {
 					this.loadMarketingTab();
+				} else if (mainSelectedKey == "progPL") {
+				var progModel = new sap.ui.model.json.JSONModel(jQuery.sap.getModulePath("Dealmemoappln.json", "/prog30Tab.json"));
+				var progTRPModel = new sap.ui.model.json.JSONModel(jQuery.sap.getModulePath("Dealmemoappln.json", "/progTRPTab.json"));
+					this.loadProgPL();
 				}
 
 			},
@@ -5266,6 +5270,146 @@ sap.ui.define([
 					
 				});
 			},
+			//ProgPL tab in dealmemo
+			loadProgPL: function() {
+					var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
+				var dealMemoDetailInfo = dealMemoDetailModel.getData();
+					sap.ui.core.BusyIndicator.show(0);
+					var dmNo = dealMemoDetailInfo.Dmno
+				// that.getView().byId("idPl").setIconColor("Positive");
+				// that.getView().byId("btnSave").setEnabled(false);
+				var intDataModelUrl = "/sap/opu/odata/IBSCMS/DEALMEMO_SRV/";
+				var oModelSav = new sap.ui.model.odata.ODataModel(intDataModelUrl, true, "", "");
+				var pValue = "/DmafSet(Tentid='IBS',Dmno='" + dmNo + "')"; //aModel.oData.Dmno
+				oModelSav.read(pValue, null, null, true, function(oData) {
+					sap.ui.core.BusyIndicator.hide();
+					that.calcProgPL(oData);
+
+				}, function() {});
+			},
+			calcProgPL: function(oData) {
+			sap.ui.core.BusyIndicator.show(0);
+			// var coreModel = sap.ui.getCore().getModel("modelForDm");
+			var netbcrevag = +oData.Avgbcrevamt;
+			var slots = +oData.Noofslots;
+			var advoffair = +oData.Advoffairamt;
+			var totothrevamt = +oData.Totothrevamt;
+			var Estavgrtng = +oData.Estavgrtng;
+			var costamramt = +coreModel.oData.Amrtpercost; //CNTAMRTAMT
+
+			// if (sap.ui.getCore().getModel("modelForDm").oData.Totdmamt != 0.000) {
+			// 	var totalDmcost = sap.ui.getCore().getModel("modelForDm").oData.Totdmamt;
+			// 	var val3 = totalDmcost;
+			// 	val3 = val3.toString();
+			// 	val3 = Number(val3.replace(/[^0-9\.]+/g, ""));
+			// 	totalDmcost = val3;
+			// } else {
+			// 	var totalDmcost = that.getView().byId("totalCost").getText();
+			// 	var val3 = totalDmcost;
+			// 	val3 = val3.toString();
+			// 	val3 = Number(val3.replace(/[^0-9\.]+/g, ""));
+			// 	totalDmcost = val3;
+			// }
+			//Per 30 min
+			var bModel = that.getView().byId("prog30Table").getModel();
+			var netOthrev = totothrevamt / slots;
+			var amrContCost = totalDmcost / slots * costamramt; //totDmCost/slots*Amrtpercost 
+			var contbefoffair = (netbcrevag + netOthrev) - amrContCost; //CNTAMRTAMT
+			var lessmakt = advoffair / slots;
+			var contaftoffair = contbefoffair - lessmakt;
+			var contper = (contaftoffair / netbcrevag) * 100;
+
+			netbcrevag = netbcrevag.toFixed(2);
+			netOthrev = netOthrev.toFixed(2);
+			amrContCost = amrContCost.toFixed(2);
+			contbefoffair = contbefoffair.toFixed(2);
+			lessmakt = lessmakt.toFixed(2);
+			contaftoffair = contaftoffair.toFixed(2);
+			contper = contper.toFixed(2);
+
+			bModel.oData.results[0].sinput1 = netbcrevag;
+			bModel.oData.results[1].sinput1 = netOthrev;
+			bModel.oData.results[2].sinput1 = amrContCost;
+			bModel.oData.results[3].sinput1 = contbefoffair;
+			bModel.oData.results[4].sinput1 = lessmakt;
+			bModel.oData.results[5].sinput1 = contaftoffair;
+			bModel.oData.results[6].sinput1 = contper;
+			bModel.oData.results[0].curr = oData.Waers;
+			bModel.oData.results[1].curr = bModel.oData.results[2].curr = bModel.oData.results[0].curr;
+			bModel.oData.results[3].curr = bModel.oData.results[4].curr = bModel.oData.results[0].curr;
+			bModel.oData.results[5].curr = bModel.oData.results[6].curr = bModel.oData.results[0].curr;
+			/*---------------------------slot budgets for per 30 min----------------------------------------*/
+			var slotbudavgbcrevamt = +oData.Avgbcrevamt; // +oData.Budavgbcrevamt;
+			var slotbudnetothrev = +oData.Totothrevamt / slots; //Budtotothvamt
+			var slotbudcontamrcost = +oData.Budcashamt * costamramt;
+			var slotbudcontrbef = (slotbudavgbcrevamt + slotbudnetothrev) - slotbudcontamrcost;
+			var slotbudlessmakt = advoffair / slots;
+			var slotbudcontraft = slotbudcontrbef - slotbudlessmakt;
+			var slotbudcontper = (slotbudcontraft / slotbudavgbcrevamt) * 100;
+
+			slotbudavgbcrevamt = slotbudavgbcrevamt.toFixed(2);
+			slotbudnetothrev = slotbudnetothrev.toFixed(2);
+			slotbudcontamrcost = slotbudcontamrcost.toFixed(2);
+			slotbudcontrbef = slotbudcontrbef.toFixed(2);
+			slotbudlessmakt = slotbudlessmakt.toFixed(2);
+			slotbudcontraft = slotbudcontraft.toFixed(2);
+			slotbudcontper = slotbudcontper.toFixed(2);
+
+			bModel.oData.results[0].sinput2 = slotbudavgbcrevamt;
+			bModel.oData.results[1].sinput2 = slotbudnetothrev;
+			bModel.oData.results[2].sinput2 = amrContCost //slotbudcontamrcost;
+			bModel.oData.results[3].sinput2 = slotbudcontrbef;
+			bModel.oData.results[4].sinput2 = slotbudlessmakt;
+			bModel.oData.results[5].sinput2 = slotbudcontraft;
+			bModel.oData.results[6].sinput2 = slotbudcontper;
+
+			bModel.refresh();
+
+			//per TRP
+			var cModel = that.getView().byId("progTRPTable").getModel();
+
+			var netrevaftcomm = netbcrevag / Estavgrtng;
+			var amrcontcosttrp = (totalDmcost / slots * costamramt) / Estavgrtng;
+			var contrbefoffairTrp = netrevaftcomm - amrcontcosttrp;
+			var lessmaktTrp = (advoffair / slots) / Estavgrtng;
+			var contaftairmktTrp = contrbefoffairTrp - lessmaktTrp;
+
+			netrevaftcomm = netrevaftcomm.toFixed(2);
+			amrcontcosttrp = amrcontcosttrp.toFixed(2);
+			contrbefoffairTrp = contrbefoffairTrp.toFixed(2);
+			lessmaktTrp = lessmaktTrp.toFixed(2);
+			contaftairmktTrp = contaftairmktTrp.toFixed(2);
+
+			cModel.oData.results[0].sinput1 = netrevaftcomm;
+			cModel.oData.results[1].sinput1 = amrcontcosttrp;
+			cModel.oData.results[2].sinput1 = contrbefoffairTrp;
+			cModel.oData.results[3].sinput1 = lessmaktTrp;
+			cModel.oData.results[4].sinput1 = contaftairmktTrp;
+
+			/*---------------------------slot budgets for per 30 min----------------------------------------*/
+			var slotnetrevaftcommTrp = +oData.Avgbcrevamt / +oData.Budavgrtng; //+oData.Budavgbcrevamt / +oData.Budavgrtng;
+			var slotbudcontcostTrp = (+oData.Budcashamt * costamramt) / +oData.Budavgrtng;
+			var slotbudcontribefTrp = slotnetrevaftcommTrp - slotbudcontcostTrp;
+			var slotbudlessmaktTrp = (advoffair / slots) / +oData.Budavgrtng;
+			var slotbudcontraftTrp = slotbudcontribefTrp - slotbudlessmaktTrp;
+
+			slotnetrevaftcommTrp = slotnetrevaftcommTrp.toFixed(2);
+			slotbudcontcostTrp = slotbudcontcostTrp.toFixed(2);
+			slotbudcontribefTrp = slotbudcontribefTrp.toFixed(2);
+			slotbudlessmaktTrp = slotbudlessmaktTrp.toFixed(2);
+			slotbudcontraftTrp = slotbudcontraftTrp.toFixed(2);
+
+			cModel.oData.results[0].sinput2 = slotnetrevaftcommTrp;
+			cModel.oData.results[1].sinput2 = amrcontcosttrp //slotbudcontcostTrp;
+			cModel.oData.results[2].sinput2 = slotbudcontribefTrp;
+			cModel.oData.results[3].sinput2 = slotbudlessmaktTrp;
+			cModel.oData.results[4].sinput2 = slotbudcontraftTrp;
+			cModel.oData.results[0].curr = oData.Waers;
+			cModel.oData.results[1].curr = cModel.oData.results[2].curr = cModel.oData.results[0].curr;
+			cModel.oData.results[3].curr = cModel.oData.results[4].curr = cModel.oData.results[0].curr;
+			cModel.refresh();
+			sap.ui.core.BusyIndicator.hide();
+		},
 			/************** Vendor Contract Code ********************/
 			toVendorContractCreate: function() {
 				var oRouter = this.getOwnerComponent().getRouter();
