@@ -5286,9 +5286,9 @@ sap.ui.define([
 				var pValue = "/DmafSet(Tentid='IBS',Dmno='" + dmNo + "')"; //aModel.oData.Dmno
 				oModelSav.read(pValue, null, null, true, function(oData) {
 					sap.ui.core.BusyIndicator.hide();
-					this.calcProgPL(oData);
+					this.calcProgPL(oData)
 
-				}, function() {});
+				}.bind(this), function() {});
 			},
 			calcProgPL: function(oData) {
 			sap.ui.core.BusyIndicator.show(0);
