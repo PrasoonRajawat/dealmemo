@@ -1081,18 +1081,33 @@ sap.ui.define([
 				} else if (mainSelectedKey == "attachment") {
 					this.loadAttachments();
 				} else if (mainSelectedKey == "rev30") {
+					var orev30Model = new sap.ui.model.json.JSONModel(jQuery.sap.getModulePath("Dealmemoappln.json", "/rev30Tab.json"));
+					this.getView().byId("Rev30Table").setModel(orev30Model);
 					this.loadRevenueTab();
 				} else if (mainSelectedKey == "makt") {
+					var txt_makt = that._oResourceBundle.getText("txt_advcostoffair");
+					var maktData = {
+						"results": [{
+							"skey": txt_makt,
+							"sinput": "",
+							"curr": ""
+						}]
+					};
+					var omarketModel = new sap.ui.model.json.JSONModel(maktData);
+					this.getView().byId("marketTable").setModel(omarketModel);
 					this.loadMarketingTab();
 				} else if (mainSelectedKey == "progPL") {
-				var progModel = new sap.ui.model.json.JSONModel(jQuery.sap.getModulePath("com.ui.dealmemolocal.json", "/prog30Tab.json"));
-				var progTRPModel = new sap.ui.model.json.JSONModel(jQuery.sap.getModulePath("com.ui.dealmemolocal.json", "/progTRPTab.json"));
-				this.getView().byId("prog30Table").setModel(progModel);
-				this.getView().byId("progTRPTable").setModel(progTRPModel);
+					var progModel = new sap.ui.model.json.JSONModel(jQuery.sap.getModulePath("com.ui.dealmemolocal.json", "/prog30Tab.json"));
+					var progTRPModel = new sap.ui.model.json.JSONModel(jQuery.sap.getModulePath("com.ui.dealmemolocal.json", "/progTRPTab.json"));
+					this.getView().byId("prog30Table").setModel(progModel);
+					this.getView().byId("progTRPTable").setModel(progTRPModel);
 					this.loadProgPL();
-
 				}
-
+				if (mainSelectedKey == "progPL") {
+					this.getView().byId("btnSaveDM").setEnabled(false);
+				} else {
+					this.getView().byId("btnSaveDM").setEnabled(true);
+				}
 			},
 
 			getYearEpisodes: function(FromYr, ToYr) {
@@ -1139,6 +1154,7 @@ sap.ui.define([
 				dealMemoDetailModel.setProperty("/scheduletabcolor", "Critical");
 				dealMemoDetailModel.setProperty("/revenueTabColor", "Critical");
 				dealMemoDetailModel.setProperty("/marketTabColor", "Critical");
+				dealMemoDetailModel.setProperty("/progTabColor", "Critical");
 				this.getView().byId("btnSubmitDM").setEnabled(false);
 				if (dealMemoDetailInfo.enableFlow === "M") {
 					dealMemoDetailModel.setProperty("/episodeDetTabEnable", true);
@@ -1214,15 +1230,16 @@ sap.ui.define([
 					dealMemoDetailModel.setProperty("/scheduletabcolor", "Positive");
 					dealMemoDetailModel.setProperty("/revenueTabEnable", true);
 					dealMemoDetailModel.setProperty("/marketTabEnable", true);
+					dealMemoDetailModel.setProperty("/progTabEnable", true);
 				} else {
 					dealMemoDetailModel.setProperty("/revenueTabEnable", false);
-						dealMemoDetailModel.setProperty("/marketTabEnable", false);
+					dealMemoDetailModel.setProperty("/marketTabEnable", false);
 				}
 				if (oData.Dmaf.Avgbcrevamt !== "0.00") {
 					dealMemoDetailModel.setProperty("/revenueTabColor", "Positive");
 				}
-				if(oData.Dmaf.Advoffairamt !== "0.00") {
-						dealMemoDetailModel.setProperty("/marketTabColor", "Positive");
+				if (oData.Dmaf.Advoffairamt !== "0.00") {
+					dealMemoDetailModel.setProperty("/marketTabColor", "Positive");
 				}
 				dealMemoDetailModel.refresh(true);
 				this.handleDmStatus(oData);
@@ -3155,7 +3172,7 @@ sap.ui.define([
 
 				if (dealMemoDetailInfo.Cnttp === "05") {
 					episodeList = dealMemoModel.getProperty("/matchList");
-								for (var i = 0; i < episodeData.length; i++) { //Added By Dhiraj For converting matid
+					for (var i = 0; i < episodeData.length; i++) { //Added By Dhiraj For converting matid
 						var epiidSplit = episodeData[i].Epinm.split("-");
 						episodeData[i].Epiid = epiidSplit[0].trim();
 						episodeData[i].Mvid = epiidSplit[0].trim();
@@ -5234,53 +5251,63 @@ sap.ui.define([
 			},
 			// load Revenue tab
 			loadRevenueTab: function() {
-					var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
+				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
-					sap.ui.core.BusyIndicator.show(0);
-				var bModel = this.getView().byId("Rev30Table").getModel();
-				var dmNo = dealMemoDetailInfo.Dmno
+				sap.ui.core.BusyIndicator.show(0);
+				var bModel = that.getView().byId("Rev30Table").getModel();
 				var srvUrl = "/sap/opu/odata/IBSCMS/DEALMEMO_SRV/";
 				var oModelSav = new sap.ui.model.odata.ODataModel(srvUrl, true, "", "");
-				var pValue = "/DmafSet(Tentid='IBS',Dmno='" + dmNo + "')";
+				var pValue = "/DmafSet(Tentid='IBS',Dmno='" + dmNo[0] + "')";
 				oModelSav.read(pValue, null, null, true, function(oData) {
 					sap.ui.core.BusyIndicator.hide();
-					dealMemoDetailModel.setProperty("/DmafSet", oData);
-					dealMemoDetailModel.refresh(true);
-				
-					
+					var oModel = new sap.ui.model.json.JSONModel(oData);
+					bModel.oData.results[1].sinput = oData.Avgbcrevamt;
+					bModel.oData.results[2].sinput = oData.Totavgbcrevamt;
+					bModel.oData.results[3].sinput = oData.Totothrevamt;
+					bModel.oData.results[0].sinput = oData.Noofslots;
+					bModel.oData.results[0].curr = bModel.oData.results[1].curr = bModel.oData.results[1].curr = bModel.oData.results[3].curr =
+						dealMemoDetailInfo.Waers ;
+					bModel.refresh();
 				}, function() {
 					sap.ui.core.BusyIndicator.hide();
-					
+					bModel.oData.results[1].sinput = dealMemoDetailInfo.Dmaf.Avgbcrevamt;
+					bModel.oData.results[2].sinput = dealMemoDetailInfo.Dmaf.Totavgbcrevamt;
+					bModel.oData.results[3].sinput = dealMemoDetailInfo.Dmaf.Totothrevamt;
+					bModel.oData.results[0].sinput = dealMemoDetailInfo.Dmaf.Noofslots;
+					bModel.oData.results[0].curr = dealMemoDetailInfo.Waers;
+					bModel.refresh();
 				});
 			},
 			loadMarketingTab: function() {
-					var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
+				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
-					sap.ui.core.BusyIndicator.show(0);
-				var bModel = this.getView().byId("marketTable").getModel();
-				var dmNo = dealMemoDetailInfo.Dmno
+				sap.ui.core.BusyIndicator.show(0);
+				var bModel = that.getView().byId("marketTable").getModel();
+				var dmNo = that.getDmNo();
 				var srvUrl = "/sap/opu/odata/IBSCMS/DEALMEMO_SRV/";
 				var oModelSav = new sap.ui.model.odata.ODataModel(srvUrl, true, "", "");
-				var pValue = "/DmafSet(Tentid='IBS',Dmno='" + dmNo + "')";
+				var pValue = "/DmafSet(Tentid='IBS',Dmno='" + dmNo[0] + "')";
 				oModelSav.read(pValue, null, null, true, function(oData) {
 					sap.ui.core.BusyIndicator.hide();
-					dealMemoDetailModel.setProperty("/DmafSet", oData);
-					dealMemoDetailModel.refresh(true);
-				
-					
+					bModel.oData.results[0].sinput = oData.Advoffairamt;
+					bModel.oData.results[0].curr = dealMemoDetailInfo.Waers;
+					bModel.refresh();
 				}, function() {
+					//	alert("fail");
 					sap.ui.core.BusyIndicator.hide();
-					
+					bModel.oData.results[0].sinput = dealMemoDetailInfo.Dmaf.Advoffairamt;
+					bModel.oData.results[0].curr = dealMemoDetailInfo.Waers;
+					bModel.refresh();
 				});
 			},
-				//ProgPL tab in dealmemo
+			//ProgPL tab in dealmemo
 			loadProgPL: function() {
-					var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
+				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
-					sap.ui.core.BusyIndicator.show(0);
-					var dmNo = dealMemoDetailInfo.Dmno
-				// this.getView().byId("idPl").setIconColor("Positive");
-				// this.getView().byId("btnSave").setEnabled(false);
+				sap.ui.core.BusyIndicator.show(0);
+				var dmNo = dealMemoDetailInfo.Dmno
+					// this.getView().byId("idPl").setIconColor("Positive");
+					// this.getView().byId("btnSave").setEnabled(false);
 				var intDataModelUrl = "/sap/opu/odata/IBSCMS/DEALMEMO_SRV/";
 				var oModelSav = new sap.ui.model.odata.ODataModel(intDataModelUrl, true, "", "");
 				var pValue = "/DmafSet(Tentid='IBS',Dmno='" + dmNo + "')"; //aModel.oData.Dmno
@@ -5291,130 +5318,130 @@ sap.ui.define([
 				}.bind(this), function() {});
 			},
 			calcProgPL: function(oData) {
-			sap.ui.core.BusyIndicator.show(0);
+				sap.ui.core.BusyIndicator.show(0);
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
-			// var coreModel = sap.ui.getCore().getModel("modelForDm");
-			var netbcrevag = +oData.Avgbcrevamt;
-			var slots = +oData.Noofslots;
-			var advoffair = +oData.Advoffairamt;
-			var totothrevamt = +oData.Totothrevamt;
-			var Estavgrtng = +oData.Estavgrtng;
-			var costamramt = +dealMemoDetailInfo.Amrtpercost; //CNTAMRTAMT
+				// var coreModel = sap.ui.getCore().getModel("modelForDm");
+				var netbcrevag = +oData.Avgbcrevamt;
+				var slots = +oData.Noofslots;
+				var advoffair = +oData.Advoffairamt;
+				var totothrevamt = +oData.Totothrevamt;
+				var Estavgrtng = +oData.Estavgrtng;
+				var costamramt = +dealMemoDetailInfo.Amrtpercost; //CNTAMRTAMT
 
-			if (dealMemoDetailInfo.Totdmamt != 0.000) {
-				var totalDmcost = dealMemoDetailInfo.Totdmamt; 
-				var val3 = totalDmcost;
-				val3 = val3.toString();
-				val3 = Number(val3.replace(/[^0-9\.]+/g, ""));
-				totalDmcost = val3;
-			} else {
-				var totalDmcost = dealMemoDetailInfo.Totdmamt;
-				var val3 = totalDmcost;
-				val3 = val3.toString();
-				val3 = Number(val3.replace(/[^0-9\.]+/g, ""));
-				totalDmcost = val3;
-			}
-			//Per 30 min
-			var bModel = this.getView().byId("prog30Table").getModel();
-			var netOthrev = totothrevamt / slots;
-			var amrContCost = totalDmcost / slots * costamramt; //totDmCost/slots*Amrtpercost 
-			var contbefoffair = (netbcrevag + netOthrev) - amrContCost; //CNTAMRTAMT
-			var lessmakt = advoffair / slots;
-			var contaftoffair = contbefoffair - lessmakt;
-			var contper = (contaftoffair / netbcrevag) * 100;
+				if (dealMemoDetailInfo.Totdmamt != 0.000) {
+					var totalDmcost = dealMemoDetailInfo.Totdmamt;
+					var val3 = totalDmcost;
+					val3 = val3.toString();
+					val3 = Number(val3.replace(/[^0-9\.]+/g, ""));
+					totalDmcost = val3;
+				} else {
+					var totalDmcost = dealMemoDetailInfo.Totdmamt;
+					var val3 = totalDmcost;
+					val3 = val3.toString();
+					val3 = Number(val3.replace(/[^0-9\.]+/g, ""));
+					totalDmcost = val3;
+				}
+				//Per 30 min
+				var bModel = this.getView().byId("prog30Table").getModel();
+				var netOthrev = totothrevamt / slots;
+				var amrContCost = totalDmcost / slots * costamramt; //totDmCost/slots*Amrtpercost 
+				var contbefoffair = (netbcrevag + netOthrev) - amrContCost; //CNTAMRTAMT
+				var lessmakt = advoffair / slots;
+				var contaftoffair = contbefoffair - lessmakt;
+				var contper = (contaftoffair / netbcrevag) * 100;
 
-			netbcrevag = netbcrevag.toFixed(2);
-			netOthrev = netOthrev.toFixed(2);
-			amrContCost = amrContCost.toFixed(2);
-			contbefoffair = contbefoffair.toFixed(2);
-			lessmakt = lessmakt.toFixed(2);
-			contaftoffair = contaftoffair.toFixed(2);
-			contper = contper.toFixed(2);
+				netbcrevag = netbcrevag.toFixed(2);
+				netOthrev = netOthrev.toFixed(2);
+				amrContCost = amrContCost.toFixed(2);
+				contbefoffair = contbefoffair.toFixed(2);
+				lessmakt = lessmakt.toFixed(2);
+				contaftoffair = contaftoffair.toFixed(2);
+				contper = contper.toFixed(2);
 
-			bModel.oData.results[0].sinput1 = netbcrevag;
-			bModel.oData.results[1].sinput1 = netOthrev;
-			bModel.oData.results[2].sinput1 = amrContCost;
-			bModel.oData.results[3].sinput1 = contbefoffair;
-			bModel.oData.results[4].sinput1 = lessmakt;
-			bModel.oData.results[5].sinput1 = contaftoffair;
-			bModel.oData.results[6].sinput1 = contper;
-			bModel.oData.results[0].curr = oData.Waers;
-			bModel.oData.results[1].curr = bModel.oData.results[2].curr = bModel.oData.results[0].curr;
-			bModel.oData.results[3].curr = bModel.oData.results[4].curr = bModel.oData.results[0].curr;
-			bModel.oData.results[5].curr = bModel.oData.results[6].curr = bModel.oData.results[0].curr;
-			/*---------------------------slot budgets for per 30 min----------------------------------------*/
-			var slotbudavgbcrevamt = +oData.Avgbcrevamt; // +oData.Budavgbcrevamt;
-			var slotbudnetothrev = +oData.Totothrevamt / slots; //Budtotothvamt
-			var slotbudcontamrcost = +oData.Budcashamt * costamramt;
-			var slotbudcontrbef = (slotbudavgbcrevamt + slotbudnetothrev) - slotbudcontamrcost;
-			var slotbudlessmakt = advoffair / slots;
-			var slotbudcontraft = slotbudcontrbef - slotbudlessmakt;
-			var slotbudcontper = (slotbudcontraft / slotbudavgbcrevamt) * 100;
+				bModel.oData.results[0].sinput1 = netbcrevag;
+				bModel.oData.results[1].sinput1 = netOthrev;
+				bModel.oData.results[2].sinput1 = amrContCost;
+				bModel.oData.results[3].sinput1 = contbefoffair;
+				bModel.oData.results[4].sinput1 = lessmakt;
+				bModel.oData.results[5].sinput1 = contaftoffair;
+				bModel.oData.results[6].sinput1 = contper;
+				bModel.oData.results[0].curr = oData.Waers;
+				bModel.oData.results[1].curr = bModel.oData.results[2].curr = bModel.oData.results[0].curr;
+				bModel.oData.results[3].curr = bModel.oData.results[4].curr = bModel.oData.results[0].curr;
+				bModel.oData.results[5].curr = bModel.oData.results[6].curr = bModel.oData.results[0].curr;
+				/*---------------------------slot budgets for per 30 min----------------------------------------*/
+				var slotbudavgbcrevamt = +oData.Avgbcrevamt; // +oData.Budavgbcrevamt;
+				var slotbudnetothrev = +oData.Totothrevamt / slots; //Budtotothvamt
+				var slotbudcontamrcost = +oData.Budcashamt * costamramt;
+				var slotbudcontrbef = (slotbudavgbcrevamt + slotbudnetothrev) - slotbudcontamrcost;
+				var slotbudlessmakt = advoffair / slots;
+				var slotbudcontraft = slotbudcontrbef - slotbudlessmakt;
+				var slotbudcontper = (slotbudcontraft / slotbudavgbcrevamt) * 100;
 
-			slotbudavgbcrevamt = slotbudavgbcrevamt.toFixed(2);
-			slotbudnetothrev = slotbudnetothrev.toFixed(2);
-			slotbudcontamrcost = slotbudcontamrcost.toFixed(2);
-			slotbudcontrbef = slotbudcontrbef.toFixed(2);
-			slotbudlessmakt = slotbudlessmakt.toFixed(2);
-			slotbudcontraft = slotbudcontraft.toFixed(2);
-			slotbudcontper = slotbudcontper.toFixed(2);
+				slotbudavgbcrevamt = slotbudavgbcrevamt.toFixed(2);
+				slotbudnetothrev = slotbudnetothrev.toFixed(2);
+				slotbudcontamrcost = slotbudcontamrcost.toFixed(2);
+				slotbudcontrbef = slotbudcontrbef.toFixed(2);
+				slotbudlessmakt = slotbudlessmakt.toFixed(2);
+				slotbudcontraft = slotbudcontraft.toFixed(2);
+				slotbudcontper = slotbudcontper.toFixed(2);
 
-			bModel.oData.results[0].sinput2 = slotbudavgbcrevamt;
-			bModel.oData.results[1].sinput2 = slotbudnetothrev;
-			bModel.oData.results[2].sinput2 = amrContCost //slotbudcontamrcost;
-			bModel.oData.results[3].sinput2 = slotbudcontrbef;
-			bModel.oData.results[4].sinput2 = slotbudlessmakt;
-			bModel.oData.results[5].sinput2 = slotbudcontraft;
-			bModel.oData.results[6].sinput2 = slotbudcontper;
+				bModel.oData.results[0].sinput2 = slotbudavgbcrevamt;
+				bModel.oData.results[1].sinput2 = slotbudnetothrev;
+				bModel.oData.results[2].sinput2 = amrContCost //slotbudcontamrcost;
+				bModel.oData.results[3].sinput2 = slotbudcontrbef;
+				bModel.oData.results[4].sinput2 = slotbudlessmakt;
+				bModel.oData.results[5].sinput2 = slotbudcontraft;
+				bModel.oData.results[6].sinput2 = slotbudcontper;
 
-			bModel.refresh();
+				bModel.refresh();
 
-			//per TRP
-			var cModel = this.getView().byId("progTRPTable").getModel();
+				//per TRP
+				var cModel = this.getView().byId("progTRPTable").getModel();
 
-			var netrevaftcomm = netbcrevag / Estavgrtng;
-			var amrcontcosttrp = (totalDmcost / slots * costamramt) / Estavgrtng;
-			var contrbefoffairTrp = netrevaftcomm - amrcontcosttrp;
-			var lessmaktTrp = (advoffair / slots) / Estavgrtng;
-			var contaftairmktTrp = contrbefoffairTrp - lessmaktTrp;
+				var netrevaftcomm = netbcrevag / Estavgrtng;
+				var amrcontcosttrp = (totalDmcost / slots * costamramt) / Estavgrtng;
+				var contrbefoffairTrp = netrevaftcomm - amrcontcosttrp;
+				var lessmaktTrp = (advoffair / slots) / Estavgrtng;
+				var contaftairmktTrp = contrbefoffairTrp - lessmaktTrp;
 
-			netrevaftcomm = netrevaftcomm.toFixed(2);
-			amrcontcosttrp = amrcontcosttrp.toFixed(2);
-			contrbefoffairTrp = contrbefoffairTrp.toFixed(2);
-			lessmaktTrp = lessmaktTrp.toFixed(2);
-			contaftairmktTrp = contaftairmktTrp.toFixed(2);
+				netrevaftcomm = netrevaftcomm.toFixed(2);
+				amrcontcosttrp = amrcontcosttrp.toFixed(2);
+				contrbefoffairTrp = contrbefoffairTrp.toFixed(2);
+				lessmaktTrp = lessmaktTrp.toFixed(2);
+				contaftairmktTrp = contaftairmktTrp.toFixed(2);
 
-			cModel.oData.results[0].sinput1 = netrevaftcomm;
-			cModel.oData.results[1].sinput1 = amrcontcosttrp;
-			cModel.oData.results[2].sinput1 = contrbefoffairTrp;
-			cModel.oData.results[3].sinput1 = lessmaktTrp;
-			cModel.oData.results[4].sinput1 = contaftairmktTrp;
+				cModel.oData.results[0].sinput1 = netrevaftcomm;
+				cModel.oData.results[1].sinput1 = amrcontcosttrp;
+				cModel.oData.results[2].sinput1 = contrbefoffairTrp;
+				cModel.oData.results[3].sinput1 = lessmaktTrp;
+				cModel.oData.results[4].sinput1 = contaftairmktTrp;
 
-			/*---------------------------slot budgets for per 30 min----------------------------------------*/
-			var slotnetrevaftcommTrp = +oData.Avgbcrevamt / +oData.Budavgrtng; //+oData.Budavgbcrevamt / +oData.Budavgrtng;
-			var slotbudcontcostTrp = (+oData.Budcashamt * costamramt) / +oData.Budavgrtng;
-			var slotbudcontribefTrp = slotnetrevaftcommTrp - slotbudcontcostTrp;
-			var slotbudlessmaktTrp = (advoffair / slots) / +oData.Budavgrtng;
-			var slotbudcontraftTrp = slotbudcontribefTrp - slotbudlessmaktTrp;
+				/*---------------------------slot budgets for per 30 min----------------------------------------*/
+				var slotnetrevaftcommTrp = +oData.Avgbcrevamt / +oData.Budavgrtng; //+oData.Budavgbcrevamt / +oData.Budavgrtng;
+				var slotbudcontcostTrp = (+oData.Budcashamt * costamramt) / +oData.Budavgrtng;
+				var slotbudcontribefTrp = slotnetrevaftcommTrp - slotbudcontcostTrp;
+				var slotbudlessmaktTrp = (advoffair / slots) / +oData.Budavgrtng;
+				var slotbudcontraftTrp = slotbudcontribefTrp - slotbudlessmaktTrp;
 
-			slotnetrevaftcommTrp = slotnetrevaftcommTrp.toFixed(2);
-			slotbudcontcostTrp = slotbudcontcostTrp.toFixed(2);
-			slotbudcontribefTrp = slotbudcontribefTrp.toFixed(2);
-			slotbudlessmaktTrp = slotbudlessmaktTrp.toFixed(2);
-			slotbudcontraftTrp = slotbudcontraftTrp.toFixed(2);
+				slotnetrevaftcommTrp = slotnetrevaftcommTrp.toFixed(2);
+				slotbudcontcostTrp = slotbudcontcostTrp.toFixed(2);
+				slotbudcontribefTrp = slotbudcontribefTrp.toFixed(2);
+				slotbudlessmaktTrp = slotbudlessmaktTrp.toFixed(2);
+				slotbudcontraftTrp = slotbudcontraftTrp.toFixed(2);
 
-			cModel.oData.results[0].sinput2 = slotnetrevaftcommTrp;
-			cModel.oData.results[1].sinput2 = amrcontcosttrp //slotbudcontcostTrp;
-			cModel.oData.results[2].sinput2 = slotbudcontribefTrp;
-			cModel.oData.results[3].sinput2 = slotbudlessmaktTrp;
-			cModel.oData.results[4].sinput2 = slotbudcontraftTrp;
-			cModel.oData.results[0].curr = oData.Waers;
-			cModel.oData.results[1].curr = cModel.oData.results[2].curr = cModel.oData.results[0].curr;
-			cModel.oData.results[3].curr = cModel.oData.results[4].curr = cModel.oData.results[0].curr;
-			cModel.refresh();
-			sap.ui.core.BusyIndicator.hide();
-		},
+				cModel.oData.results[0].sinput2 = slotnetrevaftcommTrp;
+				cModel.oData.results[1].sinput2 = amrcontcosttrp //slotbudcontcostTrp;
+				cModel.oData.results[2].sinput2 = slotbudcontribefTrp;
+				cModel.oData.results[3].sinput2 = slotbudlessmaktTrp;
+				cModel.oData.results[4].sinput2 = slotbudcontraftTrp;
+				cModel.oData.results[0].curr = oData.Waers;
+				cModel.oData.results[1].curr = cModel.oData.results[2].curr = cModel.oData.results[0].curr;
+				cModel.oData.results[3].curr = cModel.oData.results[4].curr = cModel.oData.results[0].curr;
+				cModel.refresh();
+				sap.ui.core.BusyIndicator.hide();
+			},
 			/************** Vendor Contract Code ********************/
 			toVendorContractCreate: function() {
 				var oRouter = this.getOwnerComponent().getRouter();
@@ -5439,7 +5466,7 @@ sap.ui.define([
 					"Contver": oContractItem.Contver
 				});
 			},
-		
+
 			/************** Vendor Contract Code *******************/
 
 			/*********** Artist Contract *******************/
