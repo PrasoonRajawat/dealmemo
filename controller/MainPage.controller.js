@@ -1085,8 +1085,10 @@ sap.ui.define([
 				} else if (mainSelectedKey == "makt") {
 					this.loadMarketingTab();
 				} else if (mainSelectedKey == "progPL") {
-				var progModel = new sap.ui.model.json.JSONModel(jQuery.sap.getModulePath("Dealmemoappln.json", "/prog30Tab.json"));
-				var progTRPModel = new sap.ui.model.json.JSONModel(jQuery.sap.getModulePath("Dealmemoappln.json", "/progTRPTab.json"));
+				var progModel = new sap.ui.model.json.JSONModel(jQuery.sap.getModulePath("com.ui.dealmemolocal.json", "/prog30Tab.json"));
+				var progTRPModel = new sap.ui.model.json.JSONModel(jQuery.sap.getModulePath("com.ui.dealmemolocal.json", "/progTRPTab.json"));
+				this.getView().byId("prog30Table").setModel(progModel);
+				this.getView().byId("progTRPTable").setModel(progTRPModel);
 					this.loadProgPL();
 				}
 
