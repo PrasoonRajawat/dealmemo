@@ -5273,44 +5273,20 @@ sap.ui.define([
 					
 				});
 			},
-			/************** Vendor Contract Code ********************/
-			toVendorContractCreate: function() {
-				var oRouter = this.getOwnerComponent().getRouter();
-				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
-				var dealMemoDetailInfo = dealMemoDetailModel.getData();
-				oRouter.navTo("VendorContract", {
-					"Dmno": dealMemoDetailInfo.Dmno,
-					"Dmver": dealMemoDetailInfo.Dmver,
-					"Contno": "new",
-					"Contver": "new"
-				});
-			},
-			toVendorContractDisplay: function(oEvent) {
-				var oRouter = this.getOwnerComponent().getRouter();
-				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
-				var dealMemoDetailInfo = dealMemoDetailModel.getData();
-				var oContractItem = oEvent.getParameters()['listItem'].getBindingContext("dealMemoDetailModel").getObject();
-				oRouter.navTo("VendorContract", {
-					"Dmno": dealMemoDetailInfo.Dmno,
-					"Dmver": dealMemoDetailInfo.Dmver,
-					"Contno": oContractItem.Contno,
-					"Contver": oContractItem.Contver
-				});
-			},
-			//ProgPL tab in dealmemo
+				//ProgPL tab in dealmemo
 			loadProgPL: function() {
 					var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
 					sap.ui.core.BusyIndicator.show(0);
 					var dmNo = dealMemoDetailInfo.Dmno
-				// that.getView().byId("idPl").setIconColor("Positive");
-				// that.getView().byId("btnSave").setEnabled(false);
+				// this.getView().byId("idPl").setIconColor("Positive");
+				// this.getView().byId("btnSave").setEnabled(false);
 				var intDataModelUrl = "/sap/opu/odata/IBSCMS/DEALMEMO_SRV/";
 				var oModelSav = new sap.ui.model.odata.ODataModel(intDataModelUrl, true, "", "");
 				var pValue = "/DmafSet(Tentid='IBS',Dmno='" + dmNo + "')"; //aModel.oData.Dmno
 				oModelSav.read(pValue, null, null, true, function(oData) {
 					sap.ui.core.BusyIndicator.hide();
-					that.calcProgPL(oData);
+					this.calcProgPL(oData);
 
 				}, function() {});
 			},
@@ -5331,14 +5307,14 @@ sap.ui.define([
 			// 	val3 = Number(val3.replace(/[^0-9\.]+/g, ""));
 			// 	totalDmcost = val3;
 			// } else {
-			// 	var totalDmcost = that.getView().byId("totalCost").getText();
+			// 	var totalDmcost = this.getView().byId("totalCost").getText();
 			// 	var val3 = totalDmcost;
 			// 	val3 = val3.toString();
 			// 	val3 = Number(val3.replace(/[^0-9\.]+/g, ""));
 			// 	totalDmcost = val3;
 			// }
 			//Per 30 min
-			var bModel = that.getView().byId("prog30Table").getModel();
+			var bModel = this.getView().byId("prog30Table").getModel();
 			var netOthrev = totothrevamt / slots;
 			var amrContCost = totalDmcost / slots * costamramt; //totDmCost/slots*Amrtpercost 
 			var contbefoffair = (netbcrevag + netOthrev) - amrContCost; //CNTAMRTAMT
@@ -5393,7 +5369,7 @@ sap.ui.define([
 			bModel.refresh();
 
 			//per TRP
-			var cModel = that.getView().byId("progTRPTable").getModel();
+			var cModel = this.getView().byId("progTRPTable").getModel();
 
 			var netrevaftcomm = netbcrevag / Estavgrtng;
 			var amrcontcosttrp = (totalDmcost / slots * costamramt) / Estavgrtng;
@@ -5437,6 +5413,31 @@ sap.ui.define([
 			cModel.refresh();
 			sap.ui.core.BusyIndicator.hide();
 		},
+			/************** Vendor Contract Code ********************/
+			toVendorContractCreate: function() {
+				var oRouter = this.getOwnerComponent().getRouter();
+				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
+				var dealMemoDetailInfo = dealMemoDetailModel.getData();
+				oRouter.navTo("VendorContract", {
+					"Dmno": dealMemoDetailInfo.Dmno,
+					"Dmver": dealMemoDetailInfo.Dmver,
+					"Contno": "new",
+					"Contver": "new"
+				});
+			},
+			toVendorContractDisplay: function(oEvent) {
+				var oRouter = this.getOwnerComponent().getRouter();
+				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
+				var dealMemoDetailInfo = dealMemoDetailModel.getData();
+				var oContractItem = oEvent.getParameters()['listItem'].getBindingContext("dealMemoDetailModel").getObject();
+				oRouter.navTo("VendorContract", {
+					"Dmno": dealMemoDetailInfo.Dmno,
+					"Dmver": dealMemoDetailInfo.Dmver,
+					"Contno": oContractItem.Contno,
+					"Contver": oContractItem.Contver
+				});
+			},
+		
 			/************** Vendor Contract Code *******************/
 
 			/*********** Artist Contract *******************/
