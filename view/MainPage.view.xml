@@ -107,7 +107,7 @@
 									<IconTabFilter id="idRev30" key="rev30" text="{i18n>IcnTbFlt_Revper30min}" icon="sap-icon://history" class="sapMITBHead" 
 									enabled="{dealMemoDetailModel>/revenueTabEnable}"	iconColor="{path:'dealMemoDetailModel>/revenueTabColor'}" design="Horizontal" visible="{= ${dealMemoDetailModel>/Dmno} !== '' ? true : false }" >
 									<content>
-										<Table id="Rev30Table" enabled="{path:'dealMemoDetailModel>/Dmst',formatter:'.Formatter.formatEditableStatus'}" >
+										<Table id="Rev30Table">
 											<columns>
 												<Column width="70%">
 													<ObjectIdentifier title=""/>
@@ -149,7 +149,7 @@
 									<IconTabFilter id="idMarketing" key="makt" text="{i18n>IcnTbFlt_MarketBudget}" icon="sap-icon://marketing-campaign" class="sapMITBHead" 
 									enabled="{dealMemoDetailModel>/marketTabEnable}" iconColor="{path:'dealMemoDetailModel>/marketTabColor'}" design="Horizontal" visible="{= ${dealMemoDetailModel>/Dmno} !== '' ? true : false }">
 									<content>
-										<Table id="marketTable" enabled="{path:'dealMemoDetailModel>/Dmst',formatter:'.Formatter.formatEditableStatus'}">
+										<Table id="marketTable">
 											<columns>
 												<Column width="70%">
 													<ObjectIdentifier title=""/>
@@ -172,7 +172,7 @@
 								</IconTabFilter>
 								
 								<IconTabFilter id="idPl" key="progPL" text="{i18n>IcnTbFlt_ProgPandL}" icon="sap-icon://loan" class="sapMITBHead" iconColor="Critical"
-										enabled="{dealMemoDetailModel>/progTabEnable}"	iconColor="{path:'dealMemoDetailModel>/progTabColor'}" design="Horizontal" visible="{= ${dealMemoDetailModel>/Dmno} !== '' ? true : false }">
+									design="Horizontal">
 									<content>
 										<Table id="prog30Table" items="{/results}">
 											<columns>
