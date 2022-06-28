@@ -5302,19 +5302,19 @@ sap.ui.define([
 			var Estavgrtng = +oData.Estavgrtng;
 			var costamramt = +dealMemoDetailInfo.Amrtpercost; //CNTAMRTAMT
 
-			// if (sap.ui.getCore().getModel("modelForDm").oData.Totdmamt != 0.000) {
-			// 	var totalDmcost = sap.ui.getCore().getModel("modelForDm").oData.Totdmamt;
-			// 	var val3 = totalDmcost;
-			// 	val3 = val3.toString();
-			// 	val3 = Number(val3.replace(/[^0-9\.]+/g, ""));
-			// 	totalDmcost = val3;
-			// } else {
-			// 	var totalDmcost = this.getView().byId("totalCost").getText();
-			// 	var val3 = totalDmcost;
-			// 	val3 = val3.toString();
-			// 	val3 = Number(val3.replace(/[^0-9\.]+/g, ""));
-			// 	totalDmcost = val3;
-			// }
+			if (dealMemoDetailInfo.Totdmamt != 0.000) {
+				var totalDmcost = dealMemoDetailInfo.Totdmamt; 
+				var val3 = totalDmcost;
+				val3 = val3.toString();
+				val3 = Number(val3.replace(/[^0-9\.]+/g, ""));
+				totalDmcost = val3;
+			} else {
+				var totalDmcost = dealMemoDetailInfo.Totdmamt;
+				var val3 = totalDmcost;
+				val3 = val3.toString();
+				val3 = Number(val3.replace(/[^0-9\.]+/g, ""));
+				totalDmcost = val3;
+			}
 			//Per 30 min
 			var bModel = this.getView().byId("prog30Table").getModel();
 			var netOthrev = totothrevamt / slots;
