@@ -5291,14 +5291,16 @@ sap.ui.define([
 				}.bind(this), function() {});
 			},
 			calcProgPL: function(oData) {
-			sap.ui.core.BusyIndicator.show(0);
+			sap.ui.core.BusyIndicator.show(0
+				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
+				var dealMemoDetailInfo = dealMemoDetailModel.getData();
 			// var coreModel = sap.ui.getCore().getModel("modelForDm");
 			var netbcrevag = +oData.Avgbcrevamt;
 			var slots = +oData.Noofslots;
 			var advoffair = +oData.Advoffairamt;
 			var totothrevamt = +oData.Totothrevamt;
 			var Estavgrtng = +oData.Estavgrtng;
-			var costamramt = +coreModel.oData.Amrtpercost; //CNTAMRTAMT
+			var costamramt = +dealMemoDetailInfo.Amrtpercost; //CNTAMRTAMT
 
 			// if (sap.ui.getCore().getModel("modelForDm").oData.Totdmamt != 0.000) {
 			// 	var totalDmcost = sap.ui.getCore().getModel("modelForDm").oData.Totdmamt;
