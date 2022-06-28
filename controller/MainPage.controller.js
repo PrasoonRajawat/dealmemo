@@ -1085,7 +1085,7 @@ sap.ui.define([
 					this.getView().byId("Rev30Table").setModel(orev30Model);
 					this.loadRevenueTab();
 				} else if (mainSelectedKey == "makt") {
-					var txt_makt = that._oResourceBundle.getText("txt_advcostoffair");
+					var txt_makt = this._oResourceBundle.getText("txt_advcostoffair");
 					var maktData = {
 						"results": [{
 							"skey": txt_makt,
@@ -5254,7 +5254,7 @@ sap.ui.define([
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
 				sap.ui.core.BusyIndicator.show(0);
-				var bModel = that.getView().byId("Rev30Table").getModel();
+				var bModel = this.getView().byId("Rev30Table").getModel();
 				var srvUrl = "/sap/opu/odata/IBSCMS/DEALMEMO_SRV/";
 				var oModelSav = new sap.ui.model.odata.ODataModel(srvUrl, true, "", "");
 				var pValue = "/DmafSet(Tentid='IBS',Dmno='" + dmNo[0] + "')";
@@ -5282,8 +5282,8 @@ sap.ui.define([
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
 				sap.ui.core.BusyIndicator.show(0);
-				var bModel = that.getView().byId("marketTable").getModel();
-				var dmNo = that.getDmNo();
+				var bModel = this.getView().byId("marketTable").getModel();
+				var dmNo = this.getDmNo();
 				var srvUrl = "/sap/opu/odata/IBSCMS/DEALMEMO_SRV/";
 				var oModelSav = new sap.ui.model.odata.ODataModel(srvUrl, true, "", "");
 				var pValue = "/DmafSet(Tentid='IBS',Dmno='" + dmNo[0] + "')";
