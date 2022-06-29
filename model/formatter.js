@@ -112,7 +112,7 @@ sap.ui.define([
         	   
            },
            formatEditableStatus:function(Dmst){
-        	   if(Dmst === "01" || Dmst === undefined || Dmst === "" || Dmst === null || Dmst === "04"){
+        	   if(Dmst === "01" || Dmst === undefined || Dmst === "" || Dmst === null ){
         		   return true;
         	   }
         	   else{
@@ -120,7 +120,7 @@ sap.ui.define([
         	   }
            },
             formatEditableContStatus:function(Contstat){
-        	   if(Contstat === "01" || Contstat === undefined || Contstat === "" || Contstat === null ){
+        	   if(Contstat === "01" || Contstat === undefined || Contstat === "" || Contstat === null || Contstat === "04" ){
         		   return true;
         	   }
         	   else{
