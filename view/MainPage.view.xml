@@ -241,7 +241,7 @@
 															<ToolbarSpacer/>
 															<Button id="synopsisBtn" icon="sap-icon://edit" press="oneditSynopsis"  ariaLabelledBy="editButtonLabel"/>
 														</Toolbar>
-														<TextArea id="synopsisTxt" rows="7" width="100%" visible="false"></TextArea>
+														<TextArea id="synopsisTxt" rows="7" width="100%"></TextArea>
 														<List id="synopsisFeed" showSeparators="Inner" items="{/EntryCollection}">
 															<CustomListItem>
 																<HBox>
