@@ -1,3 +1,4 @@
+var that = null;
 sap.ui.define([
 		"sap/ui/core/mvc/Controller",
 		"sap/ui/model/Filter",
@@ -18,6 +19,7 @@ sap.ui.define([
 		return Controller.extend("com.ui.dealmemolocal.controller.MainPage", {
 			Formatter: Formatter,
 			onInit: function() {
+				that = this;
 				var oModel = new sap.ui.model.json.JSONModel();
 				this.getView().setModel(oModel, "dealMemoModel");
 
@@ -5364,7 +5366,7 @@ sap.ui.define([
 					if (oData.Dmno == "") {
 						sap.ui.core.BusyIndicator.show(0);
 						// var aModel = this.getView().byId("mLabel").getModel();
-						var bModel = this.getView().byId("Rev30Table").getModel();
+						var bModel = that.getView().byId("Rev30Table").getModel();
 						oData.Tentid = "IBS";
 						var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 						var dealMemoDetailInfo = dealMemoDetailModel.getData();
@@ -5410,7 +5412,7 @@ sap.ui.define([
 								}
 							});
 					} else {
-						var bModel = this.getView().byId("Rev30Table").getModel();
+						var bModel = that.getView().byId("Rev30Table").getModel();
 						if (oData.Avgbcrevamt == bModel.oData.results[1].sinput && oData.Totothrevamt == bModel.oData.results[3].sinput) {
 							sap.m.MessageBox.show(this.getView().getModel("i18n").getText("msg_alreadysave"), {
 								icon: sap.m.MessageBox.Icon.ERROR,
@@ -5432,7 +5434,7 @@ sap.ui.define([
 							var pValue = "/DmafSet(Tentid='IBS',Dmno='" + oData.Dmno + "')";
 							oModelSav.update(pValue, oData, null, function() {
 									sap.ui.core.BusyIndicator.hide();
-									this.getView().byId("idRev30").setIconColor("Positive");
+									// this.getView().byId("idRev30").setIconColor("Positive");
 									// this.BudgEnable();
 									sap.m.MessageToast.show(this.getView().getModel("i18n").getText("msg_revper30upd"));
 								},
