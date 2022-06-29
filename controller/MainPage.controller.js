@@ -5263,7 +5263,7 @@ function(Controller, Filter, FilterOperator, Formatter, MessageBox, MessageToast
 				var dmNo = dealMemoDetailInfo.Dmno
 				var srvUrl = "/sap/opu/odata/IBSCMS/DEALMEMO_SRV/";
 				var oModelSav = new sap.ui.model.odata.ODataModel(srvUrl, true, "", "");
-				var pValue = "/DmafSet(Tentid='IBS',Dmno='" + dmNo[0] + "')";
+				var pValue = "/DmafSet(Tentid='IBS',Dmno='" + dmNo + "')";
 				oModelSav.read(pValue, null, null, true, function(oData) {
 					sap.ui.core.BusyIndicator.hide();
 					var oModel = new sap.ui.model.json.JSONModel(oData);
@@ -5331,7 +5331,7 @@ function(Controller, Filter, FilterOperator, Formatter, MessageBox, MessageToast
 				if (bModel.oData.results[1].sinput !== "" && bModel.oData.results[1].sinput !== "0.00" && bModel.oData.results[3].sinput !== "" &&
 					bModel.oData.results[3].sinput !== "0.00" && state1 === "None" && state2 === "None") {
 					// var aModel = this.getView().byId("mLabel").getModel();
-					var pValue = "/DmafSet(Tentid='IBS',Dmno='" + dmNo[0] + "')";
+					var pValue = "/DmafSet(Tentid='IBS',Dmno='" + dmNo + "')";
 					oModelSave.read(pValue, null, null, true, dSuccRev30, eFailRev30);
 
 				} else {
@@ -5364,8 +5364,10 @@ function(Controller, Filter, FilterOperator, Formatter, MessageBox, MessageToast
 						// var aModel = this.getView().byId("mLabel").getModel();
 						var bModel = this.getView().byId("Rev30Table").getModel();
 						oData.Tentid = "IBS";
-						var dmNo = this.getDmNo();
-						oData.Dmno = dmNo[0];
+							var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
+				var dealMemoDetailInfo = dealMemoDetailModel.getData();
+				var dmNo = dealMemoDetailInfo.Dmno;
+						oData.Dmno = dmNo;
 						oData.Avgbcrevamt = bModel.oData.results[1].sinput.toString();
 						oData.Totavgbcrevamt = bModel.oData.results[2].sinput.toString();
 						oData.Totothrevamt = bModel.oData.results[3].sinput.toString();
@@ -5491,7 +5493,9 @@ function(Controller, Filter, FilterOperator, Formatter, MessageBox, MessageToast
 						var aModel = this.getView().byId("mLabel").getModel();
 						var bModel = this.getView().byId("marketTable").getModel();
 						oData.Tentid = "IBS";
-						oData.Dmno = dmNo[0];
+						var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
+				var dealMemoDetailInfo = dealMemoDetailModel.getData();
+				var dmNo = dealMemoDetailInfo.Dmno;
 						oData.Advoffairamt = bModel.oData.results[0].sinput;
 						oData.Advoffairamt = oData.Advoffairamt.toString();
 						//	var oModelSave = new sap.ui.model.odata.ODataModel(intDataModelUrl, true, "", "");
@@ -5604,7 +5608,7 @@ function(Controller, Filter, FilterOperator, Formatter, MessageBox, MessageToast
 			var dmNo = dealMemoDetailInfo.Dmno
 			var srvUrl = "/sap/opu/odata/IBSCMS/DEALMEMO_SRV/";
 			var oModelSav = new sap.ui.model.odata.ODataModel(srvUrl, true, "", "");
-			var pValue = "/DmafSet(Tentid='IBS',Dmno='" + dmNo[0] + "')";
+			var pValue = "/DmafSet(Tentid='IBS',Dmno='" + dmNo + "')";
 			oModelSav.read(pValue, null, null, true, function(oData) {
 				sap.ui.core.BusyIndicator.hide();
 				if (bModel.oData.results.length > 0) {
