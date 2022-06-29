@@ -5478,6 +5478,8 @@ function(Controller, Filter, FilterOperator, Formatter, MessageBox, MessageToast
 		var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
 				var dmNo = dealMemoDetailInfo.Dmno;
+					var srvUrl = "/sap/opu/odata/IBSCMS/DEALMEMO_SRV/";
+			var oModelSave = new sap.ui.model.odata.ODataModel(srvUrl, true, "", "");
 			var state = this.getView().byId("marketTable").getItems()[0].getCells()[1].getValueState();
 			var bModel = this.getView().byId("marketTable").getModel();
 			if (bModel.oData.results[0].sinput !== "" && bModel.oData.results[0].sinput !== "0.00" && state == "None") {
