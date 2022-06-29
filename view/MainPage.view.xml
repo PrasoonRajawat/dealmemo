@@ -214,7 +214,7 @@
 								</IconTabFilter>
 								
 									<IconTabFilter id="comment" key="comment" text="{i18n>IcnTbFlt_Cmnts}" icon="sap-icon://comment" class="sapMITBHead" iconColor="Critical"
-									design="Horizontal" visible="false">
+									design="Horizontal">
 									<content>
 										<IconTabBar id="commentInner" expandable="true" expanded="true" visible="true" setSelectedKey="synopsis" select="oncommentInnerSelect">
 											<items>
@@ -223,10 +223,10 @@
 														<Toolbar>
 															<ObjectIdentifier title="{i18n>ObjIden_Cncpt}" class="sapUiSmallMarginTop sapUiTinyMarginBottom"/>
 															<ToolbarSpacer/>
-															<Button id="conceptBtn" icon="sap-icon://edit" press="oneditSynopsis" enabled="false" ariaLabelledBy="editButtonLabel"/>
+															<Button id="conceptBtn" icon="sap-icon://edit" press="oneditSynopsis"  ariaLabelledBy="editButtonLabel"/>
 														</Toolbar>
-														<TextArea id="conceptTxt" rows="7" width="100%" visible="false"></TextArea>
-														<List id="conceptFeed" showSeparators="Inner" items="{/EntryCollection}" visible="false">
+														<TextArea id="conceptTxt" rows="7" width="100%" ></TextArea>
+														<List id="conceptFeed" showSeparators="Inner" items="{/EntryCollection}">
 															<CustomListItem>
 																<HBox>
 																	<VBox class="sapUiSmallMarginTop sapUiTinyMarginBottom">
@@ -239,10 +239,10 @@
 														<Toolbar>
 															<ObjectIdentifier title="{i18n>ObjIden_Synopsis}" class="sapUiSmallMarginTop sapUiTinyMarginBottom"/>
 															<ToolbarSpacer/>
-															<Button id="synopsisBtn" icon="sap-icon://edit" press="oneditSynopsis" enabled="false" ariaLabelledBy="editButtonLabel"/>
+															<Button id="synopsisBtn" icon="sap-icon://edit" press="oneditSynopsis"  ariaLabelledBy="editButtonLabel"/>
 														</Toolbar>
 														<TextArea id="synopsisTxt" rows="7" width="100%" visible="false"></TextArea>
-														<List id="synopsisFeed" showSeparators="Inner" items="{/EntryCollection}" visible="false">
+														<List id="synopsisFeed" showSeparators="Inner" items="{/EntryCollection}">
 															<CustomListItem>
 																<HBox>
 																	<VBox class="sapUiSmallMarginTop sapUiTinyMarginBottom">
