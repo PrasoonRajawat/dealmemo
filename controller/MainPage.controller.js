@@ -5821,10 +5821,13 @@ sap.ui.define([
 			},
 			getDataForComm: function(that) {
 				sap.ui.core.BusyIndicator.show(0);
-				var DealM = that.getDealMNo();
+				var dealMemoDetailModel = that.getView().getModel("dealMemoDetailModel");
+				var dealMemoDetailInfo = dealMemoDetailModel.getData();
+				var Dmno = dealMemoDetailInfo.Dmno;
+				var Dmver = dealMemoDetailInfo.Dmver;
 				var intDataModelUrl = "/sap/opu/odata/IBSCMS/DEALMEMO_SRV/";
 				var oModelSav = new sap.ui.model.odata.ODataModel(intDataModelUrl, true, "", "");
-				var pValue1 = "/DmHeaderSet(Tentid='IBS',Dmno='" + DealM[0] + "',Dmver='" + DealM[1] + "',Transtp='D')?&$expand=DmtxtSet";
+				var pValue1 = "/DmHeaderSet(Tentid='IBS',Dmno='" + Dmno + "',Dmver='" + Dmver + "',Transtp='D')?&$expand=DmtxtSet";
 
 				oModelSav.read(pValue1, null, null, true, function(oData) {
 					sap.ui.core.BusyIndicator.hide();
@@ -6408,6 +6411,10 @@ sap.ui.define([
 						]
 					};
 					var sModel = new sap.ui.model.json.JSONModel(commData);
+						var dealMemoDetailModel = that.getView().getModel("dealMemoDetailModel");
+				var dealMemoDetailInfo = dealMemoDetailModel.getData();
+				var Dmno = dealMemoDetailInfo.Dmno;
+				var Dmver = dealMemoDetailInfo.Dmver;
 					//sModel.loadData("json/comments.json", "", false);
 					sap.ui.getCore().getControl(id).setModel(sModel);
 					sap.ui.getCore().getControl(id).addStyleClass("sapUiMediumMarginTop , sapUiTinyMarginBottom");
@@ -6416,7 +6423,7 @@ sap.ui.define([
 					// service to fetch comments of particular tab
 					var intDataModelUrl = "/sap/opu/odata/IBSCMS/DEALMEMO_SRV/";
 					var oModelSav = new sap.ui.model.odata.ODataModel(intDataModelUrl, true, "", "");
-					var pValue = "/DmtxtSet?$filter=Tentid eq'IBS' and  Dmno eq '" + DealM[0] + "' and Dmver eq '" + DealM[1] + "' and Txtsuffix eq '" +
+					var pValue = "/DmtxtSet?$filter=Tentid eq'IBS' and  Dmno eq '" + Dmno + "' and Dmver eq '" + Dmver[1] + "' and Txtsuffix eq '" +
 						key + "'";
 					oModelSav.read(pValue, null, null, true, function(oData) {
 						sap.ui.core.BusyIndicator.hide();
