@@ -216,7 +216,7 @@
 								</IconTabFilter>
 								
 								<IconTabFilter id="comment" key="comment" text="{i18n>IcnTbFlt_Cmnts}" icon="sap-icon://comment" class="sapMITBHead" iconColor="Critical"
-									design="Horizontal" visible="false">
+									design="Horizontal" visible="{= ${dealMemoDetailModel>/Dmno} !== '' ? true : false }">
 									<content>
 										<IconTabBar id="commentInner" expandable="true" expanded="true" visible="true" setSelectedKey="synopsis" select="oncommentInnerSelect">
 											<items>
