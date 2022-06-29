@@ -37,6 +37,7 @@
             </Page>
         </masterPages>
         <detailPages>
+        	<Label id="lblComments" visible="false" text=""/>
              <Page title="{i18n>detTitle}" id="dealMemoDetail"  navButtonPress="onShowMatser" showNavButton="true">
               	<core:Fragment fragmentName="com.ui.dealmemolocal.fragments.DetailPageHeader" type="XML" />
               	<Panel expandable="false" backgroundDesign="Transparent" expanded="true"> 
