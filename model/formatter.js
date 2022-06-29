@@ -112,7 +112,7 @@ sap.ui.define([
         	   
            },
            formatEditableStatus:function(Dmst){
-        	   if(Dmst === "01" || Dmst === undefined || Dmst === "" || Dmst === null || Dmst === "04"){
+        	   if(Dmst === "01" || Dmst === undefined || Dmst === "" || Dmst === null ){
         		   return true;
         	   }
         	   else{
