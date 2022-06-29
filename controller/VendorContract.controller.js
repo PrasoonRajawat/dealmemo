@@ -769,7 +769,7 @@ sap.ui.define([
 			},
 			loadEpisodes: function() {
 				var oModel = this.getView().getModel();
-				//	sap.ui.core.BusyIndicator.show();
+					sap.ui.core.BusyIndicator.show();
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
 				var oFilters = [{
@@ -792,7 +792,7 @@ sap.ui.define([
 				oModel.read("/F4EpiIDSet", {
 					filters: aFilters,
 					success: function(oData) {
-
+						sap.ui.core.BusyIndicator.hide();
 						var filteredEpisodes = oData.results.filter(function(epObj) {
 							if (vendorContractDetailInfo.Contno !== "") {
 								return epObj.Vcflag !== "X" || (epObj.Contno === vendorContractDetailInfo.Contno && epObj.Contver ===
@@ -809,6 +809,7 @@ sap.ui.define([
 
 					}.bind(this),
 					error: function(oError) {
+						sap.ui.core.BusyIndicator.hide();
 						var oErrorResponse = JSON.parse(oError.responseText);
 						var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
 						MessageBox.error(oMsg);

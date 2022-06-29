@@ -713,6 +713,7 @@ sap.ui.define([
 			},
 			loadEpisodes: function() {
 				var oModel = this.getView().getModel();
+				sap.ui.core.BusyIndicator.show();
 				var artistContractModel = this.getView().getModel("artistContractModel");
 				var artistContractDetailInfo = artistContractModel.getData();
 				var oFilters = [{
@@ -735,13 +736,13 @@ sap.ui.define([
 				oModel.read("/F4EpiIDSet", {
 					filters: aFilters,
 					success: function(oData) {
-
+						sap.ui.core.BusyIndicator.hide();
 						//	var filteredEpisodes = oData.results.filter(function(epObj){return epObj.Vcflag === "";});
 						artistContractModel.setProperty("/episodeList", oData.results);
 						artistContractModel.refresh(true);
 					}.bind(this),
 					error: function(oError) {
-
+						sap.ui.core.BusyIndicator.hide();
 					}
 				});
 			},
