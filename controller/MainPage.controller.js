@@ -5489,9 +5489,11 @@ sap.ui.define([
 				if (bModel.oData.results[0].sinput !== "" && bModel.oData.results[0].sinput !== "0.00" && state == "None") {
 
 					// var aModel = this.getView().byId("mLabel").getModel();
-					var pValue = "/DmafSet(Tentid='IBS',Dmno='" + dmNo[0] + "')";
+					var pValue = "/DmafSet(Tentid='IBS',Dmno='" + dmNo + "')";
 					oModelSave.read(pValue, null, null, true, function(oData) {
 						sap.ui.core.BusyIndicator.hide();
+						var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
+				var dealMemoDetailInfo = dealMemoDetailModel.getData();
 						var dmNo = dealMemoDetailInfo.Dmno;
 						//	alert(" get market");
 						if (oData.Dmno == "") {
