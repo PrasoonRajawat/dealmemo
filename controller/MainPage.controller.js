@@ -6360,9 +6360,9 @@ sap.ui.define([
 						var sbtn = that.getView().byId("synopsisBtn").getEnabled();
 
 						if (cbtn == true && sbtn == true) {
-							that.getView().byId("btnSave").setEnabled(false);
+							that.getView().byId("btnSaveDM").setEnabled(false);
 						} else {
-							that.getView().byId("btnSave").setEnabled(true);
+							that.getView().byId("btnSaveDM").setEnabled(true);
 						}
 					}
 
