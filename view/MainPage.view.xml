@@ -122,7 +122,7 @@
 													<!--<Input value="{sinput}" type="Number" enabled="{enab}" textAlign="Right" liveChange="calRev30"/>-->
 													<Input
 														value="{ parts: [ {path: 'sinput'}, {path: 'curr'} ], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false,minFractionDigits: 2,maxFractionDigits: 2 } }"
-														textAlign="Right" enabled="{enab}"  change="calRev30"/>
+														textAlign="Right" enabled="{enab}"  editable="{= ${dealMemoDetailModel>/Dmst} !== '01' ? true : false }" change="calRev30"/>
 												</ColumnListItem>
 											</items>
 										</Table>
@@ -146,7 +146,7 @@
 													<Text text="{skey}" class="sapUiTinyMarginTop"></Text>
 													<Input
 														value="{ parts: [ {path: 'sinput'}, {path: 'curr'} ], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false,minFractionDigits: 2, maxFractionDigits: 2 } }"
-														textAlign="Right" change="calcMarket"/>
+														textAlign="Right" editable="{= ${dealMemoDetailModel>/Dmst} !== '01' ? true : false }" change="calcMarket"/>
 													<!--	<Input value="{sinput}" type="Number" textAlign="Right" liveChange="calcMarket"/>-->
 												</ColumnListItem>
 											</items>
@@ -154,8 +154,8 @@
 									</content>
 								</IconTabFilter>
 								
-								<IconTabFilter id="idPl" key="progPL" text="{i18n>IcnTbFlt_ProgPandL}" icon="sap-icon://loan" class="sapMITBHead" iconColor="Critical"
-									design="Horizontal">
+								<IconTabFilter id="idPl" key="progPL" text="{i18n>IcnTbFlt_ProgPandL}" icon="sap-icon://loan" class="sapMITBHead" 
+									enabled="{dealMemoDetailModel>/progTabEnable}" iconColor="{path:'dealMemoDetailModel>/progTabColor'}" design="Horizontal" visible="{= ${dealMemoDetailModel>/Dmno} !== '' ? true : false }">
 									<content>
 										<Table id="prog30Table" items="{/results}">
 											<columns>

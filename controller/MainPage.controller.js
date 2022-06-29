@@ -1243,6 +1243,7 @@ sap.ui.define([
 				}
 				if (oData.Dmaf.Advoffairamt !== "0.00") {
 					dealMemoDetailModel.setProperty("/marketTabColor", "Positive");
+					dealMemoDetailModel.setProperty("/progTabColor", "Positive");
 				}
 				dealMemoDetailModel.refresh(true);
 				this.handleDmStatus(oData);
@@ -5492,16 +5493,16 @@ sap.ui.define([
 					var pValue = "/DmafSet(Tentid='IBS',Dmno='" + dmNo + "')";
 					oModelSave.read(pValue, null, null, true, function(oData) {
 						sap.ui.core.BusyIndicator.hide();
-						var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
+						var dealMemoDetailModel = that.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
 						var dmNo = dealMemoDetailInfo.Dmno;
 						//	alert(" get market");
 						if (oData.Dmno == "") {
 							sap.ui.core.BusyIndicator.show(0);
-							var aModel = this.getView().byId("mLabel").getModel();
-							var bModel = this.getView().byId("marketTable").getModel();
+							var aModel = that.getView().byId("mLabel").getModel();
+							var bModel = that.getView().byId("marketTable").getModel();
 							oData.Tentid = "IBS";
-							var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
+							var dealMemoDetailModel = that.getView().getModel("dealMemoDetailModel");
 							var dealMemoDetailInfo = dealMemoDetailModel.getData();
 							var dmNo = dealMemoDetailInfo.Dmno;
 							oData.Advoffairamt = bModel.oData.results[0].sinput;
@@ -5517,7 +5518,7 @@ sap.ui.define([
 							oModelSave.create(pValue, oData, null, function() {
 									sap.ui.core.BusyIndicator.hide();
 									// this.getView().byId("idMarketing").setIconColor("Positive");
-									sap.m.MessageToast.show(this.getView().getModel("i18n").getText("msg_maktbudsave"));
+									sap.m.MessageToast.show(that.getView().getModel("i18n").getResourceBundle().getText("msg_maktbudsave"));
 								},
 								function(oData) {
 									sap.ui.core.BusyIndicator.hide();
@@ -5531,7 +5532,7 @@ sap.ui.define([
 
 									} else {
 										sap.ui.core.BusyIndicator.hide();
-										sap.m.MessageBox.show(this.getView().getModel("i18n").getText("msg_maktbudsavefail"), {
+										sap.m.MessageBox.show(that.getView().getModel("i18n").getResourceBundle().getText("msg_maktbudsavefail"), {
 											icon: sap.m.MessageBox.Icon.ERROR,
 											title: "{i18n>Error}"
 										});
@@ -5541,9 +5542,9 @@ sap.ui.define([
 
 						} else {
 							sap.ui.core.BusyIndicator.show(0);
-							var bModel = this.getView().byId("marketTable").getModel();
+							var bModel = that.getView().byId("marketTable").getModel();
 							if (oData.Advoffairamt == bModel.oData.results[0].sinput) {
-								sap.m.MessageBox.show(this.getView().getModel("i18n").getText("msg_alreadysave"), {
+								sap.m.MessageBox.show(that.getView().getModel("i18n").getResourceBundle().getText("msg_alreadysave"), {
 									icon: sap.m.MessageBox.Icon.ERROR,
 									title: "{i18n>Error}"
 								});
@@ -5565,9 +5566,9 @@ sap.ui.define([
 								var pValue = "/DmafSet(Tentid='IBS',Dmno='" + oData.Dmno + "')";
 								oModelSave.update(pValue, oData, null, function() {
 										sap.ui.core.BusyIndicator.hide();
-										this.getView().byId("idMarketing").setIconColor("Positive");
+										that.getView().byId("idMarketing").setIconColor("Positive");
 										// this.BudgEnable();
-										sap.m.MessageToast.show(this.getView().getModel("i18n").getText("msg_maktbudsave"));
+										sap.m.MessageToast.show(that.getView().getModel("i18n").getResourceBundle().getText("msg_maktbudsave"));
 									},
 									function(oData) {
 										sap.ui.core.BusyIndicator.hide();
@@ -5580,7 +5581,7 @@ sap.ui.define([
 											});
 										} else {
 											sap.ui.core.BusyIndicator.hide();
-											sap.m.MessageBox.show(this.getView().getModel("i18n").getText("msg_maktbudsavefail"), {
+											sap.m.MessageBox.show(that.getView().getModel("i18n").getResourceBundle().getText("msg_maktbudsavefail"), {
 												icon: sap.m.MessageBox.Icon.ERROR,
 												title: "{i18n>Error}"
 											});
@@ -5594,12 +5595,12 @@ sap.ui.define([
 				} else {
 					sap.ui.core.BusyIndicator.hide();
 					if (state == "Error") {
-						sap.m.MessageBox.show(this.getView().getModel("i18n").getText("msg_highlighterror"), {
+						sap.m.MessageBox.show(that.getView().getModel("i18n").getResourceBundle().getText("msg_highlighterror"), {
 							icon: sap.m.MessageBox.Icon.ERROR,
 							title: "{i18n>Error}"
 						});
 					} else {
-						sap.m.MessageBox.show(this.getView().getModel("i18n").getText("msg_filladvcost"), {
+						sap.m.MessageBox.show(that.getView().getModel("i18n").getResourceBundle().getText("msg_filladvcost"), {
 							icon: sap.m.MessageBox.Icon.ERROR,
 							title: "{i18n>Error}"
 						});
