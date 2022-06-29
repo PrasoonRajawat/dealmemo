@@ -5414,7 +5414,7 @@ sap.ui.define([
 					} else {
 						var bModel = that.getView().byId("Rev30Table").getModel();
 						if (oData.Avgbcrevamt == bModel.oData.results[1].sinput && oData.Totothrevamt == bModel.oData.results[3].sinput) {
-							sap.m.MessageBox.show(that.getView().getModel("i18n")._oResourceBundle.getText("msg_alreadysave"), {
+							sap.m.MessageBox.show(that.getView().getModel("i18n")._oResourceBundle.getText("msg_alreadysave"),  {
 								icon: sap.m.MessageBox.Icon.ERROR,
 								title: "{i18n>Error}"
 							});
