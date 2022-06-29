@@ -4217,6 +4217,10 @@ sap.ui.define([
 					itemText: "Approved",
 					itemKey: "04",
 					filterProp: "Dmst"
+				}, {
+					itemText: "Contract Under Approval",
+					itemKey: "05",
+					filterProp: "Dmst"
 				}];
 				var filterItemsList = [{
 					filterItemText: "Status",
@@ -6264,9 +6268,9 @@ sap.ui.define([
 						var sbtn = that.getView().byId("synopsisBtn").getEnabled();
 
 						if (cbtn == true && sbtn == true) {
-							that.getView().byId("btnSave").setEnabled(false);
+							that.getView().byId("btnSaveDM").setEnabled(false);
 						} else {
-							that.getView().byId("btnSave").setEnabled(true);
+							that.getView().byId("btnSaveDM").setEnabled(true);
 						}
 					}
 				}
