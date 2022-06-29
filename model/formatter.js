@@ -119,6 +119,14 @@ sap.ui.define([
         		   return false;
         	   }
            },
+            formatEditableContStatus:function(Contstat){
+        	   if(Contstat === "01" || Contstat === undefined || Contstat === "" || Contstat === null ){
+        		   return true;
+        	   }
+        	   else{
+        		   return false;
+        	   }
+           },
            formatLabelContentBased:function(lblName,ContType){
         	   //var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
         	   var oSourceBundle = sap.ui.component(sap.ui.core.Component.getOwnerIdFor(this.getView())).getModel('i18n').getResourceBundle();
