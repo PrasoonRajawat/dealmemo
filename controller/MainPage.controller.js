@@ -5368,7 +5368,7 @@ sap.ui.define([
 						// var aModel = this.getView().byId("mLabel").getModel();
 						var bModel = that.getView().byId("Rev30Table").getModel();
 						oData.Tentid = "IBS";
-						var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
+						var dealMemoDetailModel = that.getView().getModel("dealMemoDetailModel");
 						var dealMemoDetailInfo = dealMemoDetailModel.getData();
 						var dmNo = dealMemoDetailInfo.Dmno;
 						oData.Dmno = dmNo;
@@ -5389,7 +5389,7 @@ sap.ui.define([
 								//	alert("revenue created");
 								sap.ui.core.BusyIndicator.hide();
 								// this.getView().byId("idRev30").setIconColor("Positive");
-								sap.m.MessageToast.show(this.getView().getModel("i18n").getText("msg_revper30save"));
+								sap.m.MessageToast.show(that.getView().getModel("i18n").getText("msg_revper30save"));
 							},
 
 							function(oData) {
@@ -5405,7 +5405,7 @@ sap.ui.define([
 
 								} else {
 
-									sap.m.MessageBox.show(this.getView().getModel("i18n").getText("msg_revper30savefail"), {
+									sap.m.MessageBox.show(that.getView().getModel("i18n").getText("msg_revper30savefail"), {
 										icon: sap.m.MessageBox.Icon.ERROR,
 										title: "{i18n>Error}"
 									});
@@ -5414,7 +5414,7 @@ sap.ui.define([
 					} else {
 						var bModel = that.getView().byId("Rev30Table").getModel();
 						if (oData.Avgbcrevamt == bModel.oData.results[1].sinput && oData.Totothrevamt == bModel.oData.results[3].sinput) {
-							sap.m.MessageBox.show(this.getView().getModel("i18n").getText("msg_alreadysave"), {
+							sap.m.MessageBox.show(that.getView().getModel("i18n").getText("msg_alreadysave"), {
 								icon: sap.m.MessageBox.Icon.ERROR,
 								title: "{i18n>Error}"
 							});
@@ -5436,7 +5436,7 @@ sap.ui.define([
 									sap.ui.core.BusyIndicator.hide();
 									// this.getView().byId("idRev30").setIconColor("Positive");
 									// this.BudgEnable();
-									sap.m.MessageToast.show(this.getView().getModel("i18n").getText("msg_revper30upd"));
+									sap.m.MessageToast.show(that.getView().getModel("i18n").getText("msg_revper30upd"));
 								},
 								function(oData) {
 									sap.ui.core.BusyIndicator.hide();
@@ -5449,7 +5449,7 @@ sap.ui.define([
 										});
 
 									} else {
-										sap.m.MessageBox.show(this.getView().getModel("i18n").getText("msg_revper30updfail"), {
+										sap.m.MessageBox.show(that.getView().getModel("i18n").getText("msg_revper30updfail"), {
 											icon: sap.m.MessageBox.Icon.ERROR,
 											title: "{i18n>Error}"
 										});
