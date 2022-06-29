@@ -1,21 +1,21 @@
 sap.ui.define([
-	"sap/ui/core/mvc/Controller",
-	"sap/ui/model/Filter",
-	"sap/ui/model/FilterOperator",
-	"com/ui/dealmemolocal/model/formatter",
-	"sap/m/MessageBox",
-	"sap/m/MessageToast",
-	"sap/ui/core/Fragment",
-	"sap/ui/export/Spreadsheet"
-],
-/**
- * @param {typeof sap.ui.core.mvc.Controller} Controller
- */
-function(Controller, Filter, FilterOperator, Formatter, MessageBox, MessageToast, Fragment, Spreadsheet) {
-	"use strict";
-	jQuery.sap.require("com.ui.dealmemolocal.model.jszip");
-	jQuery.sap.require("com.ui.dealmemolocal.model.xlsx");
-	return Controller.extend("com.ui.dealmemolocal.controller.MainPage", {
+		"sap/ui/core/mvc/Controller",
+		"sap/ui/model/Filter",
+		"sap/ui/model/FilterOperator",
+		"com/ui/dealmemolocal/model/formatter",
+		"sap/m/MessageBox",
+		"sap/m/MessageToast",
+		"sap/ui/core/Fragment",
+		"sap/ui/export/Spreadsheet"
+	],
+	/**
+	 * @param {typeof sap.ui.core.mvc.Controller} Controller
+	 */
+	function(Controller, Filter, FilterOperator, Formatter, MessageBox, MessageToast, Fragment, Spreadsheet) {
+		"use strict";
+		jQuery.sap.require("com.ui.dealmemolocal.model.jszip");
+		jQuery.sap.require("com.ui.dealmemolocal.model.xlsx");
+		return Controller.extend("com.ui.dealmemolocal.controller.MainPage", {
 			Formatter: Formatter,
 			onInit: function() {
 				var oModel = new sap.ui.model.json.JSONModel();
@@ -5322,9 +5322,11 @@ function(Controller, Filter, FilterOperator, Formatter, MessageBox, MessageToast
 			},
 			saveRevenueTab: function() {
 				sap.ui.core.BusyIndicator.show(0);
-					var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
+				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
 				var dmNo = dealMemoDetailInfo.Dmno;
+				var srvUrl = "/sap/opu/odata/IBSCMS/DEALMEMO_SRV/";
+				var oModelSave = new sap.ui.model.odata.ODataModel(srvUrl, true, "", "");
 				var bModel = this.getView().byId("Rev30Table").getModel();
 				var state1 = this.getView().byId("Rev30Table").getItems()[1].getCells()[1].getValueState();
 				var state2 = this.getView().byId("Rev30Table").getItems()[3].getCells()[1].getValueState();
@@ -5364,9 +5366,9 @@ function(Controller, Filter, FilterOperator, Formatter, MessageBox, MessageToast
 						// var aModel = this.getView().byId("mLabel").getModel();
 						var bModel = this.getView().byId("Rev30Table").getModel();
 						oData.Tentid = "IBS";
-							var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
-				var dealMemoDetailInfo = dealMemoDetailModel.getData();
-				var dmNo = dealMemoDetailInfo.Dmno;
+						var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
+						var dealMemoDetailInfo = dealMemoDetailModel.getData();
+						var dmNo = dealMemoDetailInfo.Dmno;
 						oData.Dmno = dmNo;
 						oData.Avgbcrevamt = bModel.oData.results[1].sinput.toString();
 						oData.Totavgbcrevamt = bModel.oData.results[2].sinput.toString();
@@ -5471,96 +5473,46 @@ function(Controller, Filter, FilterOperator, Formatter, MessageBox, MessageToast
 				}
 
 			},
-		
-		saveMarketingTab: function() {
 
-			sap.ui.core.BusyIndicator.show(0);
-		var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
+			saveMarketingTab: function() {
+
+				sap.ui.core.BusyIndicator.show(0);
+				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
 				var dmNo = dealMemoDetailInfo.Dmno;
-					var srvUrl = "/sap/opu/odata/IBSCMS/DEALMEMO_SRV/";
-			var oModelSave = new sap.ui.model.odata.ODataModel(srvUrl, true, "", "");
-			var state = this.getView().byId("marketTable").getItems()[0].getCells()[1].getValueState();
-			var bModel = this.getView().byId("marketTable").getModel();
-			if (bModel.oData.results[0].sinput !== "" && bModel.oData.results[0].sinput !== "0.00" && state == "None") {
+				var srvUrl = "/sap/opu/odata/IBSCMS/DEALMEMO_SRV/";
+				var oModelSave = new sap.ui.model.odata.ODataModel(srvUrl, true, "", "");
+				var state = this.getView().byId("marketTable").getItems()[0].getCells()[1].getValueState();
+				var bModel = this.getView().byId("marketTable").getModel();
+				if (bModel.oData.results[0].sinput !== "" && bModel.oData.results[0].sinput !== "0.00" && state == "None") {
 
-				// var aModel = this.getView().byId("mLabel").getModel();
-				var pValue = "/DmafSet(Tentid='IBS',Dmno='" + dmNo[0] + "')";
-				oModelSave.read(pValue, null, null, true, function(oData) {
-					sap.ui.core.BusyIndicator.hide();
+					// var aModel = this.getView().byId("mLabel").getModel();
+					var pValue = "/DmafSet(Tentid='IBS',Dmno='" + dmNo[0] + "')";
+					oModelSave.read(pValue, null, null, true, function(oData) {
+						sap.ui.core.BusyIndicator.hide();
 						var dmNo = dealMemoDetailInfo.Dmno;
-					//	alert(" get market");
-					if (oData.Dmno == "") {
-						sap.ui.core.BusyIndicator.show(0);
-						var aModel = this.getView().byId("mLabel").getModel();
-						var bModel = this.getView().byId("marketTable").getModel();
-						oData.Tentid = "IBS";
-						var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
-				var dealMemoDetailInfo = dealMemoDetailModel.getData();
-				var dmNo = dealMemoDetailInfo.Dmno;
-						oData.Advoffairamt = bModel.oData.results[0].sinput;
-						oData.Advoffairamt = oData.Advoffairamt.toString();
-						//	var oModelSave = new sap.ui.model.odata.ODataModel(intDataModelUrl, true, "", "");
-						oModelSave.setHeaders({
-							"Accept": "application/json"
-						});
-						oModelSave.setHeaders({
-							"X-Requested-With": "X"
-						});
-						var pValue = "/DmafSet";
-						oModelSave.create(pValue, oData, null, function() {
-								sap.ui.core.BusyIndicator.hide();
-								// this.getView().byId("idMarketing").setIconColor("Positive");
-								sap.m.MessageToast.show(this.getView().getModel("i18n").getText("msg_maktbudsave"));
-							},
-							function(oData) {
-								sap.ui.core.BusyIndicator.hide();
-								var errMsg = JSON.parse(oData.response.body);
-								if (errMsg !== '') {
-									var stext = errMsg.error.innererror.errordetails[0].message;
-									sap.m.MessageBox.show(stext, {
-										icon: sap.m.MessageBox.Icon.ERROR,
-										title: "{i18n>Error}"
-									});
-
-								} else {
-									sap.ui.core.BusyIndicator.hide();
-									sap.m.MessageBox.show(this.getView().getModel("i18n").getText("msg_maktbudsavefail"), {
-										icon: sap.m.MessageBox.Icon.ERROR,
-										title: "{i18n>Error}"
-									});
-								}
-
-							});
-
-					} else {
-						sap.ui.core.BusyIndicator.show(0);
-						var bModel = this.getView().byId("marketTable").getModel();
-						if (oData.Advoffairamt == bModel.oData.results[0].sinput) {
-							sap.m.MessageBox.show(this.getView().getModel("i18n").getText("msg_alreadysave"), {
-								icon: sap.m.MessageBox.Icon.ERROR,
-								title: "{i18n>Error}"
-							});
-							sap.ui.core.BusyIndicator.hide();
-						} else {
-							var valCheck = 0;
-							if (oData.Advoffairamt == "0.00") {
-								valCheck = 1;
-							}
-
+						//	alert(" get market");
+						if (oData.Dmno == "") {
+							sap.ui.core.BusyIndicator.show(0);
+							var aModel = this.getView().byId("mLabel").getModel();
+							var bModel = this.getView().byId("marketTable").getModel();
+							oData.Tentid = "IBS";
+							var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
+							var dealMemoDetailInfo = dealMemoDetailModel.getData();
+							var dmNo = dealMemoDetailInfo.Dmno;
 							oData.Advoffairamt = bModel.oData.results[0].sinput;
 							oData.Advoffairamt = oData.Advoffairamt.toString();
+							//	var oModelSave = new sap.ui.model.odata.ODataModel(intDataModelUrl, true, "", "");
 							oModelSave.setHeaders({
 								"Accept": "application/json"
 							});
 							oModelSave.setHeaders({
 								"X-Requested-With": "X"
 							});
-							var pValue = "/DmafSet(Tentid='IBS',Dmno='" + oData.Dmno + "')";
-							oModelSave.update(pValue, oData, null, function() {
+							var pValue = "/DmafSet";
+							oModelSave.create(pValue, oData, null, function() {
 									sap.ui.core.BusyIndicator.hide();
-									this.getView().byId("idMarketing").setIconColor("Positive");
-									// this.BudgEnable();
+									// this.getView().byId("idMarketing").setIconColor("Positive");
 									sap.m.MessageToast.show(this.getView().getModel("i18n").getText("msg_maktbudsave"));
 								},
 								function(oData) {
@@ -5572,6 +5524,7 @@ function(Controller, Filter, FilterOperator, Formatter, MessageBox, MessageToast
 											icon: sap.m.MessageBox.Icon.ERROR,
 											title: "{i18n>Error}"
 										});
+
 									} else {
 										sap.ui.core.BusyIndicator.hide();
 										sap.m.MessageBox.show(this.getView().getModel("i18n").getText("msg_maktbudsavefail"), {
@@ -5579,268 +5532,317 @@ function(Controller, Filter, FilterOperator, Formatter, MessageBox, MessageToast
 											title: "{i18n>Error}"
 										});
 									}
+
 								});
+
+						} else {
+							sap.ui.core.BusyIndicator.show(0);
+							var bModel = this.getView().byId("marketTable").getModel();
+							if (oData.Advoffairamt == bModel.oData.results[0].sinput) {
+								sap.m.MessageBox.show(this.getView().getModel("i18n").getText("msg_alreadysave"), {
+									icon: sap.m.MessageBox.Icon.ERROR,
+									title: "{i18n>Error}"
+								});
+								sap.ui.core.BusyIndicator.hide();
+							} else {
+								var valCheck = 0;
+								if (oData.Advoffairamt == "0.00") {
+									valCheck = 1;
+								}
+
+								oData.Advoffairamt = bModel.oData.results[0].sinput;
+								oData.Advoffairamt = oData.Advoffairamt.toString();
+								oModelSave.setHeaders({
+									"Accept": "application/json"
+								});
+								oModelSave.setHeaders({
+									"X-Requested-With": "X"
+								});
+								var pValue = "/DmafSet(Tentid='IBS',Dmno='" + oData.Dmno + "')";
+								oModelSave.update(pValue, oData, null, function() {
+										sap.ui.core.BusyIndicator.hide();
+										this.getView().byId("idMarketing").setIconColor("Positive");
+										// this.BudgEnable();
+										sap.m.MessageToast.show(this.getView().getModel("i18n").getText("msg_maktbudsave"));
+									},
+									function(oData) {
+										sap.ui.core.BusyIndicator.hide();
+										var errMsg = JSON.parse(oData.response.body);
+										if (errMsg !== '') {
+											var stext = errMsg.error.innererror.errordetails[0].message;
+											sap.m.MessageBox.show(stext, {
+												icon: sap.m.MessageBox.Icon.ERROR,
+												title: "{i18n>Error}"
+											});
+										} else {
+											sap.ui.core.BusyIndicator.hide();
+											sap.m.MessageBox.show(this.getView().getModel("i18n").getText("msg_maktbudsavefail"), {
+												icon: sap.m.MessageBox.Icon.ERROR,
+												title: "{i18n>Error}"
+											});
+										}
+									});
+							}
 						}
-					}
-				}, function() {
-					sap.ui.core.BusyIndicator.hide();
-				});
-			} else {
-				sap.ui.core.BusyIndicator.hide();
-				if (state == "Error") {
-					sap.m.MessageBox.show(this.getView().getModel("i18n").getText("msg_highlighterror"), {
-						icon: sap.m.MessageBox.Icon.ERROR,
-						title: "{i18n>Error}"
+					}, function() {
+						sap.ui.core.BusyIndicator.hide();
 					});
 				} else {
-					sap.m.MessageBox.show(this.getView().getModel("i18n").getText("msg_filladvcost"), {
-						icon: sap.m.MessageBox.Icon.ERROR,
-						title: "{i18n>Error}"
-					});
+					sap.ui.core.BusyIndicator.hide();
+					if (state == "Error") {
+						sap.m.MessageBox.show(this.getView().getModel("i18n").getText("msg_highlighterror"), {
+							icon: sap.m.MessageBox.Icon.ERROR,
+							title: "{i18n>Error}"
+						});
+					} else {
+						sap.m.MessageBox.show(this.getView().getModel("i18n").getText("msg_filladvcost"), {
+							icon: sap.m.MessageBox.Icon.ERROR,
+							title: "{i18n>Error}"
+						});
+					}
 				}
-			}
 
-		},
+			},
 
-		loadMarketingTab: function() {
-			var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
-			var dealMemoDetailInfo = dealMemoDetailModel.getData();
-			sap.ui.core.BusyIndicator.show(0);
-			var bModel = this.getView().byId("marketTable").getModel();
-			var dmNo = dealMemoDetailInfo.Dmno
-			var srvUrl = "/sap/opu/odata/IBSCMS/DEALMEMO_SRV/";
-			var oModelSav = new sap.ui.model.odata.ODataModel(srvUrl, true, "", "");
-			var pValue = "/DmafSet(Tentid='IBS',Dmno='" + dmNo + "')";
-			oModelSav.read(pValue, null, null, true, function(oData) {
-				sap.ui.core.BusyIndicator.hide();
-				if (bModel.oData.results.length > 0) {
-					bModel.oData.results[0].sinput = oData.Advoffairamt;
-					bModel.oData.results[0].curr = dealMemoDetailInfo.Waers;
-				}
-				bModel.refresh();
-			}, function() {
-				//	alert("fail");
-				sap.ui.core.BusyIndicator.hide();
-				if (bModel.oData.results.length > 0) {
-					bModel.oData.results[0].sinput = dealMemoDetailInfo.Dmaf.Advoffairamt;
-					bModel.oData.results[0].curr = dealMemoDetailInfo.Waers;
-				}
-				bModel.refresh();
-			});
-		},
+			loadMarketingTab: function() {
+				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
+				var dealMemoDetailInfo = dealMemoDetailModel.getData();
+				sap.ui.core.BusyIndicator.show(0);
+				var bModel = this.getView().byId("marketTable").getModel();
+				var dmNo = dealMemoDetailInfo.Dmno
+				var srvUrl = "/sap/opu/odata/IBSCMS/DEALMEMO_SRV/";
+				var oModelSav = new sap.ui.model.odata.ODataModel(srvUrl, true, "", "");
+				var pValue = "/DmafSet(Tentid='IBS',Dmno='" + dmNo + "')";
+				oModelSav.read(pValue, null, null, true, function(oData) {
+					sap.ui.core.BusyIndicator.hide();
+					if (bModel.oData.results.length > 0) {
+						bModel.oData.results[0].sinput = oData.Advoffairamt;
+						bModel.oData.results[0].curr = dealMemoDetailInfo.Waers;
+					}
+					bModel.refresh();
+				}, function() {
+					//	alert("fail");
+					sap.ui.core.BusyIndicator.hide();
+					if (bModel.oData.results.length > 0) {
+						bModel.oData.results[0].sinput = dealMemoDetailInfo.Dmaf.Advoffairamt;
+						bModel.oData.results[0].curr = dealMemoDetailInfo.Waers;
+					}
+					bModel.refresh();
+				});
+			},
 			calcMarket: function(oEvent) {
-			var val = oEvent.getSource().getValue();
-			var bModel = this.getView().byId("marketTable").getModel();
-			bModel.oData.results[0].sinput1 = val.toString();
-			bModel.refresh();
-			var pattern1 = /^[1-9]\d*((,\d{3}){1})(((,\d{3}){1})?(\.\d{0,2})?)$/; // values like 000,000,000.00
-			var pattern2 = /^\d{1,9}(\.\d{1,2})?$/;
-			if (val.match(pattern1) || val == "") {
-				oEvent.getSource().setValueState("None");
+				var val = oEvent.getSource().getValue();
+				var bModel = this.getView().byId("marketTable").getModel();
+				bModel.oData.results[0].sinput1 = val.toString();
+				bModel.refresh();
+				var pattern1 = /^[1-9]\d*((,\d{3}){1})(((,\d{3}){1})?(\.\d{0,2})?)$/; // values like 000,000,000.00
+				var pattern2 = /^\d{1,9}(\.\d{1,2})?$/;
+				if (val.match(pattern1) || val == "") {
+					oEvent.getSource().setValueState("None");
 
-			} else if (val.match(pattern2)) {
-				oEvent.getSource().setValueState("None");
-			} else {
-				oEvent.getSource().setValueState("Error");
-				oEvent.getSource().setValueStateText(this.getView().getModel("i18n").getResourceBundle().getText("msg_tooltipamount"));
-			}
-		},
-		//ProgPL tab in dealmemo
-		loadProgPL: function() {
-			var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
-			var dealMemoDetailInfo = dealMemoDetailModel.getData();
-			sap.ui.core.BusyIndicator.show(0);
-			var dmNo = dealMemoDetailInfo.Dmno
-				// this.getView().byId("idPl").setIconColor("Positive");
-				// this.getView().byId("btnSave").setEnabled(false);
-			var intDataModelUrl = "/sap/opu/odata/IBSCMS/DEALMEMO_SRV/";
-			var oModelSav = new sap.ui.model.odata.ODataModel(intDataModelUrl, true, "", "");
-			var pValue = "/DmafSet(Tentid='IBS',Dmno='" + dmNo + "')"; //aModel.oData.Dmno
-			oModelSav.read(pValue, null, null, true, function(oData) {
+				} else if (val.match(pattern2)) {
+					oEvent.getSource().setValueState("None");
+				} else {
+					oEvent.getSource().setValueState("Error");
+					oEvent.getSource().setValueStateText(this.getView().getModel("i18n").getResourceBundle().getText("msg_tooltipamount"));
+				}
+			},
+			//ProgPL tab in dealmemo
+			loadProgPL: function() {
+				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
+				var dealMemoDetailInfo = dealMemoDetailModel.getData();
+				sap.ui.core.BusyIndicator.show(0);
+				var dmNo = dealMemoDetailInfo.Dmno
+					// this.getView().byId("idPl").setIconColor("Positive");
+					// this.getView().byId("btnSave").setEnabled(false);
+				var intDataModelUrl = "/sap/opu/odata/IBSCMS/DEALMEMO_SRV/";
+				var oModelSav = new sap.ui.model.odata.ODataModel(intDataModelUrl, true, "", "");
+				var pValue = "/DmafSet(Tentid='IBS',Dmno='" + dmNo + "')"; //aModel.oData.Dmno
+				oModelSav.read(pValue, null, null, true, function(oData) {
+					sap.ui.core.BusyIndicator.hide();
+					this.calcProgPL(oData)
+
+				}.bind(this), function() {});
+			},
+			calcProgPL: function(oData) {
+				sap.ui.core.BusyIndicator.show(0);
+				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
+				var dealMemoDetailInfo = dealMemoDetailModel.getData();
+				// var coreModel = sap.ui.getCore().getModel("modelForDm");
+				var netbcrevag = +oData.Avgbcrevamt;
+				var slots = +oData.Noofslots;
+				var advoffair = +oData.Advoffairamt;
+				var totothrevamt = +oData.Totothrevamt;
+				var Estavgrtng = +oData.Estavgrtng;
+				var costamramt = +dealMemoDetailInfo.Amrtpercost; //CNTAMRTAMT
+
+				if (dealMemoDetailInfo.Totdmamt != 0.000) {
+					var totalDmcost = dealMemoDetailInfo.Totdmamt;
+					var val3 = totalDmcost;
+					val3 = val3.toString();
+					val3 = Number(val3.replace(/[^0-9\.]+/g, ""));
+					totalDmcost = val3;
+				} else {
+					var totalDmcost = dealMemoDetailInfo.Totdmamt;
+					var val3 = totalDmcost;
+					val3 = val3.toString();
+					val3 = Number(val3.replace(/[^0-9\.]+/g, ""));
+					totalDmcost = val3;
+				}
+				//Per 30 min
+				var bModel = this.getView().byId("prog30Table").getModel();
+				var netOthrev = totothrevamt / slots;
+				var amrContCost = totalDmcost / slots * costamramt; //totDmCost/slots*Amrtpercost 
+				var contbefoffair = (netbcrevag + netOthrev) - amrContCost; //CNTAMRTAMT
+				var lessmakt = advoffair / slots;
+				var contaftoffair = contbefoffair - lessmakt;
+				var contper = (contaftoffair / netbcrevag) * 100;
+
+				netbcrevag = netbcrevag.toFixed(2);
+				netOthrev = netOthrev.toFixed(2);
+				amrContCost = amrContCost.toFixed(2);
+				contbefoffair = contbefoffair.toFixed(2);
+				lessmakt = lessmakt.toFixed(2);
+				contaftoffair = contaftoffair.toFixed(2);
+				contper = contper.toFixed(2);
+				if (bModel.oData.results.length > 0) {
+					bModel.oData.results[0].sinput1 = netbcrevag;
+					bModel.oData.results[1].sinput1 = netOthrev;
+					bModel.oData.results[2].sinput1 = amrContCost;
+					bModel.oData.results[3].sinput1 = contbefoffair;
+					bModel.oData.results[4].sinput1 = lessmakt;
+					bModel.oData.results[5].sinput1 = contaftoffair;
+					bModel.oData.results[6].sinput1 = contper;
+					bModel.oData.results[0].curr = oData.Waers;
+					bModel.oData.results[1].curr = bModel.oData.results[2].curr = bModel.oData.results[0].curr;
+					bModel.oData.results[3].curr = bModel.oData.results[4].curr = bModel.oData.results[0].curr;
+					bModel.oData.results[5].curr = bModel.oData.results[6].curr = bModel.oData.results[0].curr;
+				}
+				/*---------------------------slot budgets for per 30 min----------------------------------------*/
+				var slotbudavgbcrevamt = +oData.Avgbcrevamt; // +oData.Budavgbcrevamt;
+				var slotbudnetothrev = +oData.Totothrevamt / slots; //Budtotothvamt
+				var slotbudcontamrcost = +oData.Budcashamt * costamramt;
+				var slotbudcontrbef = (slotbudavgbcrevamt + slotbudnetothrev) - slotbudcontamrcost;
+				var slotbudlessmakt = advoffair / slots;
+				var slotbudcontraft = slotbudcontrbef - slotbudlessmakt;
+				var slotbudcontper = (slotbudcontraft / slotbudavgbcrevamt) * 100;
+
+				slotbudavgbcrevamt = slotbudavgbcrevamt.toFixed(2);
+				slotbudnetothrev = slotbudnetothrev.toFixed(2);
+				slotbudcontamrcost = slotbudcontamrcost.toFixed(2);
+				slotbudcontrbef = slotbudcontrbef.toFixed(2);
+				slotbudlessmakt = slotbudlessmakt.toFixed(2);
+				slotbudcontraft = slotbudcontraft.toFixed(2);
+				slotbudcontper = slotbudcontper.toFixed(2);
+				if (bModel.oData.results.length > 0) {
+					bModel.oData.results[0].sinput2 = slotbudavgbcrevamt;
+					bModel.oData.results[1].sinput2 = slotbudnetothrev;
+					bModel.oData.results[2].sinput2 = amrContCost //slotbudcontamrcost;
+					bModel.oData.results[3].sinput2 = slotbudcontrbef;
+					bModel.oData.results[4].sinput2 = slotbudlessmakt;
+					bModel.oData.results[5].sinput2 = slotbudcontraft;
+					bModel.oData.results[6].sinput2 = slotbudcontper;
+				}
+				bModel.refresh();
+
+				//per TRP
+				var cModel = this.getView().byId("progTRPTable").getModel();
+
+				var netrevaftcomm = netbcrevag / Estavgrtng;
+				var amrcontcosttrp = (totalDmcost / slots * costamramt) / Estavgrtng;
+				var contrbefoffairTrp = netrevaftcomm - amrcontcosttrp;
+				var lessmaktTrp = (advoffair / slots) / Estavgrtng;
+				var contaftairmktTrp = contrbefoffairTrp - lessmaktTrp;
+
+				netrevaftcomm = netrevaftcomm.toFixed(2);
+				amrcontcosttrp = amrcontcosttrp.toFixed(2);
+				contrbefoffairTrp = contrbefoffairTrp.toFixed(2);
+				lessmaktTrp = lessmaktTrp.toFixed(2);
+				contaftairmktTrp = contaftairmktTrp.toFixed(2);
+				if (cModel.oData.results.length > 0) {
+					cModel.oData.results[0].sinput1 = netrevaftcomm;
+					cModel.oData.results[1].sinput1 = amrcontcosttrp;
+					cModel.oData.results[2].sinput1 = contrbefoffairTrp;
+					cModel.oData.results[3].sinput1 = lessmaktTrp;
+					cModel.oData.results[4].sinput1 = contaftairmktTrp;
+				}
+				/*---------------------------slot budgets for per 30 min----------------------------------------*/
+				var slotnetrevaftcommTrp = +oData.Avgbcrevamt / +oData.Budavgrtng; //+oData.Budavgbcrevamt / +oData.Budavgrtng;
+				var slotbudcontcostTrp = (+oData.Budcashamt * costamramt) / +oData.Budavgrtng;
+				var slotbudcontribefTrp = slotnetrevaftcommTrp - slotbudcontcostTrp;
+				var slotbudlessmaktTrp = (advoffair / slots) / +oData.Budavgrtng;
+				var slotbudcontraftTrp = slotbudcontribefTrp - slotbudlessmaktTrp;
+
+				slotnetrevaftcommTrp = slotnetrevaftcommTrp.toFixed(2);
+				slotbudcontcostTrp = slotbudcontcostTrp.toFixed(2);
+				slotbudcontribefTrp = slotbudcontribefTrp.toFixed(2);
+				slotbudlessmaktTrp = slotbudlessmaktTrp.toFixed(2);
+				slotbudcontraftTrp = slotbudcontraftTrp.toFixed(2);
+				if (cModel.oData.results.length > 0) {
+					cModel.oData.results[0].sinput2 = slotnetrevaftcommTrp;
+					cModel.oData.results[1].sinput2 = amrcontcosttrp //slotbudcontcostTrp;
+					cModel.oData.results[2].sinput2 = slotbudcontribefTrp;
+					cModel.oData.results[3].sinput2 = slotbudlessmaktTrp;
+					cModel.oData.results[4].sinput2 = slotbudcontraftTrp;
+					cModel.oData.results[0].curr = oData.Waers;
+					cModel.oData.results[1].curr = cModel.oData.results[2].curr = cModel.oData.results[0].curr;
+					cModel.oData.results[3].curr = cModel.oData.results[4].curr = cModel.oData.results[0].curr;
+				}
+				cModel.refresh();
 				sap.ui.core.BusyIndicator.hide();
-				this.calcProgPL(oData)
+			},
+			/************** Vendor Contract Code ********************/
+			toVendorContractCreate: function() {
+				var oRouter = this.getOwnerComponent().getRouter();
+				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
+				var dealMemoDetailInfo = dealMemoDetailModel.getData();
+				oRouter.navTo("VendorContract", {
+					"Dmno": dealMemoDetailInfo.Dmno,
+					"Dmver": dealMemoDetailInfo.Dmver,
+					"Contno": "new",
+					"Contver": "new"
+				});
+			},
+			toVendorContractDisplay: function(oEvent) {
+				var oRouter = this.getOwnerComponent().getRouter();
+				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
+				var dealMemoDetailInfo = dealMemoDetailModel.getData();
+				var oContractItem = oEvent.getParameters()['listItem'].getBindingContext("dealMemoDetailModel").getObject();
+				oRouter.navTo("VendorContract", {
+					"Dmno": dealMemoDetailInfo.Dmno,
+					"Dmver": dealMemoDetailInfo.Dmver,
+					"Contno": oContractItem.Contno,
+					"Contver": oContractItem.Contver
+				});
+			},
 
-			}.bind(this), function() {});
-		},
-		calcProgPL: function(oData) {
-			sap.ui.core.BusyIndicator.show(0);
-			var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
-			var dealMemoDetailInfo = dealMemoDetailModel.getData();
-			// var coreModel = sap.ui.getCore().getModel("modelForDm");
-			var netbcrevag = +oData.Avgbcrevamt;
-			var slots = +oData.Noofslots;
-			var advoffair = +oData.Advoffairamt;
-			var totothrevamt = +oData.Totothrevamt;
-			var Estavgrtng = +oData.Estavgrtng;
-			var costamramt = +dealMemoDetailInfo.Amrtpercost; //CNTAMRTAMT
+			/************** Vendor Contract Code *******************/
 
-			if (dealMemoDetailInfo.Totdmamt != 0.000) {
-				var totalDmcost = dealMemoDetailInfo.Totdmamt;
-				var val3 = totalDmcost;
-				val3 = val3.toString();
-				val3 = Number(val3.replace(/[^0-9\.]+/g, ""));
-				totalDmcost = val3;
-			} else {
-				var totalDmcost = dealMemoDetailInfo.Totdmamt;
-				var val3 = totalDmcost;
-				val3 = val3.toString();
-				val3 = Number(val3.replace(/[^0-9\.]+/g, ""));
-				totalDmcost = val3;
+			/*********** Artist Contract *******************/
+
+			toArtistContract: function(oEvent) {
+				var oRouter = this.getOwnerComponent().getRouter();
+				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
+				var dealMemoDetailInfo = dealMemoDetailModel.getData();
+				var oContractItem = oEvent.getParameters()['listItem'].getBindingContext("dealMemoDetailModel").getObject();
+				oRouter.navTo("ArtistContract", {
+					"Dmno": dealMemoDetailInfo.Dmno,
+					"Dmver": dealMemoDetailInfo.Dmver,
+					"Contno": oContractItem.Contno,
+					"Contver": oContractItem.Contver
+				});
+			},
+			toArtistContractCreate: function() {
+				var oRouter = this.getOwnerComponent().getRouter();
+				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
+				var dealMemoDetailInfo = dealMemoDetailModel.getData();
+				oRouter.navTo("ArtistContract", {
+					"Dmno": dealMemoDetailInfo.Dmno,
+					"Dmver": dealMemoDetailInfo.Dmver,
+					"Contno": "new",
+					"Contver": "new"
+				});
 			}
-			//Per 30 min
-			var bModel = this.getView().byId("prog30Table").getModel();
-			var netOthrev = totothrevamt / slots;
-			var amrContCost = totalDmcost / slots * costamramt; //totDmCost/slots*Amrtpercost 
-			var contbefoffair = (netbcrevag + netOthrev) - amrContCost; //CNTAMRTAMT
-			var lessmakt = advoffair / slots;
-			var contaftoffair = contbefoffair - lessmakt;
-			var contper = (contaftoffair / netbcrevag) * 100;
 
-			netbcrevag = netbcrevag.toFixed(2);
-			netOthrev = netOthrev.toFixed(2);
-			amrContCost = amrContCost.toFixed(2);
-			contbefoffair = contbefoffair.toFixed(2);
-			lessmakt = lessmakt.toFixed(2);
-			contaftoffair = contaftoffair.toFixed(2);
-			contper = contper.toFixed(2);
-			if (bModel.oData.results.length > 0) {
-				bModel.oData.results[0].sinput1 = netbcrevag;
-				bModel.oData.results[1].sinput1 = netOthrev;
-				bModel.oData.results[2].sinput1 = amrContCost;
-				bModel.oData.results[3].sinput1 = contbefoffair;
-				bModel.oData.results[4].sinput1 = lessmakt;
-				bModel.oData.results[5].sinput1 = contaftoffair;
-				bModel.oData.results[6].sinput1 = contper;
-				bModel.oData.results[0].curr = oData.Waers;
-				bModel.oData.results[1].curr = bModel.oData.results[2].curr = bModel.oData.results[0].curr;
-				bModel.oData.results[3].curr = bModel.oData.results[4].curr = bModel.oData.results[0].curr;
-				bModel.oData.results[5].curr = bModel.oData.results[6].curr = bModel.oData.results[0].curr;
-			}
-			/*---------------------------slot budgets for per 30 min----------------------------------------*/
-			var slotbudavgbcrevamt = +oData.Avgbcrevamt; // +oData.Budavgbcrevamt;
-			var slotbudnetothrev = +oData.Totothrevamt / slots; //Budtotothvamt
-			var slotbudcontamrcost = +oData.Budcashamt * costamramt;
-			var slotbudcontrbef = (slotbudavgbcrevamt + slotbudnetothrev) - slotbudcontamrcost;
-			var slotbudlessmakt = advoffair / slots;
-			var slotbudcontraft = slotbudcontrbef - slotbudlessmakt;
-			var slotbudcontper = (slotbudcontraft / slotbudavgbcrevamt) * 100;
-
-			slotbudavgbcrevamt = slotbudavgbcrevamt.toFixed(2);
-			slotbudnetothrev = slotbudnetothrev.toFixed(2);
-			slotbudcontamrcost = slotbudcontamrcost.toFixed(2);
-			slotbudcontrbef = slotbudcontrbef.toFixed(2);
-			slotbudlessmakt = slotbudlessmakt.toFixed(2);
-			slotbudcontraft = slotbudcontraft.toFixed(2);
-			slotbudcontper = slotbudcontper.toFixed(2);
-			if (bModel.oData.results.length > 0) {
-				bModel.oData.results[0].sinput2 = slotbudavgbcrevamt;
-				bModel.oData.results[1].sinput2 = slotbudnetothrev;
-				bModel.oData.results[2].sinput2 = amrContCost //slotbudcontamrcost;
-				bModel.oData.results[3].sinput2 = slotbudcontrbef;
-				bModel.oData.results[4].sinput2 = slotbudlessmakt;
-				bModel.oData.results[5].sinput2 = slotbudcontraft;
-				bModel.oData.results[6].sinput2 = slotbudcontper;
-			}
-			bModel.refresh();
-
-			//per TRP
-			var cModel = this.getView().byId("progTRPTable").getModel();
-
-			var netrevaftcomm = netbcrevag / Estavgrtng;
-			var amrcontcosttrp = (totalDmcost / slots * costamramt) / Estavgrtng;
-			var contrbefoffairTrp = netrevaftcomm - amrcontcosttrp;
-			var lessmaktTrp = (advoffair / slots) / Estavgrtng;
-			var contaftairmktTrp = contrbefoffairTrp - lessmaktTrp;
-
-			netrevaftcomm = netrevaftcomm.toFixed(2);
-			amrcontcosttrp = amrcontcosttrp.toFixed(2);
-			contrbefoffairTrp = contrbefoffairTrp.toFixed(2);
-			lessmaktTrp = lessmaktTrp.toFixed(2);
-			contaftairmktTrp = contaftairmktTrp.toFixed(2);
-			if (cModel.oData.results.length > 0) {
-				cModel.oData.results[0].sinput1 = netrevaftcomm;
-				cModel.oData.results[1].sinput1 = amrcontcosttrp;
-				cModel.oData.results[2].sinput1 = contrbefoffairTrp;
-				cModel.oData.results[3].sinput1 = lessmaktTrp;
-				cModel.oData.results[4].sinput1 = contaftairmktTrp;
-			}
-			/*---------------------------slot budgets for per 30 min----------------------------------------*/
-			var slotnetrevaftcommTrp = +oData.Avgbcrevamt / +oData.Budavgrtng; //+oData.Budavgbcrevamt / +oData.Budavgrtng;
-			var slotbudcontcostTrp = (+oData.Budcashamt * costamramt) / +oData.Budavgrtng;
-			var slotbudcontribefTrp = slotnetrevaftcommTrp - slotbudcontcostTrp;
-			var slotbudlessmaktTrp = (advoffair / slots) / +oData.Budavgrtng;
-			var slotbudcontraftTrp = slotbudcontribefTrp - slotbudlessmaktTrp;
-
-			slotnetrevaftcommTrp = slotnetrevaftcommTrp.toFixed(2);
-			slotbudcontcostTrp = slotbudcontcostTrp.toFixed(2);
-			slotbudcontribefTrp = slotbudcontribefTrp.toFixed(2);
-			slotbudlessmaktTrp = slotbudlessmaktTrp.toFixed(2);
-			slotbudcontraftTrp = slotbudcontraftTrp.toFixed(2);
-			if (cModel.oData.results.length > 0) {
-				cModel.oData.results[0].sinput2 = slotnetrevaftcommTrp;
-				cModel.oData.results[1].sinput2 = amrcontcosttrp //slotbudcontcostTrp;
-				cModel.oData.results[2].sinput2 = slotbudcontribefTrp;
-				cModel.oData.results[3].sinput2 = slotbudlessmaktTrp;
-				cModel.oData.results[4].sinput2 = slotbudcontraftTrp;
-				cModel.oData.results[0].curr = oData.Waers;
-				cModel.oData.results[1].curr = cModel.oData.results[2].curr = cModel.oData.results[0].curr;
-				cModel.oData.results[3].curr = cModel.oData.results[4].curr = cModel.oData.results[0].curr;
-			}
-			cModel.refresh();
-			sap.ui.core.BusyIndicator.hide();
-		},
-		/************** Vendor Contract Code ********************/
-		toVendorContractCreate: function() {
-			var oRouter = this.getOwnerComponent().getRouter();
-			var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
-			var dealMemoDetailInfo = dealMemoDetailModel.getData();
-			oRouter.navTo("VendorContract", {
-				"Dmno": dealMemoDetailInfo.Dmno,
-				"Dmver": dealMemoDetailInfo.Dmver,
-				"Contno": "new",
-				"Contver": "new"
-			});
-		},
-		toVendorContractDisplay: function(oEvent) {
-			var oRouter = this.getOwnerComponent().getRouter();
-			var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
-			var dealMemoDetailInfo = dealMemoDetailModel.getData();
-			var oContractItem = oEvent.getParameters()['listItem'].getBindingContext("dealMemoDetailModel").getObject();
-			oRouter.navTo("VendorContract", {
-				"Dmno": dealMemoDetailInfo.Dmno,
-				"Dmver": dealMemoDetailInfo.Dmver,
-				"Contno": oContractItem.Contno,
-				"Contver": oContractItem.Contver
-			});
-		},
-
-		/************** Vendor Contract Code *******************/
-
-		/*********** Artist Contract *******************/
-
-		toArtistContract: function(oEvent) {
-			var oRouter = this.getOwnerComponent().getRouter();
-			var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
-			var dealMemoDetailInfo = dealMemoDetailModel.getData();
-			var oContractItem = oEvent.getParameters()['listItem'].getBindingContext("dealMemoDetailModel").getObject();
-			oRouter.navTo("ArtistContract", {
-				"Dmno": dealMemoDetailInfo.Dmno,
-				"Dmver": dealMemoDetailInfo.Dmver,
-				"Contno": oContractItem.Contno,
-				"Contver": oContractItem.Contver
-			});
-		},
-		toArtistContractCreate: function() {
-			var oRouter = this.getOwnerComponent().getRouter();
-			var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
-			var dealMemoDetailInfo = dealMemoDetailModel.getData();
-			oRouter.navTo("ArtistContract", {
-				"Dmno": dealMemoDetailInfo.Dmno,
-				"Dmver": dealMemoDetailInfo.Dmver,
-				"Contno": "new",
-				"Contver": "new"
-			});
-		}
-
+		});
 	});
-});
