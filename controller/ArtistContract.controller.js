@@ -230,7 +230,7 @@ sap.ui.define([
 
 						// dealMemoDetailModel.setProperty("/costCodes", oData.results);
 						artistContractModel.refresh(true);
-						this.loadDealMemoList();
+						this.loadDealMemoDetails();
 
 					}.bind(this),
 					error: function(oError) {
