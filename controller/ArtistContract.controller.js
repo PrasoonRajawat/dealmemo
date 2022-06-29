@@ -1949,9 +1949,9 @@ sap.ui.define([
 					new Filter("Tentid", "EQ", "IBS"),
 					new Filter("Dmno", "EQ", artistContractDetailInfo.Dmno),
 					new Filter("Dmver", "EQ", artistContractDetailInfo.Dmver),
-					new Filter("Contno", "EQ", vendorContractDetailInfo.Contno),
-					new Filter("Contver", "EQ", vendorContractDetailInfo.Contver),
-					new Filter("Conttp", "EQ", vendorContractDetailInfo.Conttp)
+					new Filter("Contno", "EQ", artistContractDetailInfo.Contno),
+					new Filter("Contver", "EQ", artistContractDetailInfo.Contver),
+					new Filter("Conttp", "EQ", artistContractDetailInfo.Conttp)
 				];
 				var timeFormat = sap.ui.core.format.DateFormat.getTimeInstance({
 					pattern: "KK:mm:ss"
