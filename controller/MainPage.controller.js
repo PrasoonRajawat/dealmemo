@@ -1105,7 +1105,10 @@ sap.ui.define([
 					this.getView().byId("prog30Table").setModel(progModel);
 					this.getView().byId("progTRPTable").setModel(progTRPModel);
 					this.loadProgPL();
+				} else if (mainSelectedKey == "comment") {
+					this.loadComment();
 				}
+				
 				if (mainSelectedKey == "progPL") {
 					this.getView().byId("btnSaveDM").setEnabled(false);
 				} else {
@@ -5795,6 +5798,12 @@ sap.ui.define([
 				}
 				cModel.refresh();
 				sap.ui.core.BusyIndicator.hide();
+			},
+			// Comment Tab
+			loadComment: function() {
+				that.getView().byId("commentInner").setSelectedKey("synopsis");
+				sap.ui.controller("Dealmemoappln.controller.Custom1").getComment(that);
+				sap.ui.controller("Dealmemoappln.controller.Custom1").getDataForComm(that);
 			},
 			/************** Vendor Contract Code ********************/
 			toVendorContractCreate: function() {
