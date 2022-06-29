@@ -203,7 +203,6 @@ sap.ui.define([
 					"vcEpiDataColor": "Critical",
 					"vcPaymentDataColor": "Critical",
 					"vcDeliveryDataColor": "Critical",
-					"vcDeliveryDataColor": "Critical",
 					"vcEpiNonCostCdDataColor": "Critical",
 					"saveVisible": true,
 					"submitVisible": vendorContractDetailInfo.App === "App" && vendorContractDetailInfo.Contno !== "new" ? true : false,

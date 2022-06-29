@@ -191,9 +191,9 @@ sap.ui.define([
 						artistContractModel.refresh(true);
 						this.getView().byId("btnEditAC").setVisible(false);
 						this.getView().byId("idSubIconTabBarac").setSelectedKey("acSubEpiData");
-						if(artistContractDetailInfo.Dmst !== "04"){
+						// if(artistContractDetailInfo.Dmst !== "04"){
 						this.loadVendors();
-					}
+					// }
 					}.bind(this),
 					error: function(oError) {
 						var oErrorResponse = JSON.parse(oError.responseText);
