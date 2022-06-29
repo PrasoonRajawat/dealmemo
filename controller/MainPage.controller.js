@@ -5622,6 +5622,23 @@ function(Controller, Filter, FilterOperator, Formatter, MessageBox, MessageToast
 				bModel.refresh();
 			});
 		},
+			calcMarket: function(oEvent) {
+			var val = oEvent.getSource().getValue();
+			var bModel = this.getView().byId("marketTable").getModel();
+			bModel.oData.results[0].sinput1 = val.toString();
+			bModel.refresh();
+			var pattern1 = /^[1-9]\d*((,\d{3}){1})(((,\d{3}){1})?(\.\d{0,2})?)$/; // values like 000,000,000.00
+			var pattern2 = /^\d{1,9}(\.\d{1,2})?$/;
+			if (val.match(pattern1) || val == "") {
+				oEvent.getSource().setValueState("None");
+
+			} else if (val.match(pattern2)) {
+				oEvent.getSource().setValueState("None");
+			} else {
+				oEvent.getSource().setValueState("Error");
+				oEvent.getSource().setValueStateText(this.getView().getModel("i18n").getResourceBundle().getText("msg_tooltipamount"));
+			}
+		},
 		//ProgPL tab in dealmemo
 		loadProgPL: function() {
 			var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");

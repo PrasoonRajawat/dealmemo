@@ -107,7 +107,7 @@
 									<IconTabFilter id="idRev30" key="rev30" text="{i18n>IcnTbFlt_Revper30min}" icon="sap-icon://history" class="sapMITBHead" 
 									enabled="{dealMemoDetailModel>/revenueTabEnable}"	iconColor="{path:'dealMemoDetailModel>/revenueTabColor'}" design="Horizontal" visible="{= ${dealMemoDetailModel>/Dmno} !== '' ? true : false }" >
 									<content>
-										<Table id="Rev30Table">
+								<Table id="Rev30Table" items="{/results}">
 											<columns>
 												<Column width="70%">
 													<ObjectIdentifier title=""/>
@@ -118,28 +118,11 @@
 											</columns>
 											<items>
 												<ColumnListItem>
-													<Text text="Total 30 min slots" class="sapUiTinyMarginTop"></Text>
+													<Text text="{skey}" class="sapUiTinyMarginTop"></Text>
+													<!--<Input value="{sinput}" type="Number" enabled="{enab}" textAlign="Right" liveChange="calRev30"/>-->
 													<Input
-														value="{ parts: [ {path: 'dealMemoDetailModel>/Dmaf/Noofslots'}, {path: 'dealMemoDetailModel>Waers'} ], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false,minFractionDigits: 2,maxFractionDigits: 2 } }"
-														textAlign="Right"   change="calRev30"/>
-												</ColumnListItem>
-													<ColumnListItem>
-													<Text text="Average Broadcast Revenue per 30 min." class="sapUiTinyMarginTop"></Text>
-													<Input
-														value="{ parts: [ {path: 'dealMemoDetailModel>/Dmaf/Avgbcrevamt'}, {path: 'dealMemoDetailModel>Waers'} ], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false,minFractionDigits: 2,maxFractionDigits: 2 } }"
-														textAlign="Right"   change="calRev30"/>
-												</ColumnListItem>
-													<ColumnListItem>
-													<Text text="Total Broadcast Revenue Total Run" class="sapUiTinyMarginTop"></Text>
-													<Input
-														value="{ parts: [ {path: 'dealMemoDetailModel>/Dmaf/Totavgbcrevamt'}, {path: 'dealMemoDetailModel>Waers'} ], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false,minFractionDigits: 2,maxFractionDigits: 2 } }"
-														textAlign="Right"   change="calRev30"/>
-												</ColumnListItem>
-													<ColumnListItem>
-													<Text text="Total Other Revenue Total Run" class="sapUiTinyMarginTop"></Text>
-													<Input
-														value="{ parts: [ {path: 'dealMemoDetailModel>/Dmaf/Totothrevamt'}, {path: 'dealMemoDetailModel>Waers'} ], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false,minFractionDigits: 2,maxFractionDigits: 2 } }"
-														textAlign="Right"   change="calRev30"/>
+														value="{ parts: [ {path: 'sinput'}, {path: 'curr'} ], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false,minFractionDigits: 2,maxFractionDigits: 2 } }"
+														textAlign="Right" enabled="{enab}"  change="calRev30"/>
 												</ColumnListItem>
 											</items>
 										</Table>
@@ -149,7 +132,7 @@
 									<IconTabFilter id="idMarketing" key="makt" text="{i18n>IcnTbFlt_MarketBudget}" icon="sap-icon://marketing-campaign" class="sapMITBHead" 
 									enabled="{dealMemoDetailModel>/marketTabEnable}" iconColor="{path:'dealMemoDetailModel>/marketTabColor'}" design="Horizontal" visible="{= ${dealMemoDetailModel>/Dmno} !== '' ? true : false }">
 									<content>
-										<Table id="marketTable">
+									<Table id="marketTable" items="{/results}">
 											<columns>
 												<Column width="70%">
 													<ObjectIdentifier title=""/>
@@ -160,9 +143,9 @@
 											</columns>
 											<items>
 												<ColumnListItem>
-													<Text text="Advertising costs off-air(Full Run)" class="sapUiTinyMarginTop"></Text>
+													<Text text="{skey}" class="sapUiTinyMarginTop"></Text>
 													<Input
-														value="{ parts: [ {path: 'dealMemoDetailModel>/Dmaf/Advoffairamt'}, {path: 'dealMemoDetailModel>Waers'} ], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false,minFractionDigits: 2, maxFractionDigits: 2 } }"
+														value="{ parts: [ {path: 'sinput'}, {path: 'curr'} ], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false,minFractionDigits: 2, maxFractionDigits: 2 } }"
 														textAlign="Right" change="calcMarket"/>
 													<!--	<Input value="{sinput}" type="Number" textAlign="Right" liveChange="calcMarket"/>-->
 												</ColumnListItem>
