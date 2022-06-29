@@ -5805,693 +5805,693 @@ sap.ui.define([
 				cModel.refresh();
 				sap.ui.core.BusyIndicator.hide();
 			},
-			// Comment Tab
-			loadComment: function() {
-				that.getView().byId("commentInner").setSelectedKey("synopsis");
-				this.getComment();
-				this.getDataForComm();
-			},
-			getComment: function() {
-				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
-				var dealMemoDetailInfo = dealMemoDetailModel.getData();
-				var aflag = 0;
-				this.assignConcept(aflag);
-				this.assignSynopsis(aflag);
-				this.getTabList();
-			},
-			getDataForComm: function(that) {
-				sap.ui.core.BusyIndicator.show(0);
-				var dealMemoDetailModel = that.getView().getModel("dealMemoDetailModel");
-				var dealMemoDetailInfo = dealMemoDetailModel.getData();
-				var Dmno = dealMemoDetailInfo.Dmno;
-				var Dmver = dealMemoDetailInfo.Dmver;
-				var intDataModelUrl = "/sap/opu/odata/IBSCMS/DEALMEMO_SRV/";
-				var oModelSav = new sap.ui.model.odata.ODataModel(intDataModelUrl, true, "", "");
-				var pValue1 = "/DmHeaderSet(Tentid='IBS',Dmno='" + Dmno + "',Dmver='" + Dmver + "',Transtp='D')?&$expand=DmtxtSet";
+		// 	// Comment Tab
+		// 	loadComment: function() {
+		// 		that.getView().byId("commentInner").setSelectedKey("synopsis");
+		// 		this.getComment();
+		// 		this.getDataForComm();
+		// 	},
+		// 	getComment: function() {
+		// 		var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
+		// 		var dealMemoDetailInfo = dealMemoDetailModel.getData();
+		// 		var aflag = 0;
+		// 		this.assignConcept(aflag);
+		// 		this.assignSynopsis(aflag);
+		// 		this.getTabList();
+		// 	},
+		// 	getDataForComm: function(that) {
+		// 		sap.ui.core.BusyIndicator.show(0);
+		// 		var dealMemoDetailModel = that.getView().getModel("dealMemoDetailModel");
+		// 		var dealMemoDetailInfo = dealMemoDetailModel.getData();
+		// 		var Dmno = dealMemoDetailInfo.Dmno;
+		// 		var Dmver = dealMemoDetailInfo.Dmver;
+		// 		var intDataModelUrl = "/sap/opu/odata/IBSCMS/DEALMEMO_SRV/";
+		// 		var oModelSav = new sap.ui.model.odata.ODataModel(intDataModelUrl, true, "", "");
+		// 		var pValue1 = "/DmHeaderSet(Tentid='IBS',Dmno='" + Dmno + "',Dmver='" + Dmver + "',Transtp='D')?&$expand=DmtxtSet";
 
-				oModelSav.read(pValue1, null, null, true, function(oData) {
-					sap.ui.core.BusyIndicator.hide();
-					//alert("success");
-					var aModelData = new sap.ui.model.json.JSONModel(oData);
-					that.getView().byId("lblComments").setModel(aModelData);
-				}, function(oData) {
-					sap.ui.core.BusyIndicator.hide();
-					var errMsg = JSON.parse(oData.response.body);
-					if (errMsg !== undefined) {
+		// 		oModelSav.read(pValue1, null, null, true, function(oData) {
+		// 			sap.ui.core.BusyIndicator.hide();
+		// 			//alert("success");
+		// 			var aModelData = new sap.ui.model.json.JSONModel(oData);
+		// 			that.getView().byId("lblComments").setModel(aModelData);
+		// 		}, function(oData) {
+		// 			sap.ui.core.BusyIndicator.hide();
+		// 			var errMsg = JSON.parse(oData.response.body);
+		// 			if (errMsg !== undefined) {
 
-						var stext = errMsg.error.innererror.errordetails[0].message;
-						sap.m.MessageBox.show(stext, {
-							icon: sap.m.MessageBox.Icon.ERROR,
-							title: "Error"
-						});
-					}
-				});
-			},
-			getTabList: function() {
+		// 				var stext = errMsg.error.innererror.errordetails[0].message;
+		// 				sap.m.MessageBox.show(stext, {
+		// 					icon: sap.m.MessageBox.Icon.ERROR,
+		// 					title: "Error"
+		// 				});
+		// 			}
+		// 		});
+		// 	},
+		// 	getTabList: function() {
 
-				//******************************** condition for adding inner tabs in comments tab**********************		
-				// var TabFlag = that.getView().byId("lblCommentStatus").getText();
-				// if (TabFlag === "0") //if tabs doesn't exist
-				// {
-				that.setTabList();
-				// } else {
-				// 	if (status == "04" || status == "02") {
-				// 		var tabs = that.getView().byId("commentInner").getItems();
-				// 		for (var i = 0; i < tabs.length; i++) {
-				// 			that.getView().byId("commentInner").getItems()[i].setVisible(true);
-				// 		}
-				// 	} else {
-				// 		var tabs = that.getView().byId("commentInner").getItems();
-				// 		for (var i = 2; i < tabs.length; i++) {
-				// 			that.getView().byId("commentInner").getItems()[i].setVisible(false);
-				// 		}
-				// 	}
-				// } //if (TabFlag === "0")
-			},
-				appendTxt: function(that, key) {
-			sap.ui.core.BusyIndicator.show(0);
-			var jModelData = this.modelDesign(that, key);
-			var intDataModelUrl = "/sap/opu/odata/IBSCMS/DEALMEMO_SRV/";
-			var oModelSav = new sap.ui.model.odata.ODataModel(intDataModelUrl, true, "", "");
-			oModelSav.setHeaders({
-				"Accept": "application/json"
-			});
-			oModelSav.setHeaders({
-				"X-Requested-With": "X"
-			});
-			var pValue = "/DmHeaderSet";
-			oModelSav.create(pValue, jModelData.oData, null, function() {
-					sap.ui.core.BusyIndicator.hide();
-					/*	sap.m.MessageBox.show("comment created successfully", {
-							icon: sap.m.MessageBox.Icon.SUCCESS,
-							title: "Success"
-						});*/
-					sap.m.MessageToast.show(that._oResourceBundle.getText("msg_commsave"));
+		// 		//******************************** condition for adding inner tabs in comments tab**********************		
+		// 		// var TabFlag = that.getView().byId("lblCommentStatus").getText();
+		// 		// if (TabFlag === "0") //if tabs doesn't exist
+		// 		// {
+		// 		that.setTabList();
+		// 		// } else {
+		// 		// 	if (status == "04" || status == "02") {
+		// 		// 		var tabs = that.getView().byId("commentInner").getItems();
+		// 		// 		for (var i = 0; i < tabs.length; i++) {
+		// 		// 			that.getView().byId("commentInner").getItems()[i].setVisible(true);
+		// 		// 		}
+		// 		// 	} else {
+		// 		// 		var tabs = that.getView().byId("commentInner").getItems();
+		// 		// 		for (var i = 2; i < tabs.length; i++) {
+		// 		// 			that.getView().byId("commentInner").getItems()[i].setVisible(false);
+		// 		// 		}
+		// 		// 	}
+		// 		// } //if (TabFlag === "0")
+		// 	},
+		// 		appendTxt: function(that, key) {
+		// 	sap.ui.core.BusyIndicator.show(0);
+		// 	var jModelData = this.modelDesign(that, key);
+		// 	var intDataModelUrl = "/sap/opu/odata/IBSCMS/DEALMEMO_SRV/";
+		// 	var oModelSav = new sap.ui.model.odata.ODataModel(intDataModelUrl, true, "", "");
+		// 	oModelSav.setHeaders({
+		// 		"Accept": "application/json"
+		// 	});
+		// 	oModelSav.setHeaders({
+		// 		"X-Requested-With": "X"
+		// 	});
+		// 	var pValue = "/DmHeaderSet";
+		// 	oModelSav.create(pValue, jModelData.oData, null, function() {
+		// 			sap.ui.core.BusyIndicator.hide();
+		// 			/*	sap.m.MessageBox.show("comment created successfully", {
+		// 					icon: sap.m.MessageBox.Icon.SUCCESS,
+		// 					title: "Success"
+		// 				});*/
+		// 			sap.m.MessageToast.show(that._oResourceBundle.getText("msg_commsave"));
 
-				},
-				function() {
-					sap.ui.core.BusyIndicator.hide();
-					sap.m.MessageBox.show(that._oResourceBundle.getText("msg_commcreatefail"), {
-						icon: sap.m.MessageBox.Icon.ERROR,
-						title: "{i18n>Error}"
-					});
-				});
+		// 		},
+		// 		function() {
+		// 			sap.ui.core.BusyIndicator.hide();
+		// 			sap.m.MessageBox.show(that._oResourceBundle.getText("msg_commcreatefail"), {
+		// 				icon: sap.m.MessageBox.Icon.ERROR,
+		// 				title: "{i18n>Error}"
+		// 			});
+		// 		});
 
-		},
-			onFeedPost: function(that) {
-				var Key = that.getView().byId("commentInner").getSelectedKey();
-				that.saveComments(Key, that);
-			},
+		// },
+		// 	onFeedPost: function(that) {
+		// 		var Key = that.getView().byId("commentInner").getSelectedKey();
+		// 		that.saveComments(Key, that);
+		// 	},
 			
-		modelDesign: function(that, key) {
-			var aModelData = that.getView().byId("lblComments").getModel();
+		// modelDesign: function(that, key) {
+		// 	var aModelData = that.getView().byId("lblComments").getModel();
 
-			//*********************creation of model for posting comments**************************
-			var oFields = {
-				Amrtpercost: "0.00",
-				Avgepidur: "",
-				Bukrs: "",
-				Butxt: "",
-				Cafrefno: "",
-				Chnlid: "",
-				Chnlnm: "",
-				Cntcat: "",
-				Cntcatnm: "",
-				Cntgn: "",
-				Cntgnnm: "",
-				Cntid: "",
-				Cntnm: "",
-				Cntnt: "",
-				Cntntnm: "",
-				Cntobj: "",
-				Cntobjnm: "",
-				Cntsgn: "",
-				Cntsgnnm: "",
-				Cntstp: "",
-				Cntstpnm: "",
-				Cnttp: "",
-				Cnttpnm: "",
-				Dmdt: "null",
-				Dmno: "",
-				Dmrefno: "",
-				Dmst: "",
-				Dmstdesc: "",
-				Dmver: "",
-				Estprgreldt: "null",
-				Exchrt: "0.00",
-				Noofepi: "",
-				Recst: "",
-				Tentid: "",
-				Txtsuffix: "",
-				Waers: "",
-				DmtxtSet: [],
-				DmEpisodeSet: [],
-				DmCostSet: []
-			};
+		// 	//*********************creation of model for posting comments**************************
+		// 	var oFields = {
+		// 		Amrtpercost: "0.00",
+		// 		Avgepidur: "",
+		// 		Bukrs: "",
+		// 		Butxt: "",
+		// 		Cafrefno: "",
+		// 		Chnlid: "",
+		// 		Chnlnm: "",
+		// 		Cntcat: "",
+		// 		Cntcatnm: "",
+		// 		Cntgn: "",
+		// 		Cntgnnm: "",
+		// 		Cntid: "",
+		// 		Cntnm: "",
+		// 		Cntnt: "",
+		// 		Cntntnm: "",
+		// 		Cntobj: "",
+		// 		Cntobjnm: "",
+		// 		Cntsgn: "",
+		// 		Cntsgnnm: "",
+		// 		Cntstp: "",
+		// 		Cntstpnm: "",
+		// 		Cnttp: "",
+		// 		Cnttpnm: "",
+		// 		Dmdt: "null",
+		// 		Dmno: "",
+		// 		Dmrefno: "",
+		// 		Dmst: "",
+		// 		Dmstdesc: "",
+		// 		Dmver: "",
+		// 		Estprgreldt: "null",
+		// 		Exchrt: "0.00",
+		// 		Noofepi: "",
+		// 		Recst: "",
+		// 		Tentid: "",
+		// 		Txtsuffix: "",
+		// 		Waers: "",
+		// 		DmtxtSet: [],
+		// 		DmEpisodeSet: [],
+		// 		DmCostSet: []
+		// 	};
 
-			var yModelData = new sap.ui.model.json.JSONModel(oFields);
+		// 	var yModelData = new sap.ui.model.json.JSONModel(oFields);
 
-			/*	yModelData.oData.Dmdt = "2016-12-07T00:00:00";
-			yModelData.oData.Estprgreldt = "2017-01-02T00:00:00";*/
-			/*	var dmdtLen= yModelData.oData.Dmdt.length;
-				yModelData.oData.Dmdt=yModelData.oData.Dmdt.substring(0,dmdtLen-2);*/
-			//	var EstdtLen= yModelData.oData.Estprgreldt.length;
-			//	yModelData.oData.Estprgreldt=yModelData.oData.Estprgreldt.substring(0,EstdtLen-2);
+		// 	/*	yModelData.oData.Dmdt = "2016-12-07T00:00:00";
+		// 	yModelData.oData.Estprgreldt = "2017-01-02T00:00:00";*/
+		// 	/*	var dmdtLen= yModelData.oData.Dmdt.length;
+		// 		yModelData.oData.Dmdt=yModelData.oData.Dmdt.substring(0,dmdtLen-2);*/
+		// 	//	var EstdtLen= yModelData.oData.Estprgreldt.length;
+		// 	//	yModelData.oData.Estprgreldt=yModelData.oData.Estprgreldt.substring(0,EstdtLen-2);
 
-			//*********passing data in json model**********
-			yModelData.oData.Avgepidur = aModelData.oData.Avgepidur;
-			yModelData.oData.Amrtpercost = aModelData.oData.Amrtpercost;
-			yModelData.oData.Bukrs = aModelData.oData.Bukrs;
-			yModelData.oData.Butxt = aModelData.oData.Butxt;
-			yModelData.oData.Cntcatnm = aModelData.oData.Cntcatnm;
-			yModelData.oData.Cntsgnnm = aModelData.oData.Cntsgnnm;
-			yModelData.oData.Chnlnm = aModelData.oData.Chnlnm;
-			yModelData.oData.Cntcat = aModelData.oData.Cntcat;
-			yModelData.oData.Cntgnnm = aModelData.oData.Cntgnnm;
-			yModelData.oData.Cntobjnm = aModelData.oData.Cntobjnm;
-			yModelData.oData.Cafrefno = aModelData.oData.Cafrefno;
-			yModelData.oData.Cntgn = aModelData.oData.Cntgn;
-			yModelData.oData.Cntntnm = aModelData.oData.Cntntnm;
-			yModelData.oData.Cntsgn = aModelData.oData.Cntsgn;
-			yModelData.oData.Cntnm = aModelData.oData.Cntnm;
-			yModelData.oData.Cntobj = aModelData.oData.Cntobj;
-			yModelData.oData.Cntstp = aModelData.oData.Cntstp;
-			yModelData.oData.Cntstpnm = aModelData.oData.Cntstpnm;
-			yModelData.oData.Cnttp = aModelData.oData.Cnttp;
-			yModelData.oData.Cntnt = aModelData.oData.Cntnt;
-			yModelData.oData.Chnlid = aModelData.oData.Chnlid;
-			yModelData.oData.Cntid = aModelData.oData.Cntid;
-			yModelData.oData.Dmstdesc = aModelData.oData.Dmstdesc;
-			yModelData.oData.Dmver = aModelData.oData.Dmver;
-			yModelData.oData.Dmdt = aModelData.oData.Dmdt;
-			yModelData.oData.Dmst = aModelData.oData.Dmst;
-			yModelData.oData.Dmrefno = aModelData.oData.Dmrefno;
-			yModelData.oData.Dmno = aModelData.oData.Dmno;
-			yModelData.oData.Exchrt = aModelData.oData.Exchrt;
-			yModelData.oData.Estprgreldt = aModelData.oData.Estprgreldt;
-			yModelData.oData.Noofepi = aModelData.oData.Noofepi;
-			yModelData.oData.Recst = aModelData.oData.Recst;
-			yModelData.oData.Txtsuffix = key;
-			yModelData.oData.Tentid = aModelData.oData.Tentid;
-			yModelData.oData.Waers = aModelData.oData.Waers;
-			yModelData.oData.DmCostSet = [];
-			yModelData.oData.DmEpisodeSet = [];
-			yModelData.oData.DmtxtSet = aModelData.oData.DmtxtSet;
-			yModelData.oData.DmtxtSet = yModelData.oData.DmtxtSet.results;
-			return yModelData;
-		},
-			//*****************************************Function For adding inner tabs**********************************
-			setTabList: function() {
-				sap.ui.core.BusyIndicator.show(0);
-				var dealMemoDetailModel = that.getView().getModel("dealMemoDetailModel");
-				var dealMemoDetailInfo = dealMemoDetailModel.getData();
-				var Dmno = dealMemoDetailInfo.Dmno;
-				var Dmver = dealMemoDetailInfo.Dmver;
-				var intDataModelUrl = "/sap/opu/odata/IBSCMS/DEALMEMO_SRV/";
-				var oModelSav = new sap.ui.model.odata.ODataModel(intDataModelUrl, true, "", "");
-				var pValue = "/RsmpSet?$filter=Tentid eq'IBS' and  Dmno eq '" + Dmno + "' and Dmver eq '" + Dmver + "' and Uname eq ''";
-				oModelSav.read(pValue, null, null, true, commtabSucc, commtabFail);
+		// 	//*********passing data in json model**********
+		// 	yModelData.oData.Avgepidur = aModelData.oData.Avgepidur;
+		// 	yModelData.oData.Amrtpercost = aModelData.oData.Amrtpercost;
+		// 	yModelData.oData.Bukrs = aModelData.oData.Bukrs;
+		// 	yModelData.oData.Butxt = aModelData.oData.Butxt;
+		// 	yModelData.oData.Cntcatnm = aModelData.oData.Cntcatnm;
+		// 	yModelData.oData.Cntsgnnm = aModelData.oData.Cntsgnnm;
+		// 	yModelData.oData.Chnlnm = aModelData.oData.Chnlnm;
+		// 	yModelData.oData.Cntcat = aModelData.oData.Cntcat;
+		// 	yModelData.oData.Cntgnnm = aModelData.oData.Cntgnnm;
+		// 	yModelData.oData.Cntobjnm = aModelData.oData.Cntobjnm;
+		// 	yModelData.oData.Cafrefno = aModelData.oData.Cafrefno;
+		// 	yModelData.oData.Cntgn = aModelData.oData.Cntgn;
+		// 	yModelData.oData.Cntntnm = aModelData.oData.Cntntnm;
+		// 	yModelData.oData.Cntsgn = aModelData.oData.Cntsgn;
+		// 	yModelData.oData.Cntnm = aModelData.oData.Cntnm;
+		// 	yModelData.oData.Cntobj = aModelData.oData.Cntobj;
+		// 	yModelData.oData.Cntstp = aModelData.oData.Cntstp;
+		// 	yModelData.oData.Cntstpnm = aModelData.oData.Cntstpnm;
+		// 	yModelData.oData.Cnttp = aModelData.oData.Cnttp;
+		// 	yModelData.oData.Cntnt = aModelData.oData.Cntnt;
+		// 	yModelData.oData.Chnlid = aModelData.oData.Chnlid;
+		// 	yModelData.oData.Cntid = aModelData.oData.Cntid;
+		// 	yModelData.oData.Dmstdesc = aModelData.oData.Dmstdesc;
+		// 	yModelData.oData.Dmver = aModelData.oData.Dmver;
+		// 	yModelData.oData.Dmdt = aModelData.oData.Dmdt;
+		// 	yModelData.oData.Dmst = aModelData.oData.Dmst;
+		// 	yModelData.oData.Dmrefno = aModelData.oData.Dmrefno;
+		// 	yModelData.oData.Dmno = aModelData.oData.Dmno;
+		// 	yModelData.oData.Exchrt = aModelData.oData.Exchrt;
+		// 	yModelData.oData.Estprgreldt = aModelData.oData.Estprgreldt;
+		// 	yModelData.oData.Noofepi = aModelData.oData.Noofepi;
+		// 	yModelData.oData.Recst = aModelData.oData.Recst;
+		// 	yModelData.oData.Txtsuffix = key;
+		// 	yModelData.oData.Tentid = aModelData.oData.Tentid;
+		// 	yModelData.oData.Waers = aModelData.oData.Waers;
+		// 	yModelData.oData.DmCostSet = [];
+		// 	yModelData.oData.DmEpisodeSet = [];
+		// 	yModelData.oData.DmtxtSet = aModelData.oData.DmtxtSet;
+		// 	yModelData.oData.DmtxtSet = yModelData.oData.DmtxtSet.results;
+		// 	return yModelData;
+		// },
+		// 	//*****************************************Function For adding inner tabs**********************************
+		// 	setTabList: function() {
+		// 		sap.ui.core.BusyIndicator.show(0);
+		// 		var dealMemoDetailModel = that.getView().getModel("dealMemoDetailModel");
+		// 		var dealMemoDetailInfo = dealMemoDetailModel.getData();
+		// 		var Dmno = dealMemoDetailInfo.Dmno;
+		// 		var Dmver = dealMemoDetailInfo.Dmver;
+		// 		var intDataModelUrl = "/sap/opu/odata/IBSCMS/DEALMEMO_SRV/";
+		// 		var oModelSav = new sap.ui.model.odata.ODataModel(intDataModelUrl, true, "", "");
+		// 		var pValue = "/RsmpSet?$filter=Tentid eq'IBS' and  Dmno eq '" + Dmno + "' and Dmver eq '" + Dmver + "' and Uname eq ''";
+		// 		oModelSav.read(pValue, null, null, true, commtabSucc, commtabFail);
 
-				function commtabSucc(oData) {
-					sap.ui.core.BusyIndicator.hide();
-					if (oData.results.length !== 0) {
-						for (var i = 0; i < oData.results.length; i++) {
+		// 		function commtabSucc(oData) {
+		// 			sap.ui.core.BusyIndicator.hide();
+		// 			if (oData.results.length !== 0) {
+		// 				for (var i = 0; i < oData.results.length; i++) {
 
-							var tkey = oData.results[i].Posnid;
-							var ttext = oData.results[i].Posnidnm;
-							var Listid = tkey + "comment";
-							var custId = tkey + "customl";
-							var FeedId = tkey + "FeedIp";
-							var item = new sap.m.IconTabFilter({
-								id: tkey,
-								key: tkey,
-								text: ttext,
-								exapanded: true,
-								expandable: true,
-								content: [
-									new sap.m.FeedInput({
-										id: FeedId,
-										showIcon: false,
-										post: function() {
-											that.onFeedPost();
-										}
-									}),
-									new sap.m.List({
-										id: Listid,
-										showSeparators: "Inner"
+		// 					var tkey = oData.results[i].Posnid;
+		// 					var ttext = oData.results[i].Posnidnm;
+		// 					var Listid = tkey + "comment";
+		// 					var custId = tkey + "customl";
+		// 					var FeedId = tkey + "FeedIp";
+		// 					var item = new sap.m.IconTabFilter({
+		// 						id: tkey,
+		// 						key: tkey,
+		// 						text: ttext,
+		// 						exapanded: true,
+		// 						expandable: true,
+		// 						content: [
+		// 							new sap.m.FeedInput({
+		// 								id: FeedId,
+		// 								showIcon: false,
+		// 								post: function() {
+		// 									that.onFeedPost();
+		// 								}
+		// 							}),
+		// 							new sap.m.List({
+		// 								id: Listid,
+		// 								showSeparators: "Inner"
 
-									})
-								]
-							});
-							var itemTemplate = new sap.m.CustomListItem({
-								id: custId,
-								content: [
-									new sap.m.ObjectAttribute({
-										title: "{Author}",
-										text: "{Date}",
-										active: true
-									}),
-									new sap.m.Text({
-										text: "{Text}"
-									})
+		// 							})
+		// 						]
+		// 					});
+		// 					var itemTemplate = new sap.m.CustomListItem({
+		// 						id: custId,
+		// 						content: [
+		// 							new sap.m.ObjectAttribute({
+		// 								title: "{Author}",
+		// 								text: "{Date}",
+		// 								active: true
+		// 							}),
+		// 							new sap.m.Text({
+		// 								text: "{Text}"
+		// 							})
 
-								]
-							});
-							sap.ui.getCore().getControl(Listid).bindAggregation("items", "/EntryCollection", itemTemplate);
-							that.getView().byId("commentInner").addItem(item);
-							if (status == "04") {
-								//	sap.ui.getCore().getControl(FeedId).setEnabled(false);
-							} else {
-								//	sap.ui.getCore().getControl(FeedId).setEnabled(true);
-							}
-							if (status == "01") {
-								if (tkey == "INIT") {
-									sap.ui.getCore().byId(tkey).setVisible(true);
-								} else {
-									sap.ui.getCore().byId(tkey).setVisible(false);
-								}
-							}
-						}
+		// 						]
+		// 					});
+		// 					sap.ui.getCore().getControl(Listid).bindAggregation("items", "/EntryCollection", itemTemplate);
+		// 					that.getView().byId("commentInner").addItem(item);
+		// 					if (status == "04") {
+		// 						//	sap.ui.getCore().getControl(FeedId).setEnabled(false);
+		// 					} else {
+		// 						//	sap.ui.getCore().getControl(FeedId).setEnabled(true);
+		// 					}
+		// 					if (status == "01") {
+		// 						if (tkey == "INIT") {
+		// 							sap.ui.getCore().byId(tkey).setVisible(true);
+		// 						} else {
+		// 							sap.ui.getCore().byId(tkey).setVisible(false);
+		// 						}
+		// 					}
+		// 				}
 
-					}
-					TabFlg = TabFlg + 1;
-					var aflag = "0";
-					that.assignConcept(that, aflag);
-					that.assignSynopsis(that, aflag);
-					that.getView().byId("lblCommentStatus").setText("1");
+		// 			}
+		// 			TabFlg = TabFlg + 1;
+		// 			var aflag = "0";
+		// 			that.assignConcept(that, aflag);
+		// 			that.assignSynopsis(that, aflag);
+		// 			that.getView().byId("lblCommentStatus").setText("1");
 
-				}
+		// 		}
 
-				function commtabFail(oData, that) {
-					sap.ui.core.BusyIndicator.hide();
-					var errMsg = JSON.parse(oData.response.body);
-					if (errMsg.error.innererror.errordetails[0].message !== undefined) {
-						var stext = errMsg.error.innererror.errordetails[0].message;
-						sap.m.MessageBox.show(stext, {
-							icon: sap.m.MessageBox.Icon.ERROR,
-							title: "{i18n>Error}"
-						});
-					} else {
-						sap.m.MessageBox.show(that._oResourceBundle.getText("msg_servfailcomm"), {
-							icon: sap.m.MessageBox.Icon.SUCCESS,
-							title: "{i18n>Success}"
-						});
-					}
+		// 		function commtabFail(oData, that) {
+		// 			sap.ui.core.BusyIndicator.hide();
+		// 			var errMsg = JSON.parse(oData.response.body);
+		// 			if (errMsg.error.innererror.errordetails[0].message !== undefined) {
+		// 				var stext = errMsg.error.innererror.errordetails[0].message;
+		// 				sap.m.MessageBox.show(stext, {
+		// 					icon: sap.m.MessageBox.Icon.ERROR,
+		// 					title: "{i18n>Error}"
+		// 				});
+		// 			} else {
+		// 				sap.m.MessageBox.show(that._oResourceBundle.getText("msg_servfailcomm"), {
+		// 					icon: sap.m.MessageBox.Icon.SUCCESS,
+		// 					title: "{i18n>Success}"
+		// 				});
+		// 			}
 
-				}
+		// 		}
 
-			},
-			saveComments: function(Key) {
+		// 	},
+		// 	saveComments: function(Key) {
 
-				if (Key === 'synopsis') {
-					var kValue = "";
-					var valS = that.getView().byId("synopsisTxt").getValue();
-					if (valS !== "") {
-						kValue = "SYNOPSIS";
-						that.saveCommData(that, valS);
-						that.appendTxt(that, kValue);
-						that.assignSynopsis(that);
-						that.getView().byId("synopsisTxt").setValue("");
-					}
-					var valC = that.getView().byId("conceptTxt").getValue();
-					if (valC !== "") {
-						kValue = "CONCEPT";
-						that.saveCommData(that, valC);
-						that.appendTxt(that, kValue);
-						that.assignConcept(that);
-						that.getView().byId("conceptTxt").setValue("");
-					}
-					if (valS == "" && valC == "") {
-						sap.m.MessageBox.show(that._oResourceBundle.getText("msg_fillconsyn"), {
-							icon: sap.m.MessageBox.Icon.ERROR,
-							title: "Error"
-						});
-					}
+		// 		if (Key === 'synopsis') {
+		// 			var kValue = "";
+		// 			var valS = that.getView().byId("synopsisTxt").getValue();
+		// 			if (valS !== "") {
+		// 				kValue = "SYNOPSIS";
+		// 				that.saveCommData(that, valS);
+		// 				that.appendTxt(that, kValue);
+		// 				that.assignSynopsis(that);
+		// 				that.getView().byId("synopsisTxt").setValue("");
+		// 			}
+		// 			var valC = that.getView().byId("conceptTxt").getValue();
+		// 			if (valC !== "") {
+		// 				kValue = "CONCEPT";
+		// 				that.saveCommData(that, valC);
+		// 				that.appendTxt(that, kValue);
+		// 				that.assignConcept(that);
+		// 				that.getView().byId("conceptTxt").setValue("");
+		// 			}
+		// 			if (valS == "" && valC == "") {
+		// 				sap.m.MessageBox.show(that._oResourceBundle.getText("msg_fillconsyn"), {
+		// 					icon: sap.m.MessageBox.Icon.ERROR,
+		// 					title: "Error"
+		// 				});
+		// 			}
 
-				} else {
-					var Inpid = Key + "FeedIp";
-					var val = sap.ui.getCore().byId(Inpid).getValue();
-					if (val !== "") {
-						that.saveCommData(that, val);
-						that.appendTxt(that, Key);
-						sap.ui.getCore().byId(Inpid).setValue("");
-						//	that.setComments(that,Key);
-					}
-				}
-				that.setComments(that, Key);
+		// 		} else {
+		// 			var Inpid = Key + "FeedIp";
+		// 			var val = sap.ui.getCore().byId(Inpid).getValue();
+		// 			if (val !== "") {
+		// 				that.saveCommData(that, val);
+		// 				that.appendTxt(that, Key);
+		// 				sap.ui.getCore().byId(Inpid).setValue("");
+		// 				//	that.setComments(that,Key);
+		// 			}
+		// 		}
+		// 		that.setComments(that, Key);
 
-			},
-			saveCommData: function(that, val) {
-				//var jModelData = this.modelDesign(that);
-				var aModelData = that.getView().byId("lblComments").getModel();
-				var idURL = "http://ibssapserv9.inveniodelhi.com:8060";
-				var oRecord = "";
-				var extraRow = "";
-				var user = "";
+		// 	},
+		// 	saveCommData: function(that, val) {
+		// 		//var jModelData = this.modelDesign(that);
+		// 		var aModelData = that.getView().byId("lblComments").getModel();
+		// 		var idURL = "http://ibssapserv9.inveniodelhi.com:8060";
+		// 		var oRecord = "";
+		// 		var extraRow = "";
+		// 		var user = "";
 
-				var oModitem = '/DmtxtSet/results';
-				aModelData.oData.DmtxtSet.results = [];
-				var oModProperty = aModelData.getProperty(oModitem);
-				var mainLines = val.split("\n");
-				var lenAdj = mainLines.length;
-				if (lenAdj === 1) {
-					if (mainLines[0] === "") {
-						lenAdj = 0;
-					}
-				}
+		// 		var oModitem = '/DmtxtSet/results';
+		// 		aModelData.oData.DmtxtSet.results = [];
+		// 		var oModProperty = aModelData.getProperty(oModitem);
+		// 		var mainLines = val.split("\n");
+		// 		var lenAdj = mainLines.length;
+		// 		if (lenAdj === 1) {
+		// 			if (mainLines[0] === "") {
+		// 				lenAdj = 0;
+		// 			}
+		// 		}
 
-				var oCtr = 1;
+		// 		var oCtr = 1;
 
-				if (oCtr === 1) {
-					for (oCtr = 1; oCtr <= lenAdj; oCtr++) {
-						lCtr = oCtr - 1;
-						mainLines[lCtr] = mainLines[lCtr].replace(/"/g, "'");
-						var childLine = [];
-						var tdformat = "";
-						if (mainLines[lCtr].length > 132) {
-							var int1 = 0;
-							var int2 = 0;
-							var cLen = mainLines[lCtr].length / 132;
-							cLen = Math.ceil(cLen);
-							for (var c = 0; c < cLen; c++) {
-								int1 = int2;
+		// 		if (oCtr === 1) {
+		// 			for (oCtr = 1; oCtr <= lenAdj; oCtr++) {
+		// 				lCtr = oCtr - 1;
+		// 				mainLines[lCtr] = mainLines[lCtr].replace(/"/g, "'");
+		// 				var childLine = [];
+		// 				var tdformat = "";
+		// 				if (mainLines[lCtr].length > 132) {
+		// 					var int1 = 0;
+		// 					var int2 = 0;
+		// 					var cLen = mainLines[lCtr].length / 132;
+		// 					cLen = Math.ceil(cLen);
+		// 					for (var c = 0; c < cLen; c++) {
+		// 						int1 = int2;
 
-								if (c === cLen - 1) {
-									int2 = mainLines[lCtr].length;
-								} else {
-									int2 = int2 + 131;
-								}
-								if (c > 0) {
-									tdformat = "";
-								} else {
-									tdformat = "*";
+		// 						if (c === cLen - 1) {
+		// 							int2 = mainLines[lCtr].length;
+		// 						} else {
+		// 							int2 = int2 + 131;
+		// 						}
+		// 						if (c > 0) {
+		// 							tdformat = "";
+		// 						} else {
+		// 							tdformat = "*";
 
-								}
+		// 						}
 
-								childLine[c] = mainLines[lCtr].substring(int1, int2);
+		// 						childLine[c] = mainLines[lCtr].substring(int1, int2);
 
-								oRecord = '{' + '"__metadata" : {' + '"id" : "' + idURL + '/sap/opu/odata/IBSCMS/DEALMEMO_SRV/DmtxtSet(' + user + ')",' +
-									'"uri" : "' + idURL + '/sap/opu/odata/IBSCMS/DEALMEMO_SRV/DmtxtSet(' + user + ')",' + '"type" : "DEALMEMO_SRV.Dmtxt"' + '},' +
-									'"Tdformat" : "' + tdformat + '",' + '"Tdline" : "' + childLine[c] + '" ' + '}';
-								extraRow = $.parseJSON(oRecord);
-								oModProperty.push(extraRow);
+		// 						oRecord = '{' + '"__metadata" : {' + '"id" : "' + idURL + '/sap/opu/odata/IBSCMS/DEALMEMO_SRV/DmtxtSet(' + user + ')",' +
+		// 							'"uri" : "' + idURL + '/sap/opu/odata/IBSCMS/DEALMEMO_SRV/DmtxtSet(' + user + ')",' + '"type" : "DEALMEMO_SRV.Dmtxt"' + '},' +
+		// 							'"Tdformat" : "' + tdformat + '",' + '"Tdline" : "' + childLine[c] + '" ' + '}';
+		// 						extraRow = $.parseJSON(oRecord);
+		// 						oModProperty.push(extraRow);
 
-							}
-						} else {
-							oRecord = '{' + '"__metadata" : {' + '"id" : "' + idURL + '/sap/opu/odata/IBSCMS/DEALMEMO_SRV/DmtxtSet(' + user + ')",' +
-								'"uri" : "' + idURL + '/sap/opu/odata/IBSCMS/DEALMEMO_SRV/DmtxtSet(' + user + ')",' + '"type" : "DEALMEMO_SRV.Dmtxt"' + '},' +
-								'"Tdformat" : "*",' + '"Tdline" : "' + mainLines[lCtr] + '" ' + '}';
-							extraRow = $.parseJSON(oRecord);
-							oModProperty.push(extraRow);
-						}
+		// 					}
+		// 				} else {
+		// 					oRecord = '{' + '"__metadata" : {' + '"id" : "' + idURL + '/sap/opu/odata/IBSCMS/DEALMEMO_SRV/DmtxtSet(' + user + ')",' +
+		// 						'"uri" : "' + idURL + '/sap/opu/odata/IBSCMS/DEALMEMO_SRV/DmtxtSet(' + user + ')",' + '"type" : "DEALMEMO_SRV.Dmtxt"' + '},' +
+		// 						'"Tdformat" : "*",' + '"Tdline" : "' + mainLines[lCtr] + '" ' + '}';
+		// 					extraRow = $.parseJSON(oRecord);
+		// 					oModProperty.push(extraRow);
+		// 				}
 
-					}
-				}
-			},
-			assignConcept: function(aflag) {
-				sap.ui.core.BusyIndicator.show(0);
-				var dealMemoDetailModel = that.getView().getModel("dealMemoDetailModel");
-				var dealMemoDetailInfo = dealMemoDetailModel.getData();
-				var Dmno = dealMemoDetailInfo.Dmno;
-				var Dmver = dealMemoDetailInfo.Dmver;
-				var intDataModelUrl = "/sap/opu/odata/IBSCMS/DEALMEMO_SRV/";
-				var oModelSav = new sap.ui.model.odata.ODataModel(intDataModelUrl, true, "", "");
-				var pValue1 = "/DmtxtSet?$filter=Tentid eq'IBS' and  Dmno eq '" + Dmno + "' and Dmver eq '" + Dmver +
-					"' and Txtsuffix eq 'CONCEPT'";
-				oModelSav.read(pValue1, null, null, true, conceptSucc, conceptFail);
+		// 			}
+		// 		}
+		// 	},
+		// 	assignConcept: function(aflag) {
+		// 		sap.ui.core.BusyIndicator.show(0);
+		// 		var dealMemoDetailModel = that.getView().getModel("dealMemoDetailModel");
+		// 		var dealMemoDetailInfo = dealMemoDetailModel.getData();
+		// 		var Dmno = dealMemoDetailInfo.Dmno;
+		// 		var Dmver = dealMemoDetailInfo.Dmver;
+		// 		var intDataModelUrl = "/sap/opu/odata/IBSCMS/DEALMEMO_SRV/";
+		// 		var oModelSav = new sap.ui.model.odata.ODataModel(intDataModelUrl, true, "", "");
+		// 		var pValue1 = "/DmtxtSet?$filter=Tentid eq'IBS' and  Dmno eq '" + Dmno + "' and Dmver eq '" + Dmver +
+		// 			"' and Txtsuffix eq 'CONCEPT'";
+		// 		oModelSav.read(pValue1, null, null, true, conceptSucc, conceptFail);
 
-				function conceptSucc(oData) {
-					sap.ui.core.BusyIndicator.hide();
-					var length = oData.results.length;
-					if (length !== 0) {
-						var data = "";
-						var head = [];
-						head = oData.results[0].Tdline.split("_");
-						var year = head[1].substring(0, 4);
-						var month = head[1].substring(4, 6);
-						var day = head[1].substring(6, 8);
-						var date = year + '-' + month + '-' + day;
-						for (var i = 1; i < length; i++) {
-							if (oData.results[i].Tdformat !== "" && i > 1) {
-								data = data + ('\n');
-							}
-							data = data + oData.results[i].Tdline;
-						}
-						var oData = {
-							EntryCollection: [{
-								Author: head[0],
-								Type: "Concept",
-								date: date,
-								Text: data
-							}]
-						};
-						var oModel = new sap.ui.model.json.JSONModel(oData);
-						if (aflag === 1) {
-							that.getView().byId("conceptTxt").setValue(data);
-							that.getView().byId("conceptFeed").setVisible(false);
-							that.getView().byId("conceptTxt").setVisible(true);
-							that.getView().byId("conceptBtn").setEnabled(false);
+		// 		function conceptSucc(oData) {
+		// 			sap.ui.core.BusyIndicator.hide();
+		// 			var length = oData.results.length;
+		// 			if (length !== 0) {
+		// 				var data = "";
+		// 				var head = [];
+		// 				head = oData.results[0].Tdline.split("_");
+		// 				var year = head[1].substring(0, 4);
+		// 				var month = head[1].substring(4, 6);
+		// 				var day = head[1].substring(6, 8);
+		// 				var date = year + '-' + month + '-' + day;
+		// 				for (var i = 1; i < length; i++) {
+		// 					if (oData.results[i].Tdformat !== "" && i > 1) {
+		// 						data = data + ('\n');
+		// 					}
+		// 					data = data + oData.results[i].Tdline;
+		// 				}
+		// 				var oData = {
+		// 					EntryCollection: [{
+		// 						Author: head[0],
+		// 						Type: "Concept",
+		// 						date: date,
+		// 						Text: data
+		// 					}]
+		// 				};
+		// 				var oModel = new sap.ui.model.json.JSONModel(oData);
+		// 				if (aflag === 1) {
+		// 					that.getView().byId("conceptTxt").setValue(data);
+		// 					that.getView().byId("conceptFeed").setVisible(false);
+		// 					that.getView().byId("conceptTxt").setVisible(true);
+		// 					that.getView().byId("conceptBtn").setEnabled(false);
 
-						} else {
-							that.getView().byId("conceptFeed").setModel(oModel);
-							that.getView().byId("conceptFeed").setVisible(true);
-							that.getView().byId("conceptTxt").setVisible(false);
-							that.getView().byId("conceptBtn").setEnabled(true);
-						}
+		// 				} else {
+		// 					that.getView().byId("conceptFeed").setModel(oModel);
+		// 					that.getView().byId("conceptFeed").setVisible(true);
+		// 					that.getView().byId("conceptTxt").setVisible(false);
+		// 					that.getView().byId("conceptBtn").setEnabled(true);
+		// 				}
 
-					} else {
+		// 			} else {
 
-						that.getView().byId("conceptBtn").setEnabled(false);
-						that.getView().byId("conceptTxt").setVisible(true);
-						that.getView().byId("conceptFeed").setVisible(false);
-					}
-					var inKey = that.getView().byId("commentInner").getSelectedKey();
-					if (inKey == "synopsis") {
-						var cbtn = that.getView().byId("conceptBtn").getEnabled();
-						var sbtn = that.getView().byId("synopsisBtn").getEnabled();
+		// 				that.getView().byId("conceptBtn").setEnabled(false);
+		// 				that.getView().byId("conceptTxt").setVisible(true);
+		// 				that.getView().byId("conceptFeed").setVisible(false);
+		// 			}
+		// 			var inKey = that.getView().byId("commentInner").getSelectedKey();
+		// 			if (inKey == "synopsis") {
+		// 				var cbtn = that.getView().byId("conceptBtn").getEnabled();
+		// 				var sbtn = that.getView().byId("synopsisBtn").getEnabled();
 
-						if (cbtn == true && sbtn == true) {
-							that.getView().byId("btnSaveDM").setEnabled(false);
-						} else {
-							that.getView().byId("btnSaveDM").setEnabled(true);
-						}
-					}
-				}
+		// 				if (cbtn == true && sbtn == true) {
+		// 					that.getView().byId("btnSaveDM").setEnabled(false);
+		// 				} else {
+		// 					that.getView().byId("btnSaveDM").setEnabled(true);
+		// 				}
+		// 			}
+		// 		}
 
-				function conceptFail(oData) {
-					sap.ui.core.BusyIndicator.hide();
-					var errMsg = JSON.parse(oData.response.body);
-					if (errMsg.error.innererror.errordetails[0] !== undefined) {
-						var stext = errMsg.error.innererror.errordetails[0].message;
-						sap.m.MessageBox.show(stext, {
-							icon: sap.m.MessageBox.Icon.ERROR,
-							title: "Error"
-						});
-					} else {
-						sap.m.MessageBox.show(that._oResourceBundle.getText("msg_conceptdetfail"), {
-							icon: sap.m.MessageBox.Icon.SUCCESS,
-							title: "Success"
-						});
-					}
+		// 		function conceptFail(oData) {
+		// 			sap.ui.core.BusyIndicator.hide();
+		// 			var errMsg = JSON.parse(oData.response.body);
+		// 			if (errMsg.error.innererror.errordetails[0] !== undefined) {
+		// 				var stext = errMsg.error.innererror.errordetails[0].message;
+		// 				sap.m.MessageBox.show(stext, {
+		// 					icon: sap.m.MessageBox.Icon.ERROR,
+		// 					title: "Error"
+		// 				});
+		// 			} else {
+		// 				sap.m.MessageBox.show(that._oResourceBundle.getText("msg_conceptdetfail"), {
+		// 					icon: sap.m.MessageBox.Icon.SUCCESS,
+		// 					title: "Success"
+		// 				});
+		// 			}
 
-				}
+		// 		}
 
-			},
+		// 	},
 
-			//*****************************************Assing Synopsis details**********************************
-			assignSynopsis: function(aflag) {
-				sap.ui.core.BusyIndicator.show(0);
-				var dealMemoDetailModel = that.getView().getModel("dealMemoDetailModel");
-				var dealMemoDetailInfo = dealMemoDetailModel.getData();
-				var Dmno = dealMemoDetailInfo.Dmno;
-				var Dmver = dealMemoDetailInfo.Dmver;
-				var intDataModelUrl = "/sap/opu/odata/IBSCMS/DEALMEMO_SRV/";
-				var oModelSav = new sap.ui.model.odata.ODataModel(intDataModelUrl, true, "", "");
-				var pValue1 = "/DmtxtSet?$filter=Tentid eq'IBS' and  Dmno eq '" + Dmno + "' and Dmver eq '" + Dmver +
-					"' and Txtsuffix eq 'SYNOPSIS'";
-				oModelSav.read(pValue1, null, null, true, synopsisSucc, synopsisFail);
+		// 	//*****************************************Assing Synopsis details**********************************
+		// 	assignSynopsis: function(aflag) {
+		// 		sap.ui.core.BusyIndicator.show(0);
+		// 		var dealMemoDetailModel = that.getView().getModel("dealMemoDetailModel");
+		// 		var dealMemoDetailInfo = dealMemoDetailModel.getData();
+		// 		var Dmno = dealMemoDetailInfo.Dmno;
+		// 		var Dmver = dealMemoDetailInfo.Dmver;
+		// 		var intDataModelUrl = "/sap/opu/odata/IBSCMS/DEALMEMO_SRV/";
+		// 		var oModelSav = new sap.ui.model.odata.ODataModel(intDataModelUrl, true, "", "");
+		// 		var pValue1 = "/DmtxtSet?$filter=Tentid eq'IBS' and  Dmno eq '" + Dmno + "' and Dmver eq '" + Dmver +
+		// 			"' and Txtsuffix eq 'SYNOPSIS'";
+		// 		oModelSav.read(pValue1, null, null, true, synopsisSucc, synopsisFail);
 
-				function synopsisSucc(oData) {
-					sap.ui.core.BusyIndicator.hide();
-					var length = oData.results.length;
-					if (length !== 0) {
-						var data = "";
-						var head = [];
-						head = oData.results[0].Tdline.split("_");
-						var year = head[1].substring(0, 4);
-						var month = head[1].substring(4, 6);
-						var day = head[1].substring(6, 8);
-						var date = year + '-' + month + '-' + day;
-						for (var i = 1; i < length; i++) {
-							if (oData.results[i].Tdformat !== "" && i > 1) {
-								data = data + ('\n');
-							}
-							data = data + oData.results[i].Tdline;
-						}
-						var oData = {
-							EntryCollection: [{
-								Author: head[0],
-								Type: "Concept",
-								date: date,
-								Text: data
-							}]
-						};
-						var oModel = new sap.ui.model.json.JSONModel(oData);
-						if (aflag === 1) {
-							that.getView().byId("synopsisTxt").setValue(data);
-							that.getView().byId("synopsisFeed").setVisible(false);
-							that.getView().byId("synopsisTxt").setVisible(true);
-							that.getView().byId("synopsisBtn").setEnabled(false);
-						} else {
-							that.getView().byId("synopsisFeed").setModel(oModel);
-							that.getView().byId("synopsisFeed").setVisible(true);
-							that.getView().byId("synopsisTxt").setVisible(false);
-							that.getView().byId("synopsisBtn").setEnabled(true);
-						}
+		// 		function synopsisSucc(oData) {
+		// 			sap.ui.core.BusyIndicator.hide();
+		// 			var length = oData.results.length;
+		// 			if (length !== 0) {
+		// 				var data = "";
+		// 				var head = [];
+		// 				head = oData.results[0].Tdline.split("_");
+		// 				var year = head[1].substring(0, 4);
+		// 				var month = head[1].substring(4, 6);
+		// 				var day = head[1].substring(6, 8);
+		// 				var date = year + '-' + month + '-' + day;
+		// 				for (var i = 1; i < length; i++) {
+		// 					if (oData.results[i].Tdformat !== "" && i > 1) {
+		// 						data = data + ('\n');
+		// 					}
+		// 					data = data + oData.results[i].Tdline;
+		// 				}
+		// 				var oData = {
+		// 					EntryCollection: [{
+		// 						Author: head[0],
+		// 						Type: "Concept",
+		// 						date: date,
+		// 						Text: data
+		// 					}]
+		// 				};
+		// 				var oModel = new sap.ui.model.json.JSONModel(oData);
+		// 				if (aflag === 1) {
+		// 					that.getView().byId("synopsisTxt").setValue(data);
+		// 					that.getView().byId("synopsisFeed").setVisible(false);
+		// 					that.getView().byId("synopsisTxt").setVisible(true);
+		// 					that.getView().byId("synopsisBtn").setEnabled(false);
+		// 				} else {
+		// 					that.getView().byId("synopsisFeed").setModel(oModel);
+		// 					that.getView().byId("synopsisFeed").setVisible(true);
+		// 					that.getView().byId("synopsisTxt").setVisible(false);
+		// 					that.getView().byId("synopsisBtn").setEnabled(true);
+		// 				}
 
-					} else {
-						that.getView().byId("synopsisBtn").setEnabled(false);
-						that.getView().byId("synopsisTxt").setVisible(true);
-						that.getView().byId("synopsisFeed").setVisible(false);
-					}
-					var inKey = that.getView().byId("commentInner").getSelectedKey();
-					if (inKey == "synopsis") {
-						var cbtn = that.getView().byId("conceptBtn").getEnabled();
-						var sbtn = that.getView().byId("synopsisBtn").getEnabled();
+		// 			} else {
+		// 				that.getView().byId("synopsisBtn").setEnabled(false);
+		// 				that.getView().byId("synopsisTxt").setVisible(true);
+		// 				that.getView().byId("synopsisFeed").setVisible(false);
+		// 			}
+		// 			var inKey = that.getView().byId("commentInner").getSelectedKey();
+		// 			if (inKey == "synopsis") {
+		// 				var cbtn = that.getView().byId("conceptBtn").getEnabled();
+		// 				var sbtn = that.getView().byId("synopsisBtn").getEnabled();
 
-						if (cbtn == true && sbtn == true) {
-							that.getView().byId("btnSaveDM").setEnabled(false);
-						} else {
-							that.getView().byId("btnSaveDM").setEnabled(true);
-						}
-					}
+		// 				if (cbtn == true && sbtn == true) {
+		// 					that.getView().byId("btnSaveDM").setEnabled(false);
+		// 				} else {
+		// 					that.getView().byId("btnSaveDM").setEnabled(true);
+		// 				}
+		// 			}
 
-				}
+		// 		}
 
-				function synopsisFail(oData) {
-					sap.ui.core.BusyIndicator.hide();
-					var errMsg = JSON.parse(oData.response.body);
-					if (errMsg !== undefined) {
-						var stext = errMsg.error.innererror.errordetails[0].message;
-						sap.m.MessageBox.show(stext, {
-							icon: sap.m.MessageBox.Icon.ERROR,
-							title: "Error"
-						});
-					} else {
-						sap.m.MessageBox.show(that._oResourceBundle.getText("msg_conceptdetfail"), {
-							icon: sap.m.MessageBox.Icon.SUCCESS,
-							title: "Success"
-						});
-					}
-				}
+		// 		function synopsisFail(oData) {
+		// 			sap.ui.core.BusyIndicator.hide();
+		// 			var errMsg = JSON.parse(oData.response.body);
+		// 			if (errMsg !== undefined) {
+		// 				var stext = errMsg.error.innererror.errordetails[0].message;
+		// 				sap.m.MessageBox.show(stext, {
+		// 					icon: sap.m.MessageBox.Icon.ERROR,
+		// 					title: "Error"
+		// 				});
+		// 			} else {
+		// 				sap.m.MessageBox.show(that._oResourceBundle.getText("msg_conceptdetfail"), {
+		// 					icon: sap.m.MessageBox.Icon.SUCCESS,
+		// 					title: "Success"
+		// 				});
+		// 			}
+		// 		}
 
-			},
+		// 	},
 
-			//*************************************** set comments on inner tabs *******************************************
+		// 	//*************************************** set comments on inner tabs *******************************************
 
-			setComments: function(that, key) {
+		// 	setComments: function(that, key) {
 
-				if (key === 'synopsis') {
-					var aflag = "0";
-					that.assignConcept(that, aflag);
-					that.assignSynopsis(that, aflag);
-				} else {
-					var id = key + "comment"; //id of Comment List 
-					var idL = key + "customl"; //id of CustomListItem
-					var DealM = that.getDealMNo();
+		// 		if (key === 'synopsis') {
+		// 			var aflag = "0";
+		// 			that.assignConcept(that, aflag);
+		// 			that.assignSynopsis(that, aflag);
+		// 		} else {
+		// 			var id = key + "comment"; //id of Comment List 
+		// 			var idL = key + "customl"; //id of CustomListItem
+		// 			var DealM = that.getDealMNo();
 
-					//-------------------- set model and class for list-------------------------
-					var commData = {
-						"EntryCollection": [{
-								"Author": "",
-								"Date": "",
-								"Text": ""
-							}
+		// 			//-------------------- set model and class for list-------------------------
+		// 			var commData = {
+		// 				"EntryCollection": [{
+		// 						"Author": "",
+		// 						"Date": "",
+		// 						"Text": ""
+		// 					}
 
-						]
-					};
-					var sModel = new sap.ui.model.json.JSONModel(commData);
-						var dealMemoDetailModel = that.getView().getModel("dealMemoDetailModel");
-				var dealMemoDetailInfo = dealMemoDetailModel.getData();
-				var Dmno = dealMemoDetailInfo.Dmno;
-				var Dmver = dealMemoDetailInfo.Dmver;
-					//sModel.loadData("json/comments.json", "", false);
-					sap.ui.getCore().getControl(id).setModel(sModel);
-					sap.ui.getCore().getControl(id).addStyleClass("sapUiMediumMarginTop , sapUiTinyMarginBottom");
-					sap.ui.getCore().getControl(idL).addStyleClass("sapUiSmallMarginTop , sapUiSmallMarginBottom");
-					sap.ui.core.BusyIndicator.show(0);
-					// service to fetch comments of particular tab
-					var intDataModelUrl = "/sap/opu/odata/IBSCMS/DEALMEMO_SRV/";
-					var oModelSav = new sap.ui.model.odata.ODataModel(intDataModelUrl, true, "", "");
-					var pValue = "/DmtxtSet?$filter=Tentid eq'IBS' and  Dmno eq '" + Dmno + "' and Dmver eq '" + Dmver[1] + "' and Txtsuffix eq '" +
-						key + "'";
-					oModelSav.read(pValue, null, null, true, function(oData) {
-						sap.ui.core.BusyIndicator.hide();
-						var header = [];
-						var data = [];
-						var i = 0;
-						if (oData.results.length !== 0) { //if comments exist
-							header[0] = oData.results[0].Tdline; //header for first comment
-							for (var j = 1; j < oData.results.length; j++) {
-								if (oData.results[j].Tdformat === 'C') // if new comment starts
-								{
-									i = i + 1;
-									header[i] = oData.results[j].Tdline;
-								} else {
-									if (data[i] === undefined) {
-										data[i] = "";
-									}
-									data[i] = data[i] + oData.results[j].Tdline; //concatenate data
-									if (j + 1 !== oData.results.length) {
-										if (oData.results[j + 1].Tdformat !== "") {
-											data[i] = data[i] + ('\n');
-										}
-									}
+		// 				]
+		// 			};
+		// 			var sModel = new sap.ui.model.json.JSONModel(commData);
+		// 				var dealMemoDetailModel = that.getView().getModel("dealMemoDetailModel");
+		// 		var dealMemoDetailInfo = dealMemoDetailModel.getData();
+		// 		var Dmno = dealMemoDetailInfo.Dmno;
+		// 		var Dmver = dealMemoDetailInfo.Dmver;
+		// 			//sModel.loadData("json/comments.json", "", false);
+		// 			sap.ui.getCore().getControl(id).setModel(sModel);
+		// 			sap.ui.getCore().getControl(id).addStyleClass("sapUiMediumMarginTop , sapUiTinyMarginBottom");
+		// 			sap.ui.getCore().getControl(idL).addStyleClass("sapUiSmallMarginTop , sapUiSmallMarginBottom");
+		// 			sap.ui.core.BusyIndicator.show(0);
+		// 			// service to fetch comments of particular tab
+		// 			var intDataModelUrl = "/sap/opu/odata/IBSCMS/DEALMEMO_SRV/";
+		// 			var oModelSav = new sap.ui.model.odata.ODataModel(intDataModelUrl, true, "", "");
+		// 			var pValue = "/DmtxtSet?$filter=Tentid eq'IBS' and  Dmno eq '" + Dmno + "' and Dmver eq '" + Dmver[1] + "' and Txtsuffix eq '" +
+		// 				key + "'";
+		// 			oModelSav.read(pValue, null, null, true, function(oData) {
+		// 				sap.ui.core.BusyIndicator.hide();
+		// 				var header = [];
+		// 				var data = [];
+		// 				var i = 0;
+		// 				if (oData.results.length !== 0) { //if comments exist
+		// 					header[0] = oData.results[0].Tdline; //header for first comment
+		// 					for (var j = 1; j < oData.results.length; j++) {
+		// 						if (oData.results[j].Tdformat === 'C') // if new comment starts
+		// 						{
+		// 							i = i + 1;
+		// 							header[i] = oData.results[j].Tdline;
+		// 						} else {
+		// 							if (data[i] === undefined) {
+		// 								data[i] = "";
+		// 							}
+		// 							data[i] = data[i] + oData.results[j].Tdline; //concatenate data
+		// 							if (j + 1 !== oData.results.length) {
+		// 								if (oData.results[j + 1].Tdformat !== "") {
+		// 									data[i] = data[i] + ('\n');
+		// 								}
+		// 							}
 
-								}
-							}
-							var oModel = sap.ui.getCore().getControl(id).getModel(); // get list model
-							for (var count = 0; count <= i; count++) { // loop for pushing data in model
-								var content = that.splitHeader(header[count]); // function to get date and name
-								var oEntries = {
-									Author: content[0],
-									Date: content[1],
-									Text: data[count]
-								};
-								/*	oModel.oData.EntryCollection[count].Author= "Alex";
- 	 	              	oModel.oData.EntryCollection[count].Text= data[count];*/
-								//	var aEntries = oModel.getData().EntryCollection;
-								var aEntries = oModel.oData.EntryCollection;
-								aEntries.unshift(oEntries);
-								oModel.setData({
-									EntryCollection: aEntries
-								});
-							}
-							oModel.refresh();
-							/*	var sData = oModel.getJSON();
-								var yModelData = new sap.ui.model.json.JSONModel();
-								yModelData.setJSON(sData);
-								sap.ui.getCore().getControl(id).setModel(yModelData);*/
-						}
+		// 						}
+		// 					}
+		// 					var oModel = sap.ui.getCore().getControl(id).getModel(); // get list model
+		// 					for (var count = 0; count <= i; count++) { // loop for pushing data in model
+		// 						var content = that.splitHeader(header[count]); // function to get date and name
+		// 						var oEntries = {
+		// 							Author: content[0],
+		// 							Date: content[1],
+		// 							Text: data[count]
+		// 						};
+		// 						/*	oModel.oData.EntryCollection[count].Author= "Alex";
+ 	//  	              	oModel.oData.EntryCollection[count].Text= data[count];*/
+		// 						//	var aEntries = oModel.getData().EntryCollection;
+		// 						var aEntries = oModel.oData.EntryCollection;
+		// 						aEntries.unshift(oEntries);
+		// 						oModel.setData({
+		// 							EntryCollection: aEntries
+		// 						});
+		// 					}
+		// 					oModel.refresh();
+		// 					/*	var sData = oModel.getJSON();
+		// 						var yModelData = new sap.ui.model.json.JSONModel();
+		// 						yModelData.setJSON(sData);
+		// 						sap.ui.getCore().getControl(id).setModel(yModelData);*/
+		// 				}
 
-					}, function(oData) {
-						sap.ui.core.BusyIndicator.hide();
-						var errMsg = JSON.parse(oData.response.body);
-						if (errMsg !== undefined) {
-							var stext = errMsg.error.innererror.errordetails[0].message;
-							sap.m.MessageBox.show(stext, {
-								icon: sap.m.MessageBox.Icon.ERROR,
-								title: "Error"
-							});
-						} else {
-							sap.m.MessageBox.show(that._oResourceBundle.getText("msg_servfailcomm"), {
-								icon: sap.m.MessageBox.Icon.SUCCESS,
-								title: "Success"
-							});
-						}
-					});
-				}
-			},
+		// 			}, function(oData) {
+		// 				sap.ui.core.BusyIndicator.hide();
+		// 				var errMsg = JSON.parse(oData.response.body);
+		// 				if (errMsg !== undefined) {
+		// 					var stext = errMsg.error.innererror.errordetails[0].message;
+		// 					sap.m.MessageBox.show(stext, {
+		// 						icon: sap.m.MessageBox.Icon.ERROR,
+		// 						title: "Error"
+		// 					});
+		// 				} else {
+		// 					sap.m.MessageBox.show(that._oResourceBundle.getText("msg_servfailcomm"), {
+		// 						icon: sap.m.MessageBox.Icon.SUCCESS,
+		// 						title: "Success"
+		// 					});
+		// 				}
+		// 			});
+		// 		}
+		// 	},
 			/************** Vendor Contract Code ********************/
 			toVendorContractCreate: function() {
 				var oRouter = this.getOwnerComponent().getRouter();
