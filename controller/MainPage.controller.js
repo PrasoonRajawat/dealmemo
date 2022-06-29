@@ -5802,8 +5802,8 @@ sap.ui.define([
 			// Comment Tab
 			loadComment: function() {
 				that.getView().byId("commentInner").setSelectedKey("synopsis");
-				sap.ui.controller("Dealmemoappln.controller.Custom1").getComment(that);
-				sap.ui.controller("Dealmemoappln.controller.Custom1").getDataForComm(that);
+				sap.ui.controller("com.ui.dealmemolocal.controller.Custom1").getComment(that);
+				sap.ui.controller("com.ui.dealmemolocal.controller.Custom1").getDataForComm(that);
 			},
 			/************** Vendor Contract Code ********************/
 			toVendorContractCreate: function() {

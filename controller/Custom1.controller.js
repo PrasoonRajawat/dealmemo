@@ -11,9 +11,9 @@ sap.ui.define([
 	'sap/ui/core/format/DateFormat'
 ], function(Controller, DateFormat) {
 
-	return Controller.extend("Dealmemoappln.controller.Custom1", {
+	return Controller.extend("com.ui.dealmemolocal.controller.Custom1", {
 		getDealMNo: function() {
-			var dm = sap.ui.controller('Dealmemoappln.controller.DealMemoView').getDmNo();
+			var dm = sap.ui.controller('com.ui.dealmemolocal.controller.MainPage').getDmNo();
 			return [dm[0], dm[1]];
 		},
 		getBudgetDetails: function(that) {
