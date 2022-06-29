@@ -4215,6 +4215,10 @@ sap.ui.define([
 					itemText: "Approved",
 					itemKey: "04",
 					filterProp: "Dmst"
+				}, {
+					itemText: "Contract Under Approval",
+					itemKey: "05",
+					filterProp: "Dmst"
 				}];
 				var filterItemsList = [{
 					filterItemText: "Status",
