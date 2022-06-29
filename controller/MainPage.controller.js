@@ -5821,7 +5821,7 @@ sap.ui.define([
 			},
 			getDataForComm: function(that) {
 				sap.ui.core.BusyIndicator.show(0);
-				var DealM = thatref.getDealMNo();
+				var DealM = that.getDealMNo();
 				var intDataModelUrl = "/sap/opu/odata/IBSCMS/DEALMEMO_SRV/";
 				var oModelSav = new sap.ui.model.odata.ODataModel(intDataModelUrl, true, "", "");
 				var pValue1 = "/DmHeaderSet(Tentid='IBS',Dmno='" + DealM[0] + "',Dmver='" + DealM[1] + "',Transtp='D')?&$expand=DmtxtSet";
@@ -5897,7 +5897,7 @@ sap.ui.define([
 		},
 			onFeedPost: function(that) {
 				var Key = that.getView().byId("commentInner").getSelectedKey();
-				thatref.saveComments(Key, that);
+				that.saveComments(Key, that);
 			},
 			
 		modelDesign: function(that, key) {
@@ -6073,8 +6073,8 @@ sap.ui.define([
 					}
 					TabFlg = TabFlg + 1;
 					var aflag = "0";
-					thatref.assignConcept(that, aflag);
-					thatref.assignSynopsis(that, aflag);
+					that.assignConcept(that, aflag);
+					that.assignSynopsis(that, aflag);
 					that.getView().byId("lblCommentStatus").setText("1");
 
 				}
@@ -6105,17 +6105,17 @@ sap.ui.define([
 					var valS = that.getView().byId("synopsisTxt").getValue();
 					if (valS !== "") {
 						kValue = "SYNOPSIS";
-						thatref.saveCommData(that, valS);
-						thatref.appendTxt(that, kValue);
-						thatref.assignSynopsis(that);
+						that.saveCommData(that, valS);
+						that.appendTxt(that, kValue);
+						that.assignSynopsis(that);
 						that.getView().byId("synopsisTxt").setValue("");
 					}
 					var valC = that.getView().byId("conceptTxt").getValue();
 					if (valC !== "") {
 						kValue = "CONCEPT";
-						thatref.saveCommData(that, valC);
-						thatref.appendTxt(that, kValue);
-						thatref.assignConcept(that);
+						that.saveCommData(that, valC);
+						that.appendTxt(that, kValue);
+						that.assignConcept(that);
 						that.getView().byId("conceptTxt").setValue("");
 					}
 					if (valS == "" && valC == "") {
@@ -6129,13 +6129,13 @@ sap.ui.define([
 					var Inpid = Key + "FeedIp";
 					var val = sap.ui.getCore().byId(Inpid).getValue();
 					if (val !== "") {
-						thatref.saveCommData(that, val);
-						thatref.appendTxt(that, Key);
+						that.saveCommData(that, val);
+						that.appendTxt(that, Key);
 						sap.ui.getCore().byId(Inpid).setValue("");
-						//	thatref.setComments(that,Key);
+						//	that.setComments(that,Key);
 					}
 				}
-				thatref.setComments(that, Key);
+				that.setComments(that, Key);
 
 			},
 			saveCommData: function(that, val) {
@@ -6390,12 +6390,12 @@ sap.ui.define([
 
 				if (key === 'synopsis') {
 					var aflag = "0";
-					thatref.assignConcept(that, aflag);
-					thatref.assignSynopsis(that, aflag);
+					that.assignConcept(that, aflag);
+					that.assignSynopsis(that, aflag);
 				} else {
 					var id = key + "comment"; //id of Comment List 
 					var idL = key + "customl"; //id of CustomListItem
-					var DealM = thatref.getDealMNo();
+					var DealM = that.getDealMNo();
 
 					//-------------------- set model and class for list-------------------------
 					var commData = {
@@ -6445,7 +6445,7 @@ sap.ui.define([
 							}
 							var oModel = sap.ui.getCore().getControl(id).getModel(); // get list model
 							for (var count = 0; count <= i; count++) { // loop for pushing data in model
-								var content = thatref.splitHeader(header[count]); // function to get date and name
+								var content = that.splitHeader(header[count]); // function to get date and name
 								var oEntries = {
 									Author: content[0],
 									Date: content[1],
