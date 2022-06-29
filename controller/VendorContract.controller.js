@@ -966,7 +966,7 @@ sap.ui.define([
 							oData.vcTabEnable = false;
 						}
 						oData.submitVisible = false;
-						if (vendorContractDetailInfo.App === "App" && oData.Contstat === "01" && oData.Contstat === "03") { // added by dhiraj on 20/05/2022 for submit butn.
+						if (vendorContractDetailInfo.App === "App" && ( oData.Contstat === "01" || oData.Contstat === "03" ) ) { // added by dhiraj on 20/05/2022 for submit butn.
 							oData.submitVisible = true;
 						}
 						oData.releaseTabVisible = false;
@@ -984,7 +984,7 @@ sap.ui.define([
 							this.displayContractFlag = false;
 							if (!this.newContractCreated) {
 								oData.saveVisible = false;
-								this.getView().byId("btnEditVC").setVisible(Formatter.formatEditableStatus(vendorContractDetailInfo.Dmst));
+								this.getView().byId("btnEditVC").setVisible(Formatter.formatEditableStatus(vendorContractDetailInfo.Contstat));
 							}
 						}
 						this.getView().byId("idIconSubTabBar2").setSelectedKey("vcSubEpiDataNoCostCd");
