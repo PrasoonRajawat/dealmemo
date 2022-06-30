@@ -5683,127 +5683,133 @@ sap.ui.define([
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
 				// var coreModel = sap.ui.getCore().getModel("modelForDm");
-				var netbcrevag = +oData.Avgbcrevamt;
-				var slots = +oData.Noofslots;
-				var advoffair = +oData.Advoffairamt;
-				var totothrevamt = +oData.Totothrevamt;
-				var Estavgrtng = +oData.Estavgrtng;
-				var costamramt = +dealMemoDetailInfo.Amrtpercost; //CNTAMRTAMT
+			var netbcrevag = +oData.Netbcrevaftagcom; //+oData.Avgbcrevamt;commented on 24-10-2019
+			var slots = +oData.Noofslots;
+			var advoffair = +oData.Advoffairamt;
+			var totothrevamt = +oData.Totothrevamt;
+			var Estavgrtng = +oData.Estavgrtng;
+			var costamramt = +coreModel.oData.Amrtpercost; //CNTAMRTAMT
 
-				if (dealMemoDetailInfo.Totdmamt != 0.000) {
-					var totalDmcost = dealMemoDetailInfo.Totdmamt;
-					var val3 = totalDmcost;
-					val3 = val3.toString();
-					val3 = Number(val3.replace(/[^0-9\.]+/g, ""));
-					totalDmcost = val3;
-				} else {
-					var totalDmcost = dealMemoDetailInfo.Totdmamt;
-					var val3 = totalDmcost;
-					val3 = val3.toString();
-					val3 = Number(val3.replace(/[^0-9\.]+/g, ""));
-					totalDmcost = val3;
-				}
-				//Per 30 min
-				var bModel = this.getView().byId("prog30Table").getModel();
-				var netOthrev = totothrevamt / slots;
-				var amrContCost = totalDmcost / slots * costamramt; //totDmCost/slots*Amrtpercost 
-				var contbefoffair = (netbcrevag + netOthrev) - amrContCost; //CNTAMRTAMT
-				var lessmakt = advoffair / slots;
-				var contaftoffair = contbefoffair - lessmakt;
-				var contper = (contaftoffair / netbcrevag) * 100;
+		if (dealMemoDetailInfo.Totdmamt != 0.000) {
+				var totalDmcost = dealMemoDetailInfo.Totdmamt;
+				var val3 = totalDmcost;
+				val3 = val3.toString();
+				val3 = Number(val3.replace(/[^0-9\.]+/g, ""));
+				totalDmcost = val3;
+			} else {
+				var totalDmcost = dealMemoDetailInfo.Totdmamt;
+				var val3 = totalDmcost;
+				val3 = val3.toString();
+				val3 = Number(val3.replace(/[^0-9\.]+/g, ""));
+				totalDmcost = val3;
+			}
+			//Per 30 min
+			var bModel = that.getView().byId("prog30Table").getModel();
+			var netOthrev = +oData.Netothrev; //totothrevamt / slots;commented on 24-10-2019
+			var amrContCost = +oData.Cntamrtamt; //totalDmcost / slots * costamramt; //totDmCost/slots*Amrtpercost ;commented on 24-10-2019
+			var contbefoffair = +oData.Contribefoffairmakt; // (netbcrevag + netOthrev) - amrContCost; //CNTAMRTAMT  ;commented on 24-10-2019
+			var lessmakt = +oData.Lessmaktamt; //advoffair / slots;commented on 24-10-2019
+			var contaftoffair = +oData.Contriaftoffairmakt; //contbefoffair - lessmakt;commented on 24-10-2019
+			var contper = +oData.Contriper; //(contaftoffair / netbcrevag) * 100;commented on 24-10-2019
 
-				netbcrevag = netbcrevag.toFixed(2);
-				netOthrev = netOthrev.toFixed(2);
-				amrContCost = amrContCost.toFixed(2);
-				contbefoffair = contbefoffair.toFixed(2);
-				lessmakt = lessmakt.toFixed(2);
-				contaftoffair = contaftoffair.toFixed(2);
-				contper = contper.toFixed(2);
-				if (bModel.oData.results.length > 0) {
-					bModel.oData.results[0].sinput1 = netbcrevag;
-					bModel.oData.results[1].sinput1 = netOthrev;
-					bModel.oData.results[2].sinput1 = amrContCost;
-					bModel.oData.results[3].sinput1 = contbefoffair;
-					bModel.oData.results[4].sinput1 = lessmakt;
-					bModel.oData.results[5].sinput1 = contaftoffair;
-					bModel.oData.results[6].sinput1 = contper;
-					bModel.oData.results[0].curr = oData.Waers;
-					bModel.oData.results[1].curr = bModel.oData.results[2].curr = bModel.oData.results[0].curr;
-					bModel.oData.results[3].curr = bModel.oData.results[4].curr = bModel.oData.results[0].curr;
-					bModel.oData.results[5].curr = bModel.oData.results[6].curr = bModel.oData.results[0].curr;
-				}
-				/*---------------------------slot budgets for per 30 min----------------------------------------*/
-				var slotbudavgbcrevamt = +oData.Avgbcrevamt; // +oData.Budavgbcrevamt;
-				var slotbudnetothrev = +oData.Totothrevamt / slots; //Budtotothvamt
-				var slotbudcontamrcost = +oData.Budcashamt * costamramt;
-				var slotbudcontrbef = (slotbudavgbcrevamt + slotbudnetothrev) - slotbudcontamrcost;
-				var slotbudlessmakt = advoffair / slots;
-				var slotbudcontraft = slotbudcontrbef - slotbudlessmakt;
-				var slotbudcontper = (slotbudcontraft / slotbudavgbcrevamt) * 100;
+			netbcrevag = netbcrevag.toFixed(2);
+			netOthrev = netOthrev.toFixed(2);
+			amrContCost = amrContCost.toFixed(2);
+			contbefoffair = contbefoffair.toFixed(2);
+			lessmakt = lessmakt.toFixed(2);
+			contaftoffair = contaftoffair.toFixed(2);
+			contper = contper.toFixed(2);
 
-				slotbudavgbcrevamt = slotbudavgbcrevamt.toFixed(2);
-				slotbudnetothrev = slotbudnetothrev.toFixed(2);
-				slotbudcontamrcost = slotbudcontamrcost.toFixed(2);
-				slotbudcontrbef = slotbudcontrbef.toFixed(2);
-				slotbudlessmakt = slotbudlessmakt.toFixed(2);
-				slotbudcontraft = slotbudcontraft.toFixed(2);
-				slotbudcontper = slotbudcontper.toFixed(2);
-				if (bModel.oData.results.length > 0) {
-					bModel.oData.results[0].sinput2 = slotbudavgbcrevamt;
-					bModel.oData.results[1].sinput2 = slotbudnetothrev;
-					bModel.oData.results[2].sinput2 = amrContCost //slotbudcontamrcost;
-					bModel.oData.results[3].sinput2 = slotbudcontrbef;
-					bModel.oData.results[4].sinput2 = slotbudlessmakt;
-					bModel.oData.results[5].sinput2 = slotbudcontraft;
-					bModel.oData.results[6].sinput2 = slotbudcontper;
-				}
-				bModel.refresh();
+			bModel.oData.results[0].sinput1 = netbcrevag;
+			bModel.oData.results[1].sinput1 = netOthrev;
+			bModel.oData.results[2].sinput1 = amrContCost;
+			bModel.oData.results[3].sinput1 = contbefoffair;
+			bModel.oData.results[4].sinput1 = lessmakt;
+			bModel.oData.results[5].sinput1 = contaftoffair;
+			bModel.oData.results[6].sinput1 = contper;
+			bModel.oData.results[0].curr = oData.Waers;
+			bModel.oData.results[1].curr = bModel.oData.results[2].curr = bModel.oData.results[0].curr;
+			bModel.oData.results[3].curr = bModel.oData.results[4].curr = bModel.oData.results[0].curr;
+			bModel.oData.results[5].curr = bModel.oData.results[6].curr = bModel.oData.results[0].curr;
+			/*---------------------------slot budgets for per 30 min----------------------------------------*/
+		
+			var slotbudavgbcrevamt = +oData.Bnetbcrevaftagcom;
+			var slotbudnetothrev = +oData.Bnetothrev;
+			var slotbudcontamrcost = +oData.Bcntamrtamt;
+			var slotbudcontrbef = +oData.Bcontribefoffairmakt;
+			var slotbudlessmakt = +oData.Blessmaktamt;
+			var slotbudcontraft = +oData.Bcontriaftoffairmakt;
+			var slotbudcontper = +oData.Bcontriper;
+			//EOA: by Lakshmana on 16.06.2020
 
-				//per TRP
-				var cModel = this.getView().byId("progTRPTable").getModel();
+			slotbudavgbcrevamt = slotbudavgbcrevamt.toFixed(2);
+			slotbudnetothrev = slotbudnetothrev.toFixed(2);
+			slotbudcontamrcost = slotbudcontamrcost.toFixed(2);
+			slotbudcontrbef = slotbudcontrbef.toFixed(2);
+			slotbudlessmakt = slotbudlessmakt.toFixed(2);
+			slotbudcontraft = slotbudcontraft.toFixed(2);
+			slotbudcontper = slotbudcontper.toFixed(2);
 
-				var netrevaftcomm = netbcrevag / Estavgrtng;
-				var amrcontcosttrp = (totalDmcost / slots * costamramt) / Estavgrtng;
-				var contrbefoffairTrp = netrevaftcomm - amrcontcosttrp;
-				var lessmaktTrp = (advoffair / slots) / Estavgrtng;
-				var contaftairmktTrp = contrbefoffairTrp - lessmaktTrp;
+			bModel.oData.results[0].sinput2 = slotbudavgbcrevamt;
+			bModel.oData.results[1].sinput2 = slotbudnetothrev;
+			//	bModel.oData.results[2].sinput2 = amrContCost //slotbudcontamrcost;				//Deleted by Lakshmana on 16.06.2020
+			bModel.oData.results[2].sinput2 = slotbudcontamrcost; //Added by Lakshmana on 16.06.2020
+			bModel.oData.results[3].sinput2 = slotbudcontrbef;
+			bModel.oData.results[4].sinput2 = slotbudlessmakt;
+			bModel.oData.results[5].sinput2 = slotbudcontraft;
+			bModel.oData.results[6].sinput2 = slotbudcontper;
 
-				netrevaftcomm = netrevaftcomm.toFixed(2);
-				amrcontcosttrp = amrcontcosttrp.toFixed(2);
-				contrbefoffairTrp = contrbefoffairTrp.toFixed(2);
-				lessmaktTrp = lessmaktTrp.toFixed(2);
-				contaftairmktTrp = contaftairmktTrp.toFixed(2);
-				if (cModel.oData.results.length > 0) {
-					cModel.oData.results[0].sinput1 = netrevaftcomm;
-					cModel.oData.results[1].sinput1 = amrcontcosttrp;
-					cModel.oData.results[2].sinput1 = contrbefoffairTrp;
-					cModel.oData.results[3].sinput1 = lessmaktTrp;
-					cModel.oData.results[4].sinput1 = contaftairmktTrp;
-				}
-				/*---------------------------slot budgets for per 30 min----------------------------------------*/
-				var slotnetrevaftcommTrp = +oData.Avgbcrevamt / +oData.Budavgrtng; //+oData.Budavgbcrevamt / +oData.Budavgrtng;
-				var slotbudcontcostTrp = (+oData.Budcashamt * costamramt) / +oData.Budavgrtng;
-				var slotbudcontribefTrp = slotnetrevaftcommTrp - slotbudcontcostTrp;
-				var slotbudlessmaktTrp = (advoffair / slots) / +oData.Budavgrtng;
-				var slotbudcontraftTrp = slotbudcontribefTrp - slotbudlessmaktTrp;
+			bModel.refresh();
 
-				slotnetrevaftcommTrp = slotnetrevaftcommTrp.toFixed(2);
-				slotbudcontcostTrp = slotbudcontcostTrp.toFixed(2);
-				slotbudcontribefTrp = slotbudcontribefTrp.toFixed(2);
-				slotbudlessmaktTrp = slotbudlessmaktTrp.toFixed(2);
-				slotbudcontraftTrp = slotbudcontraftTrp.toFixed(2);
-				if (cModel.oData.results.length > 0) {
-					cModel.oData.results[0].sinput2 = slotnetrevaftcommTrp;
-					cModel.oData.results[1].sinput2 = amrcontcosttrp //slotbudcontcostTrp;
-					cModel.oData.results[2].sinput2 = slotbudcontribefTrp;
-					cModel.oData.results[3].sinput2 = slotbudlessmaktTrp;
-					cModel.oData.results[4].sinput2 = slotbudcontraftTrp;
-					cModel.oData.results[0].curr = oData.Waers;
-					cModel.oData.results[1].curr = cModel.oData.results[2].curr = cModel.oData.results[0].curr;
-					cModel.oData.results[3].curr = cModel.oData.results[4].curr = cModel.oData.results[0].curr;
-				}
-				cModel.refresh();
-				sap.ui.core.BusyIndicator.hide();
+			//per TRP
+			var cModel = that.getView().byId("progTRPTable").getModel();
+
+			
+			var lessmaktTrp = +oData.Trplessmaktamt; //(advoffair / slots) / Estavgrtng;//commented on 25-10-2019
+			var contaftairmktTrp = +oData.Trpcontriaftoffairmakt; //contrbefoffairTrp - lessmaktTrp;//commented on 25-10-2019
+
+			var netrevaftcomm = +oData.Trpnetbcrevaftcom; //Added by Lakshmana for P&L Table changes
+			var amrcontcosttrp = +oData.Trpcntamrtamt; //Added by Lakshmana for P&L Table changes
+			var contrbefoffairTrp = +oData.Trpcontribefoffairmakt; //Added by Lakshmana for P&L Table changes
+
+			netrevaftcomm = netrevaftcomm.toFixed(2);
+			amrcontcosttrp = amrcontcosttrp.toFixed(2);
+			contrbefoffairTrp = contrbefoffairTrp.toFixed(2);
+			lessmaktTrp = lessmaktTrp.toFixed(2);
+			contaftairmktTrp = contaftairmktTrp.toFixed(2);
+
+			cModel.oData.results[0].sinput1 = netrevaftcomm;
+			cModel.oData.results[1].sinput1 = amrcontcosttrp;
+			cModel.oData.results[2].sinput1 = contrbefoffairTrp;
+			cModel.oData.results[3].sinput1 = lessmaktTrp;
+			cModel.oData.results[4].sinput1 = contaftairmktTrp;
+
+			/*---------------------------slot budgets for per 30 min----------------------------------------*/
+		
+			var slotnetrevaftcommTrp = +oData.Btrpnetbcrevaftcom;
+			var slotbudcontcostTrp = +oData.Btrpcntamrtamt;
+			var slotbudcontribefTrp = +oData.Btrpcontribefoffairmakt;
+			var slotbudlessmaktTrp = +oData.Btrplessmaktamt;
+			var slotbudcontraftTrp = +oData.Btrpcontriaftoffairmakt;
+			//EOA: by Lakshmana on 16.06.2020
+
+			slotnetrevaftcommTrp = slotnetrevaftcommTrp.toFixed(2);
+			slotbudcontcostTrp = slotbudcontcostTrp.toFixed(2);
+			slotbudcontribefTrp = slotbudcontribefTrp.toFixed(2);
+			slotbudlessmaktTrp = slotbudlessmaktTrp.toFixed(2);
+			slotbudcontraftTrp = slotbudcontraftTrp.toFixed(2);
+
+			cModel.oData.results[0].sinput2 = slotnetrevaftcommTrp;
+					
+			cModel.oData.results[1].sinput2 = slotbudcontcostTrp; //Added by Lakshmana on 16.06.2020
+			cModel.oData.results[2].sinput2 = slotbudcontribefTrp;
+			cModel.oData.results[3].sinput2 = slotbudlessmaktTrp;
+			cModel.oData.results[4].sinput2 = slotbudcontraftTrp;
+			cModel.oData.results[0].curr = oData.Waers;
+			cModel.oData.results[1].curr = cModel.oData.results[2].curr = cModel.oData.results[0].curr;
+			cModel.oData.results[3].curr = cModel.oData.results[4].curr = cModel.oData.results[0].curr;
+			cModel.refresh();
+			sap.ui.core.BusyIndicator.hide();
 			},
 		// 	// Comment Tab
 		// 	loadComment: function() {
