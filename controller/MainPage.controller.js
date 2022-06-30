@@ -5829,7 +5829,7 @@ sap.ui.define([
 			},
 			getDataForComm: function(that) {
 				sap.ui.core.BusyIndicator.show(0);
-				var dealMemoDetailModel = that.getView().getModel("dealMemoDetailModel");
+				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
 				var Dmno = dealMemoDetailInfo.Dmno;
 				var Dmver = dealMemoDetailInfo.Dmver;
