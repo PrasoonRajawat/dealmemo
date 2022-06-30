@@ -860,7 +860,17 @@ sap.ui.define([
 				this.getView().byId("idIconTabBar").setSelectedKey("detail");
 				this._noOfEpiChanged = false;
 				this._yearChanged = false;
-
+				var tempbar = new sap.m.IconTabBar({
+					visible: false
+				});
+				tempbar.addItem(that.getView().byId("SYN"));
+				that.getView().byId("commentInner").destroyItems();
+				that.getView().byId("lblCommentStatus").setText("0");
+				that.getView().byId("commentInner").addItem(that.getView().byId("SYN"));
+				var len = that.getView().byId("commentInner").getItems().length;
+				for (var i = 1; i < len; i++) {
+					that.getView().byId("commentInner").getItems()[i].setVisible(false);
+				}
 				this.getView().byId("btnChangeDM").setVisible(false);
 				this.getView().byId("btnSaveDM").setEnabled(true);
 				this.getView().byId("btnSubmitDM").setEnabled(false);
@@ -1022,7 +1032,10 @@ sap.ui.define([
 						this.loadChangeCostTemplate();
 						var blankModel = new sap.ui.model.json.JSONModel();
 						this.getView().byId("lblComments").setModel(blankModel);
-						this.getView().byId("lblCommentStatus").setText("0");
+						tempbar.addItem(that.getView().byId("SYN"));
+						that.getView().byId("commentInner").destroyItems();
+						that.getView().byId("lblCommentStatus").setText("0");
+						that.getView().byId("commentInner").addItem(that.getView().byId("SYN"));
 					}.bind(this),
 					error: function(oError) {
 						var oErrorResponse = JSON.parse(oError.responseText);
