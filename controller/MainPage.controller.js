@@ -5688,7 +5688,7 @@ sap.ui.define([
 			var advoffair = +oData.Advoffairamt;
 			var totothrevamt = +oData.Totothrevamt;
 			var Estavgrtng = +oData.Estavgrtng;
-			var costamramt = +coreModel.oData.Amrtpercost; //CNTAMRTAMT
+			var costamramt = +dealMemoDetailInfo.Amrtpercost; //CNTAMRTAMT
 
 		if (dealMemoDetailInfo.Totdmamt != 0.000) {
 				var totalDmcost = dealMemoDetailInfo.Totdmamt;
