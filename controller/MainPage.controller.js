@@ -6506,10 +6506,10 @@ sap.ui.define([
 				var aflag = 1;
 				id = id.split("--");
 				if (id[2] == "conceptBtn") {
-					that.assignConcept(that, aflag);
+					that.assignConcept(aflag);
 					//	sap.ui.controller('DealMemo.controller.Custom1').assignSynopsis(that,aflag);
 				} else if (id[2] == "synopsisBtn") {
-					that.assignSynopsis(that, aflag);
+					that.assignSynopsis(aflag);
 				}
 			},
 			/************** Vendor Contract Code ********************/
