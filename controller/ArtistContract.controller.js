@@ -191,9 +191,9 @@ sap.ui.define([
 						artistContractModel.refresh(true);
 						this.getView().byId("btnEditAC").setVisible(false);
 						this.getView().byId("idSubIconTabBarac").setSelectedKey("acSubEpiData");
-						if(artistContractDetailInfo.Dmst !== "04"){
+						// if(artistContractDetailInfo.Dmst !== "04"){
 						this.loadVendors();
-					}
+					// }
 					}.bind(this),
 					error: function(oError) {
 						var oErrorResponse = JSON.parse(oError.responseText);
@@ -229,8 +229,8 @@ sap.ui.define([
 					success: function(oData, response) {
 
 						// dealMemoDetailModel.setProperty("/costCodes", oData.results);
-						dealMemoDetailModel.refresh(true);
-						this.loadDealMemoList();
+						artistContractModel.refresh(true);
+						this.loadDealMemoDetails();
 
 					}.bind(this),
 					error: function(oError) {
@@ -713,6 +713,7 @@ sap.ui.define([
 			},
 			loadEpisodes: function() {
 				var oModel = this.getView().getModel();
+				sap.ui.core.BusyIndicator.show();
 				var artistContractModel = this.getView().getModel("artistContractModel");
 				var artistContractDetailInfo = artistContractModel.getData();
 				var oFilters = [{
@@ -735,13 +736,13 @@ sap.ui.define([
 				oModel.read("/F4EpiIDSet", {
 					filters: aFilters,
 					success: function(oData) {
-
+						sap.ui.core.BusyIndicator.hide();
 						//	var filteredEpisodes = oData.results.filter(function(epObj){return epObj.Vcflag === "";});
 						artistContractModel.setProperty("/episodeList", oData.results);
 						artistContractModel.refresh(true);
 					}.bind(this),
 					error: function(oError) {
-
+						sap.ui.core.BusyIndicator.hide();
 					}
 				});
 			},
@@ -1305,7 +1306,7 @@ sap.ui.define([
 							this.displayContractFlag = false;
 							if (!this.newContractCreated) {
 								artistContractDetailInfo.saveVisible = false;
-								this.getView().byId("btnEditAC").setVisible(Formatter.formatEditableStatus(artistContractDetailInfo.Dmst));
+								this.getView().byId("btnEditAC").setVisible(Formatter.formatEditableStatus(artistContractDetailInfo.Contstat));
 							}
 						}
 						artistContractModel.refresh(true);
@@ -1949,9 +1950,9 @@ sap.ui.define([
 					new Filter("Tentid", "EQ", "IBS"),
 					new Filter("Dmno", "EQ", artistContractDetailInfo.Dmno),
 					new Filter("Dmver", "EQ", artistContractDetailInfo.Dmver),
-					new Filter("Contno", "EQ", vendorContractDetailInfo.Contno),
-					new Filter("Contver", "EQ", vendorContractDetailInfo.Contver),
-					new Filter("Conttp", "EQ", vendorContractDetailInfo.Conttp)
+					new Filter("Contno", "EQ", artistContractDetailInfo.Contno),
+					new Filter("Contver", "EQ", artistContractDetailInfo.Contver),
+					new Filter("Conttp", "EQ", artistContractDetailInfo.Conttp)
 				];
 				var timeFormat = sap.ui.core.format.DateFormat.getTimeInstance({
 					pattern: "KK:mm:ss"
