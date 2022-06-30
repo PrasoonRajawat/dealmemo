@@ -1,5 +1,6 @@
 var that = null;
 var TabFlg = 0;
+var lCtr = 0;
 var status = "";
 sap.ui.define([
 		"sap/ui/core/mvc/Controller",
