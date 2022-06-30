@@ -1243,7 +1243,7 @@ sap.ui.define([
 				} else {
 					dealMemoDetailModel.setProperty("/revenueTabEnable", false);
 					dealMemoDetailModel.setProperty("/marketTabEnable", false);
-						dealMemoDetailModel.setProperty("/progTabEnable", false);
+					dealMemoDetailModel.setProperty("/progTabEnable", false);
 				}
 				if (oData.Dmaf.Avgbcrevamt !== "0.00") {
 					dealMemoDetailModel.setProperty("/revenueTabColor", "Positive");
@@ -5685,135 +5685,134 @@ sap.ui.define([
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
 				// var coreModel = sap.ui.getCore().getModel("modelForDm");
-			var netbcrevag = +oData.Netbcrevaftagcom; //+oData.Avgbcrevamt;commented on 24-10-2019
-			var slots = +oData.Noofslots;
-			var advoffair = +oData.Advoffairamt;
-			var totothrevamt = +oData.Totothrevamt;
-			var Estavgrtng = +oData.Estavgrtng;
-			var costamramt = +dealMemoDetailInfo.Amrtpercost; //CNTAMRTAMT
+				var netbcrevag = +oData.Netbcrevaftagcom; //+oData.Avgbcrevamt;commented on 24-10-2019
+				var slots = +oData.Noofslots;
+				var advoffair = +oData.Advoffairamt;
+				var totothrevamt = +oData.Totothrevamt;
+				var Estavgrtng = +oData.Estavgrtng;
+				var costamramt = +dealMemoDetailInfo.Amrtpercost; //CNTAMRTAMT
 
-		if (dealMemoDetailInfo.Totdmamt != 0.000) {
-				var totalDmcost = dealMemoDetailInfo.Totdmamt;
-				var val3 = totalDmcost;
-				val3 = val3.toString();
-				val3 = Number(val3.replace(/[^0-9\.]+/g, ""));
-				totalDmcost = val3;
-			} else {
-				var totalDmcost = dealMemoDetailInfo.Totdmamt;
-				var val3 = totalDmcost;
-				val3 = val3.toString();
-				val3 = Number(val3.replace(/[^0-9\.]+/g, ""));
-				totalDmcost = val3;
-			}
-			//Per 30 min
-			var bModel = that.getView().byId("prog30Table").getModel();
-			var netOthrev = +oData.Netothrev; //totothrevamt / slots;commented on 24-10-2019
-			var amrContCost = +oData.Cntamrtamt; //totalDmcost / slots * costamramt; //totDmCost/slots*Amrtpercost ;commented on 24-10-2019
-			var contbefoffair = +oData.Contribefoffairmakt; // (netbcrevag + netOthrev) - amrContCost; //CNTAMRTAMT  ;commented on 24-10-2019
-			var lessmakt = +oData.Lessmaktamt; //advoffair / slots;commented on 24-10-2019
-			var contaftoffair = +oData.Contriaftoffairmakt; //contbefoffair - lessmakt;commented on 24-10-2019
-			var contper = +oData.Contriper; //(contaftoffair / netbcrevag) * 100;commented on 24-10-2019
+				if (dealMemoDetailInfo.Totdmamt != 0.000) {
+					var totalDmcost = dealMemoDetailInfo.Totdmamt;
+					var val3 = totalDmcost;
+					val3 = val3.toString();
+					val3 = Number(val3.replace(/[^0-9\.]+/g, ""));
+					totalDmcost = val3;
+				} else {
+					var totalDmcost = dealMemoDetailInfo.Totdmamt;
+					var val3 = totalDmcost;
+					val3 = val3.toString();
+					val3 = Number(val3.replace(/[^0-9\.]+/g, ""));
+					totalDmcost = val3;
+				}
+				//Per 30 min
+				var bModel = that.getView().byId("prog30Table").getModel();
+				var netOthrev = +oData.Netothrev; //totothrevamt / slots;commented on 24-10-2019
+				var amrContCost = +oData.Cntamrtamt; //totalDmcost / slots * costamramt; //totDmCost/slots*Amrtpercost ;commented on 24-10-2019
+				var contbefoffair = +oData.Contribefoffairmakt; // (netbcrevag + netOthrev) - amrContCost; //CNTAMRTAMT  ;commented on 24-10-2019
+				var lessmakt = +oData.Lessmaktamt; //advoffair / slots;commented on 24-10-2019
+				var contaftoffair = +oData.Contriaftoffairmakt; //contbefoffair - lessmakt;commented on 24-10-2019
+				var contper = +oData.Contriper; //(contaftoffair / netbcrevag) * 100;commented on 24-10-2019
 
-			netbcrevag = netbcrevag.toFixed(2);
-			netOthrev = netOthrev.toFixed(2);
-			amrContCost = amrContCost.toFixed(2);
-			contbefoffair = contbefoffair.toFixed(2);
-			lessmakt = lessmakt.toFixed(2);
-			contaftoffair = contaftoffair.toFixed(2);
-			contper = contper.toFixed(2);
+				netbcrevag = netbcrevag.toFixed(2);
+				netOthrev = netOthrev.toFixed(2);
+				amrContCost = amrContCost.toFixed(2);
+				contbefoffair = contbefoffair.toFixed(2);
+				lessmakt = lessmakt.toFixed(2);
+				contaftoffair = contaftoffair.toFixed(2);
+				contper = contper.toFixed(2);
 
-			bModel.oData.results[0].sinput1 = netbcrevag;
-			bModel.oData.results[1].sinput1 = netOthrev;
-			bModel.oData.results[2].sinput1 = amrContCost;
-			bModel.oData.results[3].sinput1 = contbefoffair;
-			bModel.oData.results[4].sinput1 = lessmakt;
-			bModel.oData.results[5].sinput1 = contaftoffair;
-			bModel.oData.results[6].sinput1 = contper;
-			bModel.oData.results[0].curr = oData.Waers;
-			bModel.oData.results[1].curr = bModel.oData.results[2].curr = bModel.oData.results[0].curr;
-			bModel.oData.results[3].curr = bModel.oData.results[4].curr = bModel.oData.results[0].curr;
-			bModel.oData.results[5].curr = bModel.oData.results[6].curr = bModel.oData.results[0].curr;
-			/*---------------------------slot budgets for per 30 min----------------------------------------*/
-		
-			var slotbudavgbcrevamt = +oData.Bnetbcrevaftagcom;
-			var slotbudnetothrev = +oData.Bnetothrev;
-			var slotbudcontamrcost = +oData.Bcntamrtamt;
-			var slotbudcontrbef = +oData.Bcontribefoffairmakt;
-			var slotbudlessmakt = +oData.Blessmaktamt;
-			var slotbudcontraft = +oData.Bcontriaftoffairmakt;
-			var slotbudcontper = +oData.Bcontriper;
-			//EOA: by Lakshmana on 16.06.2020
+				bModel.oData.results[0].sinput1 = netbcrevag;
+				bModel.oData.results[1].sinput1 = netOthrev;
+				bModel.oData.results[2].sinput1 = amrContCost;
+				bModel.oData.results[3].sinput1 = contbefoffair;
+				bModel.oData.results[4].sinput1 = lessmakt;
+				bModel.oData.results[5].sinput1 = contaftoffair;
+				bModel.oData.results[6].sinput1 = contper;
+				bModel.oData.results[0].curr = oData.Waers;
+				bModel.oData.results[1].curr = bModel.oData.results[2].curr = bModel.oData.results[0].curr;
+				bModel.oData.results[3].curr = bModel.oData.results[4].curr = bModel.oData.results[0].curr;
+				bModel.oData.results[5].curr = bModel.oData.results[6].curr = bModel.oData.results[0].curr;
+				/*---------------------------slot budgets for per 30 min----------------------------------------*/
 
-			slotbudavgbcrevamt = slotbudavgbcrevamt.toFixed(2);
-			slotbudnetothrev = slotbudnetothrev.toFixed(2);
-			slotbudcontamrcost = slotbudcontamrcost.toFixed(2);
-			slotbudcontrbef = slotbudcontrbef.toFixed(2);
-			slotbudlessmakt = slotbudlessmakt.toFixed(2);
-			slotbudcontraft = slotbudcontraft.toFixed(2);
-			slotbudcontper = slotbudcontper.toFixed(2);
+				var slotbudavgbcrevamt = +oData.Bnetbcrevaftagcom;
+				var slotbudnetothrev = +oData.Bnetothrev;
+				var slotbudcontamrcost = +oData.Bcntamrtamt;
+				var slotbudcontrbef = +oData.Bcontribefoffairmakt;
+				var slotbudlessmakt = +oData.Blessmaktamt;
+				var slotbudcontraft = +oData.Bcontriaftoffairmakt;
+				var slotbudcontper = +oData.Bcontriper;
+				//EOA: by Lakshmana on 16.06.2020
 
-			bModel.oData.results[0].sinput2 = slotbudavgbcrevamt;
-			bModel.oData.results[1].sinput2 = slotbudnetothrev;
-			//	bModel.oData.results[2].sinput2 = amrContCost //slotbudcontamrcost;				//Deleted by Lakshmana on 16.06.2020
-			bModel.oData.results[2].sinput2 = slotbudcontamrcost; //Added by Lakshmana on 16.06.2020
-			bModel.oData.results[3].sinput2 = slotbudcontrbef;
-			bModel.oData.results[4].sinput2 = slotbudlessmakt;
-			bModel.oData.results[5].sinput2 = slotbudcontraft;
-			bModel.oData.results[6].sinput2 = slotbudcontper;
+				slotbudavgbcrevamt = slotbudavgbcrevamt.toFixed(2);
+				slotbudnetothrev = slotbudnetothrev.toFixed(2);
+				slotbudcontamrcost = slotbudcontamrcost.toFixed(2);
+				slotbudcontrbef = slotbudcontrbef.toFixed(2);
+				slotbudlessmakt = slotbudlessmakt.toFixed(2);
+				slotbudcontraft = slotbudcontraft.toFixed(2);
+				slotbudcontper = slotbudcontper.toFixed(2);
 
-			bModel.refresh();
+				bModel.oData.results[0].sinput2 = slotbudavgbcrevamt;
+				bModel.oData.results[1].sinput2 = slotbudnetothrev;
+				//	bModel.oData.results[2].sinput2 = amrContCost //slotbudcontamrcost;				//Deleted by Lakshmana on 16.06.2020
+				bModel.oData.results[2].sinput2 = slotbudcontamrcost; //Added by Lakshmana on 16.06.2020
+				bModel.oData.results[3].sinput2 = slotbudcontrbef;
+				bModel.oData.results[4].sinput2 = slotbudlessmakt;
+				bModel.oData.results[5].sinput2 = slotbudcontraft;
+				bModel.oData.results[6].sinput2 = slotbudcontper;
 
-			//per TRP
-			var cModel = that.getView().byId("progTRPTable").getModel();
+				bModel.refresh();
 
-			
-			var lessmaktTrp = +oData.Trplessmaktamt; //(advoffair / slots) / Estavgrtng;//commented on 25-10-2019
-			var contaftairmktTrp = +oData.Trpcontriaftoffairmakt; //contrbefoffairTrp - lessmaktTrp;//commented on 25-10-2019
+				//per TRP
+				var cModel = that.getView().byId("progTRPTable").getModel();
 
-			var netrevaftcomm = +oData.Trpnetbcrevaftcom; //Added by Lakshmana for P&L Table changes
-			var amrcontcosttrp = +oData.Trpcntamrtamt; //Added by Lakshmana for P&L Table changes
-			var contrbefoffairTrp = +oData.Trpcontribefoffairmakt; //Added by Lakshmana for P&L Table changes
+				var lessmaktTrp = +oData.Trplessmaktamt; //(advoffair / slots) / Estavgrtng;//commented on 25-10-2019
+				var contaftairmktTrp = +oData.Trpcontriaftoffairmakt; //contrbefoffairTrp - lessmaktTrp;//commented on 25-10-2019
 
-			netrevaftcomm = netrevaftcomm.toFixed(2);
-			amrcontcosttrp = amrcontcosttrp.toFixed(2);
-			contrbefoffairTrp = contrbefoffairTrp.toFixed(2);
-			lessmaktTrp = lessmaktTrp.toFixed(2);
-			contaftairmktTrp = contaftairmktTrp.toFixed(2);
+				var netrevaftcomm = +oData.Trpnetbcrevaftcom; //Added by Lakshmana for P&L Table changes
+				var amrcontcosttrp = +oData.Trpcntamrtamt; //Added by Lakshmana for P&L Table changes
+				var contrbefoffairTrp = +oData.Trpcontribefoffairmakt; //Added by Lakshmana for P&L Table changes
 
-			cModel.oData.results[0].sinput1 = netrevaftcomm;
-			cModel.oData.results[1].sinput1 = amrcontcosttrp;
-			cModel.oData.results[2].sinput1 = contrbefoffairTrp;
-			cModel.oData.results[3].sinput1 = lessmaktTrp;
-			cModel.oData.results[4].sinput1 = contaftairmktTrp;
+				netrevaftcomm = netrevaftcomm.toFixed(2);
+				amrcontcosttrp = amrcontcosttrp.toFixed(2);
+				contrbefoffairTrp = contrbefoffairTrp.toFixed(2);
+				lessmaktTrp = lessmaktTrp.toFixed(2);
+				contaftairmktTrp = contaftairmktTrp.toFixed(2);
 
-			/*---------------------------slot budgets for per 30 min----------------------------------------*/
-		
-			var slotnetrevaftcommTrp = +oData.Btrpnetbcrevaftcom;
-			var slotbudcontcostTrp = +oData.Btrpcntamrtamt;
-			var slotbudcontribefTrp = +oData.Btrpcontribefoffairmakt;
-			var slotbudlessmaktTrp = +oData.Btrplessmaktamt;
-			var slotbudcontraftTrp = +oData.Btrpcontriaftoffairmakt;
-			//EOA: by Lakshmana on 16.06.2020
+				cModel.oData.results[0].sinput1 = netrevaftcomm;
+				cModel.oData.results[1].sinput1 = amrcontcosttrp;
+				cModel.oData.results[2].sinput1 = contrbefoffairTrp;
+				cModel.oData.results[3].sinput1 = lessmaktTrp;
+				cModel.oData.results[4].sinput1 = contaftairmktTrp;
 
-			slotnetrevaftcommTrp = slotnetrevaftcommTrp.toFixed(2);
-			slotbudcontcostTrp = slotbudcontcostTrp.toFixed(2);
-			slotbudcontribefTrp = slotbudcontribefTrp.toFixed(2);
-			slotbudlessmaktTrp = slotbudlessmaktTrp.toFixed(2);
-			slotbudcontraftTrp = slotbudcontraftTrp.toFixed(2);
+				/*---------------------------slot budgets for per 30 min----------------------------------------*/
 
-			cModel.oData.results[0].sinput2 = slotnetrevaftcommTrp;
-					
-			cModel.oData.results[1].sinput2 = slotbudcontcostTrp; //Added by Lakshmana on 16.06.2020
-			cModel.oData.results[2].sinput2 = slotbudcontribefTrp;
-			cModel.oData.results[3].sinput2 = slotbudlessmaktTrp;
-			cModel.oData.results[4].sinput2 = slotbudcontraftTrp;
-			cModel.oData.results[0].curr = oData.Waers;
-			cModel.oData.results[1].curr = cModel.oData.results[2].curr = cModel.oData.results[0].curr;
-			cModel.oData.results[3].curr = cModel.oData.results[4].curr = cModel.oData.results[0].curr;
-			cModel.refresh();
-			sap.ui.core.BusyIndicator.hide();
+				var slotnetrevaftcommTrp = +oData.Btrpnetbcrevaftcom;
+				var slotbudcontcostTrp = +oData.Btrpcntamrtamt;
+				var slotbudcontribefTrp = +oData.Btrpcontribefoffairmakt;
+				var slotbudlessmaktTrp = +oData.Btrplessmaktamt;
+				var slotbudcontraftTrp = +oData.Btrpcontriaftoffairmakt;
+				//EOA: by Lakshmana on 16.06.2020
+
+				slotnetrevaftcommTrp = slotnetrevaftcommTrp.toFixed(2);
+				slotbudcontcostTrp = slotbudcontcostTrp.toFixed(2);
+				slotbudcontribefTrp = slotbudcontribefTrp.toFixed(2);
+				slotbudlessmaktTrp = slotbudlessmaktTrp.toFixed(2);
+				slotbudcontraftTrp = slotbudcontraftTrp.toFixed(2);
+
+				cModel.oData.results[0].sinput2 = slotnetrevaftcommTrp;
+
+				cModel.oData.results[1].sinput2 = slotbudcontcostTrp; //Added by Lakshmana on 16.06.2020
+				cModel.oData.results[2].sinput2 = slotbudcontribefTrp;
+				cModel.oData.results[3].sinput2 = slotbudlessmaktTrp;
+				cModel.oData.results[4].sinput2 = slotbudcontraftTrp;
+				cModel.oData.results[0].curr = oData.Waers;
+				cModel.oData.results[1].curr = cModel.oData.results[2].curr = cModel.oData.results[0].curr;
+				cModel.oData.results[3].curr = cModel.oData.results[4].curr = cModel.oData.results[0].curr;
+				cModel.refresh();
+				sap.ui.core.BusyIndicator.hide();
 			},
-		// 	// Comment Tab
+			// 	// Comment Tab
 			loadComment: function() {
 				that.getView().byId("commentInner").setSelectedKey("synopsis");
 				this.getComment();
@@ -5858,12 +5857,12 @@ sap.ui.define([
 			getTabList: function() {
 
 				//******************************** condition for adding inner tabs in comments tab**********************	
-					var dealMemoDetailModel = that.getView().getModel("dealMemoDetailModel");
+				var dealMemoDetailModel = that.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
 				status = dealMemoDetailInfo.Dmst;
 				var TabFlag = that.getView().byId("lblCommentStatus").getText();
-				if (TabFlag === "0") {  //if tabs doesn't exist
-				that.setTabList();
+				if (TabFlag === "0") { //if tabs doesn't exist
+					that.setTabList();
 				} else {
 					if (status == "04" || status == "02") {
 						var tabs = that.getView().byId("commentInner").getItems();
@@ -5876,140 +5875,140 @@ sap.ui.define([
 							that.getView().byId("commentInner").getItems()[i].setVisible(false);
 						}
 					}
-				}//if (TabFlag === "0")
+				} //if (TabFlag === "0")
 			},
-				appendTxt: function(that, key) {
-			sap.ui.core.BusyIndicator.show(0);
-			var jModelData = this.modelDesign(that, key);
-			var intDataModelUrl = "/sap/opu/odata/IBSCMS/DEALMEMO_SRV/";
-			var oModelSav = new sap.ui.model.odata.ODataModel(intDataModelUrl, true, "", "");
-			oModelSav.setHeaders({
-				"Accept": "application/json"
-			});
-			oModelSav.setHeaders({
-				"X-Requested-With": "X"
-			});
-			var pValue = "/DmHeaderSet";
-			oModelSav.create(pValue, jModelData.oData, null, function() {
-					sap.ui.core.BusyIndicator.hide();
-					/*	sap.m.MessageBox.show("comment created successfully", {
-							icon: sap.m.MessageBox.Icon.SUCCESS,
-							title: "Success"
-						});*/
-					sap.m.MessageToast.show(that._oResourceBundle.getText("msg_commsave"));
-
-				},
-				function() {
-					sap.ui.core.BusyIndicator.hide();
-					sap.m.MessageBox.show(that._oResourceBundle.getText("msg_commcreatefail"), {
-						icon: sap.m.MessageBox.Icon.ERROR,
-						title: "{i18n>Error}"
-					});
+			appendTxt: function(that, key) {
+				sap.ui.core.BusyIndicator.show(0);
+				var jModelData = this.modelDesign(that, key);
+				var intDataModelUrl = "/sap/opu/odata/IBSCMS/DEALMEMO_SRV/";
+				var oModelSav = new sap.ui.model.odata.ODataModel(intDataModelUrl, true, "", "");
+				oModelSav.setHeaders({
+					"Accept": "application/json"
 				});
+				oModelSav.setHeaders({
+					"X-Requested-With": "X"
+				});
+				var pValue = "/DmHeaderSet";
+				oModelSav.create(pValue, jModelData.oData, null, function() {
+						sap.ui.core.BusyIndicator.hide();
+						/*	sap.m.MessageBox.show("comment created successfully", {
+								icon: sap.m.MessageBox.Icon.SUCCESS,
+								title: "Success"
+							});*/
+						sap.m.MessageToast.show(that._oResourceBundle.getText("msg_commsave"));
 
-		},
+					},
+					function() {
+						sap.ui.core.BusyIndicator.hide();
+						sap.m.MessageBox.show(that._oResourceBundle.getText("msg_commcreatefail"), {
+							icon: sap.m.MessageBox.Icon.ERROR,
+							title: "{i18n>Error}"
+						});
+					});
+
+			},
 			onFeedPost: function(that) {
 				var Key = that.getView().byId("commentInner").getSelectedKey();
 				that.saveComments(Key, that);
 			},
-			
-		modelDesign: function(that, key) {
-			var aModelData = that.getView().byId("lblComments").getModel();
 
-			//*********************creation of model for posting comments**************************
-			var oFields = {
-				Amrtpercost: "0.00",
-				Avgepidur: "",
-				Bukrs: "",
-				Butxt: "",
-				Cafrefno: "",
-				Chnlid: "",
-				Chnlnm: "",
-				Cntcat: "",
-				Cntcatnm: "",
-				Cntgn: "",
-				Cntgnnm: "",
-				Cntid: "",
-				Cntnm: "",
-				Cntnt: "",
-				Cntntnm: "",
-				Cntobj: "",
-				Cntobjnm: "",
-				Cntsgn: "",
-				Cntsgnnm: "",
-				Cntstp: "",
-				Cntstpnm: "",
-				Cnttp: "",
-				Cnttpnm: "",
-				Dmdt: "null",
-				Dmno: "",
-				Dmrefno: "",
-				Dmst: "",
-				Dmstdesc: "",
-				Dmver: "",
-				Estprgreldt: "null",
-				Exchrt: "0.00",
-				Noofepi: "",
-				Recst: "",
-				Tentid: "",
-				Txtsuffix: "",
-				Waers: "",
-				DmtxtSet: [],
-				DmEpisodeSet: [],
-				DmCostSet: []
-			};
+			modelDesign: function(that, key) {
+				var aModelData = that.getView().byId("lblComments").getModel();
 
-			var yModelData = new sap.ui.model.json.JSONModel(oFields);
+				//*********************creation of model for posting comments**************************
+				var oFields = {
+					Amrtpercost: "0.00",
+					Avgepidur: "",
+					Bukrs: "",
+					Butxt: "",
+					Cafrefno: "",
+					Chnlid: "",
+					Chnlnm: "",
+					Cntcat: "",
+					Cntcatnm: "",
+					Cntgn: "",
+					Cntgnnm: "",
+					Cntid: "",
+					Cntnm: "",
+					Cntnt: "",
+					Cntntnm: "",
+					Cntobj: "",
+					Cntobjnm: "",
+					Cntsgn: "",
+					Cntsgnnm: "",
+					Cntstp: "",
+					Cntstpnm: "",
+					Cnttp: "",
+					Cnttpnm: "",
+					Dmdt: "null",
+					Dmno: "",
+					Dmrefno: "",
+					Dmst: "",
+					Dmstdesc: "",
+					Dmver: "",
+					Estprgreldt: "null",
+					Exchrt: "0.00",
+					Noofepi: "",
+					Recst: "",
+					Tentid: "",
+					Txtsuffix: "",
+					Waers: "",
+					DmtxtSet: [],
+					DmEpisodeSet: [],
+					DmCostSet: []
+				};
 
-			/*	yModelData.oData.Dmdt = "2016-12-07T00:00:00";
-			yModelData.oData.Estprgreldt = "2017-01-02T00:00:00";*/
-			/*	var dmdtLen= yModelData.oData.Dmdt.length;
-				yModelData.oData.Dmdt=yModelData.oData.Dmdt.substring(0,dmdtLen-2);*/
-			//	var EstdtLen= yModelData.oData.Estprgreldt.length;
-			//	yModelData.oData.Estprgreldt=yModelData.oData.Estprgreldt.substring(0,EstdtLen-2);
+				var yModelData = new sap.ui.model.json.JSONModel(oFields);
 
-			//*********passing data in json model**********
-			yModelData.oData.Avgepidur = aModelData.oData.Avgepidur;
-			yModelData.oData.Amrtpercost = aModelData.oData.Amrtpercost;
-			yModelData.oData.Bukrs = aModelData.oData.Bukrs;
-			yModelData.oData.Butxt = aModelData.oData.Butxt;
-			yModelData.oData.Cntcatnm = aModelData.oData.Cntcatnm;
-			yModelData.oData.Cntsgnnm = aModelData.oData.Cntsgnnm;
-			yModelData.oData.Chnlnm = aModelData.oData.Chnlnm;
-			yModelData.oData.Cntcat = aModelData.oData.Cntcat;
-			yModelData.oData.Cntgnnm = aModelData.oData.Cntgnnm;
-			yModelData.oData.Cntobjnm = aModelData.oData.Cntobjnm;
-			yModelData.oData.Cafrefno = aModelData.oData.Cafrefno;
-			yModelData.oData.Cntgn = aModelData.oData.Cntgn;
-			yModelData.oData.Cntntnm = aModelData.oData.Cntntnm;
-			yModelData.oData.Cntsgn = aModelData.oData.Cntsgn;
-			yModelData.oData.Cntnm = aModelData.oData.Cntnm;
-			yModelData.oData.Cntobj = aModelData.oData.Cntobj;
-			yModelData.oData.Cntstp = aModelData.oData.Cntstp;
-			yModelData.oData.Cntstpnm = aModelData.oData.Cntstpnm;
-			yModelData.oData.Cnttp = aModelData.oData.Cnttp;
-			yModelData.oData.Cntnt = aModelData.oData.Cntnt;
-			yModelData.oData.Chnlid = aModelData.oData.Chnlid;
-			yModelData.oData.Cntid = aModelData.oData.Cntid;
-			yModelData.oData.Dmstdesc = aModelData.oData.Dmstdesc;
-			yModelData.oData.Dmver = aModelData.oData.Dmver;
-			yModelData.oData.Dmdt = aModelData.oData.Dmdt;
-			yModelData.oData.Dmst = aModelData.oData.Dmst;
-			yModelData.oData.Dmrefno = aModelData.oData.Dmrefno;
-			yModelData.oData.Dmno = aModelData.oData.Dmno;
-			yModelData.oData.Exchrt = aModelData.oData.Exchrt;
-			yModelData.oData.Estprgreldt = aModelData.oData.Estprgreldt;
-			yModelData.oData.Noofepi = aModelData.oData.Noofepi;
-			yModelData.oData.Recst = aModelData.oData.Recst;
-			yModelData.oData.Txtsuffix = key;
-			yModelData.oData.Tentid = aModelData.oData.Tentid;
-			yModelData.oData.Waers = aModelData.oData.Waers;
-			yModelData.oData.DmCostSet = [];
-			yModelData.oData.DmEpisodeSet = [];
-			yModelData.oData.DmtxtSet = aModelData.oData.DmtxtSet;
-			yModelData.oData.DmtxtSet = yModelData.oData.DmtxtSet.results;
-			return yModelData;
-		},
+				/*	yModelData.oData.Dmdt = "2016-12-07T00:00:00";
+				yModelData.oData.Estprgreldt = "2017-01-02T00:00:00";*/
+				/*	var dmdtLen= yModelData.oData.Dmdt.length;
+					yModelData.oData.Dmdt=yModelData.oData.Dmdt.substring(0,dmdtLen-2);*/
+				//	var EstdtLen= yModelData.oData.Estprgreldt.length;
+				//	yModelData.oData.Estprgreldt=yModelData.oData.Estprgreldt.substring(0,EstdtLen-2);
+
+				//*********passing data in json model**********
+				yModelData.oData.Avgepidur = aModelData.oData.Avgepidur;
+				yModelData.oData.Amrtpercost = aModelData.oData.Amrtpercost;
+				yModelData.oData.Bukrs = aModelData.oData.Bukrs;
+				yModelData.oData.Butxt = aModelData.oData.Butxt;
+				yModelData.oData.Cntcatnm = aModelData.oData.Cntcatnm;
+				yModelData.oData.Cntsgnnm = aModelData.oData.Cntsgnnm;
+				yModelData.oData.Chnlnm = aModelData.oData.Chnlnm;
+				yModelData.oData.Cntcat = aModelData.oData.Cntcat;
+				yModelData.oData.Cntgnnm = aModelData.oData.Cntgnnm;
+				yModelData.oData.Cntobjnm = aModelData.oData.Cntobjnm;
+				yModelData.oData.Cafrefno = aModelData.oData.Cafrefno;
+				yModelData.oData.Cntgn = aModelData.oData.Cntgn;
+				yModelData.oData.Cntntnm = aModelData.oData.Cntntnm;
+				yModelData.oData.Cntsgn = aModelData.oData.Cntsgn;
+				yModelData.oData.Cntnm = aModelData.oData.Cntnm;
+				yModelData.oData.Cntobj = aModelData.oData.Cntobj;
+				yModelData.oData.Cntstp = aModelData.oData.Cntstp;
+				yModelData.oData.Cntstpnm = aModelData.oData.Cntstpnm;
+				yModelData.oData.Cnttp = aModelData.oData.Cnttp;
+				yModelData.oData.Cntnt = aModelData.oData.Cntnt;
+				yModelData.oData.Chnlid = aModelData.oData.Chnlid;
+				yModelData.oData.Cntid = aModelData.oData.Cntid;
+				yModelData.oData.Dmstdesc = aModelData.oData.Dmstdesc;
+				yModelData.oData.Dmver = aModelData.oData.Dmver;
+				yModelData.oData.Dmdt = aModelData.oData.Dmdt;
+				yModelData.oData.Dmst = aModelData.oData.Dmst;
+				yModelData.oData.Dmrefno = aModelData.oData.Dmrefno;
+				yModelData.oData.Dmno = aModelData.oData.Dmno;
+				yModelData.oData.Exchrt = aModelData.oData.Exchrt;
+				yModelData.oData.Estprgreldt = aModelData.oData.Estprgreldt;
+				yModelData.oData.Noofepi = aModelData.oData.Noofepi;
+				yModelData.oData.Recst = aModelData.oData.Recst;
+				yModelData.oData.Txtsuffix = key;
+				yModelData.oData.Tentid = aModelData.oData.Tentid;
+				yModelData.oData.Waers = aModelData.oData.Waers;
+				yModelData.oData.DmCostSet = [];
+				yModelData.oData.DmEpisodeSet = [];
+				yModelData.oData.DmtxtSet = aModelData.oData.DmtxtSet;
+				yModelData.oData.DmtxtSet = yModelData.oData.DmtxtSet.results;
+				return yModelData;
+			},
 			//*****************************************Function For adding inner tabs**********************************
 			setTabList: function() {
 				sap.ui.core.BusyIndicator.show(0);
@@ -6408,7 +6407,7 @@ sap.ui.define([
 				} else {
 					var id = key + "comment"; //id of Comment List 
 					var idL = key + "customl"; //id of CustomListItem
-					var DealM = that.getDealMNo();
+					// var DealM = that.getDealMNo();
 
 					//-------------------- set model and class for list-------------------------
 					var commData = {
@@ -6421,10 +6420,10 @@ sap.ui.define([
 						]
 					};
 					var sModel = new sap.ui.model.json.JSONModel(commData);
-						var dealMemoDetailModel = that.getView().getModel("dealMemoDetailModel");
-				var dealMemoDetailInfo = dealMemoDetailModel.getData();
-				var Dmno = dealMemoDetailInfo.Dmno;
-				var Dmver = dealMemoDetailInfo.Dmver;
+					var dealMemoDetailModel = that.getView().getModel("dealMemoDetailModel");
+					var dealMemoDetailInfo = dealMemoDetailModel.getData();
+					var Dmno = dealMemoDetailInfo.Dmno;
+					var Dmver = dealMemoDetailInfo.Dmver;
 					//sModel.loadData("json/comments.json", "", false);
 					sap.ui.getCore().getControl(id).setModel(sModel);
 					sap.ui.getCore().getControl(id).addStyleClass("sapUiMediumMarginTop , sapUiTinyMarginBottom");
@@ -6503,16 +6502,16 @@ sap.ui.define([
 				}
 			},
 			oneditSynopsis: function(oEvent) {
-			var id = oEvent.getSource().getId();
-			var aflag = 1;
-			id = id.split("--");
-			if (id[1] == "conceptBtn") {
-				that.assignConcept(that, aflag);
-				//	sap.ui.controller('DealMemo.controller.Custom1').assignSynopsis(that,aflag);
-			} else if (id[1] == "synopsisBtn") {
-			that.assignSynopsis(that, aflag);
-			}
-		},
+				var id = oEvent.getSource().getId();
+				var aflag = 1;
+				id = id.split("--");
+				if (id[1] == "conceptBtn") {
+					that.assignConcept(that, aflag);
+					//	sap.ui.controller('DealMemo.controller.Custom1').assignSynopsis(that,aflag);
+				} else if (id[1] == "synopsisBtn") {
+					that.assignSynopsis(that, aflag);
+				}
+			},
 			/************** Vendor Contract Code ********************/
 			toVendorContractCreate: function() {
 				var oRouter = this.getOwnerComponent().getRouter();
