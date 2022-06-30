@@ -5862,9 +5862,7 @@ sap.ui.define([
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
 				status = dealMemoDetailInfo.Dmst;
 				var TabFlag = that.getView().byId("lblCommentStatus").getText();
-				if (TabFlag === "0") //if tabs doesn't exist
-			
-				{
+				if (TabFlag === "0") {  //if tabs doesn't exist
 				that.setTabList();
 				} else {
 					if (status == "04" || status == "02") {
@@ -5878,7 +5876,7 @@ sap.ui.define([
 							that.getView().byId("commentInner").getItems()[i].setVisible(false);
 						}
 					}
-				// } //if (TabFlag === "0")
+				}//if (TabFlag === "0")
 			},
 				appendTxt: function(that, key) {
 			sap.ui.core.BusyIndicator.show(0);
