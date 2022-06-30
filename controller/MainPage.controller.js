@@ -1020,6 +1020,7 @@ sap.ui.define([
 						sap.ui.core.BusyIndicator.hide();
 
 						this.loadChangeCostTemplate();
+						var blankModel = new sap.ui.model.json.JSONModel();
 						this.getView().byId("lblComments").setModel(blankModel);
 						this.getView().byId("lblCommentStatus").setText("0");
 					}.bind(this),
