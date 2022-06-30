@@ -128,7 +128,7 @@
 								<IconTabFilter id="comment" key="comment" text="{i18n>IcnTbFlt_Cmnts}" icon="sap-icon://comment" class="sapMITBHead" iconColor="Critical"
 									design="Horizontal" visible="{= ${dealMemoDetailModel>/Dmno} !== '' ? true : false }">
 									<content>
-							
+							<core:Fragment fragmentName="com.ui.dealmemolocal.fragments.CommentTab" type="XML" />
 									</content>
 								</IconTabFilter>
 								
