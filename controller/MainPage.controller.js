@@ -5901,12 +5901,12 @@ sap.ui.define([
 								icon: sap.m.MessageBox.Icon.SUCCESS,
 								title: "Success"
 							});*/
-						sap.m.MessageToast.show(that._oResourceBundle.getText("msg_commsave"));
+						sap.m.MessageToast.show(that.getView().getModel("i18n").getResourceBundle().getText("msg_commsave"));
 
 					},
 					function() {
 						sap.ui.core.BusyIndicator.hide();
-						sap.m.MessageBox.show(that._oResourceBundle.getText("msg_commcreatefail"), {
+						sap.m.MessageBox.show(that.getView().getModel("i18n").getResourceBundle().getText("msg_commcreatefail"), {
 							icon: sap.m.MessageBox.Icon.ERROR,
 							title: "{i18n>Error}"
 						});
