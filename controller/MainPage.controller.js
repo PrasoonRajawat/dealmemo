@@ -6420,7 +6420,7 @@ sap.ui.define([
 						]
 					};
 					var sModel = new sap.ui.model.json.JSONModel(commData);
-					var dealMemoDetailModel = that.getView().getModel("dealMemoDetailModel");
+					var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 					var dealMemoDetailInfo = dealMemoDetailModel.getData();
 					var Dmno = dealMemoDetailInfo.Dmno;
 					var Dmver = dealMemoDetailInfo.Dmver;
