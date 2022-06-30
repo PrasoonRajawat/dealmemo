@@ -5841,7 +5841,7 @@ sap.ui.define([
 					sap.ui.core.BusyIndicator.hide();
 					//alert("success");
 					var aModelData = new sap.ui.model.json.JSONModel(oData);
-					that.getView().byId("lblComments").setModel(aModelData);
+					this.getView().byId("lblComments").setModel(aModelData);
 				}, function(oData) {
 					sap.ui.core.BusyIndicator.hide();
 					var errMsg = JSON.parse(oData.response.body);
