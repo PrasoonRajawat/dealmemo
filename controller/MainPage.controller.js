@@ -6073,6 +6073,9 @@ sap.ui.define([
 								]
 							});
 							sap.ui.getCore().getControl(Listid).bindAggregation("items", "/EntryCollection", itemTemplate);
+							if (tkey == "INIT") {
+								item.mProperties.text = "Comments";
+							}
 							that.getView().byId("commentInner").addItem(item);
 							if (status == "04") {
 								//	sap.ui.getCore().getControl(FeedId).setEnabled(false);
