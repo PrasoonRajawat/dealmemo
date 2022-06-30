@@ -3833,9 +3833,9 @@ sap.ui.define([
 					this.saveRevenueTab();
 				} else if (selectedTab == "makt") {
 					this.saveMarketingTab();
-				} elseif (selectedTab == "comment")	{
-						var Key = that.getView().byId("commentInner").getSelectedKey();
-						this.saveComments(Key);
+				} else if (selectedTab == "comment") {
+					var Key = that.getView().byId("commentInner").getSelectedKey();
+					this.saveComments(Key);
 				}
 
 			},
