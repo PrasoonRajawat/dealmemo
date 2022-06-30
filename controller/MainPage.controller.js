@@ -6505,10 +6505,10 @@ sap.ui.define([
 				var id = oEvent.getSource().getId();
 				var aflag = 1;
 				id = id.split("--");
-				if (id[1] == "conceptBtn") {
+				if (id[2] == "conceptBtn") {
 					that.assignConcept(that, aflag);
 					//	sap.ui.controller('DealMemo.controller.Custom1').assignSynopsis(that,aflag);
-				} else if (id[1] == "synopsisBtn") {
+				} else if (id[2] == "synopsisBtn") {
 					that.assignSynopsis(that, aflag);
 				}
 			},
