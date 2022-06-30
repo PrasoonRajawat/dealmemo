@@ -1242,6 +1242,7 @@ sap.ui.define([
 				} else {
 					dealMemoDetailModel.setProperty("/revenueTabEnable", false);
 					dealMemoDetailModel.setProperty("/marketTabEnable", false);
+						dealMemoDetailModel.setProperty("/progTabEnable", false);
 				}
 				if (oData.Dmaf.Avgbcrevamt !== "0.00") {
 					dealMemoDetailModel.setProperty("/revenueTabColor", "Positive");
