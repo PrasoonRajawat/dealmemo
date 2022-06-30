@@ -1019,6 +1019,7 @@ sap.ui.define([
 						sap.ui.core.BusyIndicator.hide();
 
 						this.loadChangeCostTemplate();
+						this.getView().byId("lblCommentStatus").setText("0");
 					}.bind(this),
 					error: function(oError) {
 						var oErrorResponse = JSON.parse(oError.responseText);
