@@ -1,0 +1,55 @@
+<c:FragmentDefinition xmlns="sap.m" xmlns:u="sap.ui.unified" xmlns:l="sap.ui.layout" xmlns:c="sap.ui.core">
+											<Table id="prog30Table" items="{/results}">
+											<columns>
+												<Column>
+													<ObjectIdentifier title="{i18n>ObjIden_Per30min}"/>
+												</Column>
+												<Column minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" hAlign="Center">
+													<ObjectIdentifier title="{i18n>ObjIden_Est}"/>
+												</Column>
+												<Column minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" hAlign="Center">
+													<ObjectIdentifier title="{i18n>ObjIden_Slotbudgets}"/>
+												</Column>
+												<!--<Column minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
+														<ObjectIdentifier title="Estimated as per CAF"/>
+												</Column>-->
+											</columns>
+											<items>
+												<ColumnListItem>
+													<Text text="{skey}" class="sapUiTinyMarginTop"></Text>
+												<!--	<Input value="{sinput1}" enabled="false" textAlign="Right"/>-->
+													<Input value="{ parts: [ {path: 'sinput1'}, {path: 'curr'} ], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false } }"
+														textAlign="Right" enabled="false"/>
+													<!--	<Input value="{sinput2}" enabled="false" textAlign="Right"/>-->
+													<Input value="{ parts: [ {path: 'sinput2'}, {path: 'curr'} ], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false } }"
+														textAlign="Right" enabled="false"/>
+													<!--<Input value="" />-->
+												</ColumnListItem>
+											</items>
+										</Table>
+										<Table id="progTRPTable" items="{/results}">
+											<columns>
+												<Column>
+													<ObjectIdentifier title="{i18n>ObjIden_PerTRPmin}"/>
+												</Column>
+												<Column minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" hAlign="Center">
+													<ObjectIdentifier title="{i18n>ObjIden_Est}"/>
+												</Column>
+												<Column minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" hAlign="Center">
+													<ObjectIdentifier title="{i18n>ObjIden_Slotbudgets}"/>
+												</Column>
+											</columns>
+											<items>
+												<ColumnListItem>
+													<Text text="{skey}" class="sapUiTinyMarginTop"></Text>
+													<!--	<Input value="{sinput1}" enabled="false" textAlign="Right"/>-->
+													<Input value="{ parts: [ {path: 'sinput1'}, {path: 'curr'} ], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false } }"
+														textAlign="Right" enabled="false"/>
+													<!--	<Input value="{sinput2}" enabled="false" textAlign="Right"/>-->
+													<Input value="{ parts: [ {path: 'sinput2'}, {path: 'curr'} ], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false } }"
+														textAlign="Right" enabled="false"/>
+													<!--<Input value="" />-->
+												</ColumnListItem>
+											</items>
+										</Table>
+</c:FragmentDefinition>
