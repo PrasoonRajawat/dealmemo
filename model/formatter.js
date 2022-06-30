@@ -120,7 +120,10 @@ sap.ui.define([
         	   }
            },
             formatEditableContStatus:function(Contstat){
-        	   if(Contstat === "01" || Contstat === undefined || Contstat === "" || Contstat === null || Contstat === "03"){
+
+        	   if(Contstat === "01" || Contstat === undefined || Contstat === "" || Contstat === null || Contstat === "03" || Contstat === "04"){
+
+        	  
         		   return true;
         	   }
         	   else{
