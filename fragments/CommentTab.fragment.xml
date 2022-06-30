@@ -1,0 +1,45 @@
+<c:FragmentDefinition xmlns="sap.m" xmlns:u="sap.ui.unified" xmlns:l="sap.ui.layout" xmlns:c="sap.ui.core">
+
+        	<Label id="lblComments" visible="false" text=""/>
+        	<Label id="lblCommentStatus" visible="false" text="0"/>
+				<IconTabBar id="commentInner" expandable="true" expanded="true" visible="true" setSelectedKey="synopsis" select="oncommentInnerSelect">
+											<items>
+												<IconTabFilter id="SYN" key="synopsis" text="Synopsis" class="sapMITBHead" visible="true">
+													<content>
+														<Toolbar>
+															<ObjectIdentifier title="{i18n>ObjIden_Cncpt}" class="sapUiSmallMarginTop sapUiTinyMarginBottom"/>
+															<ToolbarSpacer/>
+															<Button id="conceptBtn" icon="sap-icon://edit" press="oneditSynopsis" enabled="false" ariaLabelledBy="editButtonLabel"/>
+														</Toolbar>
+														<TextArea id="conceptTxt" rows="7" width="100%" visible="false"></TextArea>
+														<List id="conceptFeed" showSeparators="Inner" items="{/EntryCollection}" visible="false">
+															<CustomListItem>
+																<HBox>
+																	<VBox class="sapUiSmallMarginTop sapUiTinyMarginBottom">
+																		<ObjectAttribute title="{Author}" text="{date}" active="true"/>
+																		<Text text="{Text}"/>
+																	</VBox>
+																</HBox>
+															</CustomListItem>
+														</List>
+														<Toolbar>
+															<ObjectIdentifier title="{i18n>ObjIden_Synopsis}" class="sapUiSmallMarginTop sapUiTinyMarginBottom"/>
+															<ToolbarSpacer/>
+															<Button id="synopsisBtn" icon="sap-icon://edit" press="oneditSynopsis" enabled="false" ariaLabelledBy="editButtonLabel"/>
+														</Toolbar>
+														<TextArea id="synopsisTxt" rows="7" width="100%" visible="false"></TextArea>
+														<List id="synopsisFeed" showSeparators="Inner" items="{/EntryCollection}" visible="false">
+															<CustomListItem>
+																<HBox>
+																	<VBox class="sapUiSmallMarginTop sapUiTinyMarginBottom">
+																		<ObjectAttribute title="{Author}" text="{date}" active="true"/>
+																		<Text text="{Text}"/>
+																	</VBox>
+																</HBox>
+															</CustomListItem>
+														</List>
+													</content>
+												</IconTabFilter>
+											</items>
+										</IconTabBar>
+</c:FragmentDefinition>
