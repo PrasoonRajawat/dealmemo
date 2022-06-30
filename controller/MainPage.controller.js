@@ -5827,9 +5827,9 @@ sap.ui.define([
 				this.assignSynopsis(aflag);
 				this.getTabList();
 			},
-			getDataForComm: function(that) {
+			getDataForComm: function() {
 				sap.ui.core.BusyIndicator.show(0);
-				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
+				var dealMemoDetailModel = that.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
 				var Dmno = dealMemoDetailInfo.Dmno;
 				var Dmver = dealMemoDetailInfo.Dmver;
@@ -5841,7 +5841,7 @@ sap.ui.define([
 					sap.ui.core.BusyIndicator.hide();
 					//alert("success");
 					var aModelData = new sap.ui.model.json.JSONModel(oData);
-					this.getView().byId("lblComments").setModel(aModelData);
+					that.getView().byId("lblComments").setModel(aModelData);
 				}, function(oData) {
 					sap.ui.core.BusyIndicator.hide();
 					var errMsg = JSON.parse(oData.response.body);
@@ -6502,6 +6502,17 @@ sap.ui.define([
 					});
 				}
 			},
+			oneditSynopsis: function(oEvent) {
+			var id = oEvent.getSource().getId();
+			var aflag = 1;
+			id = id.split("--");
+			if (id[1] == "conceptBtn") {
+				that.assignConcept(that, aflag);
+				//	sap.ui.controller('DealMemo.controller.Custom1').assignSynopsis(that,aflag);
+			} else if (id[1] == "synopsisBtn") {
+			that.assignSynopsis(that, aflag);
+			}
+		},
 			/************** Vendor Contract Code ********************/
 			toVendorContractCreate: function() {
 				var oRouter = this.getOwnerComponent().getRouter();
