@@ -1738,16 +1738,16 @@ sap.ui.define([
 							}
 							break;
 						}
-						else if(vendorContractDetailInfo.DmCmSet.results.length > 0){
-							for ( var i = 0 ; i < vendorContractDetailInfo.DmCmSet.results.length ; i++){
-								if(vendorContractDetailInfo.DmCmSet.results[i].Mscompdt != '' ||
-								   vendorContractDetailInfo.DmCmSet.results[i].Mscompdt != null ||
-								   vendorContractDetailInfo.DmCmSet.results[i].Mscompdt != undefined){
-								   		statusFlag = false;
-								   		oMsg = "msgMileAchieved";
-								   }
-							}
-						}
+						// else if(vendorContractDetailInfo.DmCmSet.results.length > 0){
+						// 	for ( var i = 0 ; i < vendorContractDetailInfo.DmCmSet.results.length ; i++){
+						// 		if(vendorContractDetailInfo.DmCmSet.results[i].Mscompdt != '' ||
+						// 		   vendorContractDetailInfo.DmCmSet.results[i].Mscompdt != null ||
+						// 		   vendorContractDetailInfo.DmCmSet.results[i].Mscompdt != undefined){
+						// 		   		statusFlag = false;
+						// 		   		oMsg = "msgMileAchieved";
+						// 		   }
+						// 	}
+						// }
 						//else if(mlObj.estDate === "" || mlObj.estDate === null){  // Commented by dhiraj as Milestone date is not compulsary
 						//  statusFlag = false;
 						// 	oMsg="msgEnterEstDate";
