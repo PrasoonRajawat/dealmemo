@@ -911,7 +911,7 @@ sap.ui.define([
 				sap.ui.core.BusyIndicator.show(0);
 				oModel.read(odetailEntityPath, {
 					urlParameters: {
-						"$expand": "DmEpisodeSet,DmCostSet,DmCoSet,DmYCSet,DmbsSet,Dmaf"
+						"$expand": "DmEpisodeSet,DmCostSet,DmCoSet,DmYCSet,DmbsSet,Dmaf,DmtxtSet"
 					},
 
 					success: function(oData) {
