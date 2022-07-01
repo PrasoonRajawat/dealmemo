@@ -207,7 +207,7 @@ sap.ui.define([
 					"saveVisible": true,
 					"submitVisible": vendorContractDetailInfo.App === "App" && vendorContractDetailInfo.Contno !== "new" ? true : false,
 					"releaseTabVisible": vendorContractDetailInfo.Contno !== "new" ? true : false,
-					"changeVisible": vendorContractDetailInfo.App === "App" && vendorContractDetailInfo.Contstat === "04" ? true : false,
+					"changeVisible": vendorContractDetailInfo.Contstat === "04" ? true : false,
 					"editDepartmentVisible": true,
 					"editVisible": false,
 					"epiDeleteEnable": false,
@@ -975,7 +975,7 @@ sap.ui.define([
 							oData.releaseTabVisible = true
 						}
 						oData.changeVisible = false;
-						if (vendorContractDetailInfo.App === "App" && oData.Contstat === "04") {
+						if (oData.Contstat === "04") {
 							oData.changeVisible = true
 						}
 						oData.editDepartmentVisible = false; // added by dhiraj on 30/05/2022
