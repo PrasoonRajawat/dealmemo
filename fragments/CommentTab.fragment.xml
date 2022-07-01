@@ -4,7 +4,7 @@
         	<Label id="lblCommentStatus" visible="false" text="0"/>
 				<IconTabBar id="commentInner" expandable="true" expanded="true" visible="true" setSelectedKey="synopsis" select="setComments">
 											<items>
-												<IconTabFilter id="SYN" key="synopsis" text="Synopsis" class="sapMITBHead" visible="true">
+												<IconTabFilter id="SYN" key="synopsis" text="Synopsis" class="sapMITBHead" visible="true" expanded="true">
 													<content>
 														<Toolbar>
 															<ObjectIdentifier title="{i18n>ObjIden_Cncpt}" class="sapUiSmallMarginTop sapUiTinyMarginBottom"/>
