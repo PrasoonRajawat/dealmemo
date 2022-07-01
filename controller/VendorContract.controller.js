@@ -207,7 +207,7 @@ sap.ui.define([
 					"saveVisible": true,
 					"submitVisible": vendorContractDetailInfo.App === "App" && vendorContractDetailInfo.Contno !== "new" ? true : false,
 					"releaseTabVisible": vendorContractDetailInfo.Contno !== "new" ? true : false,
-					"changeVisible": vendorContractDetailInfo.App === "App" && vendorContractDetailInfo.Dmst === "04" ? true : false,
+					"changeVisible": vendorContractDetailInfo.App === "App" && vendorContractDetailInfo.Contstat === "04" ? true : false,
 					"editDepartmentVisible": true,
 					"editVisible": false,
 					"epiDeleteEnable": false,
@@ -975,7 +975,7 @@ sap.ui.define([
 							oData.releaseTabVisible = true
 						}
 						oData.changeVisible = false;
-						if (vendorContractDetailInfo.App === "App" && oData.Dmst === "04") {
+						if (vendorContractDetailInfo.App === "App" && oData.Contstat === "04") {
 							oData.changeVisible = true
 						}
 						oData.editDepartmentVisible = false; // added by dhiraj on 30/05/2022
@@ -3328,7 +3328,7 @@ sap.ui.define([
 				}
 
 			},
-			onConfirmChangeDm: function() {
+			onConfirmChangeVC: function() {
 				var oModel = this.getView().getModel();
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
@@ -3353,13 +3353,16 @@ sap.ui.define([
 				var oModel = this.getView().getModel();
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
-				var paramObj = {
+					var paramObj = {
 					"IV_TENTID": "IBS",
 					"IV_DMNO": vendorContractDetailInfo.Dmno,
-					"IV_DMVER": vendorContractDetailInfo.Dmver
+					"IV_DMVER": vendorContractDetailInfo.Dmver,
+					"IV_CONTNO": vendorContractDetailInfo.Contno,
+					"IV_CONTVER": vendorContractDetailInfo.Contver,
+					"IV_CONTTP": vendorContractDetailInfo.Conttp
 
 				};
-				oModel.callFunction("/GenerateVersion", {
+				oModel.callFunction("/GenerateContVersion", {
 					method: "GET",
 					urlParameters: paramObj,
 					success: function(oData, response) {
@@ -3386,8 +3389,8 @@ sap.ui.define([
 				var newVersionCv = parseInt(vendorContractDetailInfo.Contver) + parseInt("1");
 				vendorContractDetailInfo.Contver = "00" + newVersionCv;
 
-				var newVersionDv = parseInt(vendorContractDetailInfo.Dmver) + parseInt("1");
-				vendorContractDetailInfo.Dmver = "00" + newVersionDv;
+				// var newVersionDv = parseInt(vendorContractDetailInfo.Dmver) + parseInt("1");
+				// vendorContractDetailInfo.Dmver = "00" + newVersionDv;
 
 				oRouter.navTo("VendorContract", {
 					"Dmno": vendorContractDetailInfo.Dmno,
