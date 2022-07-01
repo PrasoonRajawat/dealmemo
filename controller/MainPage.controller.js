@@ -5892,7 +5892,8 @@ sap.ui.define([
 							that.getView().byId("commentInner").getItems()[i].setVisible(false);
 						}
 					}
-				// } //if (TabFlag === "0")
+				}
+				//if (TabFlag === "0")
 			},
 			appendTxt: function(that, key) {
 				sap.ui.core.BusyIndicator.show(0);
