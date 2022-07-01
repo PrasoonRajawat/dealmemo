@@ -860,7 +860,7 @@ sap.ui.define([
 				this.getView().byId("idIconTabBar").setSelectedKey("detail");
 				this._noOfEpiChanged = false;
 				this._yearChanged = false;
-				
+
 				this.getView().byId("btnChangeDM").setVisible(false);
 				this.getView().byId("btnSaveDM").setEnabled(true);
 				this.getView().byId("btnSubmitDM").setEnabled(false);
@@ -1023,16 +1023,16 @@ sap.ui.define([
 						var blankModel = new sap.ui.model.json.JSONModel();
 						this.getView().byId("lblComments").setModel(blankModel);
 						var tempbar = new sap.m.IconTabBar({
-					visible: false
-				});
-				tempbar.addItem(that.getView().byId("SYN"));
-				that.getView().byId("commentInner").destroyItems();
-				that.getView().byId("lblCommentStatus").setText("0");
-				that.getView().byId("commentInner").addItem(that.getView().byId("SYN"));
-				var len = that.getView().byId("commentInner").getItems().length;
-				for (var i = 1; i < len; i++) {
-					that.getView().byId("commentInner").getItems()[i].setVisible(false);
-				}
+							visible: false
+						});
+						tempbar.addItem(that.getView().byId("SYN"));
+						that.getView().byId("commentInner").destroyItems();
+						that.getView().byId("lblCommentStatus").setText("0");
+						that.getView().byId("commentInner").addItem(that.getView().byId("SYN"));
+						var len = that.getView().byId("commentInner").getItems().length;
+						for (var i = 1; i < len; i++) {
+							that.getView().byId("commentInner").getItems()[i].setVisible(false);
+						}
 					}.bind(this),
 					error: function(oError) {
 						var oErrorResponse = JSON.parse(oError.responseText);
@@ -6170,6 +6170,12 @@ sap.ui.define([
 				that.setComments(that, Key);
 
 			},
+			oncommentInnerSelect: function(oEvent) {
+
+				var Key = that.getView().byId("commentInner").getSelectedKey();
+				that.setComments(that, Key);
+
+			},
 			saveCommData: function(that, val) {
 				//var jModelData = this.modelDesign(that);
 				var aModelData = that.getView().byId("lblComments").getModel();
@@ -6532,21 +6538,21 @@ sap.ui.define([
 					that.assignSynopsis(aflag);
 				}
 			},
-				//************************************split header into name,date and time***************************************
-		splitHeader: function(header) {
-			var head = header.split("_");
-			var year = head[1].substring(0, 4);
-			var month = head[1].substring(4, 6);
-			var day = head[1].substring(6, 8);
-			var date = year + '-' + month + '-' + day;
+			//************************************split header into name,date and time***************************************
+			splitHeader: function(header) {
+				var head = header.split("_");
+				var year = head[1].substring(0, 4);
+				var month = head[1].substring(4, 6);
+				var day = head[1].substring(6, 8);
+				var date = year + '-' + month + '-' + day;
 
-			var hour = head[2].substring(0, 2);
-			var min = head[2].substring(2, 4);
-			var sec = head[2].substring(4, 6);
+				var hour = head[2].substring(0, 2);
+				var min = head[2].substring(2, 4);
+				var sec = head[2].substring(4, 6);
 
-			var time = hour + ':' + min + ':' + sec;
-			return [head[0], date, time];
-		},
+				var time = hour + ':' + min + ':' + sec;
+				return [head[0], date, time];
+			},
 			/************** Vendor Contract Code ********************/
 			toVendorContractCreate: function() {
 				var oRouter = this.getOwnerComponent().getRouter();
