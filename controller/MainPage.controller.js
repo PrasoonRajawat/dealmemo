@@ -5925,8 +5925,8 @@ sap.ui.define([
 
 			},
 			onFeedPost: function(that) {
-				var Key = that.getView().byId("commentInner").getSelectedKey();
-				that.saveComments(Key, that);
+				var Key = this.getView().byId("commentInner").getSelectedKey();
+				this.saveComments(Key, that);
 			},
 
 			modelDesign: function(that, key) {
