@@ -6172,8 +6172,8 @@ sap.ui.define([
 			},
 			oncommentInnerSelect: function(oEvent) {
 
-				var Key = that.getView().byId("commentInner").getSelectedKey();
-				that.setComments(that, Key);
+				var Key = this.getView().byId("commentInner").getSelectedKey();
+				this.setComments(that, Key);
 
 			},
 			saveCommData: function(that, val) {
