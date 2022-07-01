@@ -6458,7 +6458,7 @@ sap.ui.define([
 					// service to fetch comments of particular tab
 					var intDataModelUrl = "/sap/opu/odata/IBSCMS/DEALMEMO_SRV/";
 					var oModelSav = new sap.ui.model.odata.ODataModel(intDataModelUrl, true, "", "");
-					var pValue = "/DmtxtSet?$filter=Tentid eq'IBS' and  Dmno eq '" + Dmno + "' and Dmver eq '" + Dmver[1] + "' and Txtsuffix eq '" +
+					var pValue = "/DmtxtSet?$filter=Tentid eq'IBS' and  Dmno eq '" + Dmno + "' and Dmver eq '" + Dmver + "' and Txtsuffix eq '" +
 						key + "'";
 					oModelSav.read(pValue, null, null, true, function(oData) {
 						sap.ui.core.BusyIndicator.hide();
