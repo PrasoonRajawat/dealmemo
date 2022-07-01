@@ -6172,7 +6172,7 @@ sap.ui.define([
 			},
 			oncommentInnerSelect: function(oEvent) {
 
-				var Key = this.getView().byId("commentInner").getSelectedKey();
+				var Key =  this.getView().byId("commentInner").getSelectedKey();
 				this.setComments(that, Key);
 
 			},
