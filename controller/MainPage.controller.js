@@ -5879,19 +5879,19 @@ sap.ui.define([
 				var TabFlag = that.getView().byId("lblCommentStatus").getText();
 				if (TabFlag === "0") { //if tabs doesn't exist
 					that.setTabList();
-				}
-				// } else {
-				// 	if (status == "04" || status == "02") {
-				// 		var tabs = that.getView().byId("commentInner").getItems();
-				// 		for (var i = 0; i < tabs.length; i++) {
-				// 			that.getView().byId("commentInner").getItems()[i].setVisible(true);
-				// 		}
-				// 	} else {
-				// 		var tabs = that.getView().byId("commentInner").getItems();
-				// 		for (var i = 2; i < tabs.length; i++) {
-				// 			that.getView().byId("commentInner").getItems()[i].setVisible(false);
-				// 		}
-				// 	}
+				
+				} else {
+					if (status == "04" || status == "02") {
+						var tabs = that.getView().byId("commentInner").getItems();
+						for (var i = 0; i < tabs.length; i++) {
+							that.getView().byId("commentInner").getItems()[i].setVisible(true);
+						}
+					} else {
+						var tabs = that.getView().byId("commentInner").getItems();
+						for (var i = 2; i < tabs.length; i++) {
+							that.getView().byId("commentInner").getItems()[i].setVisible(false);
+						}
+					}
 				// } //if (TabFlag === "0")
 			},
 			appendTxt: function(that, key) {
