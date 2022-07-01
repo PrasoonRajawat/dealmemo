@@ -5879,19 +5879,20 @@ sap.ui.define([
 				var TabFlag = that.getView().byId("lblCommentStatus").getText();
 				if (TabFlag === "0") { //if tabs doesn't exist
 					that.setTabList();
-				} else {
-					if (status == "04" || status == "02") {
-						var tabs = that.getView().byId("commentInner").getItems();
-						for (var i = 0; i < tabs.length; i++) {
-							that.getView().byId("commentInner").getItems()[i].setVisible(true);
-						}
-					} else {
-						var tabs = that.getView().byId("commentInner").getItems();
-						for (var i = 2; i < tabs.length; i++) {
-							that.getView().byId("commentInner").getItems()[i].setVisible(false);
-						}
-					}
-				} //if (TabFlag === "0")
+				}
+				// } else {
+				// 	if (status == "04" || status == "02") {
+				// 		var tabs = that.getView().byId("commentInner").getItems();
+				// 		for (var i = 0; i < tabs.length; i++) {
+				// 			that.getView().byId("commentInner").getItems()[i].setVisible(true);
+				// 		}
+				// 	} else {
+				// 		var tabs = that.getView().byId("commentInner").getItems();
+				// 		for (var i = 2; i < tabs.length; i++) {
+				// 			that.getView().byId("commentInner").getItems()[i].setVisible(false);
+				// 		}
+				// 	}
+				// } //if (TabFlag === "0")
 			},
 			appendTxt: function(that, key) {
 				sap.ui.core.BusyIndicator.show(0);
@@ -6531,6 +6532,21 @@ sap.ui.define([
 					that.assignSynopsis(aflag);
 				}
 			},
+				//************************************split header into name,date and time***************************************
+		splitHeader: function(header) {
+			var head = header.split("_");
+			var year = head[1].substring(0, 4);
+			var month = head[1].substring(4, 6);
+			var day = head[1].substring(6, 8);
+			var date = year + '-' + month + '-' + day;
+
+			var hour = head[2].substring(0, 2);
+			var min = head[2].substring(2, 4);
+			var sec = head[2].substring(4, 6);
+
+			var time = hour + ':' + min + ':' + sec;
+			return [head[0], date, time];
+		},
 			/************** Vendor Contract Code ********************/
 			toVendorContractCreate: function() {
 				var oRouter = this.getOwnerComponent().getRouter();
