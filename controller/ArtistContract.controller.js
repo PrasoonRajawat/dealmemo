@@ -211,6 +211,7 @@ sap.ui.define([
 
 			},
 			onSubmitAC: function() {
+				sap.ui.core.BusyIndicator.show(0);
 				var oModel = this.getView().getModel();
 				var artistContractModel = this.getView().getModel("artistContractModel");
 				var artistContractDetailInfo = artistContractModel.getData();
@@ -227,13 +228,14 @@ sap.ui.define([
 					method: "GET",
 					urlParameters: paramObj,
 					success: function(oData, response) {
-
+						sap.ui.core.BusyIndicator.hide();
 						// dealMemoDetailModel.setProperty("/costCodes", oData.results);
 						artistContractModel.refresh(true);
 						this.loadDealMemoDetails();
 
 					}.bind(this),
 					error: function(oError) {
+						sap.ui.core.BusyIndicator.hide();
 						var oErrorResponse = JSON.parse(oError.responseText);
 						var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
 						MessageBox.error(oMsg);
