@@ -1739,7 +1739,7 @@ sap.ui.define([
 							break;
 						}
 						else if(vendorContractDetailInfo.DmCmSet.results.length > 0){
-							for ( var i = 0 ; i <= vendorContractDetailInfo.DmCmSet.results.length ; i++){
+							for ( var i = 0 ; i < vendorContractDetailInfo.DmCmSet.results.length ; i++){
 								if(vendorContractDetailInfo.DmCmSet.results[i].Mscompdt != '' ||
 								   vendorContractDetailInfo.DmCmSet.results[i].Mscompdt != null ||
 								   vendorContractDetailInfo.DmCmSet.results[i].Mscompdt != undefined){
@@ -1758,7 +1758,7 @@ sap.ui.define([
 						}
 					}
 					if (statusFlag) {
-						if (totPerc !== 100 && oAmtType === 0) {
+						if (totPerc !== 100 && oAmtType === 0){
 							statusFlag = false;
 							oMsg = "msgtotPerc100";
 						}
