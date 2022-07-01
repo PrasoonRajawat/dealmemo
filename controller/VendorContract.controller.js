@@ -1758,7 +1758,7 @@ sap.ui.define([
 						}
 					}
 					if (statusFlag) {
-						if (totPerc !== 100 && oAmtType === 0) {
+						if (totPerc !== 100 && oAmtType === 0){
 							statusFlag = false;
 							oMsg = "msgtotPerc100";
 						}
