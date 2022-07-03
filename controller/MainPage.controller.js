@@ -1177,6 +1177,7 @@ sap.ui.define([
 				dealMemoDetailModel.setProperty("/revenueTabColor", "Critical");
 				dealMemoDetailModel.setProperty("/marketTabColor", "Critical");
 				dealMemoDetailModel.setProperty("/progTabColor", "Critical");
+				dealMemoDetailModel.setProperty("/commentTabColor", "Critical");
 				this.getView().byId("btnSubmitDM").setEnabled(false);
 				if (dealMemoDetailInfo.enableFlow === "M") {
 					dealMemoDetailModel.setProperty("/episodeDetTabEnable", true);
@@ -1264,6 +1265,9 @@ sap.ui.define([
 				if (oData.Dmaf.Advoffairamt !== "0.00") {
 					dealMemoDetailModel.setProperty("/marketTabColor", "Positive");
 					dealMemoDetailModel.setProperty("/progTabColor", "Positive");
+				}
+				if (oData.DmtxtSet.results.length) {
+					dealMemoDetailModel.setProperty("/commentTabColor", "Positive");
 				}
 				dealMemoDetailModel.refresh(true);
 				this.handleDmStatus(oData);
@@ -5298,6 +5302,12 @@ sap.ui.define([
 					sap.ui.core.BusyIndicator.hide();
 					var oModel = new sap.ui.model.json.JSONModel(oData);
 					if (bModel.oData.results.length > 0) {
+						if (oData.Dmaf.Avgbcrevamt !== "0.00") {
+							dealMemoDetailModel.setProperty("/revenueTabColor", "Positive");
+						} else if {
+							dealMemoDetailModel.setProperty("/revenueTabColor", "Critical");
+						}
+
 						bModel.oData.results[1].sinput = oData.Avgbcrevamt;
 						bModel.oData.results[2].sinput = oData.Totavgbcrevamt;
 						bModel.oData.results[3].sinput = oData.Totothrevamt;
@@ -5306,6 +5316,7 @@ sap.ui.define([
 							dealMemoDetailInfo.Waers;
 					}
 					bModel.refresh();
+					dealMemoDetailModel.refresh(true);
 				}, function() {
 					sap.ui.core.BusyIndicator.hide();
 					if (bModel.oData.results.length > 0) {
@@ -5648,10 +5659,19 @@ sap.ui.define([
 				oModelSav.read(pValue, null, null, true, function(oData) {
 					sap.ui.core.BusyIndicator.hide();
 					if (bModel.oData.results.length > 0) {
+						if (oData.Advoffairamt !== "0.00") {
+							dealMemoDetailModel.setProperty("/marketTabColor", "Positive");
+							dealMemoDetailModel.setProperty("/progTabColor", "Positive");
+						} else {
+							dealMemoDetailModel.setProperty("/marketTabColor", "Critical");
+							dealMemoDetailModel.setProperty("/progTabColor", "Critical");
+						}
+
 						bModel.oData.results[0].sinput = oData.Advoffairamt;
 						bModel.oData.results[0].curr = dealMemoDetailInfo.Waers;
 					}
 					bModel.refresh();
+					dealMemoDetailModel.refresh(true);
 				}, function() {
 					//	alert("fail");
 					sap.ui.core.BusyIndicator.hide();
@@ -5879,7 +5899,7 @@ sap.ui.define([
 				var TabFlag = that.getView().byId("lblCommentStatus").getText();
 				if (TabFlag === "0") { //if tabs doesn't exist
 					that.setTabList();
-				
+
 				} else {
 					if (status == "04" || status == "02") {
 						var tabs = that.getView().byId("commentInner").getItems();
@@ -6173,7 +6193,7 @@ sap.ui.define([
 			},
 			oncommentInnerSelect: function(oEvent) {
 
-				var Key =  this.getView().byId("commentInner").getSelectedKey();
+				var Key = this.getView().byId("commentInner").getSelectedKey();
 				this.setComments(that, Key);
 
 			},
@@ -6258,6 +6278,12 @@ sap.ui.define([
 
 				function conceptSucc(oData) {
 					sap.ui.core.BusyIndicator.hide();
+				
+				if (oData.results.length) {
+					dealMemoDetailModel.setProperty("/commentTabColor", "Positive");
+				} else {
+					dealMemoDetailModel.setProperty("/commentTabColor", "Critical");
+				}
 					var length = oData.results.length;
 					if (length !== 0) {
 						var data = "";
@@ -6349,6 +6375,11 @@ sap.ui.define([
 
 				function synopsisSucc(oData) {
 					sap.ui.core.BusyIndicator.hide();
+				if (oData.results.length) {
+					dealMemoDetailModel.setProperty("/commentTabColor", "Positive");
+				} else {
+					dealMemoDetailModel.setProperty("/commentTabColor", "Critical");
+				}
 					var length = oData.results.length;
 					if (length !== 0) {
 						var data = "";
