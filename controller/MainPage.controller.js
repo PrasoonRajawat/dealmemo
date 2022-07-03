@@ -5302,7 +5302,7 @@ sap.ui.define([
 					sap.ui.core.BusyIndicator.hide();
 					var oModel = new sap.ui.model.json.JSONModel(oData);
 					if (bModel.oData.results.length > 0) {
-						if (oData.Dmaf.Avgbcrevamt !== "0.00") {
+						if (oData.Avgbcrevamt !== "0.00") {
 							dealMemoDetailModel.setProperty("/revenueTabColor", "Positive");
 						} else {
 							dealMemoDetailModel.setProperty("/revenueTabColor", "Critical");
@@ -5473,6 +5473,11 @@ sap.ui.define([
 							var pValue = "/DmafSet(Tentid='IBS',Dmno='" + oData.Dmno + "')";
 							oModelSav.update(pValue, oData, null, function() {
 									sap.ui.core.BusyIndicator.hide();
+									if (oData.Avgbcrevamt !== "0.00") {
+										dealMemoDetailModel.setProperty("/revenueTabColor", "Positive");
+									} else {
+										dealMemoDetailModel.setProperty("/revenueTabColor", "Critical");
+									}
 									// this.getView().byId("idRev30").setIconColor("Positive");
 									// this.BudgEnable();
 									sap.m.MessageToast.show(that.getView().getModel("i18n")._oResourceBundle.getText("msg_revper30upd"));
@@ -5604,7 +5609,7 @@ sap.ui.define([
 								var pValue = "/DmafSet(Tentid='IBS',Dmno='" + oData.Dmno + "')";
 								oModelSave.update(pValue, oData, null, function() {
 										sap.ui.core.BusyIndicator.hide();
-										that.getView().byId("idMarketing").setIconColor("Positive");
+										// that.getView().byId("idMarketing").setIconColor("Positive");
 										// this.BudgEnable();
 										sap.m.MessageToast.show(that.getView().getModel("i18n").getResourceBundle().getText("msg_maktbudsave"));
 									},
@@ -6278,12 +6283,12 @@ sap.ui.define([
 
 				function conceptSucc(oData) {
 					sap.ui.core.BusyIndicator.hide();
-				
-				if (oData.results.length) {
-					dealMemoDetailModel.setProperty("/commentTabColor", "Positive");
-				} else {
-					dealMemoDetailModel.setProperty("/commentTabColor", "Critical");
-				}
+
+					if (oData.results.length) {
+						dealMemoDetailModel.setProperty("/commentTabColor", "Positive");
+					} else {
+						dealMemoDetailModel.setProperty("/commentTabColor", "Critical");
+					}
 					var length = oData.results.length;
 					if (length !== 0) {
 						var data = "";
@@ -6375,11 +6380,11 @@ sap.ui.define([
 
 				function synopsisSucc(oData) {
 					sap.ui.core.BusyIndicator.hide();
-				if (oData.results.length) {
-					dealMemoDetailModel.setProperty("/commentTabColor", "Positive");
-				} else {
-					dealMemoDetailModel.setProperty("/commentTabColor", "Critical");
-				}
+					if (oData.results.length) {
+						dealMemoDetailModel.setProperty("/commentTabColor", "Positive");
+					} else {
+						dealMemoDetailModel.setProperty("/commentTabColor", "Critical");
+					}
 					var length = oData.results.length;
 					if (length !== 0) {
 						var data = "";
