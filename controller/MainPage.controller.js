@@ -5304,7 +5304,7 @@ sap.ui.define([
 					if (bModel.oData.results.length > 0) {
 						if (oData.Dmaf.Avgbcrevamt !== "0.00") {
 							dealMemoDetailModel.setProperty("/revenueTabColor", "Positive");
-						} else if {
+						} else {
 							dealMemoDetailModel.setProperty("/revenueTabColor", "Critical");
 						}
 
