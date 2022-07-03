@@ -5561,6 +5561,13 @@ sap.ui.define([
 							oModelSave.create(pValue, oData, null, function() {
 									sap.ui.core.BusyIndicator.hide();
 									// this.getView().byId("idMarketing").setIconColor("Positive");
+									if (oData.Advoffairamt !== "0.00") {
+										dealMemoDetailModel.setProperty("/marketTabColor", "Positive");
+										dealMemoDetailModel.setProperty("/progTabColor", "Positive");
+									} else {
+										dealMemoDetailModel.setProperty("/marketTabColor", "Critical");
+										dealMemoDetailModel.setProperty("/progTabColor", "Critical");
+									}
 									sap.m.MessageToast.show(that.getView().getModel("i18n").getResourceBundle().getText("msg_maktbudsave"));
 								},
 								function(oData) {
@@ -5611,6 +5618,13 @@ sap.ui.define([
 										sap.ui.core.BusyIndicator.hide();
 										// that.getView().byId("idMarketing").setIconColor("Positive");
 										// this.BudgEnable();
+										if (oData.Advoffairamt !== "0.00") {
+											dealMemoDetailModel.setProperty("/marketTabColor", "Positive");
+											dealMemoDetailModel.setProperty("/progTabColor", "Positive");
+										} else {
+											dealMemoDetailModel.setProperty("/marketTabColor", "Critical");
+											dealMemoDetailModel.setProperty("/progTabColor", "Critical");
+										}
 										sap.m.MessageToast.show(that.getView().getModel("i18n").getResourceBundle().getText("msg_maktbudsave"));
 									},
 									function(oData) {
