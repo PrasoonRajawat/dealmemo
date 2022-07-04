@@ -17,17 +17,18 @@
 			<Column minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
 				<ObjectIdentifier title="{i18n>lblMilestoneCode}"></ObjectIdentifier>
 			</Column>
+			<Column minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
+				<ObjectIdentifier title="{i18n>lblVersion}"></ObjectIdentifier>
+			</Column>
 			<Column width="8em" minScreenWidth="Desktop" hAlign="Right" demandPopin="true" popinDisplay="Inline">
 				<Label
 					text="{parts:[{value:'lblTblColEpisodesYearWise'},{path:'artistContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}"
 					design="Bold"/>
 			</Column>
-			<Column minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
-				<ObjectIdentifier title="{i18n>lblVersion}"></ObjectIdentifier>
-			</Column>
-			<Column minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
-				<ObjectIdentifier title="{i18n>lblPaymentTerm}"></ObjectIdentifier>
-			</Column>
+			
+			<!--<Column minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">-->
+			<!--	<ObjectIdentifier title="{i18n>lblPaymentTerm}"></ObjectIdentifier>-->
+			<!--</Column>-->
 			<Column hAlign="Right" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
 				<ObjectIdentifier title="{i18n>lblPercentage}"></ObjectIdentifier>
 			</Column>
@@ -40,9 +41,9 @@
 				<cells>
 					<!--<ObjectIdentifier title="{artistContractModel>Epinm}"></ObjectIdentifier>-->
 					<ObjectIdentifier text="{artistContractModel>Msidnm}"></ObjectIdentifier>
-					 <Text text="{artistContractModel>Epiid}" class="sapUiSizeCompact"/>
 					<Label text="{artistContractModel>Dmver}"></Label>
-					<ObjectIdentifier text="{artistContractModel>Ztermt}"></ObjectIdentifier>
+					 <Text text="{artistContractModel>Epiid}" class="sapUiSizeCompact"/>
+					<!--<ObjectIdentifier text="{artistContractModel>Ztermt}"></ObjectIdentifier>-->
 					<Label text="{artistContractModel>Amtper}"></Label>
 					<Label text="{path:'artistContractModel>Dueamt', type:'sap.ui.model.type.Float',formatOptions: { maxFractionDigits: 2 }}"></Label>
 				</cells>
