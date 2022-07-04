@@ -1782,18 +1782,7 @@ sap.ui.define([
 							});
 
 						} 
-					} else if (epiPaymentObj.flag === "Ch") {
-							alreadySavedflag = false;
-							delete epiPaymentObj.flag;
-							var oPath = "/DmCmSet(Tentid='IBS',Dmno='" + artistContractDetailInfo.Dmno + "',Dmver='" + artistContractDetailInfo.Dmver +
-								"',Conttp='01',Contno='" + artistContractDetailInfo.Contno + "',Contver='" + artistContractDetailInfo.Contver + "',Epiid='" +
-								epiPaymentObj.Epiid + "',Seqnr='" + epiPaymentObj.Seqnr +
-								"',Msid='" + epiPaymentObj.Msid + "')";
-
-							oModel.update(oPath, epiPaymentObj, {
-								groupId: "epiPaymentACChanges"
-							});
-						}
+					} 
 				}.bind(this));
 				if (alreadySavedflag) {
 					var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
