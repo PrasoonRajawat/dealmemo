@@ -1016,7 +1016,8 @@ sap.ui.define([
 						}
 						this._noOfEpiChanged = false;
 						this._yearChanged = false;
-
+						
+						this.getView().byId("idIconTabBar").setSelectedKey("detail"); //Added by Dhiraj to load dealmemo in detail tab
 						sap.ui.core.BusyIndicator.hide();
 
 						this.loadChangeCostTemplate();
