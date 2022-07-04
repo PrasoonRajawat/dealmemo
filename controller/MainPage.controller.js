@@ -5378,7 +5378,7 @@ sap.ui.define([
 					// var aModel = this.getView().byId("mLabel").getModel();
 					var pValue = "/DmafSet(Tentid='IBS',Dmno='" + dmNo + "')";
 					oModelSave.read(pValue, null, null, true, dSuccRev30, eFailRev30);
-					if (oData.Avgbcrevamt !== "0.00") {
+					if (dealMemoDetailInfo.Dmaf.Avgbcrevamt !== "0.00") {
 							dealMemoDetailModel.setProperty("/revenueTabColor", "Positive");
 						} else {
 							dealMemoDetailModel.setProperty("/revenueTabColor", "Critical");
@@ -5435,7 +5435,7 @@ sap.ui.define([
 						oModelSav.create(pValue, oData, null, function() {
 								//	alert("revenue created");
 								sap.ui.core.BusyIndicator.hide();
-								if (dealMemoDetailInfo.Dmaf.Avgbcrevamt !== "0.00") {
+								if (oData.Avgbcrevamt !== "0.00") {
 									dealMemoDetailModel.setProperty("/revenueTabColor", "Positive");
 								} else {
 									dealMemoDetailModel.setProperty("/revenueTabColor", "Critical");
