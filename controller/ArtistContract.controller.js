@@ -919,7 +919,7 @@ sap.ui.define([
 				var allowedEpisodes = [];
 				var response = {};
 				response.allowedEpisodes = [];
-				if (artistContractDetailInfo.epiFromId == "" && artistContractDetailInfo.epiToId == "") { //All Episodes
+				if (artistContractDetailInfo.epiPaymentFromId == "" && artistContractDetailInfo.epiPaymentToId == "") { //All Episodes
 					var episodeList = [];
 					artistContractDetailInfo.DmCmSet.results.map(function(obj) {
 						episodeList.push(obj.Epiid)
@@ -935,8 +935,8 @@ sap.ui.define([
 						}
 
 					};
-				} else if (artistContractDetailInfo.epiFromId != "" && artistContractDetailInfo.epiToId != "") { // Range of Episodes
-					for (let i = artistContractDetailInfo.epiFromId; i <= artistContractDetailInfo.epiToId; i++) {
+				} else if (artistContractDetailInfo.epiPaymentFromId != "" && artistContractDetailInfo.epiPaymentToId != "") { // Range of Episodes
+					for (let i = artistContractDetailInfo.epiPaymentFromId; i <= artistContractDetailInfo.epiPaymentToId; i++) {
 						if (artistContractDetailInfo.DmCmSet.results.findIndex(v => v.Mscompdt && v.Epiid == i && artistContractDetailInfo.mileStonesForEpi
 								.findIndex(obj => obj.Mstcd != v.Msid) == -1) == -1) {
 							response.allowedEpisodes.push(i);
