@@ -5308,7 +5308,7 @@ sap.ui.define([
 						} else {
 							dealMemoDetailModel.setProperty("/revenueTabColor", "Critical");
 						}
-							dealMemoDetailModel.refresh(true);
+						dealMemoDetailModel.refresh(true);
 
 						bModel.oData.results[1].sinput = oData.Avgbcrevamt;
 						bModel.oData.results[2].sinput = oData.Totavgbcrevamt;
@@ -5379,11 +5379,11 @@ sap.ui.define([
 					var pValue = "/DmafSet(Tentid='IBS',Dmno='" + dmNo + "')";
 					oModelSave.read(pValue, null, null, true, dSuccRev30, eFailRev30);
 					if (dealMemoDetailInfo.Dmaf.Avgbcrevamt !== "0.00") {
-							dealMemoDetailModel.setProperty("/revenueTabColor", "Positive");
-						} else {
-							dealMemoDetailModel.setProperty("/revenueTabColor", "Critical");
-						}
-							dealMemoDetailModel.refresh(true);
+						dealMemoDetailModel.setProperty("/revenueTabColor", "Positive");
+					} else {
+						dealMemoDetailModel.setProperty("/revenueTabColor", "Critical");
+					}
+					dealMemoDetailModel.refresh(true);
 
 				} else {
 					sap.ui.core.BusyIndicator.hide();
@@ -5413,6 +5413,8 @@ sap.ui.define([
 					if (oData.Dmno == "") {
 						sap.ui.core.BusyIndicator.show(0);
 						// var aModel = this.getView().byId("mLabel").getModel();
+						var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
+						var dealMemoDetailInfo = dealMemoDetailModel.getData();
 						var bModel = that.getView().byId("Rev30Table").getModel();
 						oData.Tentid = "IBS";
 						var dealMemoDetailModel = that.getView().getModel("dealMemoDetailModel");
@@ -5440,7 +5442,7 @@ sap.ui.define([
 								} else {
 									dealMemoDetailModel.setProperty("/revenueTabColor", "Critical");
 								}
-									dealMemoDetailModel.refresh(true);
+								dealMemoDetailModel.refresh(true);
 								// this.getView().byId("idRev30").setIconColor("Positive");
 								sap.m.MessageToast.show(that.getView().getModel("i18n")._oResourceBundle.getText("msg_revper30save"));
 							},
@@ -5476,6 +5478,8 @@ sap.ui.define([
 							oData.Avgbcrevamt = bModel.oData.results[1].sinput.toString();
 							oData.Totavgbcrevamt = bModel.oData.results[2].sinput.toString();
 							oData.Totothrevamt = bModel.oData.results[3].sinput.toString();
+							var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
+							var dealMemoDetailInfo = dealMemoDetailModel.getData();
 							var intDataModelUrl = "/sap/opu/odata/IBSCMS/DEALMEMO_SRV/";
 							var oModelSav = new sap.ui.model.odata.ODataModel(intDataModelUrl, true, "", "");
 							oModelSav.setHeaders({
@@ -5492,7 +5496,7 @@ sap.ui.define([
 									} else {
 										dealMemoDetailModel.setProperty("/revenueTabColor", "Critical");
 									}
-										dealMemoDetailModel.refresh(true);
+									dealMemoDetailModel.refresh(true);
 									// this.getView().byId("idRev30").setIconColor("Positive");
 									// this.BudgEnable();
 									sap.m.MessageToast.show(that.getView().getModel("i18n")._oResourceBundle.getText("msg_revper30upd"));
@@ -5583,7 +5587,7 @@ sap.ui.define([
 										dealMemoDetailModel.setProperty("/marketTabColor", "Critical");
 										dealMemoDetailModel.setProperty("/progTabColor", "Critical");
 									}
-										dealMemoDetailModel.refresh(true);
+									dealMemoDetailModel.refresh(true);
 									sap.m.MessageToast.show(that.getView().getModel("i18n").getResourceBundle().getText("msg_maktbudsave"));
 								},
 								function(oData) {
@@ -5641,7 +5645,7 @@ sap.ui.define([
 											dealMemoDetailModel.setProperty("/marketTabColor", "Critical");
 											dealMemoDetailModel.setProperty("/progTabColor", "Critical");
 										}
-											dealMemoDetailModel.refresh(true);
+										dealMemoDetailModel.refresh(true);
 										sap.m.MessageToast.show(that.getView().getModel("i18n").getResourceBundle().getText("msg_maktbudsave"));
 									},
 									function(oData) {
