@@ -1734,7 +1734,7 @@ sap.ui.define([
 							var oBody = JSON.parse(oError.responseText);
 							var oMsg = oBody.error.innererror.errordetails[0].message;
 							MessageBox.error(oMsg);
-							s
+							
 						}
 					});
 				}
