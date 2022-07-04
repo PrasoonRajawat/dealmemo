@@ -1721,9 +1721,9 @@ sap.ui.define([
 						episodeList.push(obj.Epiid)
 					});
 					if (episodeList.length > 0) {
-						for (let i = episodeList[0]; i <= episodeList.length; i++) {
-							if (vendorContractDetailInfo.DmCmSet.results.findIndex(v => v.Mscompdt && vendorContractDetailInfo.mileStonesForEpi.findIndex(obj => obj.Msid == v.Msid) == -1 )) {
-								response.allowedEpisodes.push(i);
+						for (let i = 0; i <= episodeList.length - 1; i++) {
+							if (vendorContractDetailInfo.DmCmSet.results.findIndex(v => v.Epiid == episodeList[i] && v.Mscompdt && vendorContractDetailInfo.mileStonesForEpi.findIndex(obj => obj.Msid == v.Msid) == -1 )) {
+								response.allowedEpisodes.push(episodeList[i]);
 							} else {
 								response.warningMessage = true;
 							}
@@ -1732,7 +1732,7 @@ sap.ui.define([
 					};
 				} else if (vendorContractDetailInfo.epiPaymentFromId != "" && vendorContractDetailInfo.epiPaymentToId != "") { // Range of Episodes
 					for (let i = vendorContractDetailInfo.epiPaymentFromId; i <= vendorContractDetailInfo.epiPaymentToId; i++) {
-						if (vendorContractDetailInfo.DmCmSet.results.findIndex(v => v.Mscompdt && vendorContractDetailInfo.mileStonesForEpi.findIndex(obj => obj.Msid == v.Msid)) == -1 ) {
+						if (vendorContractDetailInfo.DmCmSet.results.findIndex(v => v.Mscompdt && v.Epiid == i && vendorContractDetailInfo.mileStonesForEpi.findIndex(obj => obj.Msid == v.Msid)) == -1 ) {
 							response.allowedEpisodes.push(i);
 						} else {
 							response.warningMessage = true;
@@ -1895,7 +1895,7 @@ sap.ui.define([
 					});
 				} else {
 					if (validateBeforePush) {
-						processPaymentData(vendorContractDetailInfo);
+						this.processPaymentData(vendorContractDetailInfo);
 					}
 				}
 				// if (validateBeforePush) {
