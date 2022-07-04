@@ -223,13 +223,13 @@ sap.ui.define([
 				this.getView().byId("btnEditVC").setVisible(false);
 				this.getView().byId("idIconSubTabBar2").setSelectedKey("vcSubEpiData");
 				// if (vendorContractDetailInfo.Dmst !== "04") {
-					this.loadVendors();
+				this.loadVendors();
 				// }
 
 			},
 			onSubmitVC: function() { // Adde by dhiraj on 19/05/2022
 				sap.ui.core.BusyIndicator.show(0);
-	
+
 				var oModel = this.getView().getModel();
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
@@ -695,7 +695,7 @@ sap.ui.define([
 					MessageBox.information(oSourceBundle.getText("msgDeptCheck"));
 				}
 			},
-			onActionCB: function() {   // FOr replacement Checkbox.
+			onActionCB: function() { // FOr replacement Checkbox.
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
 				if (sap.ui.getCore().byId("recont").getSelected() === true) {
@@ -703,7 +703,7 @@ sap.ui.define([
 				} else {
 					vendorContractModel.setProperty("/createParams/Recont", false);
 				}
-			},             
+			},
 			onSelectionDialogClose: function() {
 				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
 				if (this.oValueHelpSelectionParams.dialogTitle === oSourceBundle.getText("titleVendor")) {
@@ -773,7 +773,7 @@ sap.ui.define([
 			},
 			loadEpisodes: function() {
 				var oModel = this.getView().getModel();
-					sap.ui.core.BusyIndicator.show();
+				sap.ui.core.BusyIndicator.show();
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
 				var oFilters = [{
@@ -971,7 +971,7 @@ sap.ui.define([
 							oData.vcTabEnable = false;
 						}
 						oData.submitVisible = false;
-						if (vendorContractDetailInfo.App === "App" && ( oData.Contstat === "01" || oData.Contstat === "03" ) ) { // added by dhiraj on 20/05/2022 for submit butn.
+						if (vendorContractDetailInfo.App === "App" && (oData.Contstat === "01" || oData.Contstat === "03")) { // added by dhiraj on 20/05/2022 for submit butn.
 							oData.submitVisible = true;
 						}
 						oData.releaseTabVisible = false;
@@ -1170,7 +1170,7 @@ sap.ui.define([
 									vcEpiTabData.push(oEpiDataObj)
 								}
 							} else if (epiSodeCostodeData.length && vendorContractDetailInfo.Cntsc === "Z0") { //Added by dhiraj on 23/06/2022	
-									if (epiSodeCostodeData.length) {											//for zero cost code
+								if (epiSodeCostodeData.length) { //for zero cost code
 									var oEpiDataObj = {
 										Tentid: "IBS",
 										Dmno: vendorContractDetailInfo.Dmno,
@@ -1360,7 +1360,7 @@ sap.ui.define([
 					"Depthd": vendorContractDetailInfo.createParams.Depthd,
 					"Grsescr": vendorContractDetailInfo.createParams.Grsescr,
 					"Recont": vendorContractDetailInfo.createParams.Recont,
-					
+
 				};
 				return oPayload;
 
@@ -1527,7 +1527,7 @@ sap.ui.define([
 						this.getView().addDependent(this._oSelectPaymentDialog);
 						this.byId(sap.ui.core.Fragment.createId("vcPaymentDialog", "list_mlList")).removeSelections();
 						this.byId(sap.ui.core.Fragment.createId("vcPaymentDialog", "rbAmntType")).setSelectedIndex(1);
-						this.byId(sap.ui.core.Fragment.createId("vcPaymentDialog", "rbAmtPerc")).setEditable(vendorContractDetailInfo.Contver == 1);	
+						this.byId(sap.ui.core.Fragment.createId("vcPaymentDialog", "rbAmtPerc")).setEditable(vendorContractDetailInfo.Contver == 1);
 						this._oSelectPaymentDialog.open();
 					}.bind(this));
 
@@ -1707,6 +1707,23 @@ sap.ui.define([
 				}.bind(this));
 				return mileStonePayload;
 			},
+			
+			validateMilestoneAchievementDate: function(){
+					var allowedEpisodes = [];
+					var response =  {};
+					var warningMessage = false;
+					var continueProcessing = true;
+					for (let i = vendorContractDetailInfo.epiPaymentFromId; i <= vendorContractDetailInfo.epiPaymentToId; i++) {
+						if (vendorContractDetailInfo.DmCmSet.results.findIndex(v => v.Mscompdt) == -1) {
+							response.allowedEpisodes.push(i);
+						}else{
+							warningMessage = true;
+						}
+					};
+					
+					return response;
+				
+			}
 
 			validateMileStoneData: function() {
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
@@ -1724,8 +1741,9 @@ sap.ui.define([
 						//MessageBox.error(oSourceBundle.getText("msgSelectEpisode"));
 						statusFlag = false;
 						oMsg = "msgSelectEpisode" + vendorContractDetailInfo.Cnttp;
-					}
+						
 				}
+			};
 				if (statusFlag) {
 					for (var oIndex = 0; oIndex < milestones.length; oIndex++) {
 						var mlObj = milestones[oIndex];
@@ -1742,27 +1760,12 @@ sap.ui.define([
 							}
 							break;
 						}
-						// else if(vendorContractDetailInfo.DmCmSet.results.length > 0){
-						// 	for ( var i = 0 ; i < vendorContractDetailInfo.DmCmSet.results.length ; i++){
-						// 		if(vendorContractDetailInfo.DmCmSet.results[i].Mscompdt != '' ||
-						// 		   vendorContractDetailInfo.DmCmSet.results[i].Mscompdt != null ||
-						// 		   vendorContractDetailInfo.DmCmSet.results[i].Mscompdt != undefined){
-						// 		   		statusFlag = false;
-						// 		   		oMsg = "msgMileAchieved";
-						// 		   }
-						// 	}
-						// }
-						//else if(mlObj.estDate === "" || mlObj.estDate === null){  // Commented by dhiraj as Milestone date is not compulsary
-						//  statusFlag = false;
-						// 	oMsg="msgEnterEstDate";
-						// 	break;
-						//}
 						else {
 							totPerc += parseInt(mlObj.Dueamt);
 						}
 					}
 					if (statusFlag) {
-						if (totPerc !== 100 && oAmtType === 0){
+						if (totPerc !== 100 && oAmtType === 0) {
 							statusFlag = false;
 							oMsg = "msgtotPerc100";
 						}
@@ -1785,6 +1788,29 @@ sap.ui.define([
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
 				var validateBeforePush = this.validateMileStoneData();
+				var validationResponse = this.validateMilestoneAchievementDate();
+				var continueProcessing = true;
+					if(validationResponse.warningMessage){
+					MessageBox.warning("Milestone has been achieved for some episodes. Do you want to make changes to other episodes?", {
+						actions: [MessageBox.Action.OK, MessageBox.Action.CANCEL],
+						emphasizedAction: MessageBox.Action.OK,
+						onClose: function (sAction) {
+							switch(sAction){
+								case MessageBox.Action.OK :
+									continueProcessing = true;
+									break;
+								case MessageBox.Action.CANCEL:
+									continueProcessing = false;
+									break;
+							   default:
+							   break;
+							}
+						}
+				}
+					}
+					if(!continueProcessing){
+						return;
+					}
 				if (validateBeforePush) {
 					var oPayLoad = {};
 					var epiTabData = $.extend(true, [], vendorContractDetailInfo.epiVCTabData);
@@ -1795,7 +1821,9 @@ sap.ui.define([
 					});
 					oPayLoad.DmCeSet = epiTabData;
 					oPayLoad.DmCmSet = this.preparePaymentpayload();
+					// oPayload.DmCmSet = oPayload.DmCmSet.filter(v=> validationResponse.allowedEpisodes.findIndex(episodeId => episodeId == v.Epiid) > -1);
 					oPayLoad.DmMilestoneSet = this.prepareMileStonePayload();
+					// oPayload.DmMilestoneSet = oPayload.DmMilestoneSet.filter(v=> validationResponse.allowedEpisodes.findIndex(episodeId => episodeId == v.Epiid) > -1);
 					oPayLoad.Tentid = "IBS";
 					oPayLoad.Dmno = vendorContractDetailInfo.Dmno;
 					oPayLoad.Dmver = vendorContractDetailInfo.Dmver;
@@ -3367,7 +3395,7 @@ sap.ui.define([
 				var oModel = this.getView().getModel();
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
-					var paramObj = {
+				var paramObj = {
 					"IV_TENTID": "IBS",
 					"IV_DMNO": vendorContractDetailInfo.Dmno,
 					"IV_DMVER": vendorContractDetailInfo.Dmver,
@@ -3490,7 +3518,7 @@ sap.ui.define([
 					new Filter("Tentid", "EQ", "IBS"),
 					new Filter("Dmno", "EQ", vendorContractDetailInfo.Dmno),
 					new Filter("Dmver", "EQ", vendorContractDetailInfo.Dmver),
-					new Filter("Contno", "EQ",vendorContractDetailInfo.Contno),
+					new Filter("Contno", "EQ", vendorContractDetailInfo.Contno),
 					new Filter("Contver", "EQ", vendorContractDetailInfo.Contver),
 					new Filter("Conttp", "EQ", vendorContractDetailInfo.Conttp)
 				];
