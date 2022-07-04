@@ -5436,7 +5436,7 @@ sap.ui.define([
 						oModelSav.create(pValue, oData, null, function() {
 								//	alert("revenue created");
 								sap.ui.core.BusyIndicator.hide();
-								if (oData.Avgbcrevamt !== "0.00") {
+								if (oData.Avgbcrevamt !== "0") {
 									dealMemoDetailModel.setProperty("/revenueTabColor", "Positive");
 								} else {
 									dealMemoDetailModel.setProperty("/revenueTabColor", "Critical");
@@ -5490,7 +5490,7 @@ sap.ui.define([
 							var pValue = "/DmafSet(Tentid='IBS',Dmno='" + oData.Dmno + "')";
 							oModelSav.update(pValue, oData, null, function() {
 									sap.ui.core.BusyIndicator.hide();
-									if (oData.Avgbcrevamt !== "0.00") {
+									if (oData.Avgbcrevamt !== "0") {
 										dealMemoDetailModel.setProperty("/revenueTabColor", "Positive");
 									} else {
 										dealMemoDetailModel.setProperty("/revenueTabColor", "Critical");
