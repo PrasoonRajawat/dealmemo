@@ -1874,7 +1874,7 @@ sap.ui.define([
 							   default:
 							   break;
 							}
-						}.bind(this);
+						}.bind(this)
 				});
 					}else{
 						if(validateBeforePush){
