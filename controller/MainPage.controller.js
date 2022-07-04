@@ -5308,6 +5308,7 @@ sap.ui.define([
 						} else {
 							dealMemoDetailModel.setProperty("/revenueTabColor", "Critical");
 						}
+							dealMemoDetailModel.refresh(true);
 
 						bModel.oData.results[1].sinput = oData.Avgbcrevamt;
 						bModel.oData.results[2].sinput = oData.Totavgbcrevamt;
@@ -5382,6 +5383,7 @@ sap.ui.define([
 						} else {
 							dealMemoDetailModel.setProperty("/revenueTabColor", "Critical");
 						}
+							dealMemoDetailModel.refresh(true);
 
 				} else {
 					sap.ui.core.BusyIndicator.hide();
@@ -5438,6 +5440,7 @@ sap.ui.define([
 								} else {
 									dealMemoDetailModel.setProperty("/revenueTabColor", "Critical");
 								}
+									dealMemoDetailModel.refresh(true);
 								// this.getView().byId("idRev30").setIconColor("Positive");
 								sap.m.MessageToast.show(that.getView().getModel("i18n")._oResourceBundle.getText("msg_revper30save"));
 							},
@@ -5489,6 +5492,7 @@ sap.ui.define([
 									} else {
 										dealMemoDetailModel.setProperty("/revenueTabColor", "Critical");
 									}
+										dealMemoDetailModel.refresh(true);
 									// this.getView().byId("idRev30").setIconColor("Positive");
 									// this.BudgEnable();
 									sap.m.MessageToast.show(that.getView().getModel("i18n")._oResourceBundle.getText("msg_revper30upd"));
@@ -5579,6 +5583,7 @@ sap.ui.define([
 										dealMemoDetailModel.setProperty("/marketTabColor", "Critical");
 										dealMemoDetailModel.setProperty("/progTabColor", "Critical");
 									}
+										dealMemoDetailModel.refresh(true);
 									sap.m.MessageToast.show(that.getView().getModel("i18n").getResourceBundle().getText("msg_maktbudsave"));
 								},
 								function(oData) {
@@ -5636,6 +5641,7 @@ sap.ui.define([
 											dealMemoDetailModel.setProperty("/marketTabColor", "Critical");
 											dealMemoDetailModel.setProperty("/progTabColor", "Critical");
 										}
+											dealMemoDetailModel.refresh(true);
 										sap.m.MessageToast.show(that.getView().getModel("i18n").getResourceBundle().getText("msg_maktbudsave"));
 									},
 									function(oData) {
