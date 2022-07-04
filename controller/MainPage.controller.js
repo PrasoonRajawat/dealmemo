@@ -5579,7 +5579,7 @@ sap.ui.define([
 							oModelSave.create(pValue, oData, null, function() {
 									sap.ui.core.BusyIndicator.hide();
 									// this.getView().byId("idMarketing").setIconColor("Positive");
-									if (oData.Advoffairamt !== "0.00") {
+									if (oData.Advoffairamt !== "0") {
 										dealMemoDetailModel.setProperty("/marketTabColor", "Positive");
 										dealMemoDetailModel.setProperty("/progTabColor", "Positive");
 									} else {
@@ -5637,7 +5637,7 @@ sap.ui.define([
 										sap.ui.core.BusyIndicator.hide();
 										// that.getView().byId("idMarketing").setIconColor("Positive");
 										// this.BudgEnable();
-										if (oData.Advoffairamt !== "0.00") {
+										if (oData.Advoffairamt !== "0") {
 											dealMemoDetailModel.setProperty("/marketTabColor", "Positive");
 											dealMemoDetailModel.setProperty("/progTabColor", "Positive");
 										} else {
