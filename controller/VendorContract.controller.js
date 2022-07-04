@@ -1709,6 +1709,8 @@ sap.ui.define([
 			},
 			
 			validateMilestoneAchievementDate: function(){
+				var vendorContractModel = this.getView().getModel("vendorContractModel");
+				var vendorContractDetailInfo = vendorContractModel.getData();
 					var allowedEpisodes = [];
 					var response =  {};
 					var warningMessage = false;
