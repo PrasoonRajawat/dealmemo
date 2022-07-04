@@ -1009,7 +1009,7 @@ sap.ui.define([
 				this.displayEpisodeTabData(EpiTabData);
 
 				this._oSelectEpisodeDialog.close();
-			}
+			},
 			onPushEpiDataTab: function() {
 				var validationFlag = this.validateBeforePush();
 				var validationResponse = this.validateMilestoneAchievementDate();
