@@ -913,66 +913,132 @@ sap.ui.define([
 				}
 				return true;
 			},
+			validateMilestoneAchievementDate: function() {
+				var artistContractModel = this.getView().getModel("artistContractModel");
+				var artistContractDetailInfo = artistContractModel.getData();
+				var allowedEpisodes = [];
+				var response = {};
+				response.allowedEpisodes = [];
+				if (artistContractDetailInfo.epiFromId == "" && artistContractDetailInfo.epiToId == "") { //All Episodes
+					var episodeList = [];
+					artistContractDetailInfo.DmCmSet.results.map(function(obj) {
+						episodeList.push(obj.Epiid)
+					});
+					if (episodeList.length > 0) {
+						for (let i = 0; i <= episodeList.length - 1; i++) {
+							if (artistContractDetailInfo.DmCmSet.results.findIndex(v => v.Epiid == episodeList[i] && v.Mscompdt && artistContractDetailInfo.mileStonesForEpi
+									.findIndex(obj => obj.Mstcd != v.Msid) == -1) == -1) {
+								response.allowedEpisodes.push(episodeList[i]);
+							} else {
+								response.warningMessage = true;
+							}
+						}
+
+					};
+				} else if (artistContractDetailInfo.epiFromId != "" && artistContractDetailInfo.epiToId != "") { // Range of Episodes
+					for (let i = artistContractDetailInfo.epiFromId; i <= artistContractDetailInfo.epiToId; i++) {
+						if (artistContractDetailInfo.DmCmSet.results.findIndex(v => v.Mscompdt && v.Epiid == i && artistContractDetailInfo.mileStonesForEpi
+								.findIndex(obj => obj.Mstcd != v.Msid) == -1) == -1) {
+							response.allowedEpisodes.push(i);
+						} else {
+							response.warningMessage = true;
+						}
+					};
+
+				}
+
+				return response;
+
+			},
+
+			processPaymentData: function() {
+				var artistContractModel = this.getView().getModel("artistContractModel");
+				var artistContractDetailInfo = artistContractModel.getData();
+				var selectedEpisodeList = [];
+				var oselIndex = artistContractDetailInfo.episodeMode;
+				if (oselIndex == 0) {
+					selectedEpisodeList = artistContractDetailInfo.episodeList;
+				} else {
+					selectedEpisodeList = [];
+					artistContractDetailInfo.episodeList.map(function(epObj) {
+						if (epObj.Epiid >= artistContractDetailInfo.epiFromId && epObj.Epiid <= artistContractDetailInfo.epiToId) {
+							selectedEpisodeList.push(epObj);
+						}
+
+					});
+				}
+
+				var EpiTabData = [];
+				var selectedCostCodeContexts = this.byId(sap.ui.core.Fragment.createId("acEpisodeDialog", "list_costCodes")).getSelectedContexts()
+				selectedEpisodeList.map(function(epObj) {
+
+					selectedCostCodeContexts.map(function(selCostCodeContext) {
+
+						var selectedCostCodeObj = selCostCodeContext.getObject();
+						if (selectedCostCodeObj.costCodeValue !== 0) {
+							var oEpiDataObj = {
+								Tentid: "IBS",
+								Dmno: artistContractDetailInfo.Dmno,
+								Dmver: artistContractDetailInfo.Dmver,
+								Contno: "",
+								Contver: "",
+								Epiid: epObj.Epiid,
+								Epinm: epObj.Epinm,
+								Conttp: "02",
+								Baseamt: "00.0",
+								Totepiamt: selectedCostCodeObj.costCodeValue.toString(),
+								Wmwst: "00.0",
+								Mwskz: artistContractDetailInfo.taxCodeKey,
+								Coepiamt: selectedCostCodeObj.costCodeValue.toString(),
+								Costcd: selectedCostCodeObj.Costcode,
+								Costdesc: selectedCostCodeObj.Costdesc
+
+							};
+							if (artistContractDetailInfo.contractMode === "Ch") {
+								oEpiDataObj.Contno = artistContractDetailInfo.Contno;
+								oEpiDataObj.Contver = artistContractDetailInfo.Contver;
+							}
+
+							EpiTabData.push(oEpiDataObj)
+						}
+
+					})
+
+				}.bind(this));
+
+				this.displayEpisodeTabData(EpiTabData);
+
+				this._oSelectEpisodeDialog.close();
+			}
 			onPushEpiDataTab: function() {
 				var validationFlag = this.validateBeforePush();
-				if (validationFlag) {
-					var artistContractModel = this.getView().getModel("artistContractModel");
-					var artistContractDetailInfo = artistContractModel.getData();
-					var selectedEpisodeList = [];
-					var oselIndex = artistContractDetailInfo.episodeMode;
-					if (oselIndex == 0) {
-						selectedEpisodeList = artistContractDetailInfo.episodeList;
-					} else {
-						selectedEpisodeList = [];
-						artistContractDetailInfo.episodeList.map(function(epObj) {
-							if (epObj.Epiid >= artistContractDetailInfo.epiFromId && epObj.Epiid <= artistContractDetailInfo.epiToId) {
-								selectedEpisodeList.push(epObj);
-							}
-
-						});
+				var validationResponse = this.validateMilestoneAchievementDate();
+				if (validationResponse.warningMessage) {
+					if (validationResponse.allowedEpisodes.length == 0) {
+						MessageBox.error("Milestone has already been achieved, no changes can be made.");
+						return;
 					}
-
-					var EpiTabData = [];
-					var selectedCostCodeContexts = this.byId(sap.ui.core.Fragment.createId("acEpisodeDialog", "list_costCodes")).getSelectedContexts()
-					selectedEpisodeList.map(function(epObj) {
-
-						selectedCostCodeContexts.map(function(selCostCodeContext) {
-
-							var selectedCostCodeObj = selCostCodeContext.getObject();
-							if (selectedCostCodeObj.costCodeValue !== 0) {
-								var oEpiDataObj = {
-									Tentid: "IBS",
-									Dmno: artistContractDetailInfo.Dmno,
-									Dmver: artistContractDetailInfo.Dmver,
-									Contno: "",
-									Contver: "",
-									Epiid: epObj.Epiid,
-									Epinm: epObj.Epinm,
-									Conttp: "02",
-									Baseamt: "00.0",
-									Totepiamt: selectedCostCodeObj.costCodeValue.toString(),
-									Wmwst: "00.0",
-									Mwskz: artistContractDetailInfo.taxCodeKey,
-									Coepiamt: selectedCostCodeObj.costCodeValue.toString(),
-									Costcd: selectedCostCodeObj.Costcode,
-									Costdesc: selectedCostCodeObj.Costdesc
-
-								};
-								if (artistContractDetailInfo.contractMode === "Ch") {
-									oEpiDataObj.Contno = artistContractDetailInfo.Contno;
-									oEpiDataObj.Contver = artistContractDetailInfo.Contver;
-								}
-
-								EpiTabData.push(oEpiDataObj)
+					MessageBox.warning("Milestone has been achieved for some episodes. Do you want to make changes to other episodes?", {
+						actions: [MessageBox.Action.OK, MessageBox.Action.CANCEL],
+						emphasizedAction: MessageBox.Action.OK,
+						onClose: function(sAction) {
+							switch (sAction) {
+								case MessageBox.Action.OK:
+									if (validationFlag) {
+										this.processPaymentData();
+									}
+									break;
+								case MessageBox.Action.CANCEL:
+									break;
+								default:
+									break;
 							}
-
-						})
-
-					}.bind(this));
-
-					this.displayEpisodeTabData(EpiTabData);
-
-					this._oSelectEpisodeDialog.close();
+						}.bind(this)
+					});
+				} else {
+					if (validationFlag) {
+						this.processPaymentData();
+					}
 				}
 			},
 			onCancelSelectEpisode: function() {
@@ -1734,7 +1800,7 @@ sap.ui.define([
 							var oBody = JSON.parse(oError.responseText);
 							var oMsg = oBody.error.innererror.errordetails[0].message;
 							MessageBox.error(oMsg);
-							
+
 						}
 					});
 				}
@@ -1781,8 +1847,8 @@ sap.ui.define([
 								groupId: "epiPaymentACChanges"
 							});
 
-						} 
-					} 
+						}
+					}
 				}.bind(this));
 				if (alreadySavedflag) {
 					var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
