@@ -1781,7 +1781,8 @@ sap.ui.define([
 								groupId: "epiPaymentACChanges"
 							});
 
-						} else if (epiPaymentObj.flag === "Ch") {
+						} 
+					} else if (epiPaymentObj.flag === "Ch") {
 							alreadySavedflag = false;
 							delete epiPaymentObj.flag;
 							var oPath = "/DmCmSet(Tentid='IBS',Dmno='" + vendorContractDetailInfo.Dmno + "',Dmver='" + vendorContractDetailInfo.Dmver +
@@ -1793,7 +1794,6 @@ sap.ui.define([
 								groupId: "epiPaymentVCChanges"
 							});
 						}
-					}
 				}.bind(this));
 				if (alreadySavedflag) {
 					var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
