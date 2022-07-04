@@ -1786,35 +1786,9 @@ sap.ui.define([
 				}
 				return statusFlag;
 			},
-			onPushPayment: function() {
-				var vendorContractModel = this.getView().getModel("vendorContractModel");
-				var vendorContractDetailInfo = vendorContractModel.getData();
-				var validateBeforePush = this.validateMileStoneData();
-				var validationResponse = this.validateMilestoneAchievementDate();
-				var continueProcessing = true;
-					if(validationResponse.warningMessage){
-					MessageBox.warning("Milestone has been achieved for some episodes. Do you want to make changes to other episodes?", {
-						actions: [MessageBox.Action.OK, MessageBox.Action.CANCEL],
-						emphasizedAction: MessageBox.Action.OK,
-						onClose: function (sAction) {
-							switch(sAction){
-								case MessageBox.Action.OK :
-									continueProcessing = true;
-									break;
-								case MessageBox.Action.CANCEL:
-									continueProcessing = false;
-									break;
-							   default:
-							   break;
-							}
-						}
-				});
-					}
-					if(!continueProcessing){
-						return;
-					}
-				if (validateBeforePush) {
-					var oPayLoad = {};
+			
+			processPaymentData :function(vendorContractDetailInfo){
+				var oPayLoad = {};
 					var epiTabData = $.extend(true, [], vendorContractDetailInfo.epiVCTabData);
 					epiTabData.map(function(epitabObj) {
 						delete epitabObj.flag;
@@ -1877,7 +1851,39 @@ sap.ui.define([
 							MessageBox.error(oMsg);
 						}
 					});
-				}
+			},
+			onPushPayment: function() {
+				var vendorContractModel = this.getView().getModel("vendorContractModel");
+				var vendorContractDetailInfo = vendorContractModel.getData();
+				var validateBeforePush = this.validateMileStoneData();
+				var validationResponse = this.validateMilestoneAchievementDate();
+				var continueProcessing = true;
+					if(validationResponse.warningMessage){
+					MessageBox.warning("Milestone has been achieved for some episodes. Do you want to make changes to other episodes?", {
+						actions: [MessageBox.Action.OK, MessageBox.Action.CANCEL],
+						emphasizedAction: MessageBox.Action.OK,
+						onClose: function (sAction) {
+							switch(sAction){
+								case MessageBox.Action.OK :
+									if(validateBeforePush){
+									processPaymentData(vendorContractDetailInfo);
+									}
+									break;
+								case MessageBox.Action.CANCEL:
+									break;
+							   default:
+							   break;
+							}
+						}.bind(this);
+				});
+					}else{
+						if(validateBeforePush){
+							processPaymentData(vendorContractDetailInfo);
+						}
+					}
+				// if (validateBeforePush) {
+				// 	processPaymentData(vendorContractDetailInfo);
+				// }
 			},
 			savePaymentTabVC: function() {
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
