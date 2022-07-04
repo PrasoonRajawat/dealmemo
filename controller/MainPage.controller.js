@@ -5377,6 +5377,11 @@ sap.ui.define([
 					// var aModel = this.getView().byId("mLabel").getModel();
 					var pValue = "/DmafSet(Tentid='IBS',Dmno='" + dmNo + "')";
 					oModelSave.read(pValue, null, null, true, dSuccRev30, eFailRev30);
+					if (oData.Avgbcrevamt !== "0.00") {
+							dealMemoDetailModel.setProperty("/revenueTabColor", "Positive");
+						} else {
+							dealMemoDetailModel.setProperty("/revenueTabColor", "Critical");
+						}
 
 				} else {
 					sap.ui.core.BusyIndicator.hide();
