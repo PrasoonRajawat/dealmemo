@@ -5435,7 +5435,7 @@ sap.ui.define([
 						oModelSav.create(pValue, oData, null, function() {
 								//	alert("revenue created");
 								sap.ui.core.BusyIndicator.hide();
-								if (oData.Avgbcrevamt !== "0.00") {
+								if (dealMemoDetailInfo.Dmaf.Avgbcrevamt !== "0.00") {
 									dealMemoDetailModel.setProperty("/revenueTabColor", "Positive");
 								} else {
 									dealMemoDetailModel.setProperty("/revenueTabColor", "Critical");
