@@ -1012,34 +1012,10 @@ sap.ui.define([
 			},
 			onPushEpiDataTab: function() {
 				var validationFlag = this.validateBeforePush();
-				var validationResponse = this.validateMilestoneAchievementDate();
-				if (validationResponse.warningMessage) {
-					if (validationResponse.allowedEpisodes.length == 0) {
-						MessageBox.error("Milestone has already been achieved, no changes can be made.");
-						return;
-					}
-					MessageBox.warning("Milestone has been achieved for some episodes. Do you want to make changes to other episodes?", {
-						actions: [MessageBox.Action.OK, MessageBox.Action.CANCEL],
-						emphasizedAction: MessageBox.Action.OK,
-						onClose: function(sAction) {
-							switch (sAction) {
-								case MessageBox.Action.OK:
-									if (validationFlag) {
-										this.processPaymentData();
-									}
-									break;
-								case MessageBox.Action.CANCEL:
-									break;
-								default:
-									break;
-							}
-						}.bind(this)
-					});
-				} else {
-					if (validationFlag) {
-						this.processPaymentData();
-					}
+				if (validationFlag) {
+					this.processPaymentData();
 				}
+
 			},
 			onCancelSelectEpisode: function() {
 				this._oSelectEpisodeDialog.close();
@@ -1728,81 +1704,101 @@ sap.ui.define([
 				}
 				return statusFlag;
 			},
+			processMilestoneData: function() {
+				var artistContractModel = this.getView().getModel("artistContractModel");
+				var artistContractDetailInfo = artistContractModel.getData();
+				var oPayLoad = {};
+				var epiTabData = $.extend(true, [], artistContractDetailInfo.epiTabData);
+				epiTabData.map(function(epitabObj) {
+					delete epitabObj.flag;
+					delete epitabObj.Diff;
+					delete epitabObj.epiCostEditFlag;
+					delete epitabObj.episodeSaveFlag;
+				});
+				oPayLoad.DmCeSet = epiTabData;
+				oPayLoad.DmCmSet = this.preparePaymentpayload();
+				oPayLoad.DmMilestoneSet = this.prepareMileStonePayload();
+				oPayLoad.Tentid = "IBS";
+				oPayLoad.Dmno = artistContractDetailInfo.Dmno;
+				oPayLoad.Dmver = artistContractDetailInfo.Dmver;
+				oPayLoad.Contno = artistContractDetailInfo.Contno;
+				oPayLoad.Conttp = "02";
+
+				var oModel = this.getView().getModel();
+				oModel.setUseBatch(false);
+				oModel.create("/DmCoSet", oPayLoad, {
+					success: function(oData) {
+						if (artistContractDetailInfo.acPaymentData === undefined || artistContractDetailInfo.acPaymentData.length === 0) {
+							artistContractDetailInfo.acPaymentData = [];
+							oData.DmCmSet.results.map(function(obj) {
+								obj.flag = "Cr";
+							});
+							artistContractDetailInfo.acPaymentData = artistContractDetailInfo.acPaymentData.concat(oData.DmCmSet.results);
+						} else {
+
+							oData.DmCmSet.results.map(function(obj) {
+								var flagNewEntry = true;
+								obj.flag = "Cr";
+								for (var oInd = 0; oInd < artistContractDetailInfo.acPaymentData.length; oInd++) {
+									var vcEpiObj = artistContractDetailInfo.acPaymentData[oInd];
+									if (vcEpiObj.Epiid === obj.Epiid && vcEpiObj.Msid === obj.Msid && vcEpiObj.Contver === obj.Contver) {
+										flagNewEntry = false;
+										break;
+									}
+								}
+								if (flagNewEntry) {
+									artistContractDetailInfo.acPaymentData.push(obj);
+								} else {
+									if (artistContractDetailInfo.acPaymentData[oInd].episodeSaveFlag) {
+										obj.flag = "Ch";
+									}
+									artistContractDetailInfo.acPaymentData[oInd] = obj;
+								}
+							});
+
+						}
+						artistContractModel.refresh(true);
+						this._oSelectPaymentDialogAC.close();
+					}.bind(this),
+					error: function(oError) {
+						var oBody = JSON.parse(oError.responseText);
+						var oMsg = oBody.error.innererror.errordetails[0].message;
+						MessageBox.error(oMsg);
+
+					}
+				});
+			},
 			onPushPayment: function() {
 				var artistContractModel = this.getView().getModel("artistContractModel");
 				var artistContractDetailInfo = artistContractModel.getData();
 				var validateBeforePush = this.validateMileStoneData();
-				if (validateBeforePush) {
-					var oPayLoad = {};
-					var epiTabData = $.extend(true, [], artistContractDetailInfo.epiTabData);
-					epiTabData.map(function(epitabObj) {
-						delete epitabObj.flag;
-						delete epitabObj.Diff;
-						delete epitabObj.epiCostEditFlag;
-						delete epitabObj.episodeSaveFlag;
-					});
-					oPayLoad.DmCeSet = epiTabData;
-					oPayLoad.DmCmSet = this.preparePaymentpayload();
-					oPayLoad.DmMilestoneSet = this.prepareMileStonePayload();
-					oPayLoad.Tentid = "IBS";
-					oPayLoad.Dmno = artistContractDetailInfo.Dmno;
-					oPayLoad.Dmver = artistContractDetailInfo.Dmver;
-					oPayLoad.Contno = artistContractDetailInfo.Contno;
-					oPayLoad.Conttp = "02";
-
-					var oModel = this.getView().getModel();
-					oModel.setUseBatch(false);
-					oModel.create("/DmCoSet", oPayLoad, {
-						success: function(oData) {
-							//   						if(!artistContractDetailInfo.DmCoSet.DmCmSet.results.length){
-							//   							artistContractDetailInfo.acPaymentData = [];
-							//   						}
-							//   					
-							//   						oData.DmCmSet.results.map(function(obj){
-							//   							obj.flag="Cr";
-							//   						});
-							//   						artistContractDetailInfo.acPaymentData = artistContractDetailInfo.acPaymentData.filter(function(vcPayObj){return vcPayObj.flag === undefined || vcPayObj.flag !== "Cr"});
-							//   						artistContractDetailInfo.acPaymentData = artistContractDetailInfo.acPaymentData.concat(oData.DmCmSet.results);
-
-							if (artistContractDetailInfo.acPaymentData === undefined || artistContractDetailInfo.acPaymentData.length === 0) {
-								artistContractDetailInfo.acPaymentData = [];
-								oData.DmCmSet.results.map(function(obj) {
-									obj.flag = "Cr";
-								});
-								artistContractDetailInfo.acPaymentData = artistContractDetailInfo.acPaymentData.concat(oData.DmCmSet.results);
-							} else {
-
-								oData.DmCmSet.results.map(function(obj) {
-									var flagNewEntry = true;
-									obj.flag = "Cr";
-									for (var oInd = 0; oInd < artistContractDetailInfo.acPaymentData.length; oInd++) {
-										var vcEpiObj = artistContractDetailInfo.acPaymentData[oInd];
-										if (vcEpiObj.Epiid === obj.Epiid && vcEpiObj.Msid === obj.Msid && vcEpiObj.Contver === obj.Contver) {
-											flagNewEntry = false;
-											break;
-										}
+				var validationResponse = this.validateMilestoneAchievementDate();
+				if (validationResponse.warningMessage) {
+					if (validationResponse.allowedEpisodes.length == 0) {
+						MessageBox.error("Milestone has already been achieved, no changes can be made.");
+						return;
+					}
+					MessageBox.warning("Milestone has been achieved for some episodes. Do you want to make changes to other episodes?", {
+						actions: [MessageBox.Action.OK, MessageBox.Action.CANCEL],
+						emphasizedAction: MessageBox.Action.OK,
+						onClose: function(sAction) {
+							switch (sAction) {
+								case MessageBox.Action.OK:
+									if (validateBeforePush) {
+										this.processMilestoneData();
 									}
-									if (flagNewEntry) {
-										artistContractDetailInfo.acPaymentData.push(obj);
-									} else {
-										if (artistContractDetailInfo.acPaymentData[oInd].episodeSaveFlag) {
-											obj.flag = "Ch";
-										}
-										artistContractDetailInfo.acPaymentData[oInd] = obj;
-									}
-								});
-
+									break;
+								case MessageBox.Action.CANCEL:
+									break;
+								default:
+									break;
 							}
-							artistContractModel.refresh(true);
-							this._oSelectPaymentDialogAC.close();
-						}.bind(this),
-						error: function(oError) {
-							var oBody = JSON.parse(oError.responseText);
-							var oMsg = oBody.error.innererror.errordetails[0].message;
-							MessageBox.error(oMsg);
-
-						}
+						}.bind(this)
 					});
+				} else {
+					if (validateBeforePush) {
+						this.processMilestoneData();
+					}
 				}
 			},
 
