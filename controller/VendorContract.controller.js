@@ -1866,7 +1866,7 @@ sap.ui.define([
 							switch(sAction){
 								case MessageBox.Action.OK :
 									if(validateBeforePush){
-									processPaymentData(vendorContractDetailInfo);
+									this.processPaymentData(vendorContractDetailInfo);
 									}
 									break;
 								case MessageBox.Action.CANCEL:
