@@ -153,7 +153,7 @@ sap.ui.define([
 								if (newVersionDM.length) {
 									this.selectedDealMemoObj = newVersionDM[0];
 								}
-
+								this.getView().byId("idIconTabBar").setSelectedKey("detail"); //Added by Dhiraj to load dealmemo in detail tab
 							} else if (this.rejectedDm) {
 								this.rejectedDm = false;
 								var rejectDM = oData.results.filter(function(obj) {
@@ -1017,7 +1017,6 @@ sap.ui.define([
 						this._noOfEpiChanged = false;
 						this._yearChanged = false;
 
-						this.getView().byId("idIconTabBar").setSelectedKey("detail"); //Added by Dhiraj to load dealmemo in detail tab
 						sap.ui.core.BusyIndicator.hide();
 
 						this.loadChangeCostTemplate();
@@ -5413,7 +5412,7 @@ sap.ui.define([
 					if (oData.Dmno == "") {
 						sap.ui.core.BusyIndicator.show(0);
 						// var aModel = this.getView().byId("mLabel").getModel();
-						
+
 						var bModel = that.getView().byId("Rev30Table").getModel();
 						oData.Tentid = "IBS";
 						var dealMemoDetailModel = that.getView().getModel("dealMemoDetailModel");
