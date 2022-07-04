@@ -1721,7 +1721,7 @@ sap.ui.define([
 					});
 					if (episodeList.length > 0) {
 						for (let i = 0; i <= episodeList.length - 1; i++) {
-							if (vendorContractDetailInfo.DmCmSet.results.findIndex(v => v.Epiid == episodeList[i] && v.Mscompdt && vendorContractDetailInfo.mileStonesForEpi.findIndex(obj => obj.Msid == v.Msid)) == -1 ) {
+							if (vendorContractDetailInfo.DmCmSet.results.findIndex(v => v.Epiid == episodeList[i] && v.Mscompdt && vendorContractDetailInfo.mileStonesForEpi.findIndex(obj => obj.Mstcd == v.Msid)) == -1 ) {
 								response.allowedEpisodes.push(episodeList[i]);
 							} else {
 								response.warningMessage = true;
@@ -1731,7 +1731,7 @@ sap.ui.define([
 					};
 				} else if (vendorContractDetailInfo.epiPaymentFromId != "" && vendorContractDetailInfo.epiPaymentToId != "") { // Range of Episodes
 					for (let i = vendorContractDetailInfo.epiPaymentFromId; i <= vendorContractDetailInfo.epiPaymentToId; i++) {
-						if (vendorContractDetailInfo.DmCmSet.results.findIndex(v => v.Mscompdt && v.Epiid == i && vendorContractDetailInfo.mileStonesForEpi.findIndex(obj => obj.Msid == v.Msid)) == -1 ) {
+						if (vendorContractDetailInfo.DmCmSet.results.findIndex(v => v.Mscompdt && v.Epiid == i && vendorContractDetailInfo.mileStonesForEpi.findIndex(obj => obj.Mstcd == v.Msid)) == -1 ) {
 							response.allowedEpisodes.push(i);
 						} else {
 							response.warningMessage = true;
@@ -1875,7 +1875,7 @@ sap.ui.define([
 				var validationResponse = this.validateMilestoneAchievementDate();
 				var continueProcessing = true;
 				if (validationResponse.warningMessage) {
-					if(response.allowedEpisodes.length == 0){
+					if(validationResponse.allowedEpisodes.length == 0){
 						MessageBox.error("Milestone has already been achieved, no changes can be made.");
 						return;
 					}
