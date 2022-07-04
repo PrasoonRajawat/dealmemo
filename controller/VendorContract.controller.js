@@ -1723,7 +1723,7 @@ sap.ui.define([
 					
 					return response;
 				
-			}
+			},
 
 			validateMileStoneData: function() {
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
