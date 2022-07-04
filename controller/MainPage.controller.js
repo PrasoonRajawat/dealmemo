@@ -5413,8 +5413,7 @@ sap.ui.define([
 					if (oData.Dmno == "") {
 						sap.ui.core.BusyIndicator.show(0);
 						// var aModel = this.getView().byId("mLabel").getModel();
-						var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
-						var dealMemoDetailInfo = dealMemoDetailModel.getData();
+						
 						var bModel = that.getView().byId("Rev30Table").getModel();
 						oData.Tentid = "IBS";
 						var dealMemoDetailModel = that.getView().getModel("dealMemoDetailModel");
@@ -5478,7 +5477,7 @@ sap.ui.define([
 							oData.Avgbcrevamt = bModel.oData.results[1].sinput.toString();
 							oData.Totavgbcrevamt = bModel.oData.results[2].sinput.toString();
 							oData.Totothrevamt = bModel.oData.results[3].sinput.toString();
-							var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
+							var dealMemoDetailModel = that.getView().getModel("dealMemoDetailModel");
 							var dealMemoDetailInfo = dealMemoDetailModel.getData();
 							var intDataModelUrl = "/sap/opu/odata/IBSCMS/DEALMEMO_SRV/";
 							var oModelSav = new sap.ui.model.odata.ODataModel(intDataModelUrl, true, "", "");
