@@ -193,7 +193,7 @@ sap.ui.define([
 						this.getView().byId("idSubIconTabBarac").setSelectedKey("acSubEpiData");
 						// if(artistContractDetailInfo.Dmst !== "04"){
 						this.loadVendors();
-					// }
+						// }
 					}.bind(this),
 					error: function(oError) {
 						var oErrorResponse = JSON.parse(oError.responseText);
@@ -614,7 +614,7 @@ sap.ui.define([
 					MessageBox.information(oSourceBundle.getText("msgDeptCheck"));
 				}
 			},
-				onActionCB: function() {   // FOr replacement Checkbox.
+			onActionCB: function() { // FOr replacement Checkbox.
 				var artistContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = artistContractModel.getData();
 				if (sap.ui.getCore().byId("recont").getSelected() === true) {
@@ -622,7 +622,7 @@ sap.ui.define([
 				} else {
 					artistContractModel.setProperty("/createParams/Recont", false);
 				}
-			},             
+			},
 			onSelectionDialogClose: function() {
 				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
 				if (this.oValueHelpSelectionParams.dialogTitle === oSourceBundle.getText("titleVendor")) {
@@ -1781,8 +1781,19 @@ sap.ui.define([
 								groupId: "epiPaymentACChanges"
 							});
 
+						} 
+					} else if (epiPaymentObj.flag === "Ch") {
+							alreadySavedflag = false;
+							delete epiPaymentObj.flag;
+							var oPath = "/DmCmSet(Tentid='IBS',Dmno='" + vendorContractDetailInfo.Dmno + "',Dmver='" + vendorContractDetailInfo.Dmver +
+								"',Conttp='01',Contno='" + vendorContractDetailInfo.Contno + "',Contver='" + vendorContractDetailInfo.Contver + "',Epiid='" +
+								epiPaymentObj.Epiid + "',Seqnr='" + epiPaymentObj.Seqnr +
+								"',Msid='" + epiPaymentObj.Msid + "')";
+
+							oModel.update(oPath, epiPaymentObj, {
+								groupId: "epiPaymentVCChanges"
+							});
 						}
-					}
 				}.bind(this));
 				if (alreadySavedflag) {
 					var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
@@ -1871,12 +1882,12 @@ sap.ui.define([
 				if (oTab === "releaseStatus") {
 					this.loadReleaseStatusDetails();
 				}
-				if(oSubTab === "milestoneTab"){
+				if (oSubTab === "milestoneTab") {
 					this.loadMileTabDetails();
 				}
 
 			},
-			
+
 			getDateInMS: function(date, time) {
 				date.setHours(0, 0, 0, 0);
 				var Actdt = date.getTime();
@@ -1886,32 +1897,32 @@ sap.ui.define([
 				return DtTime;
 
 			},
-				loadMileTabDetails:function(){
+			loadMileTabDetails: function() {
 				var artistContractModel = this.getView().getModel("artistContractModel");
 				var artistContractDetailInfo = artistContractModel.getData();
-					var srvUrl = "/sap/opu/odata/IBSCMS/DEALMEMO_SRV";
-			var oModelSav = new sap.ui.model.odata.ODataModel(srvUrl, true, "", "");
-				var oPath = "/DmCmMileWiseSet?$filter=Tentid eq 'IBS'and Dmno eq '" + artistContractDetailInfo.Dmno + "' and Dmver eq '" + artistContractDetailInfo.Dmver +
+				var srvUrl = "/sap/opu/odata/IBSCMS/DEALMEMO_SRV";
+				var oModelSav = new sap.ui.model.odata.ODataModel(srvUrl, true, "", "");
+				var oPath = "/DmCmMileWiseSet?$filter=Tentid eq 'IBS'and Dmno eq '" + artistContractDetailInfo.Dmno + "' and Dmver eq '" +
+					artistContractDetailInfo.Dmver +
 					"' and Contno eq '" + artistContractDetailInfo.Contno + "' and Conttp eq '01' and Contver eq'" + artistContractDetailInfo.Contver +
 					"'";
 				var oModel = this.getView().getModel();
-			oModelSav.read(oPath, null, null, true, function(oData) {
-				var oModel = new sap.ui.model.json.JSONModel(oData);
-				oModel.setSizeLimit("999999");
-					
-						artistContractModel.setProperty("/mileWiseList", oData.results);
-						artistContractModel.refresh(true);
-			}, function(value) {
-				sap.ui.core.BusyIndicator.hide();
-				console.log(value);
-				//alert("fail");
-			});
-			// var count = {};
-			// vendorContractDetailInfo.DmCmSet.results.forEach(v =>{
-			// 	count[v] = (count[v] || 0 ) + 1
-			// })		
-			
-				
+				oModelSav.read(oPath, null, null, true, function(oData) {
+					var oModel = new sap.ui.model.json.JSONModel(oData);
+					oModel.setSizeLimit("999999");
+
+					artistContractModel.setProperty("/mileWiseList", oData.results);
+					artistContractModel.refresh(true);
+				}, function(value) {
+					sap.ui.core.BusyIndicator.hide();
+					console.log(value);
+					//alert("fail");
+				});
+				// var count = {};
+				// vendorContractDetailInfo.DmCmSet.results.forEach(v =>{
+				// 	count[v] = (count[v] || 0 ) + 1
+				// })		
+
 			},
 			loadReleaseStatusDetails: function() {
 				var oModel = this.getView().getModel();
