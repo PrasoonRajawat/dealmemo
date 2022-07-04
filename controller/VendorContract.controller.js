@@ -1788,6 +1788,7 @@ sap.ui.define([
 			},
 			
 			processPaymentData :function(vendorContractDetailInfo){
+				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var oPayLoad = {};
 					var epiTabData = $.extend(true, [], vendorContractDetailInfo.epiVCTabData);
 					epiTabData.map(function(epitabObj) {
