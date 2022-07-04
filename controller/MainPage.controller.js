@@ -1016,7 +1016,7 @@ sap.ui.define([
 						}
 						this._noOfEpiChanged = false;
 						this._yearChanged = false;
-						
+
 						this.getView().byId("idIconTabBar").setSelectedKey("detail"); //Added by Dhiraj to load dealmemo in detail tab
 						sap.ui.core.BusyIndicator.hide();
 
@@ -5428,6 +5428,11 @@ sap.ui.define([
 						oModelSav.create(pValue, oData, null, function() {
 								//	alert("revenue created");
 								sap.ui.core.BusyIndicator.hide();
+								if (oData.Avgbcrevamt !== "0.00") {
+									dealMemoDetailModel.setProperty("/revenueTabColor", "Positive");
+								} else {
+									dealMemoDetailModel.setProperty("/revenueTabColor", "Critical");
+								}
 								// this.getView().byId("idRev30").setIconColor("Positive");
 								sap.m.MessageToast.show(that.getView().getModel("i18n")._oResourceBundle.getText("msg_revper30save"));
 							},
