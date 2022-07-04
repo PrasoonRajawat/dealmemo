@@ -1806,7 +1806,7 @@ sap.ui.define([
 							   break;
 							}
 						}
-				}
+				});
 					}
 					if(!continueProcessing){
 						return;
