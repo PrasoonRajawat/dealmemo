@@ -1785,8 +1785,8 @@ sap.ui.define([
 					} else if (epiPaymentObj.flag === "Ch") {
 							alreadySavedflag = false;
 							delete epiPaymentObj.flag;
-							var oPath = "/DmCmSet(Tentid='IBS',Dmno='" + vendorContractDetailInfo.Dmno + "',Dmver='" + vendorContractDetailInfo.Dmver +
-								"',Conttp='01',Contno='" + vendorContractDetailInfo.Contno + "',Contver='" + vendorContractDetailInfo.Contver + "',Epiid='" +
+							var oPath = "/DmCmSet(Tentid='IBS',Dmno='" + artistContractDetailInfo.Dmno + "',Dmver='" + artistContractDetailInfo.Dmver +
+								"',Conttp='01',Contno='" + artistContractDetailInfo.Contno + "',Contver='" + artistContractDetailInfo.Contver + "',Epiid='" +
 								epiPaymentObj.Epiid + "',Seqnr='" + epiPaymentObj.Seqnr +
 								"',Msid='" + epiPaymentObj.Msid + "')";
 
