@@ -1721,7 +1721,7 @@ sap.ui.define([
 					});
 					if (episodeList.length > 0) {
 						for (let i = 0; i <= episodeList.length - 1; i++) {
-							if (vendorContractDetailInfo.DmCmSet.results.findIndex(v => v.Epiid == episodeList[i] && v.Mscompdt && vendorContractDetailInfo.mileStonesForEpi.findIndex(obj => obj.Msid == v.Msid) == -1 )) {
+							if (vendorContractDetailInfo.DmCmSet.results.findIndex(v => v.Epiid == episodeList[i] && v.Mscompdt && vendorContractDetailInfo.mileStonesForEpi.findIndex(obj => obj.Msid == v.Msid)) == -1 ) {
 								response.allowedEpisodes.push(episodeList[i]);
 							} else {
 								response.warningMessage = true;
