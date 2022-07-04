@@ -1875,6 +1875,10 @@ sap.ui.define([
 				var validationResponse = this.validateMilestoneAchievementDate();
 				var continueProcessing = true;
 				if (validationResponse.warningMessage) {
+					if(response.allowedEpisodes.length == 0){
+						MessageBox.error("Milestone has already been achieved, no changes can be made.");
+						return;
+					}
 					MessageBox.warning("Milestone has been achieved for some episodes. Do you want to make changes to other episodes?", {
 						actions: [MessageBox.Action.OK, MessageBox.Action.CANCEL],
 						emphasizedAction: MessageBox.Action.OK,
