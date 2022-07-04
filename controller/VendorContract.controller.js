@@ -1719,7 +1719,7 @@ sap.ui.define([
 						if (vendorContractDetailInfo.DmCmSet.results.findIndex(v => v.Mscompdt) == -1) {
 							response.allowedEpisodes.push(i);
 						}else{
-							warningMessage = true;
+							response.warningMessage = true;
 						}
 					};
 					
