@@ -1713,8 +1713,7 @@ sap.ui.define([
 				var vendorContractDetailInfo = vendorContractModel.getData();
 				var allowedEpisodes = [];
 				var response = {};
-				var warningMessage = false;
-				var continueProcessing = true;
+				response.allowedEpisodes = [];
 				if (vendorContractDetailInfo.epiPaymentFromId == "" && vendorContractDetailInfo.epiPaymentToId == "") { //All Episodes
 					var episodeList = [];
 					vendorContractDetailInfo.DmCmSet.results.map(function(obj) {
