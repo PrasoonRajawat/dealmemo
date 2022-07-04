@@ -1713,17 +1713,16 @@ sap.ui.define([
 				var vendorContractDetailInfo = vendorContractModel.getData();
 				var allowedEpisodes = [];
 				var response = {};
-				var warningMessage = false;
-				var continueProcessing = true;
+				response.allowedEpisodes = [];
 				if (vendorContractDetailInfo.epiPaymentFromId == "" && vendorContractDetailInfo.epiPaymentToId == "") { //All Episodes
 					var episodeList = [];
 					vendorContractDetailInfo.DmCmSet.results.map(function(obj) {
 						episodeList.push(obj.Epiid)
 					});
 					if (episodeList.length > 0) {
-						for (let i = episodeList[0]; i <= episodeList.length; i++) {
-							if (vendorContractDetailInfo.DmCmSet.results.findIndex(v => v.Mscompdt && vendorContractDetailInfo.mileStonesForEpi.findIndex(obj => obj.Msid == v.Msid) == -1 )) {
-								response.allowedEpisodes.push(i);
+						for (let i = 0; i <= episodeList.length - 1; i++) {
+							if (vendorContractDetailInfo.DmCmSet.results.findIndex(v => v.Epiid == episodeList[i] && v.Mscompdt && vendorContractDetailInfo.mileStonesForEpi.findIndex(obj => obj.Msid == v.Msid)) == -1 ) {
+								response.allowedEpisodes.push(episodeList[i]);
 							} else {
 								response.warningMessage = true;
 							}
@@ -1732,7 +1731,7 @@ sap.ui.define([
 					};
 				} else if (vendorContractDetailInfo.epiPaymentFromId != "" && vendorContractDetailInfo.epiPaymentToId != "") { // Range of Episodes
 					for (let i = vendorContractDetailInfo.epiPaymentFromId; i <= vendorContractDetailInfo.epiPaymentToId; i++) {
-						if (vendorContractDetailInfo.DmCmSet.results.findIndex(v => v.Mscompdt && vendorContractDetailInfo.mileStonesForEpi.findIndex(obj => obj.Msid == v.Msid)) == -1 ) {
+						if (vendorContractDetailInfo.DmCmSet.results.findIndex(v => v.Mscompdt && v.Epiid == i && vendorContractDetailInfo.mileStonesForEpi.findIndex(obj => obj.Msid == v.Msid)) == -1 ) {
 							response.allowedEpisodes.push(i);
 						} else {
 							response.warningMessage = true;
@@ -1876,6 +1875,10 @@ sap.ui.define([
 				var validationResponse = this.validateMilestoneAchievementDate();
 				var continueProcessing = true;
 				if (validationResponse.warningMessage) {
+					if(response.allowedEpisodes.length == 0){
+						MessageBox.error("Milestone has already been achieved, no changes can be made.");
+						return;
+					}
 					MessageBox.warning("Milestone has been achieved for some episodes. Do you want to make changes to other episodes?", {
 						actions: [MessageBox.Action.OK, MessageBox.Action.CANCEL],
 						emphasizedAction: MessageBox.Action.OK,
@@ -1895,7 +1898,7 @@ sap.ui.define([
 					});
 				} else {
 					if (validateBeforePush) {
-						processPaymentData(vendorContractDetailInfo);
+						this.processPaymentData(vendorContractDetailInfo);
 					}
 				}
 				// if (validateBeforePush) {
