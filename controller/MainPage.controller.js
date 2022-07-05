@@ -546,7 +546,7 @@ sap.ui.define([
 					dealMemoModel.setProperty("/createParams/Dmdt", new Date());
 					dealMemoModel.setProperty("/createParams/DmdtFormatted", Formatter.formatDateValForBackend(new Date()));
 					var enableMPMCheckForContType = [
-						"01", "03", "04", "05", "06", "07", "08", "09"
+						"01", "03", "04", "05", "06", "07", "08"
 					]
 					dealMemoModel.refresh(true);
 					var contentmasterModel = this.getView().getModel("CONTENT_MAST");
