@@ -3230,7 +3230,19 @@ sap.ui.define([
 					episodeIds = episodeList.map(function(obj) {
 						return obj.Mvid
 					});
-				}
+				} else if (dealMemoDetailInfo.Cnttp === "05") {
+					episodeList = dealMemoModel.getProperty("/matchMasterList");
+
+					for (var i = 0; i < episodeData.length; i++) { //Added By Dhiraj For converting matid
+						var epiidSplit = episodeData[i].Epinm.split("-");
+						episodeData[i].Epiid = epiidSplit[0].trim();
+						episodeData[i].Mvid = epiidSplit[0].trim();
+					}
+
+					episodeIds = episodeList.map(function(obj) {
+						return obj.Cntid // Removed Matid by Dhiraj on 23/05/2022 to cntid 
+					});
+				} 
 
 				for (var oInd = 0; oInd < episodeData.length; oInd++) {
 					var epObj = episodeData[oInd];
