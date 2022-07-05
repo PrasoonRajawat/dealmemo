@@ -977,7 +977,7 @@ sap.ui.define([
 							oData.CurrencyEnableFlag = false;
 						}
 						oData.enableFlow = "P";
-						if (oData.Cnttp === "02" || oData.Cnttp === "05") {
+						if (oData.Cnttp === "02" || oData.Cnttp === "05" || oData.Cnttp === "09") {
 							oData.enableFlow = "M" // MovieFlow
 
 						}
