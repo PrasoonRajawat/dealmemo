@@ -290,17 +290,17 @@ sap.ui.define([
 				dealMemoModel.setProperty("/movieList", oData.results);
 				dealMemoModel.refresh(true);
 			},
-			// storeMatchListInfo: function(cnt) {
-			// 	var dealMemoModel = this.getView().getModel("dealMemoModel");
-			// 	cnt.map(function(mvObj) {
-			// 		// oData.results.map(function(mvObj) {
-			// 		// mvObj.Matnm = mvObj.Matid + "-" + mvObj.Matds;
-			// 		mvObj.Matnm = mvObj.Cntid + "-" + mvObj.Cntdesc; // added by dhiraj on 23/05/2022
-			// 	});
+			storeMatchMasterListInfo: function(cnt) {
+				var dealMemoModel = this.getView().getModel("dealMemoModel");
+				cnt.map(function(mvObj) {
+					// oData.results.map(function(mvObj) {
+					// mvObj.Matnm = mvObj.Matid + "-" + mvObj.Matds;
+					mvObj.Matnm = mvObj.Cntid + "-" + mvObj.Cntdesc; // added by dhiraj on 23/05/2022
+				});
 
-			// 	dealMemoModel.setProperty("/matchList", cnt);
-			// 	dealMemoModel.refresh(true);
-			// },
+				dealMemoModel.setProperty("/matchMasterList", cnt);
+				dealMemoModel.refresh(true);
+			},
 			storeMatchListInfo: function(oData) {
 				var dealMemoModel = this.getView().getModel("dealMemoModel");
 				oData.results.map(function(mvObj) {
@@ -435,22 +435,23 @@ sap.ui.define([
 						MessageBox.error(oMsg);
 					}
 				});
-				// var oMatchModel = this.getView().getModel("CONTENT_MAST");
-				// additionalFilters = [new Filter("Cntty", "EQ", "05"), new Filter("Mlevel", "EQ", "02")];
-				// var oPath = "/es_content_list?$filter=Tentid eq 'IBS' and Cntty eq '05' and Mlevel eq '02'";
-				// oMatchModel.read(oPath, {
-				// 	// filters:   basicFiilters.concat(additionalFilters), // added by dhiraj on 24/05/2022
-				// 	success: function(oData) {
-				// 		var cnt = oData.results.filter(function(obj) {
-				// 			return obj.Mlevel === "02" && obj.Cntty === "05"
-				// 		}.bind(this));
-				// 		this.storeMatchListInfo(cnt);
-				// 	}.bind(this),
-				// 	error: function(oError) {
-				// 			var oErrorResponse = JSON.parse(oError.responseText);
-				// 			var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
-				// 			MessageBox.error(oMsg);
-				// 		}
+				var oMatchMasterModel = this.getView().getModel("CONTENT_MAST");
+				additionalFilters = [new Filter("Cntty", "EQ", "05"), new Filter("Mlevel", "EQ", "02")];
+				var oPath = "/es_content_list?$filter=Tentid eq 'IBS' and Cntty eq '05' and Mlevel eq '02'";
+				oMatchModel.read(oPath, {
+					// filters:   basicFiilters.concat(additionalFilters), // added by dhiraj on 24/05/2022
+					success: function(oData) {
+						var cnt = oData.results.filter(function(obj) {
+							return obj.Mlevel === "02" && obj.Cntty === "05" && obj.Mkdm === "X"
+						}.bind(this));
+						this.storeMatchMasterListInfo(cnt);
+					}.bind(this),
+					error: function(oError) {
+							var oErrorResponse = JSON.parse(oError.responseText);
+							var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
+							MessageBox.error(oMsg);
+						}
+				});
 				// 	var additionalFilters = [new Filter("Mstcd", "EQ", "05")];
 				// oModel.read("/F4CntIDSet", {
 				// 	filters: basicFiilters.concat(additionalFilters),
@@ -545,7 +546,7 @@ sap.ui.define([
 					dealMemoModel.setProperty("/createParams/Dmdt", new Date());
 					dealMemoModel.setProperty("/createParams/DmdtFormatted", Formatter.formatDateValForBackend(new Date()));
 					var enableMPMCheckForContType = [
-						"01", "03", "04", "05", "06", "07", "08"
+						"01", "03", "04", "05", "06", "07", "08", "09"
 					]
 					dealMemoModel.refresh(true);
 					var contentmasterModel = this.getView().getModel("CONTENT_MAST");
@@ -696,6 +697,17 @@ sap.ui.define([
 				} else if (dealMemoDetailInfo.Cnttp === "05") {
 					this.oValueHelpSelectionParams = {
 						"bindPathName": "dealMemoModel>/matchList",
+						"bindPropName": "dealMemoModel>Matnm",
+						"propName": "Matnm",
+						"keyName": "Matid",
+						"valuePath": oPath + "/Epinm",
+						"keyPath": oPath + "/Epiid",
+						"valueModel": "dealMemoDetailModel",
+						"dialogTitle": oSourceBundle.getText("titleMatch")
+					};
+				} else if (dealMemoDetailInfo.Cnttp === "09") {
+					this.oValueHelpSelectionParams = {
+						"bindPathName": "dealMemoModel>/matchMasterList",
 						"bindPropName": "dealMemoModel>Matnm",
 						"propName": "Matnm",
 						"keyName": "Matid",
@@ -1000,7 +1012,7 @@ sap.ui.define([
 
 						dealMemoDetailModel.setData(oData);
 						dealMemoDetailModel.refresh(true);
-						if (oData.Cnttp === "02" || oData.Cnttp === "05") {
+						if (oData.Cnttp === "02" || oData.Cnttp === "05" || oData.Cnttp === "09" ) {
 							this.loadMovieCostTemplate();
 						}
 						if (oData.DmEpisodeSet.results.length) {
