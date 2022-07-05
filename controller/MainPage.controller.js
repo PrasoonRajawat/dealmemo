@@ -3230,7 +3230,7 @@ sap.ui.define([
 					episodeIds = episodeList.map(function(obj) {
 						return obj.Mvid
 					});
-				} else if (dealMemoDetailInfo.Cnttp === "05") {
+				} else if (dealMemoDetailInfo.Cnttp === "09") {
 					episodeList = dealMemoModel.getProperty("/matchMasterList");
 
 					for (var i = 0; i < episodeData.length; i++) { //Added By Dhiraj For converting matid
