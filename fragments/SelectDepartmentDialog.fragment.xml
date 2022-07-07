@@ -55,7 +55,7 @@
 					<l:GridData span="XL12 L12 M12 S12"/>
 				</layoutData>
 			</Label>
-				<CheckBox id="recont" select="onActionCB">
+				<CheckBox id="recont" select="" selected="{= ${vendorContractModel>/Cntsc} === 'Z0' ? true : false}" editable="false">
 				<layoutData>
 					<l:GridData span="L1 M1 S1"/>
 				</layoutData>

@@ -477,6 +477,7 @@ sap.ui.define([
 			},
 			createParamModel: function() { // added by dhiraj on 24/05/2022
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
+				var vendorContractDetailInfo = vendorContractModel.getData();
 				vendorContractModel.setProperty("/createParams", {
 					"Zstext": "",
 					"Zltext": "",
@@ -484,7 +485,7 @@ sap.ui.define([
 					"Depthd": "",
 					"Dept": "",
 					"Grsescr": "",
-					"Recont": false
+					"Recont": vendorContractDetailInfo.Cntsc === "Z0" ? true : false 
 				});
 				if (vendorContractModel.oData.contractMode === "Ch") {
 					vendorContractModel.oData.createParams.Zstext = vendorContractModel.oData.DmCoSet.results.find(d => d.Contno ===
@@ -1572,7 +1573,7 @@ sap.ui.define([
 						"Mstcdnm": oMLObj.Mstcdnm,
 						"payee": vendorContractDetailInfo.vendorName,
 						"payeeKey": vendorContractDetailInfo.vendorKey,
-						"Zterm": "",
+						"Zterm": vendorContractDetailInfo.Zterm !== "" ? vendorContractDetailInfo.Zterm : "",
 						"Dueamt": "0",
 						"estDate": null
 					});
