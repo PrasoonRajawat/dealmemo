@@ -1515,7 +1515,7 @@ sap.ui.define([
 						"Mstcdnm": oMLObj.Mstcdnm,
 						"payee": artistContractDetailInfo.vendorName,
 						"payeeKey": artistContractDetailInfo.vendorKey,
-						"Zterm": vendorContractDetailInfo.Zterm !== "" ? vendorContractDetailInfo.Zterm : "",
+						"Zterm": artistContractDetailInfo.Zterm !== "" ? artistContractDetailInfo.Zterm : "",
 						"Dueamt": "0",
 						"estDate": null
 					});
