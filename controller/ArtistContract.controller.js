@@ -1764,16 +1764,7 @@ sap.ui.define([
 							artistContractModel.refresh(true);
 							this._oSelectPaymentDialogAC.close();
 						}.bind(this),
-						error: function(oError) {
-							var oBody = JSON.parse(oError.responseText);
-							var oMsg = oBody.error.innererror.errordetails[0].message;
-							MessageBox.error(oMsg);
-
-
-						}
-						artistContractModel.refresh(true);
-						this._oSelectPaymentDialogAC.close();
-					}.bind(this),
+						
 					error: function(oError) {
 						var oBody = JSON.parse(oError.responseText);
 						var oMsg = oBody.error.innererror.errordetails[0].message;
