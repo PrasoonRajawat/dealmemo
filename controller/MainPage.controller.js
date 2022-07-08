@@ -290,14 +290,16 @@ sap.ui.define([
 				dealMemoModel.setProperty("/movieList", oData.results);
 				dealMemoModel.refresh(true);
 			},
-			storeMatchMasterListInfo: function(cnt) {
+			storeMatchMasterListInfo: function(oData) {
 				var dealMemoModel = this.getView().getModel("dealMemoModel");
-				cnt.map(function(mvObj) {
-					// oData.results.map(function(mvObj) {
-					// mvObj.Matnm = mvObj.Matid + "-" + mvObj.Matds;
-					mvObj.Matnm = mvObj.Cntid + "-" + mvObj.Cntdesc; // added by dhiraj on 23/05/2022
+				// cnt.map(function(mvObj) {
+				// 	// oData.results.map(function(mvObj) {
+				// 	// mvObj.Matnm = mvObj.Matid + "-" + mvObj.Matds;
+				// 	mvObj.Matnm = mvObj.Cntid + "-" + mvObj.Cntdesc; // added by dhiraj on 23/05/2022
+				// });
+				oData.results.map(function(mvObj) {
+					mvObj.Matnm = mvObj.Matid + "-" + mvObj.Matds;
 				});
-
 				dealMemoModel.setProperty("/matchMasterList", cnt);
 				dealMemoModel.refresh(true);
 			},
@@ -435,23 +437,23 @@ sap.ui.define([
 						MessageBox.error(oMsg);
 					}
 				});
-				var oMatchMasterModel = this.getView().getModel("CONTENT_MAST");
-				additionalFilters = [new Filter("Cntty", "EQ", "05"), new Filter("Mlevel", "EQ", "02")];
-				var oPath = "/es_content_list?$filter=Tentid eq 'IBS' and Cntty eq '05' and Mlevel eq '02'";
-				oMatchMasterModel.read(oPath, {
-					// filters:   basicFiilters.concat(additionalFilters), // added by dhiraj on 24/05/2022
-					success: function(oData) {
-						var cnt = oData.results.filter(function(obj) {
-							return obj.Mlevel === "02" && obj.Cntty === "05" && obj.Mkdm === "X"
-						}.bind(this));
-						this.storeMatchMasterListInfo(cnt);
-					}.bind(this),
-					error: function(oError) {
-							var oErrorResponse = JSON.parse(oError.responseText);
-							var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
-							MessageBox.error(oMsg);
-						}
-				});
+				// var oMatchMasterModel = this.getView().getModel("CONTENT_MAST");
+				// additionalFilters = [new Filter("Cntty", "EQ", "05"), new Filter("Mlevel", "EQ", "02")];
+				// var oPath = "/es_content_list?$filter=Tentid eq 'IBS' and Cntty eq '05' and Mlevel eq '02'";
+				// oMatchMasterModel.read(oPath, {
+				// 	// filters:   basicFiilters.concat(additionalFilters), // added by dhiraj on 24/05/2022
+				// 	success: function(oData) {
+				// 		var cnt = oData.results.filter(function(obj) {
+				// 			return obj.Mlevel === "02" && obj.Cntty === "05" && obj.Mkdm === "X"
+				// 		}.bind(this));
+				// 		this.storeMatchMasterListInfo(cnt);
+				// 	}.bind(this),
+				// 	error: function(oError) {
+				// 			var oErrorResponse = JSON.parse(oError.responseText);
+				// 			var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
+				// 			MessageBox.error(oMsg);
+				// 		}
+				// });
 				// 	var additionalFilters = [new Filter("Mstcd", "EQ", "05")];
 				// oModel.read("/F4CntIDSet", {
 				// 	filters: basicFiilters.concat(additionalFilters),
@@ -468,6 +470,7 @@ sap.ui.define([
 				oMatchModel.read("/es_match_master", {
 					success: function(oData) {
 						this.storeMatchListInfo(oData);
+						this.storeMatchMasterListInfo(oData);
 					}.bind(this),
 					error: function(oError) {
 						var oErrorResponse = JSON.parse(oError.responseText);
@@ -1012,7 +1015,7 @@ sap.ui.define([
 
 						dealMemoDetailModel.setData(oData);
 						dealMemoDetailModel.refresh(true);
-						if (oData.Cnttp === "02" || oData.Cnttp === "05" || oData.Cnttp === "09" ) {
+						if (oData.Cnttp === "02" || oData.Cnttp === "05" || oData.Cnttp === "09") {
 							this.loadMovieCostTemplate();
 						}
 						if (oData.DmEpisodeSet.results.length) {
@@ -3232,17 +3235,15 @@ sap.ui.define([
 					});
 				} else if (dealMemoDetailInfo.Cnttp === "09") {
 					episodeList = dealMemoModel.getProperty("/matchMasterList");
-
 					for (var i = 0; i < episodeData.length; i++) { //Added By Dhiraj For converting matid
 						var epiidSplit = episodeData[i].Epinm.split("-");
 						episodeData[i].Epiid = epiidSplit[0].trim();
 						episodeData[i].Mvid = epiidSplit[0].trim();
 					}
-
 					episodeIds = episodeList.map(function(obj) {
-						return obj.Cntid // Removed Matid by Dhiraj on 23/05/2022 to cntid 
+						return obj.Matid
 					});
-				} 
+				}
 
 				for (var oInd = 0; oInd < episodeData.length; oInd++) {
 					var epObj = episodeData[oInd];
