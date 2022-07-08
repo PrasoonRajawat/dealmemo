@@ -300,7 +300,7 @@ sap.ui.define([
 				oData.results.map(function(mvObj) {
 					mvObj.Matnm = mvObj.Matid + "-" + mvObj.Matds;
 				});
-				dealMemoModel.setProperty("/matchMasterList", cnt);
+				dealMemoModel.setProperty("/matchMasterList",  oData.results);
 				dealMemoModel.refresh(true);
 			},
 			storeMatchListInfo: function(oData) {
