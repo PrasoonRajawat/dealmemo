@@ -897,6 +897,7 @@ sap.ui.define([
 			},
 
 			reloadVendorContractTabs: function() {
+					sap.ui.core.BusyIndicator.show(0);
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
 				var oPath = "/DmCoSet(Tentid='IBS',Dmno='" + vendorContractDetailInfo.Dmno + "',Dmver='" + vendorContractDetailInfo.Dmver +
@@ -997,8 +998,10 @@ sap.ui.define([
 						Object.assign(vendorContractDetailInfo, oData);
 						vendorContractModel.refresh(true);
 						this.selCostCodesPaths = [];
+						sap.ui.core.BusyIndicator.hide();
 					}.bind(this),
 					error: function(oError) {
+						sap.ui.core.BusyIndicator.hide();
 						var oErrorResponse = JSON.parse(oError.responseText);
 						var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
 						MessageBox.error(oMsg);

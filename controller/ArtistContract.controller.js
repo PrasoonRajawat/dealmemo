@@ -1271,6 +1271,7 @@ sap.ui.define([
 
 			},
 			reloadArtistContractTabs: function() {
+					sap.ui.core.BusyIndicator.show(0);
 				var artistContractModel = this.getView().getModel("artistContractModel");
 				var artistContractDetailInfo = artistContractModel.getData();
 				var oPath = "/DmCoSet(Tentid='IBS',Dmno='" + artistContractDetailInfo.Dmno + "',Dmver='" + artistContractDetailInfo.Dmver +
@@ -1355,9 +1356,10 @@ sap.ui.define([
 						}
 						artistContractModel.refresh(true);
 						this.getView().byId("idSubIconTabBarac").setSelectedKey("acSubEpiDataNoCostCd");
+							sap.ui.core.BusyIndicator.hide();
 					}.bind(this),
 					error: function(oError) {
-
+						sap.ui.core.BusyIndicator.hide();
 					}
 				})
 			},
