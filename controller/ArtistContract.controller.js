@@ -1220,16 +1220,17 @@ sap.ui.define([
 
 			},
 			onSaveArtistContract: function() {
+				sap.ui.core.BusyIndicator.show(0);
 				var oTab = this.getView().byId("idACTabBar").getSelectedKey();
 				if (oTab === "acEpiData") {
 					this.createEpiTab();
 				} else if (oTab === "acPaymentData") {
 					this.savePaymentTab();
 				}
-
+				sap.ui.core.BusyIndicator.hide();
 			},
 			reloadArtistContractTabs: function() {
-					sap.ui.core.BusyIndicator.show(0);
+				sap.ui.core.BusyIndicator.show(0);
 				var artistContractModel = this.getView().getModel("artistContractModel");
 				var artistContractDetailInfo = artistContractModel.getData();
 				var oPath = "/DmCoSet(Tentid='IBS',Dmno='" + artistContractDetailInfo.Dmno + "',Dmver='" + artistContractDetailInfo.Dmver +
@@ -1314,7 +1315,7 @@ sap.ui.define([
 						}
 						artistContractModel.refresh(true);
 						this.getView().byId("idSubIconTabBarac").setSelectedKey("acSubEpiDataNoCostCd");
-							sap.ui.core.BusyIndicator.hide();
+						sap.ui.core.BusyIndicator.hide();
 					}.bind(this),
 					error: function(oError) {
 						sap.ui.core.BusyIndicator.hide();
@@ -1736,7 +1737,7 @@ sap.ui.define([
 							var oBody = JSON.parse(oError.responseText);
 							var oMsg = oBody.error.innererror.errordetails[0].message;
 							MessageBox.error(oMsg);
-							
+
 						}
 					});
 				}
@@ -1783,8 +1784,8 @@ sap.ui.define([
 								groupId: "epiPaymentACChanges"
 							});
 
-						} 
-					} 
+						}
+					}
 				}.bind(this));
 				if (alreadySavedflag) {
 					var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
