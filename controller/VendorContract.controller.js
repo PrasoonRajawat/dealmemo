@@ -2714,6 +2714,7 @@ sap.ui.define([
 			},
 
 			onSaveVendorContract: function() {
+					sap.ui.core.BusyIndicator.show(0);
 				var oTab = this.getView().byId("idVCTabBar").getSelectedKey();
 				if (oTab === "vcEpiData") {
 					this.createEpiTabVC();
@@ -2724,7 +2725,7 @@ sap.ui.define([
 				} else if (oTab === "vcIPRData") {
 					this.saveIPRTabVC();
 				}
-
+					sap.ui.core.BusyIndicator.hide();
 			},
 			onSearchSelection: function(oEvent) {
 				var sValue = oEvent.getParameter("value");
