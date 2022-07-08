@@ -37,7 +37,7 @@
 												<cells>
 													<ObjectIdentifier title="{artistContractModel>Epinm}"></ObjectIdentifier>
 													<ObjectIdentifier title="{artistContractModel>Costdesc}"/>
-													<Input change="onEpisodeCostChange" editable="{artistContractModel>/saveVisible}" value="{parts: [ {path: 'artistContractModel>Coepiamt'}, {path: 'artistContractModel>Waers'} ], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false,minFractionDigits: 2,	maxFractionDigits: 2 } }" textAlign="Right" ></Input>
+													<Input change="onEpisodeCostChange" editable="false" value="{parts: [ {path: 'artistContractModel>Coepiamt'}, {path: 'artistContractModel>Waers'} ], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false,minFractionDigits: 2,	maxFractionDigits: 2 } }" textAlign="Right" ></Input>
 													<Label text="{path:'artistContractModel>Wmwst', type:'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 2 }}"></Label>
 													<Label text="{path:'artistContractModel>Baseamt', type:'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 2 }}"></Label>
 													<Label text="{path:'artistContractModel>Diff', type:'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 2 }}"></Label>
