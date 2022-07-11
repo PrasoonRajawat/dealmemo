@@ -50,7 +50,7 @@ sap.ui.define([
                return dateFormat.format(oVal);
            },
            formatDateValForBackend:function(oVal){
-        	   if(oVal !== null || oVal !== "" || oVal !== undefined) {
+        	 
         	   var dateFormat = sap.ui.core.format.DateFormat.getDateInstance({
                    pattern: "yyyy-MM-dd"
                });
@@ -64,7 +64,7 @@ sap.ui.define([
 	   				var outDate = oVal + "T" + h + ":" + min + ":" + sec;
 	   				return outDate;
         	   }	
-        	   }
+        	  
            },
            formatTimeDuration:function(oVal){
         	   if(oVal){
