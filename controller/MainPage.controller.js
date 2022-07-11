@@ -850,7 +850,7 @@ sap.ui.define([
 					"Langud": this.autoPopulateValueList.Langud,
 					"Noofepi": "",
 					"Amrtpercost": "0.00",
-					"Estprgreldt": "",
+					"Estprgreldt": null,
 					"BudgetCurr": "INR",
 					"Waers": "INR",
 					"OwnchnlPerc": "100.00",
@@ -1427,7 +1427,7 @@ sap.ui.define([
 					Prdnm: dealMemoDetailInfo.Prdnm,
 					Exprdnm: dealMemoDetailInfo.Exprdnm,
 					Costcenter: dealMemoDetailInfo.Costcenter,
-					Estprgreldt: dealMemoDetailInfo.Estprgreldt !== "" ? Formatter.formatDateValForBackend(dealMemoDetailInfo.Estprgreldt) : "",
+					Estprgreldt: dealMemoDetailInfo.Estprgreldt !== null ? Formatter.formatDateValForBackend(dealMemoDetailInfo.Estprgreldt) : null,
 					Avgepidur: Formatter.formatTimeValForBackend(dealMemoDetailInfo.Avgepidur)
 				}
 
