@@ -1433,10 +1433,14 @@ sap.ui.define([
 
 				return payload;
 			},
-			// changeEstimatedDate: function() {
-			// 	var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
-			// 	dealMemoDetailModel.refresh(true);
-			// },
+			changeEstimatedDate: function() {
+				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
+				var dealMemoDetailInfo = dealMemoDetailModel.getData();
+				if ( dealMemoDetailInfo.Estprgreldt === "") {
+					dealMemoDetailInfo.Estprgreldt = null ;
+				}
+				dealMemoDetailModel.refresh(true);
+			},
 			saveDealMemoDetailData: function() {
 				var validationFlag = this.validateBeforeSaveDetailTab();
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
