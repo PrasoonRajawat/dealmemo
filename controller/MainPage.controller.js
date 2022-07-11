@@ -1427,7 +1427,7 @@ sap.ui.define([
 					Prdnm: dealMemoDetailInfo.Prdnm,
 					Exprdnm: dealMemoDetailInfo.Exprdnm,
 					Costcenter: dealMemoDetailInfo.Costcenter,
-					Estprgreldt: dealMemoDetailInfo.Estprgreldt !== "" && null && undefined ? Formatter.formatDateValForBackend(dealMemoDetailInfo.Estprgreldt) : null,
+					Estprgreldt: dealMemoDetailInfo.Estprgreldt !== "" ? Formatter.formatDateValForBackend(dealMemoDetailInfo.Estprgreldt) : "",
 					Avgepidur: Formatter.formatTimeValForBackend(dealMemoDetailInfo.Avgepidur)
 				}
 
