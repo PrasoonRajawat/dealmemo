@@ -152,7 +152,7 @@
 					<l:GridData span="XL2 L2 M6 S12"/>
 				</layoutData>
 			</Label>
-			<DatePicker width="80%" value="{path:'dealMemoDetailModel>/Estprgreldt'}" placeholder="dd-mm-yyyy" valueFormat="yyyy-MM-dd" displayFormat="dd-MM-yyyy" editable="{path:'dealMemoDetailModel>/Dmst',formatter:'.Formatter.formatEditableStatus'}">
+			<DatePicker width="80%" change="changeEstimatedDate" value="{path:'dealMemoDetailModel>/Estprgreldt'}" placeholder="dd-mm-yyyy" valueFormat="yyyy-MM-dd" displayFormat="dd-MM-yyyy" editable="{path:'dealMemoDetailModel>/Dmst',formatter:'.Formatter.formatEditableStatus'}">
 				<layoutData>
 					<l:GridData span="XL4 L4 M6 S12"/>
 				</layoutData>
