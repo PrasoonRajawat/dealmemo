@@ -154,7 +154,7 @@ sap.ui.define([
 					.Dmver + "',Transtp='D')";
 				var oModel = this.getView().getModel();
 
-				//sap.ui.core.BusyIndicator.show(0);
+				sap.ui.core.BusyIndicator.show(0);
 				oModel.read(odetailEntityPath, {
 					urlParameters: {
 						"$expand": "DmCostSet,DmCoSet"
@@ -174,7 +174,7 @@ sap.ui.define([
 						sap.ui.core.BusyIndicator.hide();
 					}.bind(this),
 					error: function() {
-
+						sap.ui.core.BusyIndicator.hide();
 					}
 				});
 			},
@@ -485,7 +485,7 @@ sap.ui.define([
 					"Depthd": "",
 					"Dept": "",
 					"Grsescr": "",
-					"Recont": vendorContractDetailInfo.Cntsc === "Z0" ? true : false 
+					"Recont": vendorContractDetailInfo.Cntsc === "Z0" ? true : false
 				});
 				if (vendorContractModel.oData.contractMode === "Ch") {
 					vendorContractModel.oData.createParams.Zstext = vendorContractModel.oData.DmCoSet.results.find(d => d.Contno ===
@@ -897,7 +897,7 @@ sap.ui.define([
 			},
 
 			reloadVendorContractTabs: function() {
-					sap.ui.core.BusyIndicator.show(0);
+				sap.ui.core.BusyIndicator.show(0);
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
 				var oPath = "/DmCoSet(Tentid='IBS',Dmno='" + vendorContractDetailInfo.Dmno + "',Dmver='" + vendorContractDetailInfo.Dmver +
@@ -1212,7 +1212,7 @@ sap.ui.define([
 			},
 
 			displayEpisodeTabData: function(vcEpiTabData) {
-					sap.ui.core.BusyIndicator.show(0);
+				sap.ui.core.BusyIndicator.show(0);
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
 				var oPayLoad = {};
@@ -1258,10 +1258,10 @@ sap.ui.define([
 
 						}
 						vendorContractModel.refresh(true);
-							sap.ui.core.BusyIndicator.hide();
+						sap.ui.core.BusyIndicator.hide();
 					}.bind(this),
 					error: function(oError) {
-							sap.ui.core.BusyIndicator.hide();
+						sap.ui.core.BusyIndicator.hide();
 						var oBody = JSON.parse(oError.responseText);
 						var oMsg = oBody.error.innererror.errordetails[0].message;
 						MessageBox.error(oMsg);
@@ -1727,7 +1727,8 @@ sap.ui.define([
 					});
 					if (episodeList.length > 0) {
 						for (let i = 0; i <= episodeList.length - 1; i++) {
-							if (vendorContractDetailInfo.DmCmSet.results.findIndex(v => v.Epiid == episodeList[i] && v.Mscompdt && vendorContractDetailInfo.mileStonesForEpi.findIndex(obj => obj.Mstcd != v.Msid) == -1 ) == -1 ) {
+							if (vendorContractDetailInfo.DmCmSet.results.findIndex(v => v.Epiid == episodeList[i] && v.Mscompdt && vendorContractDetailInfo.mileStonesForEpi
+									.findIndex(obj => obj.Mstcd != v.Msid) == -1) == -1) {
 								response.allowedEpisodes.push(episodeList[i]);
 							} else {
 								response.warningMessage = true;
@@ -1737,13 +1738,14 @@ sap.ui.define([
 					};
 				} else if (vendorContractDetailInfo.epiPaymentFromId != "" && vendorContractDetailInfo.epiPaymentToId != "") { // Range of Episodes
 					for (let i = vendorContractDetailInfo.epiPaymentFromId; i <= vendorContractDetailInfo.epiPaymentToId; i++) {
-						if (vendorContractDetailInfo.DmCmSet.results.findIndex(v => v.Mscompdt && v.Epiid == i && vendorContractDetailInfo.mileStonesForEpi.findIndex(obj => obj.Mstcd != v.Msid) == -1) == -1 ) {
+						if (vendorContractDetailInfo.DmCmSet.results.findIndex(v => v.Mscompdt && v.Epiid == i && vendorContractDetailInfo.mileStonesForEpi
+								.findIndex(obj => obj.Mstcd != v.Msid) == -1) == -1) {
 							response.allowedEpisodes.push(i);
 						} else {
 							response.warningMessage = true;
 						}
 					};
-					
+
 				}
 
 				return response;
@@ -1882,7 +1884,7 @@ sap.ui.define([
 				var validationResponse = this.validateMilestoneAchievementDate();
 				var continueProcessing = true;
 				if (validationResponse.warningMessage) {
-					if(validationResponse.allowedEpisodes.length == 0){
+					if (validationResponse.allowedEpisodes.length == 0) {
 						MessageBox.error("Milestone has already been achieved, no changes can be made.");
 						return;
 					}
@@ -2716,7 +2718,7 @@ sap.ui.define([
 			},
 
 			onSaveVendorContract: function() {
-					sap.ui.core.BusyIndicator.show(0);
+				sap.ui.core.BusyIndicator.show(0);
 				var oTab = this.getView().byId("idVCTabBar").getSelectedKey();
 				if (oTab === "vcEpiData") {
 					this.createEpiTabVC();
@@ -2727,7 +2729,7 @@ sap.ui.define([
 				} else if (oTab === "vcIPRData") {
 					this.saveIPRTabVC();
 				}
-					sap.ui.core.BusyIndicator.hide();
+				sap.ui.core.BusyIndicator.hide();
 			},
 			onSearchSelection: function(oEvent) {
 				var sValue = oEvent.getParameter("value");
