@@ -126,7 +126,7 @@ sap.ui.define([
 					.Dmver + "',Transtp='D')";
 				var oModel = this.getView().getModel();
 
-				//sap.ui.core.BusyIndicator.show(0);
+				sap.ui.core.BusyIndicator.show(0);
 				oModel.read(odetailEntityPath, {
 					urlParameters: {
 						"$expand": "DmCostSet,DmCoSet"
@@ -144,7 +144,7 @@ sap.ui.define([
 						sap.ui.core.BusyIndicator.hide();
 					}.bind(this),
 					error: function() {
-
+						sap.ui.core.BusyIndicator.hide();
 					}
 				});
 			},
@@ -1021,7 +1021,7 @@ sap.ui.define([
 				this._oSelectEpisodeDialog.close();
 			},
 			displayEpisodeTabData: function(EpiTabData) {
-					sap.ui.core.BusyIndicator.show(0);
+				sap.ui.core.BusyIndicator.show(0);
 				var artistContractModel = this.getView().getModel("artistContractModel");
 				var artistContractDetailInfo = artistContractModel.getData();
 				var oPayLoad = {};
@@ -1068,10 +1068,10 @@ sap.ui.define([
 						}
 
 						artistContractModel.refresh(true);
-							sap.ui.core.BusyIndicator.hide();
+						sap.ui.core.BusyIndicator.hide();
 					}.bind(this),
 					error: function(oError) {
-							sap.ui.core.BusyIndicator.hide();
+						sap.ui.core.BusyIndicator.hide();
 						console.log(oError);
 					}
 				});
@@ -1761,12 +1761,11 @@ sap.ui.define([
 								}
 							});
 
+						}
+						artistContractModel.refresh(true);
+						this._oSelectPaymentDialogAC.close();
+					}.bind(this),
 
-							}
-							artistContractModel.refresh(true);
-							this._oSelectPaymentDialogAC.close();
-						}.bind(this),
-						
 					error: function(oError) {
 						var oBody = JSON.parse(oError.responseText);
 						var oMsg = oBody.error.innererror.errordetails[0].message;
