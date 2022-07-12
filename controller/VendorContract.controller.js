@@ -1212,7 +1212,7 @@ sap.ui.define([
 			},
 
 			displayEpisodeTabData: function(vcEpiTabData) {
-
+					sap.ui.core.BusyIndicator.show(0);
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
 				var oPayLoad = {};
@@ -1258,8 +1258,10 @@ sap.ui.define([
 
 						}
 						vendorContractModel.refresh(true);
+							sap.ui.core.BusyIndicator.hide();
 					}.bind(this),
 					error: function(oError) {
+							sap.ui.core.BusyIndicator.hide();
 						var oBody = JSON.parse(oError.responseText);
 						var oMsg = oBody.error.innererror.errordetails[0].message;
 						MessageBox.error(oMsg);

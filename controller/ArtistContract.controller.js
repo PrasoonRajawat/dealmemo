@@ -1021,7 +1021,7 @@ sap.ui.define([
 				this._oSelectEpisodeDialog.close();
 			},
 			displayEpisodeTabData: function(EpiTabData) {
-
+					sap.ui.core.BusyIndicator.show(0);
 				var artistContractModel = this.getView().getModel("artistContractModel");
 				var artistContractDetailInfo = artistContractModel.getData();
 				var oPayLoad = {};
@@ -1068,8 +1068,10 @@ sap.ui.define([
 						}
 
 						artistContractModel.refresh(true);
+							sap.ui.core.BusyIndicator.hide();
 					}.bind(this),
 					error: function(oError) {
+							sap.ui.core.BusyIndicator.hide();
 						console.log(oError);
 					}
 				});
