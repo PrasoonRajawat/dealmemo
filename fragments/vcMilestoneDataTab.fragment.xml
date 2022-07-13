@@ -28,9 +28,9 @@
 			<!--<Column minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">-->
 			<!--	<ObjectIdentifier title="{i18n>lblPaymentTerm}"></ObjectIdentifier>-->
 			<!--</Column>-->
-			<Column hAlign="Right" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
-				<ObjectIdentifier title="{i18n>lblPercentage}"></ObjectIdentifier>
-			</Column>
+			<!--<Column hAlign="Right" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">-->
+			<!--	<ObjectIdentifier title="{i18n>lblPercentage}"></ObjectIdentifier>-->
+			<!--</Column>-->
 			<Column hAlign="Right" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
 				<ObjectIdentifier title="{i18n>lblAmountDue}"></ObjectIdentifier>
 			</Column>
@@ -43,7 +43,7 @@
 					<Label text="{vendorContractModel>Dmver}"></Label>
 					 <Text text="{vendorContractModel>Epiid}" class="sapUiSizeCompact"/>
 					<!--<ObjectIdentifier text="{vendorContractModel>Ztermt}"></ObjectIdentifier>-->
-					<Label text="{vendorContractModel>Amtper}"></Label>
+					<!--<Label text="{vendorContractModel>Amtper}"></Label>-->
 					<Label text="{path:'vendorContractModel>Dueamt', type:'sap.ui.model.type.Float',formatOptions: { maxFractionDigits: 2 }}"></Label>
 				</cells>
 			</ColumnListItem>
