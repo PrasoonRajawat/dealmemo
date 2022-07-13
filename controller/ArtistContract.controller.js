@@ -1891,10 +1891,13 @@ sap.ui.define([
 				var paramObj = {
 					"IV_TENTID": "IBS",
 					"IV_DMNO": artistContractDetailInfo.Dmno,
-					"IV_DMVER": artistContractDetailInfo.Dmver
+					"IV_DMVER": artistContractDetailInfo.Dmver,
+					"IV_CONTNO": vendorContractDetailInfo.Contno,
+					"IV_CONTVER": vendorContractDetailInfo.Contver,
+					"IV_CONTTP": vendorContractDetailInfo.Conttp
 
 				};
-				oModel.callFunction("/GenerateVersion", {
+				oModel.callFunction("/GenerateContVersion", {
 					method: "GET",
 					urlParameters: paramObj,
 					success: function(oData, response) {
