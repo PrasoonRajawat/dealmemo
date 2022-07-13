@@ -4040,6 +4040,7 @@ sap.ui.define([
 			},
 
 			onSubmitDm: function() {
+					sap.ui.core.BusyIndicator.show(0);
 				var oModel = this.getView().getModel();
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
@@ -4053,13 +4054,14 @@ sap.ui.define([
 					method: "GET",
 					urlParameters: paramObj,
 					success: function(oData, response) {
-
+						sap.ui.core.BusyIndicator.hide();
 						dealMemoDetailModel.setProperty("/costCodes", oData.results);
 						dealMemoDetailModel.refresh(true);
 						this.loadDealMemoList();
 
 					}.bind(this),
 					error: function(oError) {
+						sap.ui.core.BusyIndicator.hide();
 						var oErrorResponse = JSON.parse(oError.responseText);
 						var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
 						MessageBox.error(oMsg);
@@ -4089,6 +4091,7 @@ sap.ui.define([
 				}
 			},
 			onRejectedDm: function() {
+					sap.ui.core.BusyIndicator.show(0);
 				var oModel = this.getView().getModel();
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
@@ -4102,7 +4105,7 @@ sap.ui.define([
 					method: "GET",
 					urlParameters: paramObj,
 					success: function(oData, response) {
-
+		sap.ui.core.BusyIndicator.hide();
 						dealMemoDetailModel.setProperty("/costCodes", oData.results);
 						dealMemoDetailModel.refresh(true);
 						// this.newVersionCreated = true;
@@ -4111,6 +4114,7 @@ sap.ui.define([
 
 					}.bind(this),
 					error: function(oError) {
+								sap.ui.core.BusyIndicator.hide();
 						var oErrorResponse = JSON.parse(oError.responseText);
 						var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
 						MessageBox.error(oMsg);
@@ -4120,6 +4124,7 @@ sap.ui.define([
 
 			},
 			onChangeDm: function() {
+					sap.ui.core.BusyIndicator.show(0);
 				var oModel = this.getView().getModel();
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
@@ -4133,7 +4138,7 @@ sap.ui.define([
 					method: "GET",
 					urlParameters: paramObj,
 					success: function(oData, response) {
-
+		sap.ui.core.BusyIndicator.hide();
 						dealMemoDetailModel.setProperty("/costCodes", oData.results);
 						dealMemoDetailModel.refresh(true);
 						this.newVersionCreated = true;
@@ -4141,6 +4146,7 @@ sap.ui.define([
 
 					}.bind(this),
 					error: function(oError) {
+								sap.ui.core.BusyIndicator.hide();
 						var oErrorResponse = JSON.parse(oError.responseText);
 						var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
 						MessageBox.error(oMsg);
