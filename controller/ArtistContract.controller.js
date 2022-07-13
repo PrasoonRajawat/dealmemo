@@ -164,17 +164,17 @@ sap.ui.define([
 						artistContractModel.setProperty("/Ebeln", oData.Ebeln);
 						artistContractModel.setProperty("/epiDeleteEnable", false);
 						artistContractModel.setProperty("/saveVisible", true);
-						if (artistContractDetailInfo.App === "App") { // added by dhiraj on 20/05/2022 for submit butn.
+						if (artistContractDetailInfo.Contstat === "01" || artistContractDetailInfo.Contstat === "03") { // added by dhiraj on 20/05/2022 for submit butn.
 							artistContractModel.setProperty("/submitVisible", true);
 						} else {
 							artistContractModel.setProperty("/submitVisible", false);
 						}
-						if (artistContractDetailInfo.App === "App" && artistContractDetailInfo.Contno !== "new") {
+						if (artistContractDetailInfo.Contno !== "new") {
 							artistContractModel.setProperty("/releaseTabVisible", true);
 						} else {
 							artistContractModel.setProperty("/releaseTabVisible", false);
 						}
-						if (artistContractDetailInfo.App === "App" && artistContractDetailInfo.Dmst === "04") {
+						if (artistContractDetailInfo.Contstat === "04") {
 							artistContractModel.setProperty("/changeVisible", true);
 						} else {
 							artistContractModel.setProperty("/changeVisible", false);
@@ -1327,17 +1327,17 @@ sap.ui.define([
 						artistContractDetailInfo.ContDate = Formatter.formatDateVal(oData.Contdt),
 							oData.Cntnm = artistContractDetailInfo.Cntnm;
 						artistContractDetailInfo.saveVisible = true;
-						if (artistContractDetailInfo.App === "App") { // added by dhiraj on 20/05/2022 for submit butn.
+						if (artistContractDetailInfo.Contstat === "01" || artistContractDetailInfo.Contstat === "03") { // added by dhiraj on 20/05/2022 for submit butn.
 							artistContractModel.setProperty("/submitVisible", true);
 						} else {
 							artistContractModel.setProperty("/submitVisible", false);
 						}
-						if (artistContractDetailInfo.App === "App" && artistContractDetailInfo.Contno !== "new") {
+						if (artistContractDetailInfo.Contno !== "new") {
 							artistContractModel.setProperty("/releaseTabVisible", true);
 						} else {
 							artistContractModel.setProperty("/releaseTabVisible", false);
 						}
-						if (artistContractDetailInfo.App === "App" && artistContractDetailInfo.Dmst === "04") {
+						if (artistContractDetailInfo.Contstat === "04") {
 							artistContractModel.setProperty("/changeVisible", true);
 						} else {
 							artistContractModel.setProperty("/changeVisible", false);
