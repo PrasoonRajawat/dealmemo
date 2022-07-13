@@ -1884,6 +1884,26 @@ sap.ui.define([
 				var oBinding = oEvent.getParameter("itemsBinding");
 				oBinding.filter([oFilter]);
 			},
+			onConfirmChangeAC: function() {
+				var oModel = this.getView().getModel();
+				var artistContractModel = this.getView().getModel("artistContractModel");
+				var artistContractDetailInfo = artistContractModel.getData();
+
+				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
+				MessageBox.confirm(oSourceBundle.getText("msgcreateNewVersion"), {
+					actions: [oSourceBundle.getText("lblYes"), oSourceBundle.getText("lblNo")],
+					emphasizedAction: "Yes",
+					onClose: function(sAction) {
+						if (sAction === oSourceBundle.getText("lblYes")) {
+
+							this.onChangeAC();
+						} else if (sAction === oSourceBundle.getText("lblNo")) {
+
+						}
+					}.bind(this)
+				});
+
+			},
 			onChangeAC: function() {
 				var oModel = this.getView().getModel();
 				var artistContractModel = this.getView().getModel("artistContractModel");
@@ -1892,9 +1912,9 @@ sap.ui.define([
 					"IV_TENTID": "IBS",
 					"IV_DMNO": artistContractDetailInfo.Dmno,
 					"IV_DMVER": artistContractDetailInfo.Dmver,
-					"IV_CONTNO": vendorContractDetailInfo.Contno,
-					"IV_CONTVER": vendorContractDetailInfo.Contver,
-					"IV_CONTTP": vendorContractDetailInfo.Conttp
+					"IV_CONTNO": artistContractDetailInfo.Contno,
+					"IV_CONTVER": artistContractDetailInfo.Contver,
+					"IV_CONTTP": artistContractDetailInfo.Conttp
 
 				};
 				oModel.callFunction("/GenerateContVersion", {
