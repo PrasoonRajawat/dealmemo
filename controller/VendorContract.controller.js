@@ -205,7 +205,7 @@ sap.ui.define([
 					"vcDeliveryDataColor": "Critical",
 					"vcEpiNonCostCdDataColor": "Critical",
 					"saveVisible": true,
-					"submitVisible":  vendorContractDetailInfo.Contno !== "new" ? true : false,
+					"submitVisible": vendorContractDetailInfo.Contno !== "new" ? true : false,
 					"releaseTabVisible": vendorContractDetailInfo.Contno !== "new" ? true : false,
 					"changeVisible": vendorContractDetailInfo.Contstat === "04" ? true : false,
 					"editDepartmentVisible": true,
@@ -3430,6 +3430,7 @@ sap.ui.define([
 			},
 
 			onChangeVC: function() {
+				sap.ui.core.BusyIndicator.show(0);
 				var oModel = this.getView().getModel();
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
@@ -3446,7 +3447,7 @@ sap.ui.define([
 					method: "GET",
 					urlParameters: paramObj,
 					success: function(oData, response) {
-
+						sap.ui.core.BusyIndicator.hide();
 						// vendorContractDetailInfo.setProperty("/costCodes", oData.results);
 						vendorContractModel.refresh(true);
 						this.newVersionCreated = true;
@@ -3454,6 +3455,7 @@ sap.ui.define([
 
 					}.bind(this),
 					error: function(oError) {
+						sap.ui.core.BusyIndicator.hide();
 						var oErrorResponse = JSON.parse(oError.responseText);
 						var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
 						MessageBox.error(oMsg);
