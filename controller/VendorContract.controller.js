@@ -205,7 +205,7 @@ sap.ui.define([
 					"vcDeliveryDataColor": "Critical",
 					"vcEpiNonCostCdDataColor": "Critical",
 					"saveVisible": true,
-					"submitVisible": vendorContractDetailInfo.App === "App" && vendorContractDetailInfo.Contno !== "new" ? true : false,
+					"submitVisible":  vendorContractDetailInfo.Contno !== "new" ? true : false,
 					"releaseTabVisible": vendorContractDetailInfo.Contno !== "new" ? true : false,
 					"changeVisible": vendorContractDetailInfo.Contstat === "04" ? true : false,
 					"editDepartmentVisible": true,
@@ -973,7 +973,7 @@ sap.ui.define([
 							oData.vcTabEnable = false;
 						}
 						oData.submitVisible = false;
-						if (vendorContractDetailInfo.App === "App" && (oData.Contstat === "01" || oData.Contstat === "03")) { // added by dhiraj on 20/05/2022 for submit butn.
+						if ((oData.Contstat === "01" || oData.Contstat === "03")) { // added by dhiraj on 20/05/2022 for submit butn.
 							oData.submitVisible = true;
 						}
 						oData.releaseTabVisible = false;
