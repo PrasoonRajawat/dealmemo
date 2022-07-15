@@ -1946,8 +1946,8 @@ sap.ui.define([
 				var newVersionCv = parseInt(artistContractDetailInfo.Contver) + parseInt("1");
 				artistContractDetailInfo.Contver = "00" + newVersionCv;
 
-				var newVersionDv = parseInt(artistContractDetailInfo.Dmver) + parseInt("1");
-				artistContractDetailInfo.Dmver = "00" + newVersionDv;
+				// var newVersionDv = parseInt(artistContractDetailInfo.Dmver) + parseInt("1");
+				// artistContractDetailInfo.Dmver = "00" + newVersionDv;
 
 				oRouter.navTo("VendorContract", {
 					"Dmno": artistContractDetailInfo.Dmno,
