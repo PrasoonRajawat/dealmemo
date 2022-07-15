@@ -1443,7 +1443,7 @@ sap.ui.define([
 				artistContractDetailInfo.acPaymentDataMsgVisible = false;
 				artistContractDetailInfo.acPaymentDataErrorMsg = "";
 				artistContractDetailInfo.pushBtnEnable = false;
-				artistContractDetailInfo.colPercAmntLabel = "Percentage";
+				artistContractDetailInfo.colPercAmntLabel = "Amount";
 				var DmCmSetData = artistContractDetailInfo.DmCoSet.DmCmSet.results;
 				var DmCmSetEpIds = DmCmSetData.map(function(dmcmobj) {
 					return dmcmobj.Epiid;
@@ -1470,15 +1470,15 @@ sap.ui.define([
 						this._oSelectPaymentDialogAC = oFragment; //sap.ui.xmlfragment("com.ui.dealmemolocal.fragments.SelectPaymentDialog", this);
 						this.getView().addDependent(this._oSelectPaymentDialogAC);
 						this.byId(sap.ui.core.Fragment.createId("acPaymentDialog", "list_mlListAC")).removeSelections();
-						this.byId(sap.ui.core.Fragment.createId("acPaymentDialog", "rbAmntTypeAC")).setSelectedIndex(0);
-
+						this.byId(sap.ui.core.Fragment.createId("acPaymentDialog", "rbAmntTypeAC")).setSelectedIndex(1);
+						this.byId(sap.ui.core.Fragment.createId("vcPaymentDialog", "rbAmtPerc")).setEditable(vendorContractDetailInfo.Contver == 1);
 						this._oSelectPaymentDialogAC.open();
 					}.bind(this));
 
 				} else {
 					this.byId(sap.ui.core.Fragment.createId("acPaymentDialog", "list_mlListAC")).removeSelections();
-					this.byId(sap.ui.core.Fragment.createId("acPaymentDialog", "rbAmntTypeAC")).setSelectedIndex(0);
-
+					this.byId(sap.ui.core.Fragment.createId("acPaymentDialog", "rbAmntTypeAC")).setSelectedIndex(1);
+					this.byId(sap.ui.core.Fragment.createId("vcPaymentDialog", "rbAmtPerc")).setEditable(vendorContractDetailInfo.Contver == 1);
 					this._oSelectPaymentDialogAC.open();
 				}
 			},
