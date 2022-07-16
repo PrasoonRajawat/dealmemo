@@ -1471,14 +1471,14 @@ sap.ui.define([
 						this.getView().addDependent(this._oSelectPaymentDialogAC);
 						this.byId(sap.ui.core.Fragment.createId("acPaymentDialog", "list_mlListAC")).removeSelections();
 						this.byId(sap.ui.core.Fragment.createId("acPaymentDialog", "rbAmntTypeAC")).setSelectedIndex(1);
-						this.byId(sap.ui.core.Fragment.createId("acPaymentDialog", "rbAmtPerc")).setEditable(vendorContractDetailInfo.Contver == 1);
+						this.byId(sap.ui.core.Fragment.createId("acPaymentDialog", "rbAmtPerc")).setEditable(artistContractDetailInfo.Contver == 1);
 						this._oSelectPaymentDialogAC.open();
 					}.bind(this));
 
 				} else {
 					this.byId(sap.ui.core.Fragment.createId("acPaymentDialog", "list_mlListAC")).removeSelections();
 					this.byId(sap.ui.core.Fragment.createId("acPaymentDialog", "rbAmntTypeAC")).setSelectedIndex(1);
-					this.byId(sap.ui.core.Fragment.createId("acPaymentDialog", "rbAmtPerc")).setEditable(vendorContractDetailInfo.Contver == 1);
+					this.byId(sap.ui.core.Fragment.createId("acPaymentDialog", "rbAmtPerc")).setEditable(artistContractDetailInfo.Contver == 1);
 					this._oSelectPaymentDialogAC.open();
 				}
 			},
