@@ -2624,7 +2624,8 @@ sap.ui.define([
 			},
 			onValueHelpNonAmort: function(oEvent) {
 				var oPath = oEvent.getSource().getBindingContext("vendorContractModel").sPath;
-
+				oEvent.getSource().getBindingContext("vendorContractModel").getObject().flag = "Ch";
+				this.getView().getModel("vendorContractModel").refresh(true);
 				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
 				this.oValueHelpSelectionParams = {
 					"bindPathName": "vendorContractModel>/nonAmmortPatternList",
@@ -2641,7 +2642,8 @@ sap.ui.define([
 			},
 			onValueHelpTerritory: function(oEvent) {
 				var oPath = oEvent.getSource().getBindingContext("vendorContractModel").sPath;
-
+				oEvent.getSource().getBindingContext("vendorContractModel").getObject().flag = "Ch";
+				this.getView().getModel("vendorContractModel").refresh(true);
 				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
 				this.oValueHelpSelectionParams = {
 					"bindPathName": "vendorContractModel>/teritoryList",
