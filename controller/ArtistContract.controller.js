@@ -1954,7 +1954,7 @@ sap.ui.define([
 					"Dmver": artistContractDetailInfo.Dmver,
 					"Contno": artistContractDetailInfo.Contno,
 					"Contver": artistContractDetailInfo.Contver,
-					"App": "App"
+					"App": artistContractDetailInfo.App
 				});
 			},
 			//Release Status
