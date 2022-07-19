@@ -1964,7 +1964,7 @@ sap.ui.define([
 						alreadySavedflag = false;
 						delete epiPaymentObj.flag;
 						var oPath = "/DmCmSet(Tentid='IBS',Dmno='" + vendorContractDetailInfo.Dmno + "',Dmver='" + vendorContractDetailInfo.Dmver +
-							"',Conttp='01',Contno='" + vendorContractDetailInfo.Contno + "',Contver='" + vendorContractDetailInfo.Contver + "',Epiid='" +
+							"',Conttp='02',Contno='" + vendorContractDetailInfo.Contno + "',Contver='" + vendorContractDetailInfo.Contver + "',Epiid='" +
 							epiPaymentObj.Epiid + "',Seqnr='" + epiPaymentObj.Seqnr +
 							"',Msid='" + epiPaymentObj.Msid + "')";
 
