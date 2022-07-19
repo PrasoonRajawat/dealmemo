@@ -1859,7 +1859,7 @@ sap.ui.define([
 							"',Msid='" + epiPaymentObj.Msid + "')";
 
 						oModel.update(oPath, epiPaymentObj, {
-							groupId: "epiPaymentVCChanges"
+							groupId: "epiPaymentACChanges"
 						});
 					}
 				}.bind(this));
