@@ -250,7 +250,8 @@ sap.ui.define([
 
 						// dealMemoDetailModel.setProperty("/costCodes", oData.results);
 						vendorContractModel.refresh(true);
-						this.loadDealMemoList();
+						// this.loadDealMemoList();
+						this.loadDealMemoDetails();
 
 					}.bind(this),
 					error: function(oError) {
