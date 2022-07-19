@@ -1756,6 +1756,7 @@ sap.ui.define([
 								} else {
 									if (artistContractDetailInfo.acPaymentData[oInd].episodeSaveFlag) {
 										obj.flag = "Ch";
+										obj.Updkz = "U";
 									}
 									artistContractDetailInfo.acPaymentData[oInd] = obj;
 								}
@@ -1815,6 +1816,7 @@ sap.ui.define([
 				var alreadySavedflag = true;
 				var oModel = this.getView().getModel();
 				oModel.setUseBatch(true);
+				oModel.sDefaultUpdateMethod = "PUT";
 				oModel.setDeferredGroups(oModel.getDeferredGroups().concat(["epiPaymentACChanges"]));
 				var mParameters = {
 					groupId: "epiPaymentACChanges",
