@@ -3481,7 +3481,7 @@ sap.ui.define([
 					"Dmver": vendorContractDetailInfo.Dmver,
 					"Contno": vendorContractDetailInfo.Contno,
 					"Contver": vendorContractDetailInfo.Contver,
-					"App": "App"
+					"App": vendorContractDetailInfo.App
 				});
 			},
 			//Release Status
