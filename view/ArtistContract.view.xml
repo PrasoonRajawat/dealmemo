@@ -6,11 +6,12 @@
 				<Panel expandable="false" expanded="true" backgroundDesign="Transparent" id="idObjHd">
 					<!--Made expandable="false" and added "id" property By  Lakshmana on 27.05.2020  for Deal Memo Changes-->
 					<ObjectHeader title="{i18n>lblArtistContract} : {artistContractModel>/vendorName} ({artistContractModel>/vendorRoleName})"
-						number="{path:'artistContractModel>/Totcost', type:'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 2 }}"
+						number="{ parts: [ {path: 'artistContractModel>/Totcost'}, {path: 'artistContractModel>/Waers'} ], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false,minFractionDigits: 2, maxFractionDigits: 2 } }"
 						intro="{artistContractModel>/Contno}({artistContractModel>/Contver})" numberUnit="{artistContractMode>/Waers}" responsive="true"
 						fullScreenOptimized="true" numberState="Success">
 						<statuses>
 								<ObjectStatus text="{artistContractModel>/Contstatdesc}" state="{path:'artistContractModel>/Contstat',formatter:'.Formatter.formatDealMemoStatus'}" />
+								<ObjectStatus title="{i18n>lblDealMemo}" text="{artistContractModel>/Dmno}"/>
 							<ObjectStatus title="{i18n>lblTotBudget}"
 								text="{path:'artistContractModel>/Totartbud', type:'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 2 }}"/>
 							<ObjectStatus title="{i18n>lblContent}" text="{artistContractModel>/Cntnm}"/>
