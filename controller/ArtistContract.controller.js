@@ -1274,7 +1274,7 @@ sap.ui.define([
 				sap.ui.core.BusyIndicator.hide();
 			},
 			reloadArtistContractTabs: function() {
-				sap.ui.core.BusyIndicator.show(0);
+			
 				var artistContractModel = this.getView().getModel("artistContractModel");
 				var artistContractDetailInfo = artistContractModel.getData();
 				var oPath = "/DmCoSet(Tentid='IBS',Dmno='" + artistContractDetailInfo.Dmno + "',Dmver='" + artistContractDetailInfo.Dmver +
@@ -1286,6 +1286,7 @@ sap.ui.define([
 						"$expand": "DmCeSet,DmCmSet,DmCeBalAmtSet"
 					},
 					success: function(oData) {
+							sap.ui.core.BusyIndicator.show(0);
 						oData.DmCeSet.results.map(function(obj) {
 							obj.Diff = (parseFloat(obj.Coepiamt) - (parseFloat(obj.Baseamt) + parseFloat(obj.Wmwst))).toFixed(2);
 							obj.epiCostEditFlag = false;
