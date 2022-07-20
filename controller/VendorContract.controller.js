@@ -898,7 +898,7 @@ sap.ui.define([
 			},
 
 			reloadVendorContractTabs: function() {
-				sap.ui.core.BusyIndicator.show(0);
+				
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
 				var oPath = "/DmCoSet(Tentid='IBS',Dmno='" + vendorContractDetailInfo.Dmno + "',Dmver='" + vendorContractDetailInfo.Dmver +
@@ -910,6 +910,7 @@ sap.ui.define([
 						"$expand": "DmCeSet,DmCmSet,DmVdSet,DmVrSet,DmCeBalAmtSet"
 					},
 					success: function(oData) {
+						sap.ui.core.BusyIndicator.show(0);
 						oData.Chnlnm = vendorContractDetailInfo.Chnlnm;
 						oData.Cntnm = vendorContractDetailInfo.Cntnm;
 						oData.DmCeSet.results.map(function(obj) {
