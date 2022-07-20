@@ -7,7 +7,7 @@
 					<!--Made expandable="false" and added "id" property By  Lakshmana on 27.05.2020  for Deal Memo Changes-->
 					<ObjectHeader title="{i18n>lblArtistContract} : {artistContractModel>/vendorName} ({artistContractModel>/vendorRoleName})"
 						number="{ parts: [ {path: 'artistContractModel>/Totcost'}, {path: 'artistContractModel>/Waers'} ], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false,minFractionDigits: 2, maxFractionDigits: 2 } }"
-						intro="{artistContractModel>/Contno}({artistContractModel>/Contver})" numberUnit="{artistContractMode>/Waers}" responsive="true"
+						intro="{artistContractModel>/Contno}({artistContractModel>/Contver})" numberUnit="{artistContractModel>/Waers}" responsive="true"
 						fullScreenOptimized="true" numberState="Success">
 						<statuses>
 								<ObjectStatus text="{artistContractModel>/Contstatdesc}" state="{path:'artistContractModel>/Contstat',formatter:'.Formatter.formatDealMemoStatus'}" />
