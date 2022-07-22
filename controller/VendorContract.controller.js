@@ -732,10 +732,11 @@ sap.ui.define([
 				oModel.read("/F4TaxCodeSet", {
 					filters: aFilters,
 					success: function(oData) {
-						var filteredList = oData.results.filter(function(obj) {
-							return obj.Mwskz.includes("V")
-						});
-						vendorContractModel.setProperty("/taxCodeList", filteredList);
+						// var filteredList = oData.results.filter(function(obj) {
+						// 	return obj.Mwskz.includes("V")
+						// });
+						// vendorContractModel.setProperty("/taxCodeList", filteredList);
+						vendorContractModel.setProperty("/taxCodeList", oData);
 						vendorContractModel.refresh(true);
 						sap.ui.core.BusyIndicator.hide();
 

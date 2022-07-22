@@ -1,4 +1,3 @@
-
 <c:FragmentDefinition
 	xmlns="sap.m" xmlns:l="sap.ui.layout"
 	xmlns:c="sap.ui.core">
@@ -17,17 +16,26 @@
 					<l:GridData span="XL12 L12 M12 S12"/>
 				</layoutData>
 			</Input>
-			
-			<Label text="{i18n>lbl_ChannelCategory}" design="Bold" class="sapUiTinyMarginTop" required="true">
+				<Label text="{i18n>lblSubCategory}" design="Bold" lass="sapUiTinyMarginTop" required="true">
 				<layoutData>
-					<l:GridData span="XL12 L12 M12 S12"/>
+					<l:GridData span="XL12 L12 M12 S12"/>-->
 				</layoutData>
 			</Label>
-			<Input width="100%" value="{dealMemoModel>/createParams/Contcat}" showValueHelp="true" valueHelpRequest="onValueHelpContentCategory">
+			<Input width="100%" value="{dealMemoModel>/createParams/Contsc}" showValueHelp="true" valueHelpRequest="onValueHelpContentSubCategory">
 				<layoutData>
 					<l:GridData span="XL12 L12 M12 S12"/>
 				</layoutData>
 			</Input>
+			<!--<Label text="{i18n>lbl_ChannelCategory}" design="Bold" class="sapUiTinyMarginTop" required="true">-->
+			<!--	<layoutData>-->
+			<!--		<l:GridData span="XL12 L12 M12 S12"/>-->
+			<!--	</layoutData>-->
+			<!--</Label>-->
+			<!--<Input width="100%" value="{dealMemoModel>/createParams/Contcat}" showValueHelp="true" valueHelpRequest="onValueHelpContentCategory">-->
+			<!--	<layoutData>-->
+			<!--		<l:GridData span="XL12 L12 M12 S12"/>-->
+			<!--	</layoutData>-->
+			<!--</Input>-->
 			
 			<Label text="{i18n>lbl_contType}" design="Bold" class="sapUiTinyMarginTop" required="true">
 				<layoutData>

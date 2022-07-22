@@ -533,7 +533,7 @@ sap.ui.define([
 				var createParamsData = dealMemoModel.getData().createParams;
 				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
 				var statusFlag = true;
-				if (createParamsData.Chnlnm === "" || createParamsData.Contcat === "" || createParamsData.Conttyp === "" || createParamsData.Content ===
+				if (createParamsData.Chnlnm === "" || createParamsData.Contsc === "" || createParamsData.Conttyp === "" || createParamsData.Content ===
 					"" || createParamsData.ContentNature === "") {
 					statusFlag = false;
 					MessageBox.error(oSourceBundle.getText("msgrequiredFieds"));
@@ -600,7 +600,20 @@ sap.ui.define([
 				};
 				this.openSelectionDialog();
 			},
-
+			onValueHelpContentSubCategory: function() {
+				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
+				this.oValueHelpSelectionParams = {
+					"bindPathName": "dealMemoModel>/contentSubCategoryList",
+					"bindPropName": "dealMemoModel>Mstcdnm",
+					"propName": "Mstcdnm",
+					"keyName": "Mstcd",
+					"keyPath": "/createParams/ContscKey",
+					"valuePath": "/createParams/Contsc",
+					"valueModel": "dealMemoModel",
+					"dialogTitle": oSourceBundle.getText("titleContsc")
+				};
+				this.openSelectionDialog();
+			},
 			onValueHelpContentCategory: function() {
 				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
 				this.oValueHelpSelectionParams = {
