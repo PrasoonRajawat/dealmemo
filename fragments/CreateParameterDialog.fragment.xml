@@ -18,7 +18,7 @@
 			</Input>
 				<Label text="{i18n>lblSubCategory}" design="Bold" lass="sapUiTinyMarginTop" required="true">
 				<layoutData>
-					<l:GridData span="XL12 L12 M12 S12"/>-->
+					<l:GridData span="XL12 L12 M12 S12"/>
 				</layoutData>
 			</Label>
 			<Input width="100%" value="{dealMemoModel>/createParams/Contsc}" showValueHelp="true" valueHelpRequest="onValueHelpContentSubCategory">
