@@ -736,7 +736,7 @@ sap.ui.define([
 						// 	return obj.Mwskz.includes("V")
 						// });
 						// vendorContractModel.setProperty("/taxCodeList", filteredList);
-						vendorContractModel.setProperty("/taxCodeList", oData);
+						vendorContractModel.setProperty("/taxCodeList", oData.results);
 						vendorContractModel.refresh(true);
 						sap.ui.core.BusyIndicator.hide();
 
