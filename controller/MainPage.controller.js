@@ -2612,6 +2612,12 @@ sap.ui.define([
 				var episodeCostSheetLast = [];
 				var remainCost = "";
 				var costFlag = "";
+				var totalEpiCostsPerEpisodeLast = {
+					"AcquisitionTot": 0,
+					"ExternalTot": 0,
+					"InhouseTot": 0,
+					"Tot": 0
+				}
 				var totalEpiCostsPerEpisode = {
 					"AcquisitionTot": 0,
 					"ExternalTot": 0,
