@@ -300,7 +300,7 @@ sap.ui.define([
 				oData.results.map(function(mvObj) {
 					mvObj.Matnm = mvObj.Matid + "-" + mvObj.Matds;
 				});
-				dealMemoModel.setProperty("/matchMasterList",  oData.results);
+				dealMemoModel.setProperty("/matchMasterList", oData.results);
 				dealMemoModel.refresh(true);
 			},
 			storeMatchListInfo: function(oData) {
@@ -1449,8 +1449,8 @@ sap.ui.define([
 			changeEstimatedDate: function() {
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
-				if ( dealMemoDetailInfo.Estprgreldt === "") {
-					dealMemoDetailInfo.Estprgreldt = null ;
+				if (dealMemoDetailInfo.Estprgreldt === "") {
+					dealMemoDetailInfo.Estprgreldt = null;
 				}
 				dealMemoDetailModel.refresh(true);
 			},
@@ -2609,29 +2609,40 @@ sap.ui.define([
 				var noOfEpi = dealMemoDetailModel.getProperty("/Noofepi");
 				var budgetCostData = $.extend(true, [], dealMemoDetailModel.getData().budgetCostDataEditMode);
 				var episodeCostSheet = [];
+				var remainCost = "";
 				var totalEpiCostsPerEpisode = {
 					"AcquisitionTot": 0,
 					"ExternalTot": 0,
 					"InhouseTot": 0,
 					"Tot": 0
 				};
-				budgetCostData.map(function(budgetObj, i, budgetCostData ) {
-					
-				
+				budgetCostData.map(function(budgetObj, i, budgetCostData) {
+
 					budgetObj.Prdhsamt = parseFloat(budgetObj.Prdhsamt) / noOfEpi;
 					budgetObj.Inhouseamt = parseFloat(budgetObj.Inhouseamt) / noOfEpi;
 					budgetObj.Inhsamt = parseFloat(budgetObj.Inhsamt) / noOfEpi;
 					budgetObj.Totcostamt = parseFloat(budgetObj.Totcostamt) / noOfEpi;
-					
+
 					if (budgetObj.parenCostcd === "") {
-						totalEpiCostsPerEpisode['AcquisitionTot'] += budgetObj.Prdhsamt;
-						totalEpiCostsPerEpisode['ExternalTot'] += budgetObj.Inhsamt;
-						totalEpiCostsPerEpisode['InhouseTot'] += budgetObj.Inhouseamt;
-						totalEpiCostsPerEpisode['Tot'] += budgetObj.Totcostamt;
+						if (i + 1 === budgetCostData.length) {
+							remainCost += budgetObj.Totcostamt - (budgetObj.Prdhsamt * noOfEpi);
+							totalEpiCostsPerEpisode['AcquisitionTot'] += budgetObj.Prdhsamt + remainCost;
+							remainCost += budgetObj.Totcostamt - (budgetObj.Inhsamt * noOfEpi);
+							totalEpiCostsPerEpisode['ExternalTot'] += budgetObj.Inhsamt + remainCost;
+							remainCost += budgetObj.Totcostamt - (budgetObj.Inhouseamt * noOfEpi);
+							totalEpiCostsPerEpisode['InhouseTot'] += budgetObj.Inhouseamt + remainCost;
+							remainCost += budgetObj.Totcostamt - (budgetObj.Totcostamt * noOfEpi);
+							totalEpiCostsPerEpisode['Tot'] += budgetObj.Totcostamt + remainCost;
+						} else {
+							totalEpiCostsPerEpisode['AcquisitionTot'] += budgetObj.Prdhsamt;
+							totalEpiCostsPerEpisode['ExternalTot'] += budgetObj.Inhsamt;
+							totalEpiCostsPerEpisode['InhouseTot'] += budgetObj.Inhouseamt;
+							totalEpiCostsPerEpisode['Tot'] += budgetObj.Totcostamt;
+						}
 
 					}
 					episodeCostSheet.push(budgetObj);
-					
+
 				});
 				oData.results.map(function(obj) {
 					obj.epiSodeCostSheet = $.extend(true, [], episodeCostSheet);
@@ -4054,7 +4065,7 @@ sap.ui.define([
 			},
 
 			onSubmitDm: function() {
-					sap.ui.core.BusyIndicator.show(0);
+				sap.ui.core.BusyIndicator.show(0);
 				var oModel = this.getView().getModel();
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
@@ -4105,7 +4116,7 @@ sap.ui.define([
 				}
 			},
 			onRejectedDm: function() {
-					sap.ui.core.BusyIndicator.show(0);
+				sap.ui.core.BusyIndicator.show(0);
 				var oModel = this.getView().getModel();
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
@@ -4119,7 +4130,7 @@ sap.ui.define([
 					method: "GET",
 					urlParameters: paramObj,
 					success: function(oData, response) {
-		sap.ui.core.BusyIndicator.hide();
+						sap.ui.core.BusyIndicator.hide();
 						dealMemoDetailModel.setProperty("/costCodes", oData.results);
 						dealMemoDetailModel.refresh(true);
 						// this.newVersionCreated = true;
@@ -4128,7 +4139,7 @@ sap.ui.define([
 
 					}.bind(this),
 					error: function(oError) {
-								sap.ui.core.BusyIndicator.hide();
+						sap.ui.core.BusyIndicator.hide();
 						var oErrorResponse = JSON.parse(oError.responseText);
 						var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
 						MessageBox.error(oMsg);
@@ -4138,7 +4149,7 @@ sap.ui.define([
 
 			},
 			onChangeDm: function() {
-					sap.ui.core.BusyIndicator.show(0);
+				sap.ui.core.BusyIndicator.show(0);
 				var oModel = this.getView().getModel();
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
@@ -4152,7 +4163,7 @@ sap.ui.define([
 					method: "GET",
 					urlParameters: paramObj,
 					success: function(oData, response) {
-		sap.ui.core.BusyIndicator.hide();
+						sap.ui.core.BusyIndicator.hide();
 						dealMemoDetailModel.setProperty("/costCodes", oData.results);
 						dealMemoDetailModel.refresh(true);
 						this.newVersionCreated = true;
@@ -4160,7 +4171,7 @@ sap.ui.define([
 
 					}.bind(this),
 					error: function(oError) {
-								sap.ui.core.BusyIndicator.hide();
+						sap.ui.core.BusyIndicator.hide();
 						var oErrorResponse = JSON.parse(oError.responseText);
 						var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
 						MessageBox.error(oMsg);
