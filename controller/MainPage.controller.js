@@ -2624,21 +2624,12 @@ sap.ui.define([
 					budgetObj.Totcostamt = parseFloat(budgetObj.Totcostamt) / noOfEpi;
 
 					if (budgetObj.parenCostcd === "") {
-						if (parseInt(noOfEpi) === totalEpiCostsPerEpisode.[].length + 1) {
-							remainCost += budgetObj.Totcostamt - (budgetObj.Prdhsamt * noOfEpi);
-							totalEpiCostsPerEpisode['AcquisitionTot'] += budgetObj.Prdhsamt + remainCost;
-							remainCost += budgetObj.Totcostamt - (budgetObj.Inhsamt * noOfEpi);
-							totalEpiCostsPerEpisode['ExternalTot'] += budgetObj.Inhsamt + remainCost;
-							remainCost += budgetObj.Totcostamt - (budgetObj.Inhouseamt * noOfEpi);
-							totalEpiCostsPerEpisode['InhouseTot'] += budgetObj.Inhouseamt + remainCost;
-							remainCost += budgetObj.Totcostamt - (budgetObj.Totcostamt * noOfEpi);
-							totalEpiCostsPerEpisode['Tot'] += budgetObj.Totcostamt + remainCost;
-						} else {
+					
 							totalEpiCostsPerEpisode['AcquisitionTot'] += budgetObj.Prdhsamt;
 							totalEpiCostsPerEpisode['ExternalTot'] += budgetObj.Inhsamt;
 							totalEpiCostsPerEpisode['InhouseTot'] += budgetObj.Inhouseamt;
 							totalEpiCostsPerEpisode['Tot'] += budgetObj.Totcostamt;
-						}
+						
 
 					}
 					episodeCostSheet.push(budgetObj);
