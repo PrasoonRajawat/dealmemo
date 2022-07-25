@@ -2624,7 +2624,7 @@ sap.ui.define([
 					budgetObj.Totcostamt = parseFloat(budgetObj.Totcostamt) / noOfEpi;
 
 					if (budgetObj.parenCostcd === "") {
-						if (i + 1 === budgetCostData.length) {
+						if (parseInt(noOfEpi) = totalEpiCostsPerEpisode.length + 1) {
 							remainCost += budgetObj.Totcostamt - (budgetObj.Prdhsamt * noOfEpi);
 							totalEpiCostsPerEpisode['AcquisitionTot'] += budgetObj.Prdhsamt + remainCost;
 							remainCost += budgetObj.Totcostamt - (budgetObj.Inhsamt * noOfEpi);
