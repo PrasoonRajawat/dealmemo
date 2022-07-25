@@ -2638,13 +2638,13 @@ sap.ui.define([
 					// budgetObj.Inhouseamt = parseFloat(budgetObj.Inhouseamt).toFixed(2) - (noOfEpi * totalEpiCostsPerEpisode['Tot']);
 					// budgetObj.Inhsamt = parseFloat(budgetObj.Inhsamt).toFixed(2) - (noOfEpi * totalEpiCostsPerEpisode['Tot']);
 					// budgetObj.Totcostamt = parseFloat(budgetObj.Totcostamt).toFixed(2) - (noOfEpi * totalEpiCostsPerEpisode['Tot']);
-					  remainCost += budgetObj.Totcostamt - (budgetObj.Prdhsamt * noOfEpi);
+					  remainCost += dealMemoDetailModel.oData.Totdmamt - (budgetObj.Prdhsamt * noOfEpi);
                             totalEpiCostsPerEpisode['AcquisitionTot'] += budgetObj.Prdhsamt + remainCost;
-                            remainCost += budgetObj.Totcostamt - (budgetObj.Inhsamt * noOfEpi);
+                            remainCost += dealMemoDetailModel.oData.Totdmamt - (budgetObj.Inhsamt * noOfEpi);
                             totalEpiCostsPerEpisode['ExternalTot'] += budgetObj.Inhsamt + remainCost;
-                            remainCost += budgetObj.Totcostamt - (budgetObj.Inhouseamt * noOfEpi);
+                            remainCost += dealMemoDetailModel.oData.Totdmamt - (budgetObj.Inhouseamt * noOfEpi);
                             totalEpiCostsPerEpisode['InhouseTot'] += budgetObj.Inhouseamt + remainCost;
-                            remainCost += budgetObj.Totcostamt - (budgetObj.Totcostamt * noOfEpi);
+                            remainCost += dealMemoDetailModel.oData.Totdmamt - (budgetObj.Totcostamt * noOfEpi);
                             totalEpiCostsPerEpisode['Tot'] += budgetObj.Totcostamt + remainCost;
 				
 					if (budgetObj.parenCostcd === "") {
