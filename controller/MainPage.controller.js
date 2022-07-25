@@ -2656,7 +2656,7 @@ sap.ui.define([
 					episodeCostSheetLast.push(budgetObj);
 				});
 				}
-				oData.results.map(function(obj , i , oData.results) {
+				oData.results.map(function(obj) {
 					obj.epiSodeCostSheet = $.extend(true, [], episodeCostSheet);
 					obj.epiSodeCostSheetEditMode = $.extend(true, [], episodeCostSheet);
 					obj.Totepiamt = totalEpiCostsPerEpisode["Tot"];
