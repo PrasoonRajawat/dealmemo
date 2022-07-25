@@ -2618,10 +2618,10 @@ sap.ui.define([
 				budgetCostData.map(function(budgetObj, i, budgetCostData ) {
 					
 					if (i+1 === budgetCostData.length) {
-					budgetObj.Prdhsamt = ((parseFloat(budgetObj.Prdhsamt) * noOfEpi)  - parseFloat(budgetObj.Totcostamt);
-					budgetObj.Inhouseamt = ((parseFloat(budgetObj.Inhouseamt) * noOfEpi) - parseFloat(budgetObj.Totcostamt);
-					budgetObj.Inhsamt = ((parseFloat(budgetObj.Inhsamt) * noOfEpi) - parseFloat(budgetObj.Totcostamt);
-					budgetObj.Totcostamt = ((parseFloat(budgetObj.Totcostamt) * noOfEpi) - parseFloat(budgetObj.Totcostamt);
+					budgetObj.Prdhsamt = (parseFloat(budgetObj.Prdhsamt) * noOfEpi  - parseFloat(budgetObj.Totcostamt);
+					budgetObj.Inhouseamt = (parseFloat(budgetObj.Inhouseamt) * noOfEpi - parseFloat(budgetObj.Totcostamt);
+					budgetObj.Inhsamt = (parseFloat(budgetObj.Inhsamt) * noOfEpi - parseFloat(budgetObj.Totcostamt);
+					budgetObj.Totcostamt = (parseFloat(budgetObj.Totcostamt) * noOfEpi - parseFloat(budgetObj.Totcostamt);
 					} else {
 					budgetObj.Prdhsamt = parseFloat(budgetObj.Prdhsamt) / noOfEpi;
 					budgetObj.Inhouseamt = parseFloat(budgetObj.Inhouseamt) / noOfEpi;
