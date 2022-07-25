@@ -2615,13 +2615,19 @@ sap.ui.define([
 					"InhouseTot": 0,
 					"Tot": 0
 				};
-				budgetCostData.map(function(budgetObj) {
-
+				budgetCostData.map(function(budgetObj, i, budgetCostData ) {
+					
+					if (i+1 === budgetCostData.length) {
+					budgetObj.Prdhsamt = ((parseFloat(budgetObj.Prdhsamt) * noOfEpi)  - parseFloat(budgetObj.Totcostamt);
+					budgetObj.Inhouseamt = ((parseFloat(budgetObj.Inhouseamt) * noOfEpi) - parseFloat(budgetObj.Totcostamt);
+					budgetObj.Inhsamt = ((parseFloat(budgetObj.Inhsamt) * noOfEpi) - parseFloat(budgetObj.Totcostamt);
+					budgetObj.Totcostamt = ((parseFloat(budgetObj.Totcostamt) * noOfEpi) - parseFloat(budgetObj.Totcostamt);
+					} else {
 					budgetObj.Prdhsamt = parseFloat(budgetObj.Prdhsamt) / noOfEpi;
 					budgetObj.Inhouseamt = parseFloat(budgetObj.Inhouseamt) / noOfEpi;
 					budgetObj.Inhsamt = parseFloat(budgetObj.Inhsamt) / noOfEpi;
 					budgetObj.Totcostamt = parseFloat(budgetObj.Totcostamt) / noOfEpi;
-
+					}
 					if (budgetObj.parenCostcd === "") {
 						totalEpiCostsPerEpisode['AcquisitionTot'] += budgetObj.Prdhsamt;
 						totalEpiCostsPerEpisode['ExternalTot'] += budgetObj.Inhsamt;
@@ -2630,7 +2636,7 @@ sap.ui.define([
 
 					}
 					episodeCostSheet.push(budgetObj);
-
+					
 				});
 				oData.results.map(function(obj) {
 					obj.epiSodeCostSheet = $.extend(true, [], episodeCostSheet);
