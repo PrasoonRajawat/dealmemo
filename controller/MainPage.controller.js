@@ -2645,22 +2645,22 @@ sap.ui.define([
 					if (parseFloat(budgetObjLast.Prdhsamt) !== 0) {
 						remainCost = parseFloat(budgetObjLast.Prdhsamt) - (parseFloat(budgetObjLast.Prdhsamt / noOfEpi).toFixed(2) * noOfEpi);
 					}
-					budgetObjLast.Prdhsamt = (budgetObjLast.Prdhsamt / noOfEpi) + remainCost;
+					budgetObjLast.Prdhsamt = (parseFloat(budgetObjLast.Prdhsamt) / noOfEpi) + remainCost;
 					remainCost = 0;
 					if (parseFloat(budgetObjLast.Inhouseamt) !== 0) {
 						remainCost = parseFloat(budgetObjLast.Inhouseamt) - (parseFloat(budgetObjLast.Inhouseamt / noOfEpi).toFixed(2) * noOfEpi);
 					}
-					budgetObjLast.Inhouseamt = (budgetObjLast.Inhsamt / noOfEpi) + remainCost;
+					budgetObjLast.Inhouseamt = (parseFloat(budgetObjLast.Inhouseamt) / noOfEpi) + remainCost;
 					remainCost = 0;
 					if (parseFloat(budgetObjLast.Inhsamt) !== 0) {
 						remainCost = parseFloat(budgetObjLast.Inhsamt) - (parseFloat(budgetObjLast.Inhsamt / noOfEpi).toFixed(2) * noOfEpi);
 					}
-					budgetObjLast.Inhsamt = (budgetObjLast.Inhouseamt / noOfEpi) + remainCost;
+					budgetObjLast.Inhsamt = (parseFloat(budgetObjLast.Inhsamt) / noOfEpi) + remainCost;
 					remainCost = 0;
 					if (parseFloat(budgetObjLast.Totcostamt) !== 0) {
 						remainCost = parseFloat(budgetObjLast.Totcostamt) - (parseFloat(budgetObjLast.Totcostamt / noOfEpi).toFixed(2) * noOfEpi);
 					}
-					budgetObjLast.Totcostamt = (budgetObjLast.Totcostamt / noOfEpi) + remainCost;
+					budgetObjLast.Totcostamt = (parseFloat(budgetObjLast.Totcostamt) / noOfEpi) + remainCost;
 					remainCost = 0;
 
 					if (budgetObjLast.parenCostcd === "") {
