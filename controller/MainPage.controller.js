@@ -2608,6 +2608,7 @@ sap.ui.define([
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var noOfEpi = dealMemoDetailModel.getProperty("/Noofepi");
 				var budgetCostData = $.extend(true, [], dealMemoDetailModel.getData().budgetCostDataEditMode);
+				var budgetCostDataLast = $.extend(true, [], dealMemoDetailModel.getData().budgetCostDataEditMode);
 				var episodeCostSheet = [];
 				var episodeCostSheetLast = [];
 				var remainCost = "";
