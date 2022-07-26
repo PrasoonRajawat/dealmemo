@@ -2639,19 +2639,16 @@ sap.ui.define([
 					}
 					episodeCostSheet.push(budgetObj);
 				});
-				if (dealMemoDetailModel.oData.Totdmamt !== noOfEpi * parseFloat(totalEpiCostsPerEpisode['Tot']).toFixed(2)) {
+				
 					budgetCostDataLast.map(function(budgetObjLast) {
-						// budgetObjLast.Prdhsamt = parseFloat(budgetObjLast.Prdhsamt).toFixed(2) - (noOfEpi * totalEpiCostsPerEpisode['Tot']);
-						// budgetObjLast.Inhouseamt = parseFloat(budgetObjLast.Inhouseamt).toFixed(2) - (noOfEpi * totalEpiCostsPerEpisode['Tot']);
-						// budgetObjLast.Inhsamt = parseFloat(budgetObjLast.Inhsamt).toFixed(2) - (noOfEpi * totalEpiCostsPerEpisode['Tot']);
-						// budgetObjLast.Totcostamt = parseFloat(budgetObjLast.Totcostamt).toFixed(2) - (noOfEpi * totalEpiCostsPerEpisode['Tot']);
+					
 						remainCost = parseFloat(budgetObjLast.Prdhsamt) - (parseFloat(budgetObjLast.Prdhsamt / noOfEpi).toFixed(2) * noOfEpi);
 						budgetObjLast.Prdhsamt = (budgetObjLast.Prdhsamt / noOfEpi) + remainCost;
-						remainCost = dealMemoDetailModel.oData.Totdmamt - (parseFloat(budgetObjLast.Inhouseamt / noOfEpi).toFixed(2) * noOfEpi);
+						remainCost = parseFloat(budgetObjLast.Inhouseamt) - (parseFloat(budgetObjLast.Inhouseamt / noOfEpi).toFixed(2) * noOfEpi);
 						budgetObjLast.Inhouseamt = (budgetObjLast.Inhsamt / noOfEpi) + remainCost;
-						remainCost = dealMemoDetailModel.oData.Totdmamt - (parseFloat(budgetObjLast.Inhsamt / noOfEpi).toFixed(2) * noOfEpi);
+						remainCost = parseFloat(budgetObjLast.Inhsamt) - (parseFloat(budgetObjLast.Inhsamt / noOfEpi).toFixed(2) * noOfEpi);
 						budgetObjLast.Inhsamt = (budgetObjLast.Inhouseamt / noOfEpi) + remainCost;
-						remainCost = dealMemoDetailModel.oData.Totdmamt - (parseFloat(budgetObjLast.Totcostamt / noOfEpi).toFixed(2) * noOfEpi);
+						remainCost = parseFloat(budgetObjLast.Totcostamt) - (parseFloat(budgetObjLast.Totcostamt / noOfEpi).toFixed(2) * noOfEpi);
 						budgetObjLast.Totcostamt = (budgetObjLast.Totcostamt / noOfEpi) + remainCost;
 
 						if (budgetObjLast.parenCostcd === "") {
@@ -2662,11 +2659,17 @@ sap.ui.define([
 						}
 						episodeCostSheetLast.push(budgetObjLast);
 					});
-				}
-				oData.results.map(function(obj) {
+				
+				oData.results.map(function(obj , i ) {
+					if(i + 1 = oData.results.length) {
+					obj.epiSodeCostSheet = $.extend(true, [], episodeCostSheetLast);
+					obj.epiSodeCostSheetEditMode = $.extend(true, [], episodeCostSheetLast);
+					obj.Totepiamt = totalEpiCostsPerEpisodeLast["Tot"];
+					} else {
 					obj.epiSodeCostSheet = $.extend(true, [], episodeCostSheet);
 					obj.epiSodeCostSheetEditMode = $.extend(true, [], episodeCostSheet);
 					obj.Totepiamt = totalEpiCostsPerEpisode["Tot"];
+					}
 					obj.Epidur = Formatter.formatTimeDuration(obj.Epidur);
 					obj.epiDescEditable = false;
 					obj.flag = "Cr";
