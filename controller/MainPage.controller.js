@@ -2639,30 +2639,30 @@ sap.ui.define([
 					}
 					episodeCostSheet.push(budgetObj);
 				});
-				if (dealMemoDetailModel.oData.Totdmamt !== noOfEpi * totalEpiCostsPerEpisode['Tot']) {
-						budgetCostDataLast.map(function(budgetObjLast) {
-					// budgetObjLast.Prdhsamt = parseFloat(budgetObjLast.Prdhsamt).toFixed(2) - (noOfEpi * totalEpiCostsPerEpisode['Tot']);
-					// budgetObjLast.Inhouseamt = parseFloat(budgetObjLast.Inhouseamt).toFixed(2) - (noOfEpi * totalEpiCostsPerEpisode['Tot']);
-					// budgetObjLast.Inhsamt = parseFloat(budgetObjLast.Inhsamt).toFixed(2) - (noOfEpi * totalEpiCostsPerEpisode['Tot']);
-					// budgetObjLast.Totcostamt = parseFloat(budgetObjLast.Totcostamt).toFixed(2) - (noOfEpi * totalEpiCostsPerEpisode['Tot']);
-					  remainCost = dealMemoDetailModel.oData.Totdmamt - ( parseFloat(budgetObjLast.Prdhsamt * noOfEpi).toFixed(2));
-                            budgetObjLast.Prdhsamt = budgetObjLast.Prdhsamt + remainCost;
-                            remainCost = dealMemoDetailModel.oData.Totdmamt - (parseFloat(budgetObjLast.Inhouseamt * noOfEpi).toFixed(2));
-                            budgetObjLast.Inhouseamt = budgetObjLast.Inhsamt + remainCost;
-                            remainCost = dealMemoDetailModel.oData.Totdmamt - (parseFloat(budgetObjLast.Inhsamt * noOfEpi).toFixed(2));
-                           budgetObjLast.Inhsamt = budgetObjLast.Inhouseamt + remainCost;
-                            remainCost = dealMemoDetailModel.oData.Totdmamt - (parseFloat(budgetObjLast.Totcostamt * noOfEpi).toFixed(2));
-                            budgetObjLast.Totcostamt = budgetObjLast.Totcostamt + remainCost;
+				// if (dealMemoDetailModel.oData.Totdmamt !== noOfEpi * totalEpiCostsPerEpisode['Tot']) {
+				// 		budgetCostDataLast.map(function(budgetObjLast) {
+				// 	// budgetObjLast.Prdhsamt = parseFloat(budgetObjLast.Prdhsamt).toFixed(2) - (noOfEpi * totalEpiCostsPerEpisode['Tot']);
+				// 	// budgetObjLast.Inhouseamt = parseFloat(budgetObjLast.Inhouseamt).toFixed(2) - (noOfEpi * totalEpiCostsPerEpisode['Tot']);
+				// 	// budgetObjLast.Inhsamt = parseFloat(budgetObjLast.Inhsamt).toFixed(2) - (noOfEpi * totalEpiCostsPerEpisode['Tot']);
+				// 	// budgetObjLast.Totcostamt = parseFloat(budgetObjLast.Totcostamt).toFixed(2) - (noOfEpi * totalEpiCostsPerEpisode['Tot']);
+				// 	  remainCost = dealMemoDetailModel.oData.Totdmamt - ( parseFloat(budgetObjLast.Prdhsamt * noOfEpi).toFixed(2));
+    //                         budgetObjLast.Prdhsamt = budgetObjLast.Prdhsamt + remainCost;
+    //                         remainCost = dealMemoDetailModel.oData.Totdmamt - (parseFloat(budgetObjLast.Inhouseamt * noOfEpi).toFixed(2));
+    //                         budgetObjLast.Inhouseamt = budgetObjLast.Inhsamt + remainCost;
+    //                         remainCost = dealMemoDetailModel.oData.Totdmamt - (parseFloat(budgetObjLast.Inhsamt * noOfEpi).toFixed(2));
+    //                       budgetObjLast.Inhsamt = budgetObjLast.Inhouseamt + remainCost;
+    //                         remainCost = dealMemoDetailModel.oData.Totdmamt - (parseFloat(budgetObjLast.Totcostamt * noOfEpi).toFixed(2));
+    //                         budgetObjLast.Totcostamt = budgetObjLast.Totcostamt + remainCost;
 				
-					if (budgetObjLast.parenCostcd === "") {
-							totalEpiCostsPerEpisodeLast['AcquisitionTot'] += budgetObjLast.Prdhsamt;
-							totalEpiCostsPerEpisodeLast['ExternalTot'] += budgetObjLast.Inhsamt;
-							totalEpiCostsPerEpisodeLast['InhouseTot'] += budgetObjLast.Inhouseamt;
-							totalEpiCostsPerEpisodeLast['Tot'] += budgetObjLast.Totcostamt;
-					}
-					episodeCostSheetLast.push(budgetObjLast);
-				});
-				}
+				// 	if (budgetObjLast.parenCostcd === "") {
+				// 			totalEpiCostsPerEpisodeLast['AcquisitionTot'] += budgetObjLast.Prdhsamt;
+				// 			totalEpiCostsPerEpisodeLast['ExternalTot'] += budgetObjLast.Inhsamt;
+				// 			totalEpiCostsPerEpisodeLast['InhouseTot'] += budgetObjLast.Inhouseamt;
+				// 			totalEpiCostsPerEpisodeLast['Tot'] += budgetObjLast.Totcostamt;
+				// 	}
+				// 	episodeCostSheetLast.push(budgetObjLast);
+				// });
+				// }
 				oData.results.map(function(obj) {
 					obj.epiSodeCostSheet = $.extend(true, [], episodeCostSheet);
 					obj.epiSodeCostSheetEditMode = $.extend(true, [], episodeCostSheet);
