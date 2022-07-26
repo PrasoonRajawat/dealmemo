@@ -2661,7 +2661,7 @@ sap.ui.define([
 					});
 				
 				oData.results.map(function(obj , i ) {
-					if(i + 1 = oData.results.length) {
+					if( oData.results.length === i + 1) {
 					obj.epiSodeCostSheet = $.extend(true, [], episodeCostSheetLast);
 					obj.epiSodeCostSheetEditMode = $.extend(true, [], episodeCostSheetLast);
 					obj.Totepiamt = totalEpiCostsPerEpisodeLast["Tot"];
