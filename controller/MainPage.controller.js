@@ -2640,7 +2640,7 @@ sap.ui.define([
 					episodeCostSheet.push(budgetObj);
 				});
 				if (dealMemoDetailModel.oData.Totdmamt !== noOfEpi * totalEpiCostsPerEpisode['Tot']) {
-						budgetCostData.map(function(budgetObjLastLast) {
+						budgetCostDataLast.map(function(budgetObjLast) {
 					// budgetObjLast.Prdhsamt = parseFloat(budgetObjLast.Prdhsamt).toFixed(2) - (noOfEpi * totalEpiCostsPerEpisode['Tot']);
 					// budgetObjLast.Inhouseamt = parseFloat(budgetObjLast.Inhouseamt).toFixed(2) - (noOfEpi * totalEpiCostsPerEpisode['Tot']);
 					// budgetObjLast.Inhsamt = parseFloat(budgetObjLast.Inhsamt).toFixed(2) - (noOfEpi * totalEpiCostsPerEpisode['Tot']);
