@@ -2676,7 +2676,11 @@ sap.ui.define([
 					if (oData.results.length === i + 1) {
 						obj.epiSodeCostSheet = $.extend(true, [], episodeCostSheetLast);
 						obj.epiSodeCostSheetEditMode = $.extend(true, [], episodeCostSheetLast);
-						obj.Totepiamt = totalEpiCostsPerEpisodeLast["Tot"];
+						if (parseFloat(dealMemoDetailModel.oData.Totdmamt / noOfEpi).toFixed(2) * noOfEpi  == parseFloat(dealMemoDetailModel.oData.Totdmamt) ) {
+					 	obj.Totepiamt = totalEpiCostsPerEpisode["Tot"];
+					} else {
+							obj.Totepiamt = totalEpiCostsPerEpisodeLast["Tot"];
+					}
 					} else {
 						obj.epiSodeCostSheet = $.extend(true, [], episodeCostSheet);
 						obj.epiSodeCostSheetEditMode = $.extend(true, [], episodeCostSheet);
