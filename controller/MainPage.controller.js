@@ -2645,14 +2645,14 @@ sap.ui.define([
 					// budgetObjLast.Inhouseamt = parseFloat(budgetObjLast.Inhouseamt).toFixed(2) - (noOfEpi * totalEpiCostsPerEpisode['Tot']);
 					// budgetObjLast.Inhsamt = parseFloat(budgetObjLast.Inhsamt).toFixed(2) - (noOfEpi * totalEpiCostsPerEpisode['Tot']);
 					// budgetObjLast.Totcostamt = parseFloat(budgetObjLast.Totcostamt).toFixed(2) - (noOfEpi * totalEpiCostsPerEpisode['Tot']);
-					  remainCost += dealMemoDetailModel.oData.Totdmamt - ( parseFloat(budgetObjLast.Prdhsamt * noOfEpi).toFixed(2));
-                            totalEpiCostsPerEpisode['AcquisitionTot'] += budgetObjLast.Prdhsamt + remainCost;
-                            remainCost += dealMemoDetailModel.oData.Totdmamt - (parseFloat(budgetObjLast.Inhouseamt * noOfEpi).toFixed(2));
-                            totalEpiCostsPerEpisode['ExternalTot'] += budgetObjLast.Inhsamt + remainCost;
-                            remainCost += dealMemoDetailModel.oData.Totdmamt - (parseFloat(budgetObjLast.Inhsamt * noOfEpi).toFixed(2));
-                            totalEpiCostsPerEpisode['InhouseTot'] += budgetObjLast.Inhouseamt + remainCost;
-                            remainCost += dealMemoDetailModel.oData.Totdmamt - (parseFloat(budgetObjLast.Totcostamt * noOfEpi).toFixed(2));
-                            totalEpiCostsPerEpisode['Tot'] += budgetObjLast.Totcostamt + remainCost;
+					  remainCost = dealMemoDetailModel.oData.Totdmamt - ( parseFloat(budgetObjLast.Prdhsamt * noOfEpi).toFixed(2));
+                            budgetObjLast.Prdhsamt = budgetObjLast.Prdhsamt + remainCost;
+                            remainCost = dealMemoDetailModel.oData.Totdmamt - (parseFloat(budgetObjLast.Inhouseamt * noOfEpi).toFixed(2));
+                            budgetObjLast.Inhouseamt = budgetObjLast.Inhsamt + remainCost;
+                            remainCost = dealMemoDetailModel.oData.Totdmamt - (parseFloat(budgetObjLast.Inhsamt * noOfEpi).toFixed(2));
+                           budgetObjLast.Inhsamt = budgetObjLast.Inhouseamt + remainCost;
+                            remainCost = dealMemoDetailModel.oData.Totdmamt - (parseFloat(budgetObjLast.Totcostamt * noOfEpi).toFixed(2));
+                            budgetObjLast.Totcostamt = budgetObjLast.Totcostamt + remainCost;
 				
 					if (budgetObjLast.parenCostcd === "") {
 							totalEpiCostsPerEpisodeLast['AcquisitionTot'] += budgetObjLast.Prdhsamt;
