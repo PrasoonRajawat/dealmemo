@@ -2639,36 +2639,48 @@ sap.ui.define([
 					}
 					episodeCostSheet.push(budgetObj);
 				});
-				
-					budgetCostDataLast.map(function(budgetObjLast) {
-					
-						remainCost = parseFloat(budgetObjLast.Prdhsamt) - (parseFloat(budgetObjLast.Prdhsamt / noOfEpi).toFixed(2) * noOfEpi);
-						budgetObjLast.Prdhsamt = (budgetObjLast.Prdhsamt / noOfEpi) + remainCost;
-						remainCost = parseFloat(budgetObjLast.Inhouseamt) - (parseFloat(budgetObjLast.Inhouseamt / noOfEpi).toFixed(2) * noOfEpi);
-						budgetObjLast.Inhouseamt = (budgetObjLast.Inhsamt / noOfEpi) + remainCost;
-						remainCost = parseFloat(budgetObjLast.Inhsamt) - (parseFloat(budgetObjLast.Inhsamt / noOfEpi).toFixed(2) * noOfEpi);
-						budgetObjLast.Inhsamt = (budgetObjLast.Inhouseamt / noOfEpi) + remainCost;
-						remainCost = parseFloat(budgetObjLast.Totcostamt) - (parseFloat(budgetObjLast.Totcostamt / noOfEpi).toFixed(2) * noOfEpi);
-						budgetObjLast.Totcostamt = (budgetObjLast.Totcostamt / noOfEpi) + remainCost;
 
-						if (budgetObjLast.parenCostcd === "") {
-							totalEpiCostsPerEpisodeLast['AcquisitionTot'] += budgetObjLast.Prdhsamt;
-							totalEpiCostsPerEpisodeLast['ExternalTot'] += budgetObjLast.Inhsamt;
-							totalEpiCostsPerEpisodeLast['InhouseTot'] += budgetObjLast.Inhouseamt;
-							totalEpiCostsPerEpisodeLast['Tot'] += budgetObjLast.Totcostamt;
-						}
-						episodeCostSheetLast.push(budgetObjLast);
-					});
-				
-				oData.results.map(function(obj , i ) {
-					if( oData.results.length === i + 1) {
-					obj.epiSodeCostSheet = $.extend(true, [], episodeCostSheetLast);
-					obj.epiSodeCostSheetEditMode = $.extend(true, [], episodeCostSheetLast);
-					obj.Totepiamt = totalEpiCostsPerEpisodeLast["Tot"];
+				budgetCostDataLast.map(function(budgetObjLast) {
+						remainCost = 0;
+					if (parseFloat(budgetObjLast.Prdhsamt) !== 0) {
+						remainCost = parseFloat(budgetObjLast.Prdhsamt) - (parseFloat(budgetObjLast.Prdhsamt / noOfEpi).toFixed(2) * noOfEpi);
+					}
+					budgetObjLast.Prdhsamt = (budgetObjLast.Prdhsamt / noOfEpi) + remainCost;
+					remainCost = 0;
+					if (parseFloat(budgetObjLast.Inhouseamt) !== 0) {
+						remainCost = parseFloat(budgetObjLast.Inhouseamt) - (parseFloat(budgetObjLast.Inhouseamt / noOfEpi).toFixed(2) * noOfEpi);
+					}
+					budgetObjLast.Inhouseamt = (budgetObjLast.Inhsamt / noOfEpi) + remainCost;
+					remainCost = 0;
+					if (parseFloat(budgetObjLast.Inhsamt) !== 0) {
+						remainCost = parseFloat(budgetObjLast.Inhsamt) - (parseFloat(budgetObjLast.Inhsamt / noOfEpi).toFixed(2) * noOfEpi);
+					}
+					budgetObjLast.Inhsamt = (budgetObjLast.Inhouseamt / noOfEpi) + remainCost;
+					remainCost = 0;
+					if (parseFloat(budgetObjLast.Totcostamt) !== 0) {
+						remainCost = parseFloat(budgetObjLast.Totcostamt) - (parseFloat(budgetObjLast.Totcostamt / noOfEpi).toFixed(2) * noOfEpi);
+					}
+					budgetObjLast.Totcostamt = (budgetObjLast.Totcostamt / noOfEpi) + remainCost;
+					remainCost = 0;
+
+					if (budgetObjLast.parenCostcd === "") {
+						totalEpiCostsPerEpisodeLast['AcquisitionTot'] += budgetObjLast.Prdhsamt;
+						totalEpiCostsPerEpisodeLast['ExternalTot'] += budgetObjLast.Inhsamt;
+						totalEpiCostsPerEpisodeLast['InhouseTot'] += budgetObjLast.Inhouseamt;
+						totalEpiCostsPerEpisodeLast['Tot'] += budgetObjLast.Totcostamt;
+					}
+					episodeCostSheetLast.push(budgetObjLast);
+				});
+
+				oData.results.map(function(obj, i) {
+					if (oData.results.length === i + 1) {
+						obj.epiSodeCostSheet = $.extend(true, [], episodeCostSheetLast);
+						obj.epiSodeCostSheetEditMode = $.extend(true, [], episodeCostSheetLast);
+						obj.Totepiamt = totalEpiCostsPerEpisodeLast["Tot"];
 					} else {
-					obj.epiSodeCostSheet = $.extend(true, [], episodeCostSheet);
-					obj.epiSodeCostSheetEditMode = $.extend(true, [], episodeCostSheet);
-					obj.Totepiamt = totalEpiCostsPerEpisode["Tot"];
+						obj.epiSodeCostSheet = $.extend(true, [], episodeCostSheet);
+						obj.epiSodeCostSheetEditMode = $.extend(true, [], episodeCostSheet);
+						obj.Totepiamt = totalEpiCostsPerEpisode["Tot"];
 					}
 					obj.Epidur = Formatter.formatTimeDuration(obj.Epidur);
 					obj.epiDescEditable = false;
