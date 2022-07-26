@@ -2626,10 +2626,10 @@ sap.ui.define([
 					"Tot": 0
 				};
 				budgetCostData.map(function(budgetObj) {
-					budgetObj.Prdhsamt = parseFloat(budgetObj.Prdhsamt / noOfEpi).toFixed(2);
-					budgetObj.Inhouseamt = parseFloat(budgetObj.Inhouseamt / noOfEpi).toFixed(2);
-					budgetObj.Inhsamt = parseFloat(budgetObj.Inhsamt / noOfEpi).toFixed(2);
-					budgetObj.Totcostamt = parseFloat(budgetObj.Totcostamt / noOfEpi).toFixed(2);
+					budgetObj.Prdhsamt = parseFloat(budgetObj.Prdhsamt) / noOfEpi;
+					budgetObj.Inhouseamt = parseFloat(budgetObj.Inhouseamt) / noOfEpi;
+					budgetObj.Inhsamt = parseFloat(budgetObj.Inhsamt) / noOfEpi;
+					budgetObj.Totcostamt = parseFloat(budgetObj.Totcostamt) / noOfEpi;
 				
 					if (budgetObj.parenCostcd === "") {
 							totalEpiCostsPerEpisode['AcquisitionTot'] += budgetObj.Prdhsamt;
