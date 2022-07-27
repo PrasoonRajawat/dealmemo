@@ -587,7 +587,7 @@ sap.ui.define([
 			contentSubTypeList: function(oData) {
 			var dealMemoModel = this.getView().getModel("dealMemoModel");
 			var ctype = dealMemoModel.oData.Cnttp ; 
-			var cFilter = new filter("Mstpcd", "EQ", ctype);
+			var cFilter = new Filter("Mstpcd", "EQ", ctype);
 			contentsubTypeModel.read("/es_content_subtype", {
 				filters: [cFilter],
 				success: function(oData1) {
