@@ -563,6 +563,7 @@ sap.ui.define([
 								this.autoPopulateValueList = oData;
 								this.loadNewDetailPage();
 								this.onCreateParamCancel();
+								this.contentSubTypeList();
 							}
 
 							//	           			this.selectedDealMemoObj = {"Dmno":""};
@@ -584,13 +585,8 @@ sap.ui.define([
 				this._oCreateParamDialog.close();
 			},
 			contentSubTypeList: function(oData) {
-				var ctype = "" ; 
-					var contentsubTypeModel = this.getView().getModel("CONTENT_MAST");
-					if(oData.Cntty != "") {
-					ctype = oData.Cntty  ;
-					} else if (oData.Cnttp != "") {
-					ctype = oData.Cnttp ;
-					}
+			var dealMemoModel = this.getView().getModel("dealMemoModel");
+			var ctype = dealMemoModel.oData.Cnttp ; 
 			var cFilter = new filter("Mstpcd", "EQ", ctype);
 			contentsubTypeModel.read("/es_content_subtype", {
 				filters: [cFilter],
@@ -1063,7 +1059,7 @@ sap.ui.define([
 						}
 						this._noOfEpiChanged = false;
 						this._yearChanged = false;
-
+						this.contentSubTypeList(oData);
 						sap.ui.core.BusyIndicator.hide();
 
 						this.loadChangeCostTemplate();
