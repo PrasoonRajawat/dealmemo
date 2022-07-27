@@ -559,6 +559,7 @@ sap.ui.define([
 							if (enableMPMCheckForContType.indexOf(createParamsData.ConttypKey) >= 0 && (oData.Mpmid === "" || oData.Mpmid === null)) {
 								MessageBox.error(oSourceBundle.getText("msgNoMPM", createParamsData.Content));
 							} else {
+								this.contentSubTypeList(oData);
 								this.autoPopulateValueList = oData;
 								this.loadNewDetailPage();
 								this.onCreateParamCancel();
@@ -578,10 +579,28 @@ sap.ui.define([
 
 				}
 			},
+			
 			onCreateParamCancel: function() {
 				this._oCreateParamDialog.close();
 			},
-
+			contentSubTypeList: function(oData) {
+				var ctype = "" ; 
+					var contentsubTypeModel = this.getView().getModel("CONTENT_MAST");
+					if(oData.Cntty != "") {
+					ctype = oData.Cntty  ;
+					} else if (oData.Cnttp != "") {
+					ctype = oData.Cnttp ;
+					}
+			var cFilter = new filter("Mstpcd", "EQ", ctype);
+			contentsubTypeModel.read("/es_content_subtype", {
+				filters: [cFilter],
+				success: function(oData1) {
+				var dealMemoModel = this.getView().getModel("dealMemoModel");
+				dealMemoModel.setProperty("/sortedContSubType", oData1.results);
+				dealMemoModel.refresh(true);
+				}.bind(this)
+			});
+			},
 			/************ Create Deal Memo ************/
 
 			/************ Value Helps ************/
