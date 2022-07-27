@@ -585,6 +585,7 @@ sap.ui.define([
 				this._oCreateParamDialog.close();
 			},
 			contentSubTypeList: function(oData) {
+			var contentsubTypeModel = this.getView().getModel("CONTENT_MAST");
 			var dealMemoModel = this.getView().getModel("dealMemoModel");
 			var ctype = dealMemoModel.oData.Cnttp ; 
 			var cFilter = new Filter("Mstpcd", "EQ", ctype);
