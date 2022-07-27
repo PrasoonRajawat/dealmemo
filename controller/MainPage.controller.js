@@ -559,7 +559,7 @@ sap.ui.define([
 							if (enableMPMCheckForContType.indexOf(createParamsData.ConttypKey) >= 0 && (oData.Mpmid === "" || oData.Mpmid === null)) {
 								MessageBox.error(oSourceBundle.getText("msgNoMPM", createParamsData.Content));
 							} else {
-								this.contentSubTypeList(oData);
+							
 								this.autoPopulateValueList = oData;
 								this.loadNewDetailPage();
 								this.onCreateParamCancel();
@@ -584,10 +584,10 @@ sap.ui.define([
 			onCreateParamCancel: function() {
 				this._oCreateParamDialog.close();
 			},
-			contentSubTypeList: function(oData) {
+			contentSubTypeList: function() {
 			var contentsubTypeModel = this.getView().getModel("CONTENT_MAST");
-			var dealMemoModel = this.getView().getModel("dealMemoModel");
-			var ctype = dealMemoModel.oData.Cnttp ; 
+			var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
+			var ctype = dealMemoDetailModel.oData.Cnttp ; 
 			var cFilter = new Filter("Mstpcd", "EQ", ctype);
 			contentsubTypeModel.read("/es_content_subtype", {
 				filters: [cFilter],
