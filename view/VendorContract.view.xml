@@ -27,6 +27,8 @@
 								text="{vendorContractModel>/Cntnm}"/>
 							<ObjectStatus id="Contdt" title="{i18n>lblDate}" text="{vendorContractModel>/vcDate}"/>
 							<ObjectStatus id="oSPurchaseOrder" title="{i18n>lblPurchaseOrder}" text="{vendorContractModel>/Ebeln}"/>
+							<ObjectStatus id="clmno" title="CLM Number" text="{vendorContractModel>/Clmno}"/>
+							<ObjectStatus id="clmst" title="CLM Status" text="{vendorContractModel>/Clmstatus}"/>
 							<ObjectStatus id="department" title="Department" text="{vendorContractModel>/createParams/Zltext}"/>
 							<ObjectStatus id="zprrequest" title="PR Request" text="{vendorContractModel>/createParams/Prreq}"/>
 							<ObjectStatus id="DeparmentHead" title="Deparment Head" text="{vendorContractModel>/createParams/Depthd}"/>
