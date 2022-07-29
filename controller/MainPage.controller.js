@@ -834,6 +834,7 @@ sap.ui.define([
 					"Estprgreldt": "",
 					"BudgetCurr": "INR",
 					"Waers": "INR",
+					"Exchrt": "",
 					"OwnchnlPerc": "100.00",
 					"SecondChnl": "",
 					"SecondPerc": "0.00",
@@ -893,6 +894,7 @@ sap.ui.define([
 					"errorMsgDetailTab": "",
 					"enablePerc": false,
 					"NoOfEpiEnableFlag": true,
+					"Exchrt": "",
 					"fisYrEnableFlag": true,
 					"secChanelEnableFlag": true,
 					"secChannelList": this.getSecChannelList(dealMemoModel.getProperty("/createParams/Chnlid"))
@@ -1455,6 +1457,7 @@ sap.ui.define([
 					Waers: dealMemoDetailInfo.Waers,
 					Prdnm: dealMemoDetailInfo.Prdnm,
 					Exprdnm: dealMemoDetailInfo.Exprdnm,
+					Exchrt: dealMemoDetailInfo.Exchrt,
 					Costcenter: dealMemoDetailInfo.Costcenter,
 					Estprgreldt: dealMemoDetailInfo.Estprgreldt !== null ? Formatter.formatDateValForBackend(dealMemoDetailInfo.Estprgreldt) : null,
 					Avgepidur: Formatter.formatTimeValForBackend(dealMemoDetailInfo.Avgepidur)
