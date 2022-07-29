@@ -21,7 +21,7 @@
 								text="{path:'artistContractModel>/Avlartbud', type:'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 2 }}"/>
 							<ObjectStatus title="{i18n>lblPurchaseOrder}" text="{artistContractModel>/Ebeln}"/>
 							<ObjectStatus id="clmno" title="CLM Number" text="{artistContractModel>/Clmno}"/>
-							<ObjectStatus id="clmst" title="CLM Status" text="{artistContractModel>/Clmstatus}"/>
+							<ObjectStatus id="clmst" title="CLM Status" text="{artistContractModel>/Clmstdesc}"/>
 							<ObjectStatus id="department" title="Department" text="{artistContractModel>/createParams/Zltext}"/>
 							<ObjectStatus id="zprrequest" title="PR Request" text="{artistContractModel>/createParams/Prreq}"/>
 							<ObjectStatus id="DeparmentHead" title="Deparment Head" text="{artistContractModel>/createParams/Depthd}"/>
