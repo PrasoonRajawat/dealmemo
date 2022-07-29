@@ -840,7 +840,7 @@ sap.ui.define([
 					"Estprgreldt": "",
 					"BudgetCurr": "INR",
 					"Waers": "INR",
-					"Exchrt": "",
+					"Exchrt": "0.00",
 					"OwnchnlPerc": "100.00",
 					"SecondChnl": "",
 					"SecondPerc": "0.00",
@@ -1388,15 +1388,15 @@ sap.ui.define([
 
 				}
       
-				 if (dealMemoDetailInfo.Exchrt != "" && dealMemoDetailInfo.Exchrt != undefined && dealMemoDetailInfo.Exchrt != null ){ 
-						if(!dealMemoDetailInfo.Exchrt.includes(".")){
-							statusFlag = false;
-							oMsg = "DecimalValueExchrt";
-						}else {
-							statusFlag = true;
-							oMsg = "";
-						}
-				 }
+				 //if (dealMemoDetailInfo.Exchrt != "" && dealMemoDetailInfo.Exchrt != undefined && dealMemoDetailInfo.Exchrt != null ){ 
+					// 	if(!dealMemoDetailInfo.Exchrt.includes(".")){
+					// 		statusFlag = false;
+					// 		oMsg = "DecimalValueExchrt";
+					// 	}else {
+					// 		statusFlag = true;
+					// 		oMsg = "";
+					// 	}
+				 //}
 				if (parseInt(dealMemoDetailInfo.Amrtpercost) < 0 || parseInt(dealMemoDetailInfo.Amrtpercost) > 100) {
 					statusFlag = false;
 					oMsg = "AmortPercNotValid";
