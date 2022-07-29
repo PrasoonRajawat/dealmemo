@@ -161,8 +161,8 @@
 					<l:GridData span="XL2 L2 M6 S12"/>
 				</layoutData>
 			</Label>
-			<ComboBox width="80%" selectedKey="" items="" change="" editable="{path:'dealMemoDetailModel>/Dmst',formatter:'.Formatter.formatEditableStatus'}" enabled="{dealMemoDetailModel>/secChanelEnableFlag}" >
-				
+			<ComboBox width="80%" selectedKey="" items="{dealMemoDetailModel>/OrigLibraryList}" change="" editable="{path:'dealMemoDetailModel>/Dmst',formatter:'.Formatter.formatEditableStatus'}">
+				<c:Item key="{dealMemoModel>Mstcd}" text="{dealMemoModel>Mstcdnm}"/>
 				<layoutData>
 					<l:GridData span="XL4 L4 M6 S12"/>
 				</layoutData>
