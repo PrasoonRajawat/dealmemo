@@ -151,7 +151,7 @@
 					<l:GridData span="XL2 L2 M6 S12"/>
 				</layoutData>
 			</Label>
-			<Input width="80%" value="{dealMemoDetailModel>/Exchrt}" textAlign="Right"  editable="{path:'dealMemoDetailModel>/Dmst',formatter:'.Formatter.formatEditableStatus'}" >
+			<Input width="80%" value="{  {path: 'dealMemoEpisodeModel>Exchrt'},  formatOptions: { showMeasure: false,minFractionDigits: 2, maxFractionDigits: 2 } }" textAlign="Right"  editable="{path:'dealMemoDetailModel>/Dmst',formatter:'.Formatter.formatEditableStatus'}" >
 				<layoutData>
 					<l:GridData span="XL4 L4 M6 S12"/>
 				</layoutData>
