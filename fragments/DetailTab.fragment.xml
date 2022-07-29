@@ -146,6 +146,27 @@
 			<!--		<l:GridData span="XL4 L4 M6 S12"/>-->
 			<!--	</layoutData>-->
 			<!--</Input>--><!--Commented By Dhiraj On 19/05/2022 As decided to not populate this field-->
+				<Label text="{i18n>lblexchrate}" design="Bold" class="sapUiTinyMarginTop" required="true">
+				<layoutData>
+					<l:GridData span="XL2 L2 M6 S12"/>
+				</layoutData>
+			</Label>
+			<Input width="80%" value="{dealMemoDetailModel>/Exchrt}" textAlign="Right"  editable="{path:'dealMemoDetailModel>/Dmst',formatter:'.Formatter.formatEditableStatus'}" enabled="{dealMemoDetailModel>/NoOfEpiEnableFlag}">
+				<layoutData>
+					<l:GridData span="XL4 L4 M6 S12"/>
+				</layoutData>
+			</Input>
+			<Label text="{i18n>lblorilib}" design="Bold" class="sapUiTinyMarginTop">
+				<layoutData>
+					<l:GridData span="XL2 L2 M6 S12"/>
+				</layoutData>
+			</Label>
+			<ComboBox width="80%" selectedKey="" items="" change="" editable="{path:'dealMemoDetailModel>/Dmst',formatter:'.Formatter.formatEditableStatus'}" enabled="{dealMemoDetailModel>/secChanelEnableFlag}" >
+				
+				<layoutData>
+					<l:GridData span="XL4 L4 M6 S12"/>
+				</layoutData>
+			</ComboBox>
 			
 			<Label text="{i18n>lblEstRelDate}" design="Bold" class="sapUiTinyMarginTop" wrapping = "true">
 				<layoutData>
@@ -168,28 +189,7 @@
 					<l:GridData span="XL4 L4 M6 S12"/>
 				</layoutData>
 			</Input>
-			<Label text="{i18n>lblexchrate}" design="Bold" class="sapUiTinyMarginTop" required="true">
-				<layoutData>
-					<l:GridData span="XL2 L2 M6 S12"/>
-				</layoutData>
-			</Label>
-			<Input width="80%" value="{dealMemoDetailModel>/Exchrt}" textAlign="Right"  editable="{path:'dealMemoDetailModel>/Dmst',formatter:'.Formatter.formatEditableStatus'}" enabled="{dealMemoDetailModel>/NoOfEpiEnableFlag}">
-				<layoutData>
-					<l:GridData span="XL4 L4 M6 S12"/>
-				</layoutData>
-			</Input>
-			<Label text="{i18n>lblorilib}" design="Bold" class="sapUiTinyMarginTop">
-				<layoutData>
-					<l:GridData span="XL2 L2 M6 S12"/>
-				</layoutData>
-			</Label>
-			<ComboBox width="80%" selectedKey="" items="" change="" editable="{path:'dealMemoDetailModel>/Dmst',formatter:'.Formatter.formatEditableStatus'}" enabled="{dealMemoDetailModel>/secChanelEnableFlag}" >
-				<c:Item key="" text="Original"/>
-				<c:Item key="" text="Library"/>
-				<layoutData>
-					<l:GridData span="XL4 L4 M6 S12"/>
-				</layoutData>
-			</ComboBox>
+		
 			<ObjectIdentifier title="{i18n>lblChannelDistDetails}" class="sapUiSmallMarginTop sapUiSmallMarginBottom">
 				<layoutData>
 						<l:GridData span="XL12 L12 M12 S12"/>
