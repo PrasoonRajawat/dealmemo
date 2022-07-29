@@ -1344,10 +1344,10 @@ sap.ui.define([
 				var statusFlag = true;
 				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
 				if (dealMemoDetailInfo.Noofepi === "" || dealMemoDetailInfo.Noofepi === "0" || dealMemoDetailInfo.Waers === "" ||
-					dealMemoDetailInfo.FiscalYrFromTo === "" || dealMemoDetailInfo.Cntstp === "") {
+					dealMemoDetailInfo.FiscalYrFromTo === "" || dealMemoDetailInfo.Cntstp === "" || dealMemoDetailInfo.Exchrt === "") {
 					oMsg = "msgrequiredFieds";
 					statusFlag = false;
-				} else {
+			 else {
 
 					var secChanel = dealMemoDetailInfo.SecondChnl;
 					if (secChanel && secChanel !== undefined && secChanel !== null) {
@@ -1379,6 +1379,7 @@ sap.ui.define([
 								}
 							}
 						}
+				
 					} else {
 						statusFlag = true;
 						oMsg = "";
@@ -1386,7 +1387,16 @@ sap.ui.define([
 					}
 
 				}
-
+      
+				 if (dealMemoDetailInfo.Exchrt != "" && dealMemoDetailInfo.Exchrt != undefined && dealMemoDetailInfo.Exchrt != null ){ 
+						if(!dealMemoDetailInfo.Exchrt.includes(".")){
+							statusFlag = false;
+							oMsg = "DecimalValueExchrt";
+						}else {
+							statusFlag = true;
+							oMsg = "";
+						}
+				 }
 				if (parseInt(dealMemoDetailInfo.Amrtpercost) < 0 || parseInt(dealMemoDetailInfo.Amrtpercost) > 100) {
 					statusFlag = false;
 					oMsg = "AmortPercNotValid";
