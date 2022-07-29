@@ -262,6 +262,9 @@ sap.ui.define([
 				dealMemoModel.setProperty("/contentLanguageList", oData.results.filter(function(item) {
 					return item.Mstpcd === "21";
 				}));
+				dealMemoModel.setProperty("/OrigLibraryList", oData.results.filter(function(item) {
+					return item.Mstpcd === "25";
+				}));
 				dealMemoModel.refresh(true);
 			},
 
@@ -371,6 +374,9 @@ sap.ui.define([
 				}, {
 					"key": "Mstpcd",
 					"val": "21"
+				}, {
+					"key": "Mstpcd",
+					"val": "25"
 				}, ];
 
 				var aFilters = basicFiilters.concat(this.getFilterArray(additionalFilters));
