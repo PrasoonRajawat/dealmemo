@@ -2605,6 +2605,25 @@ sap.ui.define([
 				// 	}
 				// 	this._oSelectIPRDialog.close();
 				// }
+				var vendorContractModel = this.getView().getModel("vendorContractModel");
+				var vendorContractDetailInfo = vendorContractModel.getData();
+				var oPayLoad = {};
+				var epiTabData = $.extend(true, [], vendorContractDetailInfo.epiVCTabData);
+				epiTabData.map(function(epitabObj) {
+					delete epitabObj.flag;
+					delete epitabObj.episodeSaveFlag;
+					delete epitabObj.Diff;
+				});
+				oPayLoad.DmCeSet = epiTabData;
+				oPayLoad.DmCmSet = this.preparePaymentpayload();
+				// oPayload.DmCmSet = oPayload.DmCmSet.filter(v=> validationResponse.allowedEpisodes.findIndex(episodeId => episodeId == v.Epiid) > -1);
+				oPayLoad.DmMilestoneSet = this.prepareMileStonePayload();
+				// oPayload.DmMilestoneSet = oPayload.DmMilestoneSet.filter(v=> validationResponse.allowedEpisodes.findIndex(episodeId => episodeId == v.Epiid) > -1);
+				oPayLoad.Tentid = "IBS";
+				oPayLoad.Dmno = vendorContractDetailInfo.Dmno;
+				oPayLoad.Dmver = vendorContractDetailInfo.Dmver;
+				oPayLoad.Contno = vendorContractDetailInfo.Contno;
+				oPayLoad.Conttp = "01";
 				var oPayLoad = 0;
 				var oModel = this.getView().getModel();
 				oModel.setUseBatch(false);
