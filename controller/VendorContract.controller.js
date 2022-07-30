@@ -2627,7 +2627,7 @@ sap.ui.define([
 				var oPayLoad = 0;
 				var oModel = this.getView().getModel();
 				oModel.setUseBatch(false);
-				oModel.create("/DmCoSet", oPayLoad, {
+				oModel.create("/DmVrSet", oPayLoad, {
 					success: function(oData) {
 
 						if (vendorContractDetailInfo.vcPaymentData === undefined || vendorContractDetailInfo.vcPaymentData.length === 0) {
