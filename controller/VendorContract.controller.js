@@ -2346,6 +2346,7 @@ sap.ui.define([
 
 			//IPR Rights Tab
 			onEnterIPR: function () {
+				this.getIPRMapping();
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
 				vendorContractModel.setProperty("/episodeRangeVisibleIPR", false);
@@ -2413,6 +2414,22 @@ sap.ui.define([
 				} else {
 					this._oSelectIPRDialog.open(this.checkNature());
 				}
+			},
+			getIPRMapping: function () {
+				sap.ui.core.BusyIndicator.show(0);
+				var vendorContractModel = this.getView().getModel("vendorContractModel");
+				var vendorContractDetailInfo = vendorContractModel.getData();
+			var srvUrl = "/sap/opu/odata/IBSCMS/DEALMEMO_SRV";
+			var oModelSav = new sap.ui.model.odata.ODataModel(srvUrl, true, "", "");
+			var pValue = "/AmortMapSet?$filter=Tentid eq 'IBS' and Dmno eq '" + Dmno + "' and Dmver eq '" + Dmver + "'";
+			oModelSav.read(pValue, null, null, true, function(oData) {
+				sap.ui.core.BusyIndicator.hide();
+				vendorContractModel.setProperty("/AmortMapList" , oData.results)
+			}, function(value) {
+				sap.ui.core.BusyIndicator.hide();
+				console.log(value);
+
+			});
 			},
 			onCancelIPRSelection: function () {
 				this._oSelectIPRDialog.close();
