@@ -2419,6 +2419,8 @@ sap.ui.define([
 				sap.ui.core.BusyIndicator.show(0);
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
+				var Dmno = vendorContractDetailInfo.Dmno;
+				var Dmver = vendorContractDetailInfo.Dmver;
 			var srvUrl = "/sap/opu/odata/IBSCMS/DEALMEMO_SRV";
 			var oModelSav = new sap.ui.model.odata.ODataModel(srvUrl, true, "", "");
 			var pValue = "/AmortMapSet?$filter=Tentid eq 'IBS' and Dmno eq '" + Dmno + "' and Dmver eq '" + Dmver + "'";
