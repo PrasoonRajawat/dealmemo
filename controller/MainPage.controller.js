@@ -802,7 +802,7 @@ sap.ui.define([
 				var Waers = dealMemoDetailInfo.Waers;
 				var srvUrl = "/sap/opu/odata/IBSCMS/DEALMEMO_SRV";
 			var oModelSav = new sap.ui.model.odata.ODataModel(srvUrl, true, "", "");
-			var pValue = "/MileEpisodeSet?$filter=Tentid eq 'IBS' and  eq '" + ebeln + "' and Waers eq '" + msid + "'";
+			var pValue = "/DmExchrtSet?$filter=Chnlid  eq '" + Chnlid + "' and Waers eq '" + Waers + "'";
 			oModelSav.read(pValue, null, null, true, function(oData) {
 				dealMemoDetailModel.setProperty( "Exchrt", oData.results.Exchrt );
 			}, function(value) {
