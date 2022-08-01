@@ -210,7 +210,26 @@ sap.ui.define([
 				});
 
 			},
+			validateSubmit: function() {
+				var artistContractModel = this.getView().getModel("artistContractModel");
+				var artistContractDetailInfo = artistContractModel.getData();
+				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
+				var statusFlag = true;
+				if ( !artistContractDetailInfo.DmCeSet.results.length ) {
+					statusFlag = false;
+					MessageBox.error(oSourceBundle.getText("msgrequiredTabs"));
+				} else if ( !artistContractDetailInfo.DmCmSet.results.length ) {
+					statusFlag = false;
+					MessageBox.error(oSourceBundle.getText("msgrequiredTabs"));
+				} else {
+					statusFlag = true;
+				}
+				return statusFlag;
+			},
 			onSubmitAC: function() {
+				
+				var validKey = this.validateSubmit();
+				if (validKey) {
 				sap.ui.core.BusyIndicator.show(0);
 				var oModel = this.getView().getModel();
 				var artistContractModel = this.getView().getModel("artistContractModel");
@@ -241,6 +260,7 @@ sap.ui.define([
 						MessageBox.error(oMsg);
 					}
 				});
+			}
 			},
 			displayContract: function() {
 				var artistContractModel = this.getView().getModel("artistContractModel");

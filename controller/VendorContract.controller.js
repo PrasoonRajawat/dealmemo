@@ -250,9 +250,10 @@ sap.ui.define([
 				return statusFlag;
 			},
 			onSubmitVC: function () { // Adde by dhiraj on 19/05/2022
-				sap.ui.core.BusyIndicator.show(0);
+			
 				var validKey = this.validateSubmit();
 				if (validKey) {
+				sap.ui.core.BusyIndicator.show(0);
 				var oModel = this.getView().getModel();
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
