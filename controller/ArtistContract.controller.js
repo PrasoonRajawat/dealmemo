@@ -227,9 +227,10 @@ sap.ui.define([
 				return statusFlag;
 			},
 			onSubmitAC: function() {
-				sap.ui.core.BusyIndicator.show(0);
+				
 				var validKey = this.validateSubmit();
 				if (validKey) {
+				sap.ui.core.BusyIndicator.show(0);
 				var oModel = this.getView().getModel();
 				var artistContractModel = this.getView().getModel("artistContractModel");
 				var artistContractDetailInfo = artistContractModel.getData();
