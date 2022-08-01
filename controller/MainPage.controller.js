@@ -900,7 +900,7 @@ sap.ui.define([
 					"errorMsgDetailTab": "",
 					"enablePerc": false,
 					"NoOfEpiEnableFlag": true,
-					"Exchrt": "0.00",
+					"Exchrt": "1.00",
 					"fisYrEnableFlag": true,
 					"secChanelEnableFlag": true,
 					"secChannelList": this.getSecChannelList(dealMemoModel.getProperty("/createParams/Chnlid"))
