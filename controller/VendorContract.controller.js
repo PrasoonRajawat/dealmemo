@@ -227,9 +227,32 @@ sap.ui.define([
 				// }
 
 			},
+			validateSubmit: function() {
+				var vendorContractModel = this.getView().getModel("vendorContractModel");
+				var vendorContractDetailInfo = vendorContractModel.getData();
+				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
+				var statusFlag = true;
+				if ( !vendorContractDetailInfo.DmCeSet.results.length ) {
+					statusFlag = false;
+					MessageBox.error(oSourceBundle.getText("msgrequiredTabs"));
+				} else if ( !vendorContractDetailInfo.DmCmSet.results.length ) {
+					statusFlag = false;
+					MessageBox.error(oSourceBundle.getText("msgrequiredTabs"));
+				} else if ( !vendorContractDetailInfo.DmVdSet.results.length ) {
+					statusFlag = false;
+					MessageBox.error(oSourceBundle.getText("msgrequiredTabs"));
+				}  else if ( !vendorContractDetailInfo.DmVrSet.results.length ) {
+					statusFlag = false;
+					MessageBox.error(oSourceBundle.getText("msgrequiredTabs"));
+				} else {
+					statusFlag = true;
+				}
+				return statusFlag;
+			},
 			onSubmitVC: function () { // Adde by dhiraj on 19/05/2022
 				sap.ui.core.BusyIndicator.show(0);
-
+				var validKey = this.validateSubmit();
+				if (validKey) {
 				var oModel = this.getView().getModel();
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
@@ -261,6 +284,7 @@ sap.ui.define([
 						MessageBox.error(oMsg);
 					}
 				});
+			}
 			},
 			displayContract: function () {
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
