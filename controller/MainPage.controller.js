@@ -804,7 +804,7 @@ sap.ui.define([
 			var oModelSav = new sap.ui.model.odata.ODataModel(srvUrl, true, "", "");
 			var pValue = "/DmExchrtSet?$filter=Chnlid  eq '" + Chnlid + "' and Waers eq '" + Waers + "'";
 			oModelSav.read(pValue, null, null, true, function(oData) {
-				dealMemoDetailModel.setProperty( "Exchrt", oData.results.Exchrt );
+				dealMemoDetailModel.setProperty( "/Exchrt", oData.results[0].Exchrt );
 			}, function(value) {
 						sap.ui.core.BusyIndicator.hide();
 						console.log(value);
