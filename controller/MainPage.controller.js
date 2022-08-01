@@ -712,7 +712,8 @@ sap.ui.define([
 					"keyPath": "/Waers",
 					"valuePath": "/Waers",
 					"valueModel": "dealMemoDetailModel",
-					"dialogTitle": oSourceBundle.getText("titleCurrency")
+					"dialogTitle": oSourceBundle.getText("titleCurrency"),
+					"callBackFunction": this.mapExchrt
 				};
 				this.openSelectionDialog();
 			},
@@ -793,6 +794,24 @@ sap.ui.define([
 				if (this.oValueHelpSelectionParams.callBackFunction) {
 					this.oValueHelpSelectionParams.callBackFunction(this);
 				}
+			},
+			mapExchrt: function(oRef) {
+				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
+				var dealMemoDetailInfo = dealMemoDetailModel.getData();
+				var Chnlid = dealMemoDetailInfo.Chnlid;
+				var Waers = dealMemoDetailInfo.Waers;
+				var srvUrl = "/sap/opu/odata/IBSCMS/DEALMEMO_SRV";
+			var oModelSav = new sap.ui.model.odata.ODataModel(srvUrl, true, "", "");
+			var pValue = "/MileEpisodeSet?$filter=Tentid eq 'IBS' and  eq '" + ebeln + "' and Waers eq '" + msid + "'";
+			oModelSav.read(pValue, null, null, true, function(oData) {
+				dealMemoDetailModel.setProperty( "Exchrt", oData.results.Exchrt );
+			}, function(value) {
+						sap.ui.core.BusyIndicator.hide();
+						console.log(value);
+						//alert("fail");
+		
+					});
+
 			},
 			onSearchSelection: function(oEvent) {
 				var sValue = oEvent.getParameter("value");
