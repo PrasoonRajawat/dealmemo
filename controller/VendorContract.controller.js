@@ -834,8 +834,7 @@ sap.ui.define([
 							}
 						});
 						var filterEpi = oData.results.filter(function (epObj) {
-							return (epObj.Contno === vendorContractDetailInfo.Contno && epObj.Contver ===
-								vendorContractDetailInfo.Contver); 
+							return (epObj.Contno === vendorContractDetailInfo.Contno); 
 						})
 						// vendorContractModel.setProperty("/episodeDataList", $.extend(true, [], filteredEpisodes));
 						vendorContractModel.setProperty("/episodeDataList", $.extend(true, [], filterEpi))
