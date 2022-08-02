@@ -805,15 +805,16 @@ sap.ui.define([
 			var oModelSav = new sap.ui.model.odata.ODataModel(srvUrl, true, "", "");
 			var pValue = "/DmExchrtSet?$filter=Chnlid  eq '" + Chnlid + "' and Waers eq '" + Waers + "'";
 			oModelSav.read(pValue, null, null, true, function(oData) {
-				sap.ui.core.BusyIndicator.hide();
 				dealMemoDetailModel.setProperty( "/Exchrt", oData.results[0].Exchrt );
+				dealMemoDetailModel.refresh(true);
+				sap.ui.core.BusyIndicator.hide();
 			}, function(value) {
 						sap.ui.core.BusyIndicator.hide();
 						console.log(value);
 						//alert("fail");
 		
 					});
-					sap.ui.core.BusyIndicator.hide();
+					
 			},
 			onSearchSelection: function(oEvent) {
 				var sValue = oEvent.getParameter("value");
