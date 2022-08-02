@@ -146,16 +146,7 @@
 			<!--		<l:GridData span="XL4 L4 M6 S12"/>-->
 			<!--	</layoutData>-->
 			<!--</Input>--><!--Commented By Dhiraj On 19/05/2022 As decided to not populate this field-->
-				<Label text="{i18n>lblexchrate}" design="Bold" class="sapUiTinyMarginTop" required="true">
-				<layoutData>
-					<l:GridData span="XL2 L2 M6 S12"/>
-				</layoutData>
-			</Label>
-			<Input width="80%" value="{dealMemoDetailModel>/Exchrt}" textAlign="Right" type="Number" editable="{path:'dealMemoDetailModel>/Dmst',formatter:'.Formatter.formatEditableStatus'}" >
-				<layoutData>
-					<l:GridData span="XL4 L4 M6 S12"/>
-				</layoutData>
-			</Input>
+		
 			<Label text="{i18n>lblorilib}" design="Bold" class="sapUiTinyMarginTop">
 				<layoutData>
 					<l:GridData span="XL2 L2 M6 S12"/>
@@ -167,6 +158,16 @@
 					<l:GridData span="XL4 L4 M6 S12"/>
 				</layoutData>
 			</ComboBox>
+			<Label text="{i18n>lblCurrency}" design="Bold" class="sapUiTinyMarginTop" required="true">
+				<layoutData>
+					<l:GridData span="XL2 L2 M6 S12"/>
+				</layoutData>
+			</Label>
+			<Input width="80%" value="{dealMemoDetailModel>/Waers}" showValueHelp="true" valueHelpRequest="onValuHelpCurrency"  maxLength='4' editable="{path:'dealMemoDetailModel>/Dmst',formatter:'.Formatter.formatEditableStatus'}" enabled="{dealMemoDetailModel>/CurrencyEnableFlag}"> 
+				<layoutData>
+					<l:GridData span="XL4 L4 M6 S12"/>
+				</layoutData>
+			</Input>
 			
 			<Label text="{i18n>lblEstRelDate}" design="Bold" class="sapUiTinyMarginTop" wrapping = "true">
 				<layoutData>
@@ -179,12 +180,12 @@
 				</layoutData>
 			</DatePicker>
 			
-			<Label text="{i18n>lblCurrency}" design="Bold" class="sapUiTinyMarginTop" required="true">
+					<Label text="{i18n>lblexchrate}" design="Bold" class="sapUiTinyMarginTop" required="true">
 				<layoutData>
 					<l:GridData span="XL2 L2 M6 S12"/>
 				</layoutData>
 			</Label>
-			<Input width="80%" value="{dealMemoDetailModel>/Waers}" showValueHelp="true" valueHelpRequest="onValuHelpCurrency"  maxLength='4' editable="{path:'dealMemoDetailModel>/Dmst',formatter:'.Formatter.formatEditableStatus'}" enabled="{dealMemoDetailModel>/CurrencyEnableFlag}"> 
+			<Input width="80%" value="{dealMemoDetailModel>/Exchrt}" textAlign="Right" type="Number" editable="{path:'dealMemoDetailModel>/Dmst',formatter:'.Formatter.formatEditableStatus'}" >
 				<layoutData>
 					<l:GridData span="XL4 L4 M6 S12"/>
 				</layoutData>
