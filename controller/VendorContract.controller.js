@@ -2463,7 +2463,8 @@ sap.ui.define([
 				var pValue = "/AmrMapSet?$filter=Tentid eq 'IBS' and Dmno eq '" + Dmno + "' and Dmver eq '" + Dmver + "' and Contno eq '" + Contno + "' and Contver eq '" + Contver + "' and Rhtfrdt eq datetime'" + Stdate + "' and Rhttodt eq datetime'" + Enddate + "'";
 				oModelSav.read(pValue, null, null, true, function (oData) {
 					sap.ui.core.BusyIndicator.hide();
-					vendorContractModel.setProperty("/AmortMapList", oData.results)
+					vendorContractModel.setProperty("/AmortMapList", oData.results);
+					vendorContractModel.refresh(true);
 				}, function (value) {
 					sap.ui.core.BusyIndicator.hide();
 					console.log(value);
