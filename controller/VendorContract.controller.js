@@ -2631,8 +2631,8 @@ sap.ui.define([
 							Rhtfrdt: vendorContractDetailInfo.rightStDate,
 							Rhttodt: vendorContractDetailInfo.rightendDate,
 							Norun: vendorContractDetailInfo.totRuns,
-							Leadamrtpt: vendorContractDetailInfo.amortKey == "" ? vendorContractDetailInfo.mapList.find(t => t.Epiid === selEpObj.Epiid).Leadamrtpt : vendorContractDetailInfo.amortKey,
-							Nleadamrtpt: vendorContractDetailInfo.nonAmortKey == "" ? vendorContractDetailInfo.mapList.find(t => t.Epiid === selEpObj.Epiid).Nleadamrtpt : vendorContractDetailInfo.nonAmortKey,
+							Leadamrtpt: vendorContractDetailInfo.amortKey == "" ? mapList.find(t => t.Epiid === selEpObj.Epiid).Leadamrtpt : vendorContractDetailInfo.amortKey,
+							Nleadamrtpt: vendorContractDetailInfo.nonAmortKey == "" ? mapList.find(t => t.Epiid === selEpObj.Epiid).Nleadamrtpt : vendorContractDetailInfo.nonAmortKey,
 							Territory: vendorContractDetailInfo.territoryKey,
 							Dubstitle: vendorContractDetailInfo.selAdditionalRights.indexOf("DB") >= 0 ? true : false,
 							Stitile: vendorContractDetailInfo.selAdditionalRights.indexOf("SR") >= 0 ? true : false,
@@ -2652,8 +2652,8 @@ sap.ui.define([
 							// Nonleadnm: sap.ui.getCore().byId(vendorContractDetailInfo.NonAmortItem).getText(),
 							// Leadnm: vendorContractDetailInfo.amortKey != "" ? vendorContractDetailInfo.AmortMapList.find(g => g.Epiid === selEpObj.Epiid ).Leadnm : sap.ui.getCore().byId(vendorContractDetailInfo.AmortItem).getText(),
 							// Nonleadnm: vendorContractDetailInfo.nonAmortKey != "" ? vendorContractDetailInfo.AmortMapList.find(g => g.Epiid === selEpObj.Epiid ).Nonleadnm :sap.ui.getCore().byId(vendorContractDetailInfo.NonAmortItem).getText(),
-							Leadnm: vendorContractDetailInfo.amortKey != "" ? vendorContractDetailInfo.amortPatternList.find(g => g.Mstcd == vendorContractDetailInfo.amortKey ).Mstcdnm : vendorContractDetailInfo.mapList.find(g => g.Epiid === selEpObj.Epiid ).Leadnm,
-							Nonleadnm: vendorContractDetailInfo.nonAmortKey != "" ? vendorContractDetailInfo.amortPatternList.find(g => g.Mstcd == vendorContractDetailInfo.nonAmortKey ).Mstcdnm : vendorContractDetailInfo.mapList.find(g => g.Epiid === selEpObj.Epiid ).Nonleadnm,
+							Leadnm: vendorContractDetailInfo.amortKey != "" ? vendorContractDetailInfo.amortPatternList.find(g => g.Mstcd == vendorContractDetailInfo.amortKey ).Mstcdnm : mapList.find(g => g.Epiid === selEpObj.Epiid ).Leadnm,
+							Nonleadnm: vendorContractDetailInfo.nonAmortKey != "" ? vendorContractDetailInfo.amortPatternList.find(g => g.Mstcd == vendorContractDetailInfo.nonAmortKey ).Mstcdnm : mapList.find(g => g.Epiid === selEpObj.Epiid ).Nonleadnm,
 							IPREditFlag: vendorContractDetailInfo.IPRRight === "01" ? false : true,
 							flag: "Cr"
 
