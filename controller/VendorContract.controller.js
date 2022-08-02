@@ -2641,8 +2641,10 @@ sap.ui.define([
 							Tertnm: sap.ui.getCore().byId(vendorContractDetailInfo.TeritoryItem).getText(),
 							// Leadnm: sap.ui.getCore().byId(vendorContractDetailInfo.AmortItem).getText() == "" ? vendorContractDetailInfo.AmortMapList.find(t => t.Epiid === selEpObj.Epiid).Leadamrtpt : "",
 							// Nonleadnm: sap.ui.getCore().byId(vendorContractDetailInfo.NonAmortItem).getText(),
-							Leadnm: vendorContractDetailInfo.amortKey != "" ? vendorContractDetailInfo.AmortMapList.find(g => g.Epiid === selEpObj.Epiid ).Leadnm : sap.ui.getCore().byId(vendorContractDetailInfo.AmortItem).getText(),
-							Nonleadnm: vendorContractDetailInfo.nonAmortKey != "" ? vendorContractDetailInfo.AmortMapList.find(g => g.Epiid === selEpObj.Epiid ).Nonleadnm :sap.ui.getCore().byId(vendorContractDetailInfo.NonAmortItem).getText(),
+							// Leadnm: vendorContractDetailInfo.amortKey != "" ? vendorContractDetailInfo.AmortMapList.find(g => g.Epiid === selEpObj.Epiid ).Leadnm : sap.ui.getCore().byId(vendorContractDetailInfo.AmortItem).getText(),
+							// Nonleadnm: vendorContractDetailInfo.nonAmortKey != "" ? vendorContractDetailInfo.AmortMapList.find(g => g.Epiid === selEpObj.Epiid ).Nonleadnm :sap.ui.getCore().byId(vendorContractDetailInfo.NonAmortItem).getText(),
+							Leadnm: vendorContractDetailInfo.amortKey != "" ? vendorContractDetailInfo.amortPatternList.find(g => g.Mstcd == vendorContractDetailInfo.amortKey ).Mstcdnm : vendorContractDetailInfo.AmortMapList.find(g => g.Epiid === selEpObj.Epiid ).Leadnm,
+							Nonleadnm: vendorContractDetailInfo.nonAmortKey != "" ? vendorContractDetailInfo.amortPatternList.find(g => g.Mstcd == vendorContractDetailInfo.nonAmortKey ).Mstcdnm : vendorContractDetailInfo.AmortMapList.find(g => g.Epiid === selEpObj.Epiid ).Nonleadnm,
 							IPREditFlag: vendorContractDetailInfo.IPRRight === "01" ? false : true,
 							flag: "Cr"
 
