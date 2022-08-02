@@ -2449,6 +2449,7 @@ sap.ui.define([
 				}
 			},
 			getIPRMapping: function () {
+				var that = this
 				var validateIPR = this.validateIPRDetails();
 				if (validateIPR) {
 				sap.ui.core.BusyIndicator.show(0);
@@ -2467,7 +2468,7 @@ sap.ui.define([
 					sap.ui.core.BusyIndicator.hide();
 					vendorContractModel.setProperty("/AmortMapList", oData.results);
 					vendorContractModel.refresh(true);
-					this.onPushIPR();
+					that.onPushIPR();
 				}, function (value) {
 					sap.ui.core.BusyIndicator.hide();
 					console.log(value);
