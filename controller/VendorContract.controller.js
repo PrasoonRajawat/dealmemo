@@ -2456,9 +2456,11 @@ sap.ui.define([
 				var Dmver = vendorContractDetailInfo.Dmver;
 				var Contno = vendorContractDetailInfo.Contno;
 				var Contver = vendorContractDetailInfo.Contver;
+				var Stdate = Formatter.formatDateValForBackend(vendorContractDetailInfo.rightStDate);
+				var Enddate =  Formatter.formatDateValForBackend(vendorContractDetailInfo.rightendDate);
 				var srvUrl = "/sap/opu/odata/IBSCMS/DEALMEMO_SRV";
 				var oModelSav = new sap.ui.model.odata.ODataModel(srvUrl, true, "", "");
-				var pValue = "/AmrMapSet?$filter=Tentid eq 'IBS' and Dmno eq '" + Dmno + "' and Dmver eq '" + Dmver + "' and Contno eq '" + Contno + "' and Contver eq '" + Contver + "' and Rhtfrdt '" + vendorContractDetailInfo.rightStDate + "' and Rhttodt '" + vendorContractDetailInfo.rightendDate + "'";
+				var pValue = "/AmrMapSet?$filter=Tentid eq 'IBS' and Dmno eq '" + Dmno + "' and Dmver eq '" + Dmver + "' and Contno eq '" + Contno + "' and Contver eq '" + Contver + "' and Rhtfrdt '" + Stdate + "' and Rhttodt '" + Enddate + "'";
 				oModelSav.read(pValue, null, null, true, function (oData) {
 					sap.ui.core.BusyIndicator.hide();
 					vendorContractModel.setProperty("/AmortMapList", oData.results)
