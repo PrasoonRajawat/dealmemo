@@ -2467,8 +2467,9 @@ sap.ui.define([
 				oModelSav.read(pValue, null, null, true, function (oData) {
 					sap.ui.core.BusyIndicator.hide();
 					vendorContractModel.setProperty("/AmortMapList", oData.results);
+					var mapList = oData.results;
 					vendorContractModel.refresh(true);
-					that.onPushIPR();
+					that.onPushIPR(mapList);
 				}, function (value) {
 					sap.ui.core.BusyIndicator.hide();
 					console.log(value);
@@ -2592,7 +2593,7 @@ sap.ui.define([
 				return oResponse;
 			},
 
-			onPushIPR: function () {
+			onPushIPR: function (mlist) {
 				
 				var validateIPR = this.validateIPRDetails();
 				if (validateIPR) {
@@ -2602,7 +2603,7 @@ sap.ui.define([
 					var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
 					var selectedEpisodeList = [];
 					var oselIndex = vendorContractDetailInfo.episodeModeIPR;
-					var mapList = vendorContractDetailInfo.AmortMapList;
+					var mapList = mlist;
 					var IPRPayloadArr = [];
 					if (oselIndex == 0) {
 						selectedEpisodeList = vendorContractDetailInfo.epIPRList;
