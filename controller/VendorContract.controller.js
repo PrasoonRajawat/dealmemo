@@ -836,8 +836,11 @@ sap.ui.define([
 						var filterEpi = oData.results.filter(function (epObj) {
 							return (epObj.Contno === vendorContractDetailInfo.Contno); 
 						})
-						// vendorContractModel.setProperty("/episodeDataList", $.extend(true, [], filteredEpisodes));
+						if (vendorContractDetailInfo.Contver == 'new') {
+						vendorContractModel.setProperty("/episodeDataList", $.extend(true, [], filteredEpisodes));
+						} else {
 						vendorContractModel.setProperty("/episodeDataList", $.extend(true, [], filterEpi))
+						}
 						vendorContractModel.setProperty("/episodeVCList", filteredEpisodes);
 						vendorContractModel.setProperty("/episode2List" , filterEpi);
 						vendorContractModel.setProperty("/selEpisodes", filteredEpisodes);
