@@ -2446,7 +2446,7 @@ sap.ui.define([
 				var vendorContractDetailInfo = vendorContractModel.getData();
 				var Dmno = vendorContractDetailInfo.Dmno;
 				var Dmver = vendorContractDetailInfo.Dmver;
-				var Contno = vendorContractDetailInfo.COntno;
+				var Contno = vendorContractDetailInfo.Contno;
 				var Contver = vendorContractDetailInfo.Contver;
 				var srvUrl = "/sap/opu/odata/IBSCMS/DEALMEMO_SRV";
 				var oModelSav = new sap.ui.model.odata.ODataModel(srvUrl, true, "", "");
