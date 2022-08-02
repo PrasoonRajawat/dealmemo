@@ -2460,7 +2460,7 @@ sap.ui.define([
 				var Enddate =  Formatter.formatDateValForBackend(vendorContractDetailInfo.rightendDate);
 				var srvUrl = "/sap/opu/odata/IBSCMS/DEALMEMO_SRV";
 				var oModelSav = new sap.ui.model.odata.ODataModel(srvUrl, true, "", "");
-				var pValue = "/AmrMapSet?$filter=Tentid eq 'IBS' and Dmno eq '" + Dmno + "' and Dmver eq '" + Dmver + "' and Contno eq '" + Contno + "' and Contver eq '" + Contver + "' and Rhtfrdt '" + Stdate + "' and Rhttodt '" + Enddate + "'";
+				var pValue = "/AmrMapSet?$filter=Tentid eq 'IBS' and Dmno eq '" + Dmno + "' and Dmver eq '" + Dmver + "' and Contno eq '" + Contno + "' and Contver eq '" + Contver + "' and Rhtfrdt eq datetime'" + Stdate + "' and Rhttodt eq datetime'" + Enddate + "'";
 				oModelSav.read(pValue, null, null, true, function (oData) {
 					sap.ui.core.BusyIndicator.hide();
 					vendorContractModel.setProperty("/AmortMapList", oData.results)
