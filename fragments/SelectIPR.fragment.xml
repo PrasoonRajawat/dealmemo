@@ -101,7 +101,7 @@
 		
 	</content>
 	<beginButton>
-		<Button text="{i18n>lblBtnPush}" press="onPushIPR"/>
+		<Button text="{i18n>lblBtnPush}" press="getIPRMapping"/>
 	</beginButton>
 	<endButton>
 		<Button  text="{i18n>btnCancel}" press="onCancelIPRSelection" />

@@ -2449,6 +2449,8 @@ sap.ui.define([
 				}
 			},
 			getIPRMapping: function () {
+				var validateIPR = this.validateIPRDetails();
+				if (validateIPR) {
 				sap.ui.core.BusyIndicator.show(0);
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
@@ -2465,11 +2467,13 @@ sap.ui.define([
 					sap.ui.core.BusyIndicator.hide();
 					vendorContractModel.setProperty("/AmortMapList", oData.results);
 					vendorContractModel.refresh(true);
+					this.onPushIPR();
 				}, function (value) {
 					sap.ui.core.BusyIndicator.hide();
 					console.log(value);
 
 				});
+			}
 			},
 			onCancelIPRSelection: function () {
 				this._oSelectIPRDialog.close();
@@ -2591,7 +2595,7 @@ sap.ui.define([
 				
 				var validateIPR = this.validateIPRDetails();
 				if (validateIPR) {
-					this.getIPRMapping();
+					
 					var vendorContractModel = this.getView().getModel("vendorContractModel");
 					var vendorContractDetailInfo = vendorContractModel.getData();
 					var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
