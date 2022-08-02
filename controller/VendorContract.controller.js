@@ -1047,7 +1047,7 @@ sap.ui.define([
 				vendorContractDetailInfo.epiToId = "";
 				vendorContractDetailInfo.taxCodeName = "";
 				vendorContractDetailInfo.episodeRangeVisible = false;
-				vendorContractDetailInfo.episodeDataList = vendorContractDetailInfo.episodeList;
+				vendorContractDetailInfo.episodeDataList = vendorContractDetailInfo.episodeList; //episodeVCList
 				vendorContractDetailInfo.vcEpiDataMsgVisible = false;
 				vendorContractDetailInfo.vcEpiDataErrorMsg = "";
 				vendorContractModel.refresh(true);
