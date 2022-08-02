@@ -837,7 +837,8 @@ sap.ui.define([
 							return (epObj.Contno === vendorContractDetailInfo.Contno && epObj.Contver ===
 								vendorContractDetailInfo.Contver); 
 						})
-						vendorContractModel.setProperty("/episodeDataList", $.extend(true, [], filteredEpisodes));
+						// vendorContractModel.setProperty("/episodeDataList", $.extend(true, [], filteredEpisodes));
+						vendorContractModel.setProperty("/episodeDataList", $.extend(true, [], filterEpi))
 						vendorContractModel.setProperty("/episodeVCList", filteredEpisodes);
 						vendorContractModel.setProperty("/episode2List" , filterEpi);
 						vendorContractModel.setProperty("/selEpisodes", filteredEpisodes);
