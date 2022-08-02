@@ -796,6 +796,7 @@ sap.ui.define([
 				}
 			},
 			mapExchrt: function(oRef) {
+				sap.ui.core.BusyIndicator.show(0);
 				var dealMemoDetailModel = oRef.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
 				var Chnlid = dealMemoDetailInfo.Chnlid;
@@ -804,6 +805,7 @@ sap.ui.define([
 			var oModelSav = new sap.ui.model.odata.ODataModel(srvUrl, true, "", "");
 			var pValue = "/DmExchrtSet?$filter=Chnlid  eq '" + Chnlid + "' and Waers eq '" + Waers + "'";
 			oModelSav.read(pValue, null, null, true, function(oData) {
+				sap.ui.core.BusyIndicator.hide();
 				dealMemoDetailModel.setProperty( "/Exchrt", oData.results[0].Exchrt );
 			}, function(value) {
 						sap.ui.core.BusyIndicator.hide();
@@ -811,7 +813,7 @@ sap.ui.define([
 						//alert("fail");
 		
 					});
-
+					sap.ui.core.BusyIndicator.hide();
 			},
 			onSearchSelection: function(oEvent) {
 				var sValue = oEvent.getParameter("value");
