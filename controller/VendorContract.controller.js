@@ -2674,7 +2674,7 @@ sap.ui.define([
 
 			// },
 			onPushIPR: function () {
-				this.getIPRMapping();
+			
 				var validateIPR = this.validateIPRDetails();
 				if (validateIPR) {
 					var vendorContractModel = this.getView().getModel("vendorContractModel");
