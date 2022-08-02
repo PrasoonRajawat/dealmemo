@@ -2622,8 +2622,8 @@ sap.ui.define([
 							Rhtfrdt: vendorContractDetailInfo.rightStDate,
 							Rhttodt: vendorContractDetailInfo.rightendDate,
 							Norun: vendorContractDetailInfo.totRuns,
-							Leadamrtpt: vendorContractDetailInfo.amortKey,
-							Nleadamrtpt: vendorContractDetailInfo.nonAmortKey,
+							Leadamrtpt: vendorContractDetailInfo.amortKey == "" ? vendorContractDetailInfo.AmortMapList.find(t => t.Epiid === selEpObj.Epiid).Leadamrtpt : vendorContractDetailInfo.amortKey,
+							Nleadamrtpt: vendorContractDetailInfo.nonAmortKey == "" ? vendorContractDetailInfo.AmortMapList.find(t => t.Epiid === selEpObj.Epiid).Nleadamrtpt : vendorContractDetailInfo.nonAmortKey,
 							Territory: vendorContractDetailInfo.territoryKey,
 							Dubstitle: vendorContractDetailInfo.selAdditionalRights.indexOf("DB") >= 0 ? true : false,
 							Stitile: vendorContractDetailInfo.selAdditionalRights.indexOf("SR") >= 0 ? true : false,
@@ -2639,8 +2639,10 @@ sap.ui.define([
 							Epinm: selEpObj.Epinm,
 							Iprnm: sap.ui.getCore().byId(vendorContractDetailInfo.IPRItem).getText(),
 							Tertnm: sap.ui.getCore().byId(vendorContractDetailInfo.TeritoryItem).getText(),
-							Leadnm: sap.ui.getCore().byId(vendorContractDetailInfo.AmortItem).getText(),
-							Nonleadnm: sap.ui.getCore().byId(vendorContractDetailInfo.NonAmortItem).getText(),
+							// Leadnm: sap.ui.getCore().byId(vendorContractDetailInfo.AmortItem).getText() == "" ? vendorContractDetailInfo.AmortMapList.find(t => t.Epiid === selEpObj.Epiid).Leadamrtpt : "",
+							// Nonleadnm: sap.ui.getCore().byId(vendorContractDetailInfo.NonAmortItem).getText(),
+							Leadnm: vendorContractDetailInfo.amortKey != "" ? vendorContractDetailInfo.AmortMapList.find(g => g.Epiid === selEpObj.Epiid ).Leadnm : sap.ui.getCore().byId(vendorContractDetailInfo.AmortItem).getText(),
+							Nonleadnm: vendorContractDetailInfo.nonAmortKey != "" ? vendorContractDetailInfo.AmortMapList.find(g => g.Epiid === selEpObj.Epiid ).Nonleadnm :sap.ui.getCore().byId(vendorContractDetailInfo.NonAmortItem).getText(),
 							IPREditFlag: vendorContractDetailInfo.IPRRight === "01" ? false : true,
 							flag: "Cr"
 
