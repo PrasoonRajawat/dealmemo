@@ -2371,7 +2371,7 @@ sap.ui.define([
 
 			//IPR Rights Tab
 			onEnterIPR: function () {
-				this.getIPRMapping();
+				
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
 				vendorContractModel.setProperty("/episodeRangeVisibleIPR", false);
@@ -2450,7 +2450,7 @@ sap.ui.define([
 				var Contver = vendorContractDetailInfo.Contver;
 				var srvUrl = "/sap/opu/odata/IBSCMS/DEALMEMO_SRV";
 				var oModelSav = new sap.ui.model.odata.ODataModel(srvUrl, true, "", "");
-				var pValue = "/AmrMapSet?$filter=Tentid eq 'IBS' and Dmno eq '" + Dmno + "' and Dmver eq '" + Dmver + "' and Contno eq '" + Contno + "' and Contver eq '" + Contver + "'";
+				var pValue = "/AmrMapSet?$filter=Tentid eq 'IBS' and Dmno eq '" + Dmno + "' and Dmver eq '" + Dmver + "' and Contno eq '" + Contno + "' and Contver eq '" + Contver + "' and Rhtfrdt '" + vendorContractDetailInfo.Rhtfrdt + "' and Rhttodt '" + vendorContractDetailInfo.Rhttodt + "'";
 				oModelSav.read(pValue, null, null, true, function (oData) {
 					sap.ui.core.BusyIndicator.hide();
 					vendorContractModel.setProperty("/AmortMapList", oData.results)
@@ -2522,12 +2522,12 @@ sap.ui.define([
 					vendorContractDetailInfo.vcIPRDataErrorMsg = oSourceBundle.getText("msgSelectEpisode" + vendorContractDetailInfo.Cnttp);
 					vendorContractModel.refresh(true);
 					return false;
-				} else if (vendorContractDetailInfo.IPRRight === "" || vendorContractDetailInfo.PlatformKey === "" || vendorContractDetailInfo.totRuns ===
-					"" || vendorContractDetailInfo.amortKey === "" || vendorContractDetailInfo.nonAmortKey === "") {
-					vendorContractDetailInfo.vcIPRDataErrorMsg = oSourceBundle.getText("msgrequiredFieds");
-					vendorContractDetailInfo.vcIPRDataMsgVisible = true;
-					vendorContractModel.refresh(true);
-					return false;
+				// } else if (vendorContractDetailInfo.IPRRight === "" || vendorContractDetailInfo.PlatformKey === "" || vendorContractDetailInfo.totRuns ===
+				// 	"" || vendorContractDetailInfo.amortKey === "" || vendorContractDetailInfo.nonAmortKey === "") {
+				// 	vendorContractDetailInfo.vcIPRDataErrorMsg = oSourceBundle.getText("msgrequiredFieds");
+				// 	vendorContractDetailInfo.vcIPRDataMsgVisible = true;
+				// 	vendorContractModel.refresh(true);
+				// 	return false;
 				} else if (vendorContractDetailInfo.rightStDate === null || vendorContractDetailInfo.rightendDate === null) {
 					// MessageBox.error(oSourceBundle.getText("msgrequiredFieds"));
 					vendorContractDetailInfo.vcIPRDataErrorMsg = oSourceBundle.getText("msgrequiredFieds");
@@ -2577,7 +2577,7 @@ sap.ui.define([
 			},
 
 			onPushIPR: function () {
-
+				this.getIPRMapping();
 				var validateIPR = this.validateIPRDetails();
 				if (validateIPR) {
 					var vendorContractModel = this.getView().getModel("vendorContractModel");
@@ -2599,7 +2599,7 @@ sap.ui.define([
 					}
 
 					selectedEpisodeList.map(function (selEpObj) {
-
+						
 						IPRPayloadArr.push({
 							Tentid: "IBS",
 							Dmno: vendorContractDetailInfo.Dmno,
