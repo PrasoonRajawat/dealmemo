@@ -227,21 +227,21 @@ sap.ui.define([
 				// }
 
 			},
-			validateSubmit: function() {
+			validateSubmit: function () {
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
 				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
 				var statusFlag = true;
-				if ( !vendorContractDetailInfo.DmCeSet.results.length ) {
+				if (!vendorContractDetailInfo.DmCeSet.results.length) {
 					statusFlag = false;
 					MessageBox.error(oSourceBundle.getText("msgrequiredTabs"));
-				} else if ( !vendorContractDetailInfo.DmCmSet.results.length ) {
+				} else if (!vendorContractDetailInfo.DmCmSet.results.length) {
 					statusFlag = false;
 					MessageBox.error(oSourceBundle.getText("msgrequiredTabs"));
-				} else if ( !vendorContractDetailInfo.DmVdSet.results.length ) {
+				} else if (!vendorContractDetailInfo.DmVdSet.results.length) {
 					statusFlag = false;
 					MessageBox.error(oSourceBundle.getText("msgrequiredTabs"));
-				}  else if ( !vendorContractDetailInfo.DmVrSet.results.length ) {
+				} else if (!vendorContractDetailInfo.DmVrSet.results.length) {
 					statusFlag = false;
 					MessageBox.error(oSourceBundle.getText("msgrequiredTabs"));
 				} else {
@@ -250,42 +250,42 @@ sap.ui.define([
 				return statusFlag;
 			},
 			onSubmitVC: function () { // Adde by dhiraj on 19/05/2022
-			
+
 				var validKey = this.validateSubmit();
 				if (validKey) {
-				sap.ui.core.BusyIndicator.show(0);
-				var oModel = this.getView().getModel();
-				var vendorContractModel = this.getView().getModel("vendorContractModel");
-				var vendorContractDetailInfo = vendorContractModel.getData();
-				var paramObj = {
-					"IV_TENTID": "IBS",
-					"IV_DMNO": vendorContractDetailInfo.Dmno,
-					"IV_DMVER": vendorContractDetailInfo.Dmver,
-					"IV_CONTNO": vendorContractDetailInfo.Contno,
-					"IV_CONTVER": vendorContractDetailInfo.Contver,
-					"IV_CONTTP": vendorContractDetailInfo.Conttp
+					sap.ui.core.BusyIndicator.show(0);
+					var oModel = this.getView().getModel();
+					var vendorContractModel = this.getView().getModel("vendorContractModel");
+					var vendorContractDetailInfo = vendorContractModel.getData();
+					var paramObj = {
+						"IV_TENTID": "IBS",
+						"IV_DMNO": vendorContractDetailInfo.Dmno,
+						"IV_DMVER": vendorContractDetailInfo.Dmver,
+						"IV_CONTNO": vendorContractDetailInfo.Contno,
+						"IV_CONTVER": vendorContractDetailInfo.Contver,
+						"IV_CONTTP": vendorContractDetailInfo.Conttp
 
-				};
-				oModel.callFunction("/SubmitCont", {
-					method: "GET",
-					urlParameters: paramObj,
-					success: function (oData, response) {
-						sap.ui.core.BusyIndicator.hide();
+					};
+					oModel.callFunction("/SubmitCont", {
+						method: "GET",
+						urlParameters: paramObj,
+						success: function (oData, response) {
+							sap.ui.core.BusyIndicator.hide();
 
-						// dealMemoDetailModel.setProperty("/costCodes", oData.results);
-						vendorContractModel.refresh(true);
-						// this.loadDealMemoList();
-						this.loadDealMemoDetails();
+							// dealMemoDetailModel.setProperty("/costCodes", oData.results);
+							vendorContractModel.refresh(true);
+							// this.loadDealMemoList();
+							this.loadDealMemoDetails();
 
-					}.bind(this),
-					error: function (oError) {
-						sap.ui.core.BusyIndicator.hide();
-						var oErrorResponse = JSON.parse(oError.responseText);
-						var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
-						MessageBox.error(oMsg);
-					}
-				});
-			}
+						}.bind(this),
+						error: function (oError) {
+							sap.ui.core.BusyIndicator.hide();
+							var oErrorResponse = JSON.parse(oError.responseText);
+							var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
+							MessageBox.error(oMsg);
+						}
+					});
+				}
 			},
 			displayContract: function () {
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
@@ -2446,17 +2446,19 @@ sap.ui.define([
 				var vendorContractDetailInfo = vendorContractModel.getData();
 				var Dmno = vendorContractDetailInfo.Dmno;
 				var Dmver = vendorContractDetailInfo.Dmver;
-			var srvUrl = "/sap/opu/odata/IBSCMS/DEALMEMO_SRV";
-			var oModelSav = new sap.ui.model.odata.ODataModel(srvUrl, true, "", "");
-			var pValue = "/AmortMapSet?$filter=Tentid eq 'IBS' and Dmno eq '" + Dmno + "' and Dmver eq '" + Dmver + "'";
-			oModelSav.read(pValue, null, null, true, function(oData) {
-				sap.ui.core.BusyIndicator.hide();
-				vendorContractModel.setProperty("/AmortMapList" , oData.results)
-			}, function(value) {
-				sap.ui.core.BusyIndicator.hide();
-				console.log(value);
+				var Contno = vendorContractDetailInfo.COntno;
+				var Contver = vendorContractDetailInfo.Contver;
+				var srvUrl = "/sap/opu/odata/IBSCMS/DEALMEMO_SRV";
+				var oModelSav = new sap.ui.model.odata.ODataModel(srvUrl, true, "", "");
+				var pValue = "/AmrMapSet?$filter=Tentid eq 'IBS' and Dmno eq '" + Dmno + "' and Dmver eq '" + Dmver + "' and Contno eq '" + Contno + "' and Contver eq '" + Contver + "'";
+				oModelSav.read(pValue, null, null, true, function (oData) {
+					sap.ui.core.BusyIndicator.hide();
+					vendorContractModel.setProperty("/AmortMapList", oData.results)
+				}, function (value) {
+					sap.ui.core.BusyIndicator.hide();
+					console.log(value);
 
-			});
+				});
 			},
 			onCancelIPRSelection: function () {
 				this._oSelectIPRDialog.close();
@@ -2588,7 +2590,7 @@ sap.ui.define([
 						selectedEpisodeList = vendorContractDetailInfo.epIPRList;
 					} else {
 						selectedEpisodeList = [];
-						vendorContractDetailInfo.epIPRList.map(function(epVCObj) {
+						vendorContractDetailInfo.epIPRList.map(function (epVCObj) {
 							if (epVCObj.Epiid >= vendorContractDetailInfo.epiIPRFromId && epVCObj.Epiid <= vendorContractDetailInfo.epiIPRToId) {
 								selectedEpisodeList.push(epVCObj);
 							}
@@ -2596,7 +2598,7 @@ sap.ui.define([
 						});
 					}
 
-					selectedEpisodeList.map(function(selEpObj) {
+					selectedEpisodeList.map(function (selEpObj) {
 
 						IPRPayloadArr.push({
 							Tentid: "IBS",
@@ -2649,7 +2651,7 @@ sap.ui.define([
 					}
 					this._oSelectIPRDialog.close();
 				}
-				
+
 
 			},
 			onValueHelpAmort: function (oEvent) {
