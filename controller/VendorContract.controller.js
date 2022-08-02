@@ -833,8 +833,13 @@ sap.ui.define([
 								epObj.Vcflag !== "X";
 							}
 						});
+						var filterEpi = oData.results.filter(function (epObj) {
+							return (epObj.Contno === vendorContractDetailInfo.Contno && epObj.Contver ===
+								vendorContractDetailInfo.Contver); 
+						})
 						vendorContractModel.setProperty("/episodeDataList", $.extend(true, [], filteredEpisodes));
 						vendorContractModel.setProperty("/episodeVCList", filteredEpisodes);
+						vendorContractModel.setProperty("/episode2List" , filterEpi);
 						vendorContractModel.setProperty("/selEpisodes", filteredEpisodes);
 						vendorContractModel.refresh(true);
 						sap.ui.core.BusyIndicator.hide();
@@ -1047,7 +1052,7 @@ sap.ui.define([
 				vendorContractDetailInfo.epiToId = "";
 				vendorContractDetailInfo.taxCodeName = "";
 				vendorContractDetailInfo.episodeRangeVisible = false;
-				vendorContractDetailInfo.episodeDataList = vendorContractDetailInfo.episodeList; //episodeVCList
+				vendorContractDetailInfo.episode2List = vendorContractDetailInfo.episodeList; //episodeVCList
 				vendorContractDetailInfo.vcEpiDataMsgVisible = false;
 				vendorContractDetailInfo.vcEpiDataErrorMsg = "";
 				vendorContractModel.refresh(true);
