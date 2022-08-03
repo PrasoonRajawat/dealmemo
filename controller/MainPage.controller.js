@@ -1202,7 +1202,7 @@ sap.ui.define([
 				if (mainSelectedKey == "progPL") {
 					this.getView().byId("btnSaveDM").setEnabled(false);
 				} else {
-					if (dealMemoDetailInfo.Dmst = "01") {
+					if (dealMemoDetailInfo.Dmst == "01") {
 					this.getView().byId("btnSaveDM").setEnabled(true);
 					} else {
 						this.getView().byId("btnSaveDM").setEnabled(false);
