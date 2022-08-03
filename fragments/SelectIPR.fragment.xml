@@ -79,13 +79,13 @@
 		</HBox>
 		<HBox>
 			<VBox width="50%">
-				<Label text="{i18n>lblLeadingAmortPattern}" required="true"/>
+				<Label text="{i18n>lblLeadingAmortPattern}" />
 				<ComboBox width="100%" items="{vendorContractModel>/amortPatternList}"  selectedItemId ="{vendorContractModel>/AmortItem}" selectedKey="{vendorContractModel>/amortKey}">
 					<c:Item text="{vendorContractModel>Mstcdnm}" key="{vendorContractModel>Mstcd}"/>
 				</ComboBox>
 			</VBox>
 			<VBox width="50%" class="sapUiTinyMarginBegin">
-				<Label text="{i18n>lblNonLeadingAmortPattern}" required="true"/>
+				<Label text="{i18n>lblNonLeadingAmortPattern}" />
 				<ComboBox width="100%" items="{vendorContractModel>/nonAmmortPatternList}"  selectedItemId ="{vendorContractModel>/NonAmortItem}" selectedKey="{vendorContractModel>/nonAmortKey}">
 					<c:Item text="{vendorContractModel>Mstcdnm}" key="{vendorContractModel>Mstcd}"/>
 				</ComboBox>
