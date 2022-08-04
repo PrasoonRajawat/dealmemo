@@ -1738,7 +1738,7 @@ sap.ui.define([
 						Dmver: vendorContractDetailInfo.Dmver,
 						Dueamt: oAmtType === 1 ? mlObj.Dueamt : "0.00",
 						Empfk: mlObj.vendorKey,
-						Mestdt: Formatter.formatDateValForBackend(mlObj.estDate),
+						Mestdt: mlObj.estDate != null ? Formatter.formatDateValForBackend(mlObj.estDate) : null ,
 						Msid: mlObj.Mstcd,
 						Msidnm: mlObj.Mstcdnm,
 						Tentid: "IBS",
@@ -1749,6 +1749,15 @@ sap.ui.define([
 				}.bind(this));
 				return mileStonePayload;
 			},
+
+			// changeEstimatedDate: function() {
+			// 	var vendorContractModel = this.getView().getModel("vendorContractModel");
+			// 	var vendorContractDetailInfo = vendorContractModel.getData();
+			// 	if (vendorContractDetailInfo.mileStonesForEpi.Mestdt === "") {
+			// 		vendorContractDetailInfo.mileStonesForEpi.Mestdt = null;
+			// 	}
+			// 	vendorContractDetailInfo.refresh(true);
+			// },
 
 			validateMilestoneAchievementDate: function () {
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
