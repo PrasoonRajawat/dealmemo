@@ -4019,6 +4019,7 @@ sap.ui.define([
 
 			},
 			onSavePress: function(oEvent) {
+				sap.ui.core.BusyIndicator.show(0);
 				var selectedTab = this.getView().byId("idIconTabBar").getSelectedKey();
 				if (selectedTab == "detail") {
 					this.saveDealMemoDetailData();
@@ -4044,7 +4045,7 @@ sap.ui.define([
 					var Key = that.getView().byId("commentInner").getSelectedKey();
 					this.saveComments(Key);
 				}
-
+				sap.ui.core.BusyIndicator.hide();
 			},
 			beforeDelete: function() {
 				var detailModel = this.getView().getModel("dealMemoDetailModel");
