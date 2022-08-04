@@ -44,7 +44,7 @@
 												<ObjectIdentifier title="{vendorContractModel>Epinm}"></ObjectIdentifier>
 												<Label text="{vendorContractModel>Delvcdnm}"></Label>
 												<CheckBox selected="{vendorContractModel>Delvpay}" enabled="false"></CheckBox>
-												<Label text="{path:'vendorContractModel>Estdelvdt',formatter:'.Formatter.formateDate'}"></Label>
+												<Label text="{path:'vendorContractModel>Estdelvdt',formatter:'.Formatter.formatDateTime'}"></Label>
 												<Label text="{path:'vendorContractModel>Delvdt',formatter:'.Formatter.formateDate'}"></Label>
 												<Label text="{path:'vendorContractModel>Delvtm',formatter:'.Formatter.formatTimeDuration'}"/>
 												<Label text="{path:'vendorContractModel>Mscompdt',formatter:'.Formatter.formateDate'}"></Label>

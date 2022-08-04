@@ -42,6 +42,12 @@ sap.ui.define([
                return dateFormat.format(new Date(oVal));
                
            },
+		   formatDateTime: function(oVal) {
+			var dateFormat = sap.ui.core.format.DateFormat.getDateTimeInstance({
+				pattern : "dd-MM-yyyy" 
+			})
+			dateFormat.format(oVal);
+		   },
            formateDate:function(oVal){
         	   var dateFormat = sap.ui.core.format.DateFormat.getDateInstance({
                    pattern: "dd-MM-yyyy"
