@@ -1154,6 +1154,8 @@ sap.ui.define([
 			/***************** Load Detail Tab for Deal Memo ******************/
 
 			onMainTabSelect: function() {
+				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
+				var dealMemoDetailInfo = dealMemoDetailModel.getData();
 				var mainSelectedKey = this.getView().byId("idIconTabBar").getSelectedKey();
 				if (mainSelectedKey === "detail") {
 					this.loadDetailTab(this.selectedDealMemoObj);
