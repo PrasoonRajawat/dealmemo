@@ -7,10 +7,7 @@
 						<ObjectHeader backgroundDesign="Translucent" title="{i18n>lbldealmemohdr}{dealMemoDetailModel>/Dmno}({dealMemoDetailModel>/Dmver})"
 							number="{parts:[{path:'dealMemoDetailModel>/Totdmamt'},{path:'dealMemoDetailModel>/Waers'}], type: 'sap.ui.model.type.Currency', formatOptions: {showMeasure: false}}"
 							numberUnit="{dealMemoDetailModel>/Waers}" responsive="true" fullScreenOptimized="false" numberState="Success">
-								<ObjectHeader backgroundDesign="Translucent" title=""
-							number="{parts:[{path:'dealMemoDetailModel>/loclcrcyamt'},{path:'dealMemoDetailModel>/loclcrcykey'}], type: 'sap.ui.model.type.Currency', formatOptions: {showMeasure: false}}"
-							numberUnit="{dealMemoDetailModel>/loclcrcykey}" responsive="true" fullScreenOptimized="false" numberState="Success">
-								</ObjectHeader>
+							
 							<statuses>
 								<ObjectStatus text="{dealMemoDetailModel>/Dmstdesc}" state="{path:'dealMemoDetailModel>/Dmst',formatter:'.Formatter.formatDealMemoStatus'}"/>
 							</statuses>
