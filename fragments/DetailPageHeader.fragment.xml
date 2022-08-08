@@ -5,7 +5,7 @@
 
 <Panel expandable="false" backgroundDesign="Transparent" expanded="true"> 			<!--Made expandable="false" By  Lakshmana on 27.05.2020  for Deal Memo Changes-->
 						<ObjectHeader backgroundDesign="Translucent" title="{i18n>lbldealmemohdr}{dealMemoDetailModel>/Dmno}({dealMemoDetailModel>/Dmver})"
-							number="{parts:[{path:'dealMemoDetailModel>/Totdmamt'},{path:'dealMemoDetailModel>/Waers'}{path:'dealMemoDetailModel>/loclcrcyamt'},{path:'dealMemoDetailModel>/loclcrcykey'}], type: 'sap.ui.model.type.Currency', formatOptions: {showMeasure: false}}"
+							number="{parts:[{path:'dealMemoDetailModel>/Totdmamt'},{path:'dealMemoDetailModel>/Waers'},{path:'dealMemoDetailModel>/loclcrcyamt'},{path:'dealMemoDetailModel>/loclcrcykey'}], type: 'sap.ui.model.type.Currency', formatOptions: {showMeasure: false}}"
 							numberUnit="{dealMemoDetailModel>/Waers}" responsive="true" fullScreenOptimized="false" numberState="Success">
 							
 							<statuses>
