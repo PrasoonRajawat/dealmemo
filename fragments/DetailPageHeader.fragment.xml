@@ -10,7 +10,7 @@
 							
 							<statuses>
 								<ObjectStatus text="{dealMemoDetailModel>/Dmstdesc}" state="{path:'dealMemoDetailModel>/Dmst',formatter:'.Formatter.formatDealMemoStatus'}"/>
-								<ObjectStatus text="{parts:[{path:'dealMemoDetailModel>/loclcrcyamt'},{path:'dealMemoDetailModel>/loclcrcykey'}], type: 'sap.ui.model.type.Currency', formatOptions: {showMeasure: false}}" state="Success"/>
+								<ObjectStatus text="{parts:[{path:'dealMemoDetailModel>/LoclCrcyAmt'},{path:'dealMemoDetailModel>/LoclCrcyKey'}], type: 'sap.ui.model.type.Currency', formatOptions: {showMeasure: false}}" state="Success"/>
 							</statuses>
 								
 						
