@@ -9,7 +9,7 @@
 							numberUnit="{dealMemoDetailModel>/Waers}" responsive="true" fullScreenOptimized="false" numberState="Success">
 							<ObjectHeader backgroundDesign="Translucent" 
 							number="{parts:[{path:'dealMemoDetailModel>/LoclCrcyAmt'},{path:'dealMemoDetailModel>/LoclCrcyKey'}], type: 'sap.ui.model.type.Currency', formatOptions: {showMeasure: false}}"
-							numberUnit="{dealMemoDetailModel>/LoclCrcyKey}" responsive="true" fullScreenOptimized="false" numberState="Success"/>
+							numberUnit="{dealMemoDetailModel>/LoclCrcyKey}" responsive="true" fullScreenOptimized="false"  numberState="Success"/>
 							
 							<statuses>
 								<ObjectStatus text="{dealMemoDetailModel>/Dmstdesc}" state="{path:'dealMemoDetailModel>/Dmst',formatter:'.Formatter.formatDealMemoStatus'}"/>
