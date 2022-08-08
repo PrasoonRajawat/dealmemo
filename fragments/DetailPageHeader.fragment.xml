@@ -1,4 +1,3 @@
-
 <c:FragmentDefinition
 	xmlns="sap.m" xmlns:l="sap.ui.layout"
 	xmlns:c="sap.ui.core"
@@ -8,6 +7,9 @@
 						<ObjectHeader backgroundDesign="Translucent" title="{i18n>lbldealmemohdr}{dealMemoDetailModel>/Dmno}({dealMemoDetailModel>/Dmver})"
 							number="{parts:[{path:'dealMemoDetailModel>/Totdmamt'},{path:'dealMemoDetailModel>/Waers'}], type: 'sap.ui.model.type.Currency', formatOptions: {showMeasure: false}}"
 							numberUnit="{dealMemoDetailModel>/Waers}" responsive="true" fullScreenOptimized="false" numberState="Success">
+							<ObjectHeader backgroundDesign="Translucent" 
+							number="{parts:[{path:'dealMemoDetailModel>/LoclCrcyAmt'},{path:'dealMemoDetailModel>/LoclCrcyKey'}], type: 'sap.ui.model.type.Currency', formatOptions: {showMeasure: false}}"
+							numberUnit="{dealMemoDetailModel>/LoclCrcyKey}" responsive="true" fullScreenOptimized="false" numberState="Success"/>
 							
 							<statuses>
 								<ObjectStatus text="{dealMemoDetailModel>/Dmstdesc}" state="{path:'dealMemoDetailModel>/Dmst',formatter:'.Formatter.formatDealMemoStatus'}"/>
