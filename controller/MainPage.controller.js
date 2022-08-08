@@ -1154,6 +1154,8 @@ sap.ui.define([
 			/***************** Load Detail Tab for Deal Memo ******************/
 
 			onMainTabSelect: function() {
+				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
+				var dealMemoDetailInfo = dealMemoDetailModel.getData();
 				var mainSelectedKey = this.getView().byId("idIconTabBar").getSelectedKey();
 				if (mainSelectedKey === "detail") {
 					this.loadDetailTab(this.selectedDealMemoObj);
@@ -3989,6 +3991,7 @@ sap.ui.define([
 
 			},
 			onSavePress: function(oEvent) {
+				sap.ui.core.BusyIndicator.show(0);
 				var selectedTab = this.getView().byId("idIconTabBar").getSelectedKey();
 				if (selectedTab == "detail") {
 					this.saveDealMemoDetailData();
@@ -4014,7 +4017,7 @@ sap.ui.define([
 					var Key = that.getView().byId("commentInner").getSelectedKey();
 					this.saveComments(Key);
 				}
-
+				sap.ui.core.BusyIndicator.hide();
 			},
 			beforeDelete: function() {
 				var detailModel = this.getView().getModel("dealMemoDetailModel");
