@@ -129,10 +129,14 @@ sap.ui.define([
 			},
 
 			navToDealMemo: function () {
+					var vendorContractModel = this.getView().getModel("vendorContractModel");
+				var vendorContractDetailInfo = vendorContractModel.getData();
 				if (this.newContractCreated) {
 					this.newContractCreated = false;
 					window.history.go(-2);
-				} else {
+				} else if (vendorContractDetailInfo.App){
+					window.history.back();
+				}	else {
 					window.history.go(-1);
 				}
 			},
