@@ -189,7 +189,7 @@
 						<ToolbarSpacer/>
 						<Button id="btnChangeDM" text="{i18n>btnTxtChange}" press="onConfirmChangeDm" visible="false"  />
 						<Button id="btnSaveDM" text="{i18n>btnTxtSave}" press="onSavePress"/>
-						<Button id="btnSubmitDM" text="{i18n>btnTxtSubmit}" press="onSubmitDm" enabled="false"/>
+						<Button id="btnSubmitDM" text="{i18n>btnTxtSubmit}" press="onConfirmSubmitDm" enabled="false"/>
 					</Toolbar>
 				</footer>
              </Page>
