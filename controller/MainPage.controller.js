@@ -4201,7 +4201,7 @@ sap.ui.define([
 			},
 			submitDialog: function(oData) {
 					var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
-					var dmWaers = oData.result[0].Waers
+					var dmWaers = oData.results[0].Waers
 					var locAmt = oData.results[0].LoclCrcyAmt
 				    var locKey = oData.results[0].LoclCrcyKey
 				    if(dmWaers != "INR") {
