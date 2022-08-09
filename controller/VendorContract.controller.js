@@ -135,7 +135,7 @@ sap.ui.define([
 					this.newContractCreated = false;
 					window.history.go(-2);
 				} else if (vendorContractDetailInfo.App){
-					window.history.back();
+					history.back();
 				}	else {
 					window.history.go(-1);
 				}
