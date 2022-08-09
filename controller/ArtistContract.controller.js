@@ -82,9 +82,15 @@ sap.ui.define([
 				}
 			},
 			onNavBackFromArtistContract: function() {
+				var artistContractModel = this.getView().getModel("artistContractModel");
+				var artistContractDetailInfo = artistContractModel.getData();
 				var responseFlag = this.checkForUnsavedData();
 				if (responseFlag) {
-					this.navToDealMemo();
+						if(artistContractDetailInfo.App == "App"){
+						this.navToContApp();	
+					} else { 
+						this.navToDealMemo();
+					}
 				} else {
 					var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
 					MessageBox.confirm(oSourceBundle.getText("msgUnsaveDataWar"), {
@@ -92,8 +98,11 @@ sap.ui.define([
 						emphasizedAction: "Yes",
 						onClose: function(sAction) {
 							if (sAction === oSourceBundle.getText("lblYes")) {
-
-								this.navToDealMemo();
+								if(artistContractDetailInfo.App == "App"){
+						this.navToContApp();	
+					} else { 
+						this.navToDealMemo();
+					}
 							} else if (sAction === oSourceBundle.getText("lblNo")) {
 
 							}
@@ -101,6 +110,20 @@ sap.ui.define([
 					});
 				}
 			},
+				navToContApp: function () {
+				var artistContractModel = this.getView().getModel("artistContractModel");
+				var artistContractDetailInfo = artistContractModel.getData();
+				
+				var dmno = artistContractDetailInfo.Dmno;
+				var dmver = artistContractDetailInfo.Dmver;
+				var conttp = artistContractDetailInfo.Conttp;
+				var host = window.location.origin;
+				var path = window.location.pathname;
+				
+				var finalURL = host + path + "#ZVendorContract-display&/main/" + dmno + "/" + dmver + "/" + conttp ;
+				sap.m.URLHelper.redirect(finalURL, false);
+			},
+			
 			navToDealMemo: function() {
 				if (this.newContractCreated) {
 					this.newContractCreated = false;
@@ -636,7 +659,7 @@ sap.ui.define([
 			},
 			onActionCB: function() { // FOr replacement Checkbox.
 				var artistContractModel = this.getView().getModel("vendorContractModel");
-				var vendorContractDetailInfo = artistContractModel.getData();
+				var artistContractDetailInfo = artistContractModel.getData();
 				if (sap.ui.getCore().byId("recont").getSelected() === true) {
 					artistContractModel.setProperty("/createParams/Recont", true);
 				} else {
