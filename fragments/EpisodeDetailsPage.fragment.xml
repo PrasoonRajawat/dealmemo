@@ -1,4 +1,3 @@
-
 <c:FragmentDefinition xmlns="sap.m" xmlns:u="sap.ui.unified" xmlns:l="sap.ui.layout" xmlns:c="sap.ui.core">
 	<Panel expandable="false" backgroundDesign="Transparent" expanded="true"> 			<!--Made expandable="false" By  Lakshmana on 27.05.2020  for Deal Memo Changes-->
 						<ObjectHeader backgroundDesign="Translucent" title="{dealMemoEpisodeModel>/Epinm}"
@@ -51,7 +50,7 @@
 									<l:GridData span="XL2 L2 M6 S12"/>
 								</layoutData>
 							</Label>
-							<Input width="80%" value="{dealMemoEpisodeModel>/Trp}" change="onChangeTrpValue" >
+							<Input width="80%" value="{dealMemoEpisodeModel>/Trp}" change="onChangeTrpValue" editable="{path:'dealMemoDetailModel>/Dmst',formatter:'.Formatter.formatEditableStatus'}" >
 								<layoutData>
 									<l:GridData span="XL4 L4 M6 S12"/>
 								</layoutData>
@@ -62,7 +61,7 @@
 									<l:GridData span="XL2 L2 M6 S12"/>
 								</layoutData>
 							</Label>
-							<TimePicker width="80%" change="onChangeEpiDur" value="{dealMemoEpisodeModel>/Epidur}" valueFormat="HH:mm:ss" displayFormat="HH:mm:ss" placeholder="hh:mm:ss">
+							<TimePicker width="80%" change="onChangeEpiDur" value="{dealMemoEpisodeModel>/Epidur}" valueFormat="HH:mm:ss" displayFormat="HH:mm:ss" placeholder="hh:mm:ss" editable="{path:'dealMemoDetailModel>/Dmst',formatter:'.Formatter.formatEditableStatus'}">
 								<layoutData>
 									<l:GridData span="XL4 L4 M6 S12"/>
 								</layoutData>
