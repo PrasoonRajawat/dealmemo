@@ -4202,6 +4202,51 @@ sap.ui.define([
 				}.bind(this));
 
 			},
+				onConfirmSubmitDm: function() {
+					sap.ui.core.BusyIndicator.show(0);
+				var oModel = this.getView().getModel();
+				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
+				var dealMemoDetailInfo = dealMemoDetailModel.getData();
+				var paramObj = {
+					"IV_TENTID": "IBS",
+					"IV_DMNO": dealMemoDetailInfo.Dmno,
+					"IV_DMVER": dealMemoDetailInfo.Dmver
+
+				};
+				oModel.callFunction("/CalcLocalCurr", {
+					method: "GET",
+					urlParameters: paramObj,
+					success: function(oData, response) {
+						sap.ui.core.BusyIndicator.hide();
+						this.submitDialog(oData);
+					}.bind(this),
+					error: function(oError) {
+						sap.ui.core.BusyIndicator.hide();
+						var oErrorResponse = JSON.parse(oError.responseText);
+						var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
+						MessageBox.error(oMsg);
+					}
+				});
+				
+			},
+			submitDialog: function(oData) {
+					var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
+					var locAmt = oData.results[0].LoclCrcyAmt
+				    var locKey = oData.results[0].LoclCrcyKey
+					var text = "Do you want to submit Dealmemo with local cost of" + locAmt + locKey + "."
+					MessageBox.confirm( text , {
+						actions: [oSourceBundle.getText("lblYes"), oSourceBundle.getText("lblNo")],
+						emphasizedAction: "Yes",
+						onClose: function(sAction) {
+							if (sAction === oSourceBundle.getText("lblYes")) {
+
+								this.onSubmitDm();
+							} else if (sAction === oSourceBundle.getText("lblNo")) {
+
+							}
+						}.bind(this)
+					});
+			},
 
 			onSubmitDm: function() {
 				sap.ui.core.BusyIndicator.show(0);
