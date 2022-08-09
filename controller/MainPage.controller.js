@@ -4290,10 +4290,9 @@ sap.ui.define([
 						emphasizedAction: "Yes",
 						onClose: function(sAction) {
 							if (sAction === oSourceBundle.getText("lblYes")) {
-
 								this.onChangeDm();
 							} else if (sAction === oSourceBundle.getText("lblNo")) {
-
+								this.loadDealMemoList();
 							}
 						}.bind(this)
 					});
