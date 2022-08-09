@@ -4205,7 +4205,7 @@ sap.ui.define([
 					var locAmt = oData.results[0].LoclCrcyAmt
 				    var locKey = oData.results[0].LoclCrcyKey
 				    if(dmWaers != "INR") {
-					var text = "Equivalent INR value for this deal is " + locAmt +" "+ locKey + ". Do you want to submit for an approval?" 
+					var text = "Equivalent local currency deal value is " + locAmt +" "+ locKey + ". Do you want to submit for an approval?" 
 					MessageBox.confirm( text , {
 						actions: [oSourceBundle.getText("lblYes"), oSourceBundle.getText("lblNo")],
 						emphasizedAction: "Yes",
