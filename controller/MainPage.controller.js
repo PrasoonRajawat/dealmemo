@@ -4239,10 +4239,9 @@ sap.ui.define([
 						emphasizedAction: "Yes",
 						onClose: function(sAction) {
 							if (sAction === oSourceBundle.getText("lblYes")) {
-
 								this.onSubmitDm();
 							} else if (sAction === oSourceBundle.getText("lblNo")) {
-
+								this.loadDealMemoList();
 							}
 						}.bind(this)
 					});
@@ -4292,7 +4291,7 @@ sap.ui.define([
 							if (sAction === oSourceBundle.getText("lblYes")) {
 								this.onChangeDm();
 							} else if (sAction === oSourceBundle.getText("lblNo")) {
-								this.loadDealMemoList();
+							
 							}
 						}.bind(this)
 					});
