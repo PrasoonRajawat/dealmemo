@@ -4201,9 +4201,11 @@ sap.ui.define([
 			},
 			submitDialog: function(oData) {
 					var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
+					var dmWaers = oData.result[0].Waers
 					var locAmt = oData.results[0].LoclCrcyAmt
 				    var locKey = oData.results[0].LoclCrcyKey
-					var text = "Do you want to submit Dealmemo with local cost of" + locAmt + locKey + "."
+				    if(dmWaers != "INR") {
+					var text = "Equivalent INR value for this deal is" + locAmt +" "+ locKey + ". Do you want to submit for an approval?" 
 					MessageBox.confirm( text , {
 						actions: [oSourceBundle.getText("lblYes"), oSourceBundle.getText("lblNo")],
 						emphasizedAction: "Yes",
@@ -4215,6 +4217,9 @@ sap.ui.define([
 							}
 						}.bind(this)
 					});
+				    } else {
+				    	this.onSubmitDm();
+				    }
 			},
 
 			onSubmitDm: function() {
