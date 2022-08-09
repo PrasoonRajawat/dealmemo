@@ -107,9 +107,15 @@ sap.ui.define([
 				}
 			},
 			onNavBackFromVendorContractDetail: function () {
+				var vendorContractModel = this.getView().getModel("vendorContractModel");
+				var vendorContractDetailInfo = vendorContractModel.getData();
 				var responseFlag = this.checkForUnsavedData();
 				if (responseFlag) {
-					this.navToDealMemo();
+					if(vendorContractDetailInfo.App == "App"){
+						this.navToContApp();	
+					} else { 
+						this.navToDealMemo();
+					}
 				} else {
 					var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
 					MessageBox.confirm(oSourceBundle.getText("msgUnsaveDataWar"), {
@@ -117,8 +123,11 @@ sap.ui.define([
 						emphasizedAction: "Yes",
 						onClose: function (sAction) {
 							if (sAction === oSourceBundle.getText("lblYes")) {
-
-								this.navToDealMemo();
+						if(vendorContractDetailInfo.App == "App"){
+							this.navToContApp();	
+						} else { 
+							this.navToDealMemo();
+							}
 							} else if (sAction === oSourceBundle.getText("lblNo")) {
 
 							}
@@ -126,6 +135,20 @@ sap.ui.define([
 					});
 				}
 
+			},
+			
+			navToContApp: function () {
+				var vendorContractModel = this.getView().getModel("vendorContractModel");
+				var vendorContractDetailInfo = vendorContractModel.getData();
+				
+				var dmno = vendorContractDetailInfo.Dmno;
+				var dmver = vendorContractDetailInfo.Dmver;
+				var conttp = vendorContractDetailInfo.Conttp;
+				var host = window.location.origin;
+				var path = window.location.pathname;
+				
+				var finalURL = host + path + "#ZVendorContract-display&/main/" + dmno + "/" + dmver + "/" + conttp ;
+				sap.m.URLHelper.redirect(finalURL, false);
 			},
 
 			navToDealMemo: function () {
