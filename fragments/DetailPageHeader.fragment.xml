@@ -11,7 +11,7 @@
 							<statuses>
 								<ObjectStatus text="{dealMemoDetailModel>/Dmstdesc}" state="{path:'dealMemoDetailModel>/Dmst',formatter:'.Formatter.formatDealMemoStatus'}"/>
 								<!-- <ObjectStatus text="{parts:[{path:'dealMemoDetailModel>/LoclCrcyAmt'},{path:'dealMemoDetailModel>/LoclCrcyKey'}], type: 'sap.ui.model.type.Currency', formatOptions: {showMeasure: false}} {dealMemoDetailModel>/LoclCrcyKey}" state="Success"/> -->
-								<ObjectStatus text="{parts:[{path:'dealMemoDetailModel>/LoclCrcyAmt'},{path:'dealMemoDetailModel>/LoclCrcyKey'}], type: 'sap.ui.model.type.Currency', formatOptions: {showMeasure: false}}" state="Success"/>
+								<ObjectStatus text="{parts:[{path:'dealMemoDetailModel>/LoclCrcyAmt'},{path:'dealMemoDetailModel>/LoclCrcyKey'}], type: 'sap.ui.model.type.Currency', formatOptions: {showMeasure: true}}" state="Success"/>
 							</statuses>
 								
 						
