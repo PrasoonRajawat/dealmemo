@@ -472,8 +472,11 @@ sap.ui.define([
 				// 		MessageBox.error(oMsg);
 				// 	}
 				// });
-				var oMatchModel = this.getView().getModel("MATCH_MAST"); // Added by dhiraj for level 3 on 23/06/2022
-				oMatchModel.read("/es_match_master", {
+				// var oMatchModel = this.getView().getModel("MATCH_MAST"); // Added by dhiraj for level 3 on 23/06/2022
+				// oMatchModel.read("/es_match_master", {					//Comented by dhiraj for repeated content
+				additionalFilters = [new Filter("Matid", "EQ", "")];
+				oModel.read("/MatIDSet", {
+					filters: basicFiilters.concat(additionalFilters),
 					success: function(oData) {
 						this.storeMatchListInfo(oData);
 						this.storeMatchMasterListInfo(oData);
