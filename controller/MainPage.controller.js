@@ -4230,14 +4230,15 @@ sap.ui.define([
 							// 		this.submitDialog(oData);
 							// 	}
 							// });
-							sap.m.MessageBox.show(oMsg , {
-								icon: sap.m.MessageBox.Icon.INFORMATION,
-								title: "Information",
-								onClose: function(this) {
-									this.submitDialog(oData);
-								}
-							});
-							
+							// sap.m.MessageBox.show(oMsg , {
+							// 	icon: sap.m.MessageBox.Icon.INFORMATION,
+							// 	title: "Information",
+							// 	onClose: function() {
+							// 		this.submitDialog(oData);
+							// 	}
+							// });
+							 MessageBox.information(oMsg);
+							this.submitDialog(oData);
 							
 						} else {
 							this.submitDialog(oData);
