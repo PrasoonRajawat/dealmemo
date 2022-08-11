@@ -4221,7 +4221,18 @@ sap.ui.define([
 					urlParameters: paramObj,
 					success: function(oData, response) {
 						sap.ui.core.BusyIndicator.hide();
-						this.submitDialog(oData);
+						if(oData.results.length > 0 && oData.results[0].Cnttp == "I") {
+							var oMsg = oData.results[0].Cntnm
+							MessageBox.information(oMsg, {
+								actions: [ MessageBox.Action.OK],
+								emphasizedAction: MessageBox.Action.OK,
+								onClose: function (sAction) {
+									this.submitDialog(oData);
+								}
+							});
+						}else {
+							this.submitDialog(oData);
+						}
 					}.bind(this),
 					error: function(oError) {
 						sap.ui.core.BusyIndicator.hide();
