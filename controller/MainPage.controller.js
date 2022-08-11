@@ -4223,13 +4223,21 @@ sap.ui.define([
 						sap.ui.core.BusyIndicator.hide();
 						if(oData.results.length > 0 && oData.results[0].Cnttp == "I") {
 							var oMsg = oData.results[0].Prdnm
-							MessageBox.information(oMsg, {
-								actions: [ MessageBox.Action.OK],
-								emphasizedAction: MessageBox.Action.OK,
-								onClose: function () {
+							// MessageBox.information(oMsg, {
+							// 	actions: [ MessageBox.Action.OK],
+							// 	emphasizedAction: MessageBox.Action.OK,
+							// 	onClose: function () {
+							// 		this.submitDialog(oData);
+							// 	}
+							// });
+							sap.m.MessageBox.show(oMsg , {
+								icon: sap.m.MessageBox.Icon.INFORMATION,
+								title: "Information",
+								onClose: function() {
 									this.submitDialog(oData);
 								}
 							});
+							
 							
 						} else {
 							this.submitDialog(oData);
