@@ -4196,11 +4196,12 @@ sap.ui.define([
 							MessageBox.information(oMsg, {
 								actions: [ MessageBox.Action.OK],
 								emphasizedAction: MessageBox.Action.OK,
-								onClose: function (sAction) {
+								onClose: function () {
 									this.submitDialog(oData);
 								}
 							});
-						}else {
+							
+						} else {
 							this.submitDialog(oData);
 						}
 					}.bind(this),
