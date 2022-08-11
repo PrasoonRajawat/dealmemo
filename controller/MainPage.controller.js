@@ -4192,7 +4192,7 @@ sap.ui.define([
 					success: function(oData, response) {
 						sap.ui.core.BusyIndicator.hide();
 						if(oData.results.length > 0 && oData.results[0].Cnttp == "I") {
-							var oMsg = oData.results[0].Cntnm
+							var oMsg = oData.results[0].Prdnm
 							MessageBox.information(oMsg, {
 								actions: [ MessageBox.Action.OK],
 								emphasizedAction: MessageBox.Action.OK,
