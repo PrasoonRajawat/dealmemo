@@ -4233,7 +4233,7 @@ sap.ui.define([
 							sap.m.MessageBox.show(oMsg , {
 								icon: sap.m.MessageBox.Icon.INFORMATION,
 								title: "Information",
-								onClose: function() {
+								onClose: function(this) {
 									this.submitDialog(oData);
 								}
 							});
