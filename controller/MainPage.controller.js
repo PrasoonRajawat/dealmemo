@@ -1103,7 +1103,7 @@ sap.ui.define([
 
 						dealMemoDetailModel.setData(oData);
 						dealMemoDetailModel.refresh(true);
-						if (oData.Cnttp === "02" || oData.Cnttp === "05" || oData.Cnttp === "09") {
+						if (oData.Cnttp === "02" || oData.Cnttp === "05" || oData.Cnttp === "09" || oData.Cnttp === "04") {
 							this.loadMovieCostTemplate();
 						}
 						if (oData.DmEpisodeSet.results.length) {
