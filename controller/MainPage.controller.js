@@ -293,6 +293,18 @@ sap.ui.define([
 				dealMemoModel.setProperty("/movieList", oData.results);
 				dealMemoModel.refresh(true);
 			},
+			storeMusicListInfo: function(oData) {
+				var dealMemoModel = this.getView().getModel("dealMemoModel");
+				 oData.results.filter(function(obj){
+					return obj.Mstcd == "04";
+				})
+				oData.results.map(function(mvObj) {
+					mvObj.Mvnm = mvObj.Mvid + "-" + mvObj.Mvidnm;
+				});
+
+				dealMemoModel.setProperty("/musicList", oData.results);
+				dealMemoModel.refresh(true);
+			},
 			storeMatchMasterListInfo: function(oData) {
 				var dealMemoModel = this.getView().getModel("dealMemoModel");
 				// cnt.map(function(mvObj) {
@@ -436,6 +448,7 @@ sap.ui.define([
 					filters: basicFiilters.concat(additionalFilters),
 					success: function(oData) {
 						this.storeMovieListInfo(oData);
+						this.storeMusicListInfo(oData);
 					}.bind(this),
 					error: function(oError) {
 						var oErrorResponse = JSON.parse(oError.responseText);
@@ -758,6 +771,17 @@ sap.ui.define([
 						"valueModel": "dealMemoDetailModel",
 						"dialogTitle": oSourceBundle.getText("titleMatch")
 					};
+				} else if (dealMemoDetailInfo.Cnttp === "04") {
+					this.oValueHelpSelectionParams = {
+						"bindPathName": "dealMemoModel>/musicList",
+						"bindPropName": "dealMemoModel>Matnm",
+						"propName": "Matnm",
+						"keyName": "Matid",
+						"valuePath": oPath + "/Epinm",
+						"keyPath": oPath + "/Epiid",
+						"valueModel": "dealMemoDetailModel",
+						"dialogTitle": oSourceBundle.getText("titleMatch")
+					};
 				}
 				this.openSelectionDialog();
 			},
@@ -1044,7 +1068,7 @@ sap.ui.define([
 							oData.CurrencyEnableFlag = false;
 						}
 						oData.enableFlow = "P";
-						if (oData.Cnttp === "02" || oData.Cnttp === "05" || oData.Cnttp === "09") {
+						if (oData.Cnttp === "02" || oData.Cnttp === "05" || oData.Cnttp === "09" ||oData.Cnttp === "04") {
 							oData.enableFlow = "M" // MovieFlow
 
 						}
@@ -3378,6 +3402,16 @@ sap.ui.define([
 					});
 				} else if (dealMemoDetailInfo.Cnttp === "09") {
 					episodeList = dealMemoModel.getProperty("/matchMasterList");
+					for (var i = 0; i < episodeData.length; i++) { //Added By Dhiraj For converting matid
+						var epiidSplit = episodeData[i].Epinm.split("-");
+						episodeData[i].Epiid = epiidSplit[0].trim();
+						episodeData[i].Mvid = epiidSplit[0].trim();
+					}
+					episodeIds = episodeList.map(function(obj) {
+						return obj.Matid
+					});
+				} else if (dealMemoDetailInfo.Cnttp === "04") {
+					episodeList = dealMemoModel.getProperty("/musicList");
 					for (var i = 0; i < episodeData.length; i++) { //Added By Dhiraj For converting matid
 						var epiidSplit = episodeData[i].Epinm.split("-");
 						episodeData[i].Epiid = epiidSplit[0].trim();
