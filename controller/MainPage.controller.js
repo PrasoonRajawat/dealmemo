@@ -298,11 +298,11 @@ sap.ui.define([
 					var musicList =  oData.results.filter(function(obj){
 					return obj.Mstcd == "04";
 				})
-				musicList.results.map(function(mvObj) {
+				musicList.map(function(mvObj) {
 					mvObj.Mvnm = mvObj.Mvid + "-" + mvObj.Mvidnm;
 				});
 
-				dealMemoModel.setProperty("/musicList", oData.results);
+				dealMemoModel.setProperty("/musicList", musicList);
 				dealMemoModel.refresh(true);
 			},
 			storeMatchMasterListInfo: function(oData) {
