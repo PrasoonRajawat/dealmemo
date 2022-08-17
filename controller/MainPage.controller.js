@@ -295,10 +295,10 @@ sap.ui.define([
 			},
 			storeMusicListInfo: function(oData) {
 				var dealMemoModel = this.getView().getModel("dealMemoModel");
-					 oData.results.filter(function(obj){
+					var musicList =  oData.results.filter(function(obj){
 					return obj.Mstcd == "04";
 				})
-				oData.results.map(function(mvObj) {
+				musicList.results.map(function(mvObj) {
 					mvObj.Mvnm = mvObj.Mvid + "-" + mvObj.Mvidnm;
 				});
 
@@ -773,14 +773,14 @@ sap.ui.define([
 					};
 				} else if (dealMemoDetailInfo.Cnttp === "04") {
 					this.oValueHelpSelectionParams = {
-						"bindPathName": "dealMemoModel>/musicList",
-						"bindPropName": "dealMemoModel>Matnm",
-						"propName": "Matnm",
-						"keyName": "Matid",
+						"bindPathName": "dealMemoModel>/movieList",
+						"bindPropName": "dealMemoModel>Mvnm",
+						"propName": "Mvnm",
+						"keyName": "Mvid",
 						"valuePath": oPath + "/Epinm",
 						"keyPath": oPath + "/Epiid",
 						"valueModel": "dealMemoDetailModel",
-						"dialogTitle": oSourceBundle.getText("titleMatch")
+						"dialogTitle": oSourceBundle.getText("titleMusic")
 					};
 				}
 				this.openSelectionDialog();
