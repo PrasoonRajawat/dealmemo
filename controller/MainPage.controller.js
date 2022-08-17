@@ -295,7 +295,7 @@ sap.ui.define([
 			},
 			storeMusicListInfo: function(oData) {
 				var dealMemoModel = this.getView().getModel("dealMemoModel");
-				 oData.results.filter(function(obj){
+					 oData.results.filter(function(obj){
 					return obj.Mstcd == "04";
 				})
 				oData.results.map(function(mvObj) {
