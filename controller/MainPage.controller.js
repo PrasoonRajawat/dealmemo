@@ -773,7 +773,7 @@ sap.ui.define([
 					};
 				} else if (dealMemoDetailInfo.Cnttp === "04") {
 					this.oValueHelpSelectionParams = {
-						"bindPathName": "dealMemoModel>/movieList",
+						"bindPathName": "dealMemoModel>/musicList",
 						"bindPropName": "dealMemoModel>Mvnm",
 						"propName": "Mvnm",
 						"keyName": "Mvid",
