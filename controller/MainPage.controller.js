@@ -2259,29 +2259,48 @@ sap.ui.define([
 				//-------------------------------------------------------------------------------------
 				this.changeEpiCostFlag = true;
 				dealMemoDetailModel.refresh(true);
-				if (!this._oEpiCostChangeDialog) {
-					Fragment.load({
-						id: this.createId("chngeEpiCostDialog"),
-						if (dealMemoDetailInfo.Cnttp === "02" || dealMemoDetailInfo.Cnttp === "04" || dealMemoDetailInfo.Cnttp === "05" || dealMemoDetailInfo.Cnttp === "09"){
-						name: "com.ui.dealmemolocal.fragments.ChangeMovieMatchCost",
-						controller: this
-						}else{
-						name: "com.ui.dealmemolocal.fragments.ChangeEpisodeCost",
-						controller: this
-						}
-					}).then(function name(oFragment) {
-						this._oEpiCostChangeDialog = oFragment; //sap.ui.xmlfragment("com.ui.dealmemolocal.fragments.SelectPaymentDialog", this);
-						this.getView().addDependent(this._oEpiCostChangeDialog);
-						var oTableBinding = this.byId(sap.ui.core.Fragment.createId("chngeEpiCostDialog", "oTable_changeCost")).getBinding("items");
+				if (dealMemoDetailInfo.Cnttp === "02" || dealMemoDetailInfo.Cnttp === "04" || dealMemoDetailInfo.Cnttp === "05" ||
+					dealMemoDetailInfo.Cnttp === "09") {
+					if (!this._oEpiCostChangeDialog) {
+						Fragment.load({
+							id: this.createId("chngeEpiCostDialog"),
+							name: "com.ui.dealmemolocal.fragments.ChangeMovieMatchCost",
+							controller: this
+						}).then(function name(oFragment) {
+							this._oEpiCostChangeDialog = oFragment; //sap.ui.xmlfragment("com.ui.dealmemolocal.fragments.SelectPaymentDialog", this);
+							this.getView().addDependent(this._oEpiCostChangeDialog);
+							var oTableBinding = this.byId(sap.ui.core.Fragment.createId("chngeEpiCostDialog", "oTable_changeCost")).getBinding("items");
+							oTableBinding.filter([new Filter("itemVisible", "EQ", true)]);
+							this._oEpiCostChangeDialog.open();
+						}.bind(this));
+
+					} else {
+						var oTableBinding = this.byId(sap.ui.core.Fragment.createId("chngeEpiCostDialog", "oTable_changeCost"))
+							.getBinding("items");
 						oTableBinding.filter([new Filter("itemVisible", "EQ", true)]);
 						this._oEpiCostChangeDialog.open();
-					}.bind(this));
-
+					}
 				} else {
-					var oTableBinding = this.byId(sap.ui.core.Fragment.createId("chngeEpiCostDialog", "oTable_changeCost"))
-						.getBinding("items");
-					oTableBinding.filter([new Filter("itemVisible", "EQ", true)]);
-					this._oEpiCostChangeDialog.open();
+					if (!this._oEpiCostChangeDialog) {
+						Fragment.load({
+							id: this.createId("chngeEpiCostDialog"),
+							name: "com.ui.dealmemolocal.fragments.ChangeEpisodeCost",
+							controller: this
+						}).then(function name(oFragment) {
+							this._oEpiCostChangeDialog = oFragment; //sap.ui.xmlfragment("com.ui.dealmemolocal.fragments.SelectPaymentDialog", this);
+							this.getView().addDependent(this._oEpiCostChangeDialog);
+							var oTableBinding = this.byId(sap.ui.core.Fragment.createId("chngeEpiCostDialog", "oTable_changeCost")).getBinding("items");
+							oTableBinding.filter([new Filter("itemVisible", "EQ", true)]);
+							this._oEpiCostChangeDialog.open();
+						}.bind(this));
+
+					} else {
+						var oTableBinding = this.byId(sap.ui.core.Fragment.createId("chngeEpiCostDialog", "oTable_changeCost"))
+							.getBinding("items");
+						oTableBinding.filter([new Filter("itemVisible", "EQ", true)]);
+						this._oEpiCostChangeDialog.open();
+					}
+
 				}
 
 			},
