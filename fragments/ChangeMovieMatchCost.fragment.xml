@@ -1,0 +1,98 @@
+<c:FragmentDefinition xmlns="sap.m" xmlns:u="sap.ui.unified" xmlns:l="sap.ui.layout" xmlns:c="sap.ui.core">
+	<Dialog type="Message"
+		title="{parts:[{value:'lblBtnChangeCostEpiDet'},{path:'dealMemoDetailModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}"
+		contentWidth="70%">
+		<l:Grid hSpacing="1" vSpacing="0" editable="false">
+			<Label required="true"
+				text="{parts:[{value:'lblSelectEpiFrom'},{path:'dealMemoDetailModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" width="100%">
+				<layoutData>
+					<l:GridData span="XL4 L4 M6 S12"/>
+				</layoutData>
+			</Label>
+			<ComboBox width="95%" items="{dealMemoDetailModel>/episodeCostChangeList}" selectedKey="{dealMemoDetailModel>/epiCostChangeFromId}">
+				<c:Item text="{dealMemoDetailModel>Epinm}" key="{dealMemoDetailModel>Epiid}"/> 
+				<layoutData>
+					<l:GridData span="XL8 L8 M6 S12"/>
+				</layoutData>
+			</ComboBox>
+			<Label required="true"
+				text="{parts:[{value:'lblSelectEpiTo'},{path:'dealMemoDetailModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" width="100%">
+				<layoutData>
+					<l:GridData span="XL4 L4 M6 S12"/>
+				</layoutData>
+			</Label>
+			<ComboBox width="95%" items="{dealMemoDetailModel>/episodeCostChangeList}" selectedKey="{dealMemoDetailModel>/epiCostChangeToId}">
+				<c:Item text="{dealMemoDetailModel>Epinm}" key="{dealMemoDetailModel>Epiid}"/>
+				<layoutData>
+					<l:GridData span="XL8 L8 M6 S12"/>
+				</layoutData>
+			</ComboBox>
+			<Label 
+				text="{i18n>ObjIden_Year}" width="100%">
+				<layoutData>
+					<l:GridData span="XL4 L4 M6 S12"/>
+				</layoutData>
+			</Label>
+			<ComboBox items="{dealMemoDetailModel>/yearList}" selectedKey="{dealMemoDetailModel>/epiCostChangeYear}">
+				<c:Item text="{dealMemoDetailModel>Year}" key="{dealMemoDetailModel>Year}"/>
+				<layoutData>
+					<l:GridData span="XL8 L8 M6 S12"/>
+				</layoutData>
+			</ComboBox>
+		</l:Grid>
+	
+	
+	
+	
+	
+		<Table id="oTable_changeCost" items="{dealMemoDetailModel>/changeCostData}">
+			<infoToolbar>
+				<Toolbar>
+					<Label text="{i18n>lbl_BudgetDtls}"/>
+				</Toolbar>
+			</infoToolbar>
+			<columns>
+				<Column width="200px" mergeDuplicates="true">
+					<Label text="{i18n>lblColHeadBudgetHead}" design="Bold"></Label>
+				</Column>
+				<Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" hAlign="Right" width="200px">
+					<Label text="{i18n>lblColHeadAcqBudget}" design="Bold"></Label>
+				</Column>
+				<Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" hAlign="Right" width="200px">
+					<Label text="{i18n>lblColHeadExtBudget}" design="Bold"></Label>
+				</Column>
+				<Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" hAlign="Right" width="200px">
+					<Label text="{i18n>lblColHeadInhBudget}" design="Bold"></Label>
+				</Column>
+				<Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" hAlign="Right" width="200px">
+					<Label text="{i18n>lblColHeadTotBudget}" design="Bold"></Label>
+				</Column>
+			</columns>
+			<items>
+				<ColumnListItem visible="true" unread="false" selected="true" counter="0">
+					<HBox>
+						<c:Icon src="{= ${dealMemoDetailModel>isExpanded} === true ? 'sap-icon://navigation-down-arrow' : 'sap-icon://navigation-right-arrow'}"
+							visible="{dealMemoDetailModel>hasChild}" press="onNodeExpandChangeCost"/>
+						<ObjectIdentifier title="{dealMemoDetailModel>Costdesc}" class="sapUiSmallMarginBegin"/>
+						<ObjectIdentifier title="{dealMemoDetailModel>Scostdesc}" class="sapUiMediumMarginBegin"/>
+					</HBox>
+					<Input textAlign="Right" change="onChangeAcquisitionAmount" enabled="{dealMemoDetailModel>enableAcquisition}"
+						value="{ parts: [ {path: 'dealMemoDetailModel>Prdhsamt'}, {path: 'dealMemoDetailModel>Waers'} ], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false,minFractionDigits: 2, maxFractionDigits: 2 } }"/>
+					<Input textAlign="Right" change="onChangeExternalAmount" enabled="{dealMemoDetailModel>enableExternal}"
+						value="{parts: [ { path:'dealMemoDetailModel>Inhsamt'},{path: 'dealMemoDetailModel>Waers'}],type: 'sap.ui.model.type.Currency',formatOptions: { showMeasure: false,minFractionDigits: 2, maxFractionDigits: 2 }}"/>
+					<Input textAlign="Right" change="onChangeInHouseAmount" enabled="{dealMemoDetailModel>enableInhouse}"
+						value="{parts: [ { path:'dealMemoDetailModel>Inhouseamt'},{path: 'dealMemoDetailModel>Waers'}],type: 'sap.ui.model.type.Currency',formatOptions: { showMeasure: false,minFractionDigits: 2, maxFractionDigits: 2 }}"/>
+					<Input textAlign="Right" enabled="{dealMemoDetailModel>enableTotal}"
+						value="{parts: [ { path:'dealMemoDetailModel>Totcostamt'},{path: 'dealMemoDetailModel>Waers'}],type: 'sap.ui.model.type.Currency',formatOptions: { showMeasure: false,minFractionDigits: 2, maxFractionDigits: 2 }}"/>
+				</ColumnListItem>
+			</items>
+		</Table>
+		<beginButton>
+			<Button text="{parts:[{value:'lblBtnChangeCostEpiDet'},{path:'dealMemoDetailModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}"
+				press="onApplyChangeCost"/>
+		</beginButton>
+		<endButton>
+			<Button text="{i18n>Cancel}" press="onCancelChangeCost"/>
+		</endButton>
+	</Dialog>
+</c:FragmentDefinition>

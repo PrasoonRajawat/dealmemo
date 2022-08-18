@@ -107,7 +107,7 @@
 						</IconTabFilter>
 						<IconTabFilter id="idReleaseStatusTab" text="{i18n>lblReleaseSt}" key="releaseStatus" icon="sap-icon://order-status" class="sapMITBHead"
 							iconColor="{path:'vendorContractModel>/relStatustabcolor'}" design="Horizontal"
-							enabled="{= ${vendorContractModel>/Dmst} !== '01' ? true : false }" visible="{vendorContractModel>/releaseTabVisible}">
+							enabled="{= ${vendorContractModel>/Contstat} !== '01' ? true : false }" visible="{vendorContractModel>/releaseTabVisible}">
 							<content>
 								<core:Fragment fragmentName="com.ui.dealmemolocal.fragments.DealMemoTabs.ReleaseStatus.ReleaseStatusTabVC" type="XML"/>
 							</content>
