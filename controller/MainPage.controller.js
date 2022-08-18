@@ -2227,8 +2227,13 @@ sap.ui.define([
 				if (!this._oEpiCostChangeDialog) {
 					Fragment.load({
 						id: this.createId("chngeEpiCostDialog"),
+						if (dealMemoDetailInfo.Cnttp === "02" || dealMemoDetailInfo.Cnttp === "04" || dealMemoDetailInfo.Cnttp === "05" || dealMemoDetailInfo.Cnttp === "09"){
+						name: "com.ui.dealmemolocal.fragments.ChangeMovieMatchCost",
+						controller: this
+						}else{
 						name: "com.ui.dealmemolocal.fragments.ChangeEpisodeCost",
 						controller: this
+						}
 					}).then(function name(oFragment) {
 						this._oEpiCostChangeDialog = oFragment; //sap.ui.xmlfragment("com.ui.dealmemolocal.fragments.SelectPaymentDialog", this);
 						this.getView().addDependent(this._oEpiCostChangeDialog);
