@@ -3472,7 +3472,7 @@ sap.ui.define([
 						episodeData[i].Mvid = epiidSplit[0].trim();
 					}
 					episodeIds = episodeList.map(function(obj) {
-						return obj.Matid
+						return obj.Mvid
 					});
 				}
 
