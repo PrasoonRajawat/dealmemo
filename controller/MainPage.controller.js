@@ -4251,8 +4251,10 @@ sap.ui.define([
 			submitDialog: function(oData) {
 					var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
 					var dmWaers = oData.results[0].Waers
-					var locAmt = oData.results[0].LoclCrcyAmt
+					// var locAmt = oData.results[0].LoclCrcyAmt
 				    var locKey = oData.results[0].LoclCrcyKey
+					var dollarIndianLocale = Intl.NumberFormat('en-IN');
+					var locAmt = dollarIndianLocale.format(oData.results[0].LoclCrcyAmt)
 				    if(dmWaers != "INR") {
 					var text = "Equivalent local currency deal value is " + locAmt +" "+ locKey + ". Do you want to submit for an approval?" 
 					MessageBox.confirm( text , {
