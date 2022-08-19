@@ -3511,7 +3511,7 @@ sap.ui.define([
 				}
 				for (var i = 0; i < episodeData.length; i++) { //Added By Dhiraj For converting matid or mvid to epiid of 5 digits
 					const a = i + 1;
-					episodeData[i].Epiid = "000" + a;
+					episodeData[i].Epiid = "0000" + a;
 				}
 				return statusFlag;
 			},
@@ -3536,7 +3536,7 @@ sap.ui.define([
 								groupId: "eipsodeMovieChanges"
 							});
 							alreadySaveFlag = false;
-						} else if (epObj.flag === "Ch" || this.checkForYearChange(dealMemoDetailInfo)) {
+						} else if (epObj.flag === "Ch") {
 							var payLoadData = this.prepareEpisodePayload(epObj);
 							var oPath = "/DmEpisodeSet(Tentid='IBS',Dmno='" + dealMemoDetailInfo.Dmno + "',Dmver='" + dealMemoDetailInfo.Dmver +
 								"',Epiid='" + epObj.Epiid + "',Cntid='')"
