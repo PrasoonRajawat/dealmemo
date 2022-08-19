@@ -2726,7 +2726,7 @@ sap.ui.define([
 							Iprnm: sap.ui.getCore().byId(vendorContractDetailInfo.IPRItem).getText(),
 							Tertnm: sap.ui.getCore().byId(vendorContractDetailInfo.TeritoryItem).getText(),
 							Leadnm: vendorContractDetailInfo.amortKey != "" ? sap.ui.getCore().byId(vendorContractDetailInfo.AmortItem).getText() : "",
-							Nonleadnm:  vendorContractDetailInfo.nonAmortKey != "" ? sap.ui.getCore().byId(vendorContractDetailInfo.NonAmortItem).getText() : "",
+							Nonleadnm:  vendorContractDetailInfo.nonAmortKey != "" ? sap.ui.getCore().byId(vendorContractDetailInfo.NonAmortItem).getText() : "", 
 							IPREditFlag: vendorContractDetailInfo.IPRRight === "01" ? false : true,
 							flag: "Cr"
 							
