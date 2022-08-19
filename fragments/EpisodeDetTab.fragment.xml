@@ -69,7 +69,7 @@
 																	<!-- <ObjectIdentifier title="{i18n>ObjIden_TotalEpiCost}"/> -->
 																	<ObjectIdentifier title="{parts:[{value:'lblTblColTotEpiCost'},{path:'dealMemoDetailModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}"/>
 																</Column>
-																<Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" visible="{= ${dealMemoDetailModel>/Cnttp} === '02' || ${dealMemoDetailModel>/Cnttp} === '05' ? true : false }" width="20%">
+																<Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" visible="{= ${dealMemoDetailModel>/Cnttp} === '02' || ${dealMemoDetailModel>/Cnttp} === '05' || ${dealMemoDetailModel>/Cnttp} === '09' || ${dealMemoDetailModel>/Cnttp} === '04' ? true : false }" width="20%">
 																	<ObjectIdentifier title="{i18n>ObjIden_LeadingValue}"/>
 																</Column>
 																<Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" width="20%">
