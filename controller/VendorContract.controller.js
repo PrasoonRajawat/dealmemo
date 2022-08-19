@@ -2630,86 +2630,7 @@ sap.ui.define([
 				return oResponse;
 			},
 
-			// onPushIPR: function (mlist) {
-				
-			// 	var validateIPR = this.validateIPRDetails();
-			// 	if (validateIPR) {
-					
-			// 		var vendorContractModel = this.getView().getModel("vendorContractModel");
-			// 		var vendorContractDetailInfo = vendorContractModel.getData();
-			// 		var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
-			// 		var selectedEpisodeList = [];
-			// 		var oselIndex = vendorContractDetailInfo.episodeModeIPR;
-			// 		var mapList = mlist;
-			// 		var IPRPayloadArr = [];
-			// 		if (oselIndex == 0) {
-			// 			selectedEpisodeList = vendorContractDetailInfo.epIPRList;
-			// 		} else {
-			// 			selectedEpisodeList = [];
-			// 			vendorContractDetailInfo.epIPRList.map(function (epVCObj) {
-			// 				if (epVCObj.Epiid >= vendorContractDetailInfo.epiIPRFromId && epVCObj.Epiid <= vendorContractDetailInfo.epiIPRToId) {
-			// 					selectedEpisodeList.push(epVCObj);
-			// 				}
-
-			// 			});
-			// 		}
-
-			// 		selectedEpisodeList.map(function (selEpObj) {
-						
-			// 			IPRPayloadArr.push({
-			// 				Tentid: "IBS",
-			// 				Dmno: vendorContractDetailInfo.Dmno,
-			// 				Dmver: vendorContractDetailInfo.Dmver,
-			// 				Epiid: selEpObj.Epiid, //Episode ID
-			// 				Contno: vendorContractDetailInfo.Contno,
-			// 				Conttp: "01",
-			// 				Contver: vendorContractDetailInfo.Contver,
-			// 				Iprrht: vendorContractDetailInfo.IPRRight,
-			// 				Rhtfrdt: vendorContractDetailInfo.rightStDate,
-			// 				Rhttodt: vendorContractDetailInfo.rightendDate,
-			// 				Norun: vendorContractDetailInfo.totRuns,
-			// 				Leadamrtpt: vendorContractDetailInfo.amortKey == "" ? mapList.find(t => t.Epiid === selEpObj.Epiid).Leadamrtpt : vendorContractDetailInfo.amortKey,
-			// 				Nleadamrtpt: vendorContractDetailInfo.nonAmortKey == "" ? mapList.find(t => t.Epiid === selEpObj.Epiid).Nleadamrtpt : vendorContractDetailInfo.nonAmortKey,
-			// 				Territory: vendorContractDetailInfo.territoryKey,
-			// 				Dubstitle: vendorContractDetailInfo.selAdditionalRights.indexOf("DB") >= 0 ? true : false,
-			// 				Stitile: vendorContractDetailInfo.selAdditionalRights.indexOf("SR") >= 0 ? true : false,
-			// 				Ntrpt: vendorContractDetailInfo.selAdditionalRights.indexOf("NR") >= 0 ? true : false,
-			// 				Exclrht: vendorContractDetailInfo.selAdditionalRights.indexOf("ER") >= 0 ? true : false,
-			// 				Estdt: vendorContractDetailInfo.selAdditionalRights.indexOf("ED") >= 0 ? true : false,
-			// 				Rhtstepid: "",
-			// 				Period: "",
-			// 				Dur: "",
-			// 				Platform: vendorContractDetailInfo.PlatformKey,
-			// 				Platformdsc: sap.ui.getCore().byId(vendorContractDetailInfo.PlatformItem).getText(),
-			// 				//for display
-			// 				Epinm: selEpObj.Epinm,
-			// 				Iprnm: sap.ui.getCore().byId(vendorContractDetailInfo.IPRItem).getText(),
-			// 				Tertnm: sap.ui.getCore().byId(vendorContractDetailInfo.TeritoryItem).getText(),
-			// 				Leadnm: vendorContractDetailInfo.amortKey != "" ? vendorContractDetailInfo.amortPatternList.find(g => g.Mstcd == vendorContractDetailInfo.amortKey ).Mstcdnm : mapList.find(g => g.Epiid === selEpObj.Epiid ).Leadnm,
-			// 				Nonleadnm: vendorContractDetailInfo.nonAmortKey != "" ? vendorContractDetailInfo.amortPatternList.find(g => g.Mstcd == vendorContractDetailInfo.nonAmortKey ).Mstcdnm : mapList.find(g => g.Epiid === selEpObj.Epiid ).Nonleadnm,
-			// 				IPREditFlag: vendorContractDetailInfo.IPRRight === "01" ? false : true,
-			// 				flag: "Cr"
-
-			// 			});
-
-			// 		}.bind(this));
-
-			// 		var oResp = this.updateIPRData(IPRPayloadArr, $.extend(true, [], vendorContractDetailInfo.vcIPRData));
-			// 		if (oResp.flag) {
-			// 			vendorContractDetailInfo.vcIPRData = oResp.oResTable;
-			// 			vendorContractModel.refresh(true);
-			// 		} else {
-
-			// 			var epiIds = oResp.oResTable.join(",");
-			// 			var oMsg = oSourceBundle.getText("lblForEpisodes" + vendorContractDetailInfo.Cnttp) + " " + epiIds + " Platform '" + sap.ui.getCore()
-			// 				.byId(vendorContractDetailInfo.PlatformItem).getText() + "' is already pushed";
-			// 			MessageBox.error(oMsg);
-			// 		}
-			// 		this._oSelectIPRDialog.close();
-			// 	}
-
-
-			// },
+			
 			onPushIPR: function () {
 			
 				var validateIPR = this.validateIPRDetails();
@@ -2734,7 +2655,7 @@ sap.ui.define([
 					}
 
 					selectedEpisodeList.map(function (selEpObj) {
-						
+						if(mapList.length > 0) {
 						IPRPayloadArr.push({
 							Tentid: "IBS",
 							Dmno: vendorContractDetailInfo.Dmno,
@@ -2772,9 +2693,45 @@ sap.ui.define([
 							Nonleadnm: vendorContractDetailInfo.nonAmortKey != "" ? vendorContractDetailInfo.amortPatternList.find(g => g.Mstcd == vendorContractDetailInfo.nonAmortKey ).Mstcdnm : mapList.find(g => g.Epiid == selEpObj.Epiid ).Nonleadnm,
 							IPREditFlag: vendorContractDetailInfo.IPRRight === "01" ? false : true,
 							flag: "Cr"
-
+							
 						});
-
+					} else {
+						IPRPayloadArr.push({
+							Tentid: "IBS",
+							Dmno: vendorContractDetailInfo.Dmno,
+							Dmver: vendorContractDetailInfo.Dmver,
+							Epiid: selEpObj.Epiid, //Episode ID
+							Contno: vendorContractDetailInfo.Contno,
+							Conttp: "01",
+							Contver: vendorContractDetailInfo.Contver,
+							Iprrht: vendorContractDetailInfo.IPRRight,
+							Rhtfrdt: vendorContractDetailInfo.rightStDate,
+							Rhttodt: vendorContractDetailInfo.rightendDate,
+							Norun: vendorContractDetailInfo.totRuns,
+							Leadamrtpt: vendorContractDetailInfo.amortKey,
+							Nleadamrtpt: vendorContractDetailInfo.nonAmortKey,
+							Territory: vendorContractDetailInfo.territoryKey,
+							Dubstitle: vendorContractDetailInfo.selAdditionalRights.indexOf("DB") >= 0 ? true : false,
+							Stitile: vendorContractDetailInfo.selAdditionalRights.indexOf("SR") >= 0 ? true : false,
+							Ntrpt: vendorContractDetailInfo.selAdditionalRights.indexOf("NR") >= 0 ? true : false,
+							Exclrht: vendorContractDetailInfo.selAdditionalRights.indexOf("ER") >= 0 ? true : false,
+							Estdt: vendorContractDetailInfo.selAdditionalRights.indexOf("ED") >= 0 ? true : false,
+							Rhtstepid: "",
+							Period: "",
+							Dur: "",
+							Platform: vendorContractDetailInfo.PlatformKey,
+							Platformdsc: sap.ui.getCore().byId(vendorContractDetailInfo.PlatformItem).getText(),
+							//for display
+							Epinm: selEpObj.Epinm,
+							Iprnm: sap.ui.getCore().byId(vendorContractDetailInfo.IPRItem).getText(),
+							Tertnm: sap.ui.getCore().byId(vendorContractDetailInfo.TeritoryItem).getText(),
+							Leadnm: sap.ui.getCore().byId(vendorContractDetailInfo.AmortItem).getText(),
+							Nonleadnm: sap.ui.getCore().byId(vendorContractDetailInfo.NonAmortItem).getText(),
+							IPREditFlag: vendorContractDetailInfo.IPRRight === "01" ? false : true,
+							flag: "Cr"
+							
+						});
+					}
 					}.bind(this));
 
 					var oResp = this.updateIPRData(IPRPayloadArr, $.extend(true, [], vendorContractDetailInfo.vcIPRData));
