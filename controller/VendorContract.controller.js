@@ -1692,6 +1692,37 @@ sap.ui.define([
 						});
 				}
 				if (vendorContractDetailInfo.vcPaymentData.length > 0) {
+				vendorContractDetailInfo.vcPaymentData.map(function (selEpObj) {
+					paymentPayloadArr.push({
+						Amtper: selEpObj.Amtper,
+						Tentid: selEpObj.Tentid,
+						Dmno: selEpObj.Dmno,
+						Dmver: selEpObj.Dmver,
+						Contno: selEpObj.Contno,
+						Conttp: selEpObj.Conttp,
+						Contver: selEpObj.Contver,
+						Costperamt: selEpObj.Costperamt,
+						Dueamt: selEpObj.Dueamt,
+						Epiid: selEpObj.Epiid, //Episode ID
+						Epinm: selEpObj.Epinm,
+						Msid: selEpObj.Msid,
+						Empfk: selEpObj.Empfk,
+						Zterm: selEpObj.Zterm,
+						Ztermt: selEpObj.Ztermt,
+						Mestdt: selEpObj.Mestdt,
+						Msidnm: selEpObj.Msidnm,
+						Mscompdt: selEpObj.Mscompdt !== null ? Formatter.formatDateValForBackend(new Date(selEpObj.Mscompdt)) : null,
+						Prodocno: selEpObj.Prodocno,
+						Provdocyr: selEpObj.Provdocyr,
+						Invdocno: selEpObj.Invdocno,
+						Invdocyr: selEpObj.Invdocyr,
+						Sfid: selEpObj.Sfid,
+						L2sfid: selEpObj.L2sfid,
+						Updkz: "U",
+						Seqnr: selEpObj.Seqnr
+					});
+				}.bind(this));
+			}	else {
 				selectedEpisodeList.map(function (selEpObj) {
 					paymentPayloadArr.push({
 						Contno: vendorContractDetailInfo.Contno,
@@ -1713,38 +1744,6 @@ sap.ui.define([
 						Zterm: ""
 					});
 				}.bind(this));
-				}	else {
-					vendorContractDetailInfo.vcPaymentData.map(function (selEpObj) {
-						paymentPayloadArr.push({
-							Amtper: selEpObj.Amtper,
-							Tentid: selEpObj.Tentid,
-							Dmno: selEpObj.Dmno,
-							Dmver: selEpObj.Dmver,
-							Contno: selEpObj.Contno,
-							Conttp: selEpObj.Conttp,
-							Contver: selEpObj.Contver,
-							Costperamt: selEpObj.Costperamt,
-							Dueamt: selEpObj.Dueamt,
-							Epiid: selEpObj.Epiid, //Episode ID
-							Epinm: selEpObj.Epinm,
-							Msid: selEpObj.Msid,
-							Empfk: selEpObj.Empfk,
-							Zterm: selEpObj.Zterm,
-							Ztermt: selEpObj.Ztermt,
-							Mestdt: selEpObj.Mestdt,
-							Msidnm: selEpObj.Msidnm,
-							Mscompdt: selEpObj.Mscompdt !== null ? Formatter.formatDateValForBackend(new Date(selEpObj.Mscompdt)) : null,
-							Prodocno: selEpObj.Prodocno,
-							Provdocyr: selEpObj.Provdocyr,
-							Invdocno: selEpObj.Invdocno,
-							Invdocyr: selEpObj.Invdocyr,
-							Sfid: selEpObj.Sfid,
-							L2sfid: selEpObj.L2sfid,
-							Updkz: "U",
-							Seqnr: selEpObj.Seqnr
-						});
-					}.bind(this));
-
 				}
 				return paymentPayloadArr;
 			},
