@@ -1691,7 +1691,7 @@ sap.ui.define([
 
 						});
 				}
-
+				if (vendorContractDetailInfo.vcPaymentData.length > 0) {
 				selectedEpisodeList.map(function (selEpObj) {
 					paymentPayloadArr.push({
 						Contno: vendorContractDetailInfo.Contno,
@@ -1713,7 +1713,7 @@ sap.ui.define([
 						Zterm: ""
 					});
 				}.bind(this));
-				if (vendorContractDetailInfo.vcPaymentData.length > 0) {
+				}	else {
 					vendorContractDetailInfo.vcPaymentData.map(function (selEpObj) {
 						paymentPayloadArr.push({
 							Amtper: selEpObj.Amtper,
