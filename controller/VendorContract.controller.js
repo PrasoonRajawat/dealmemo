@@ -1738,6 +1738,8 @@ sap.ui.define([
 							Provdocyr: selEpObj.Provdocyr,
 							Invdocno: selEpObj.Invdocno,
 							Invdocyr: selEpObj.Invdocyr,
+							Sfid: selEpObj.Sfid,
+							L2sfid: selEpObj.L2sfid,
 							Updkz: "U",
 							Seqnr: selEpObj.Seqnr
 						});
