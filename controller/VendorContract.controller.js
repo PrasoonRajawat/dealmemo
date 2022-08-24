@@ -1,19 +1,19 @@
 sap.ui.define([
-	"sap/ui/core/mvc/Controller",
-	"sap/ui/model/Filter",
-	"sap/ui/model/FilterOperator",
-	"com/ui/dealmemolocal/model/formatter",
-	"sap/m/MessageBox",
-	"sap/m/MessageToast",
-	"sap/ui/core/Fragment",
-	"sap/ui/core/routing/History",
-	"sap/ui/export/Spreadsheet",
-	'sap/ui/export/library'
-],
+		"sap/ui/core/mvc/Controller",
+		"sap/ui/model/Filter",
+		"sap/ui/model/FilterOperator",
+		"com/ui/dealmemolocal/model/formatter",
+		"sap/m/MessageBox",
+		"sap/m/MessageToast",
+		"sap/ui/core/Fragment",
+		"sap/ui/core/routing/History",
+		"sap/ui/export/Spreadsheet",
+		'sap/ui/export/library'
+	],
 	/**
 	 * @param {typeof sap.ui.core.mvc.Controller} Controller
 	 */
-	function (Controller, Filter, FilterOperator, Formatter, MessageBox, MessageToast, Fragment, History, Spreadsheet, exportLibrary) {
+	function(Controller, Filter, FilterOperator, Formatter, MessageBox, MessageToast, Fragment, History, Spreadsheet, exportLibrary) {
 		"use strict";
 		var EdmType = exportLibrary.EdmType;
 		jQuery.sap.require("com.ui.dealmemolocal.model.jszip");
@@ -21,12 +21,12 @@ sap.ui.define([
 		return Controller.extend("com.ui.dealmemolocal.controller.VendorContract", {
 			Formatter: Formatter,
 
-			onInit: function () {
+			onInit: function() {
 
 				this.getOwnerComponent().getRouter().attachRouteMatched(this.onRouteMatchedvendorContract, this);
 			},
 
-			onRouteMatchedvendorContract: function (oEvent) {
+			onRouteMatchedvendorContract: function(oEvent) {
 				var oName = oEvent.getParameter("name");
 				if (oName === "VendorContract") {
 					var oModel = new sap.ui.model.json.JSONModel();
@@ -53,7 +53,7 @@ sap.ui.define([
 				}
 
 			},
-			checkForUnsavedData: function () {
+			checkForUnsavedData: function() {
 				var oTab = this.getView().byId("idVCTabBar").getSelectedKey();
 				var oTableData = [];
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
@@ -63,7 +63,7 @@ sap.ui.define([
 				if (vendorContractDetailInfo.epiVCTabData) {
 					oTableData = vendorContractDetailInfo.epiVCTabData;
 					if (oTableData.length > 0) {
-						oTableData.map(function (oTabObj) {
+						oTableData.map(function(oTabObj) {
 							if (oTabObj.flag === "Cr" || oTabObj.flag === "Ch") {
 								unsavedFlag = true;
 							}
@@ -73,7 +73,7 @@ sap.ui.define([
 				if (vendorContractDetailInfo.vcPaymentData) {
 					oTableData = vendorContractDetailInfo.vcPaymentData;
 					if (oTableData.length > 0) {
-						oTableData.map(function (oTabObj) {
+						oTableData.map(function(oTabObj) {
 							if (oTabObj.flag === "Cr" || oTabObj.flag === "Ch") {
 								unsavedFlag = true;
 							}
@@ -83,7 +83,7 @@ sap.ui.define([
 				if (vendorContractDetailInfo.vcDeliveryData) {
 					oTableData = vendorContractDetailInfo.vcDeliveryData;
 					if (oTableData.length > 0) {
-						oTableData.map(function (oTabObj) {
+						oTableData.map(function(oTabObj) {
 							if (oTabObj.flag === "Cr" || oTabObj.flag === "Ch") {
 								unsavedFlag = true;
 							}
@@ -93,7 +93,7 @@ sap.ui.define([
 				if (vendorContractDetailInfo.vcIPRData) {
 					oTableData = vendorContractDetailInfo.vcIPRData;
 					if (oTableData.length > 0) {
-						oTableData.map(function (oTabObj) {
+						oTableData.map(function(oTabObj) {
 							if (oTabObj.flag === "Cr" || oTabObj.flag === "Ch") {
 								unsavedFlag = true;
 							}
@@ -106,14 +106,14 @@ sap.ui.define([
 					return true;
 				}
 			},
-			onNavBackFromVendorContractDetail: function () {
+			onNavBackFromVendorContractDetail: function() {
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
 				var responseFlag = this.checkForUnsavedData();
 				if (responseFlag) {
-					if(vendorContractDetailInfo.App == "App"){
-						this.navToContApp();	
-					} else { 
+					if (vendorContractDetailInfo.App == "App") {
+						this.navToContApp();
+					} else {
 						this.navToDealMemo();
 					}
 				} else {
@@ -121,13 +121,13 @@ sap.ui.define([
 					MessageBox.confirm(oSourceBundle.getText("msgUnsaveDataWar"), {
 						actions: [oSourceBundle.getText("lblYes"), oSourceBundle.getText("lblNo")],
 						emphasizedAction: "Yes",
-						onClose: function (sAction) {
+						onClose: function(sAction) {
 							if (sAction === oSourceBundle.getText("lblYes")) {
-						if(vendorContractDetailInfo.App == "App"){
-							this.navToContApp();	
-						} else { 
-							this.navToDealMemo();
-							}
+								if (vendorContractDetailInfo.App == "App") {
+									this.navToContApp();
+								} else {
+									this.navToDealMemo();
+								}
 							} else if (sAction === oSourceBundle.getText("lblNo")) {
 
 							}
@@ -136,34 +136,34 @@ sap.ui.define([
 				}
 
 			},
-			
-			navToContApp: function () {
+
+			navToContApp: function() {
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
-				
+
 				var dmno = vendorContractDetailInfo.Dmno;
 				var dmver = vendorContractDetailInfo.Dmver;
 				var conttp = vendorContractDetailInfo.Conttp;
 				var host = window.location.origin;
 				var path = window.location.pathname;
-				
-				var finalURL = host + path + "#ZVendorContract-display&/main/" + dmno + "/" + dmver + "/" + conttp ;
+
+				var finalURL = host + path + "#ZVendorContract-display&/main/" + dmno + "/" + dmver + "/" + conttp;
 				sap.m.URLHelper.redirect(finalURL, false);
 			},
 
-			navToDealMemo: function () {
-					var vendorContractModel = this.getView().getModel("vendorContractModel");
+			navToDealMemo: function() {
+				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
 				if (this.newContractCreated) {
 					this.newContractCreated = false;
 					window.history.go(-2);
-				} else if (vendorContractDetailInfo.App){
+				} else if (vendorContractDetailInfo.App) {
 					history.back();
-				}	else {
+				} else {
 					window.history.go(-1);
 				}
 			},
-			onEditVendorContract: function (oEvent) {
+			onEditVendorContract: function(oEvent) {
 				oEvent.getSource().setVisible(false);
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
@@ -174,7 +174,7 @@ sap.ui.define([
 				vendorContractModel.refresh(true);
 
 			},
-			loadDealMemoDetails: function () {
+			loadDealMemoDetails: function() {
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
 				var odetailEntityPath = "/DmHeaderSet(Tentid='IBS',Dmno='" + vendorContractDetailInfo.Dmno + "',Dmver='" + vendorContractDetailInfo
@@ -187,7 +187,7 @@ sap.ui.define([
 						"$expand": "DmCostSet,DmCoSet"
 					},
 
-					success: function (oData) {
+					success: function(oData) {
 						Object.assign(vendorContractDetailInfo, oData);
 
 						vendorContractModel.refresh(true);
@@ -200,13 +200,13 @@ sap.ui.define([
 						}
 						sap.ui.core.BusyIndicator.hide();
 					}.bind(this),
-					error: function () {
+					error: function() {
 						sap.ui.core.BusyIndicator.hide();
 					}
 				});
 			},
 
-			createContract: function () {
+			createContract: function() {
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
 
@@ -254,7 +254,7 @@ sap.ui.define([
 				// }
 
 			},
-			validateSubmit: function () {
+			validateSubmit: function() {
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
 				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
@@ -276,7 +276,7 @@ sap.ui.define([
 				}
 				return statusFlag;
 			},
-			onSubmitVC: function () { // Adde by dhiraj on 19/05/2022
+			onSubmitVC: function() { // Adde by dhiraj on 19/05/2022
 
 				var validKey = this.validateSubmit();
 				if (validKey) {
@@ -296,7 +296,7 @@ sap.ui.define([
 					oModel.callFunction("/SubmitCont", {
 						method: "GET",
 						urlParameters: paramObj,
-						success: function (oData, response) {
+						success: function(oData, response) {
 							sap.ui.core.BusyIndicator.hide();
 
 							// dealMemoDetailModel.setProperty("/costCodes", oData.results);
@@ -305,7 +305,7 @@ sap.ui.define([
 							this.loadDealMemoDetails();
 
 						}.bind(this),
-						error: function (oError) {
+						error: function(oError) {
 							sap.ui.core.BusyIndicator.hide();
 							var oErrorResponse = JSON.parse(oError.responseText);
 							var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
@@ -314,7 +314,7 @@ sap.ui.define([
 					});
 				}
 			},
-			displayContract: function () {
+			displayContract: function() {
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				vendorContractModel.setProperty("/contractMode", "Ch");
 
@@ -325,9 +325,9 @@ sap.ui.define([
 				this.reloadVendorContractTabs();
 			},
 
-			getFilterArray: function (arr) {
+			getFilterArray: function(arr) {
 				var filterArr = [];
-				arr.map(function (obj) {
+				arr.map(function(obj) {
 					filterArr.push(
 						new Filter(obj.key, "EQ", obj.val)
 					);
@@ -335,38 +335,38 @@ sap.ui.define([
 				return filterArr;
 
 			},
-			storeMasterCodeInfo: function (oData) {
+			storeMasterCodeInfo: function(oData) {
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
-				vendorContractModel.setProperty("/vendorRoleList", oData.results.filter(function (item) {
+				vendorContractModel.setProperty("/vendorRoleList", oData.results.filter(function(item) {
 					return item.Mstpcd === "09";
 				}));
-				vendorContractModel.setProperty("/mileStoneList", oData.results.filter(function (item) {
+				vendorContractModel.setProperty("/mileStoneList", oData.results.filter(function(item) {
 					return item.Mstpcd === "08";
 				}));
-				vendorContractModel.setProperty("/deliveryCodeList", oData.results.filter(function (item) {
+				vendorContractModel.setProperty("/deliveryCodeList", oData.results.filter(function(item) {
 					return item.Mstpcd === "06";
 				}));
-				vendorContractModel.setProperty("/teritoryList", oData.results.filter(function (item) {
+				vendorContractModel.setProperty("/teritoryList", oData.results.filter(function(item) {
 					return item.Mstpcd === "07";
 				}));
 
-				vendorContractModel.setProperty("/IPRRightsList", oData.results.filter(function (item) {
+				vendorContractModel.setProperty("/IPRRightsList", oData.results.filter(function(item) {
 					return item.Mstpcd === "14";
 				}));
 
-				vendorContractModel.setProperty("/platformList", oData.results.filter(function (item) {
+				vendorContractModel.setProperty("/platformList", oData.results.filter(function(item) {
 					return item.Mstpcd === "19";
 				}));
 
-				vendorContractModel.setProperty("/amortPatternList", oData.results.filter(function (item) {
+				vendorContractModel.setProperty("/amortPatternList", oData.results.filter(function(item) {
 					return item.Mstpcd === "12";
 				}));
 
-				vendorContractModel.setProperty("/nonAmmortPatternList", oData.results.filter(function (item) {
+				vendorContractModel.setProperty("/nonAmmortPatternList", oData.results.filter(function(item) {
 					return item.Mstpcd === "13";
 				}));
 			},
-			loadInitialDataFromMaster: function () {
+			loadInitialDataFromMaster: function() {
 
 				var filteArr = [
 
@@ -411,15 +411,15 @@ sap.ui.define([
 
 				oModel.read("/DDMastCdSet", {
 					filters: aFilters,
-					success: function (oData) {
+					success: function(oData) {
 						this.storeMasterCodeInfo(oData);
 					}.bind(this),
-					error: function () {
+					error: function() {
 
 					}
 				});
 			},
-			loadVendors: function () {
+			loadVendors: function() {
 				var oModel = this.getView().getModel();
 				sap.ui.core.BusyIndicator.show();
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
@@ -427,7 +427,7 @@ sap.ui.define([
 				sap.ui.core.BusyIndicator.show(0);
 				var oPath = "/F4LFB1Set?$filter=Bukrs eq '" + vendorContractDetailInfo.Bukrs + "'";
 				oModel.read(oPath, {
-					success: function (oData) {
+					success: function(oData) {
 						//                   	var sortedList = oData.results.sort(function(a,b){
 						//                   	    return a.Lifnr - b.Lifnr;
 						//                   	    }
@@ -440,12 +440,12 @@ sap.ui.define([
 						this.onVendorSelection();
 
 					}.bind(this),
-					error: function () {
+					error: function() {
 
 					}
 				});
 			},
-			onVendorSelection: function () {
+			onVendorSelection: function() {
 				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
 				this.oValueHelpSelectionParams = {
 					"bindPathName": "vendorContractModel>/vendorsList",
@@ -461,7 +461,7 @@ sap.ui.define([
 				};
 				this.openSelectionDialog();
 			},
-			loadVendorRoles: function (oRef) {
+			loadVendorRoles: function(oRef) {
 				var oSourceBundle = oRef.getView().getModel("i18n").getResourceBundle();
 				oRef.oValueHelpSelectionParams = {
 					"bindPathName": "vendorContractModel>/vendorRoleList",
@@ -473,20 +473,20 @@ sap.ui.define([
 					"valuePath": "/vendorRoleName",
 					"valueModel": "vendorContractModel",
 					"dialogTitle": oSourceBundle.getText("titleVendorRole")
-					// "callBackFunction": this.loadDepartment
-					//"callBackFunction":	oRef.createVendorContract
+						// "callBackFunction": this.loadDepartment
+						//"callBackFunction":	oRef.createVendorContract
 
 				};
 				oRef.openSelectionDialog();
 
 			},
 			// Added by dhiraj on 30/06/2022
-			editDepartment: function () {
+			editDepartment: function() {
 				this.editDepartment = true;
 				this.loadDepartment();
 			},
 
-			loadDepartment: function () { // added by dhiraj on 24/05/2022
+			loadDepartment: function() { // added by dhiraj on 24/05/2022
 				Fragment.load({
 					name: "com.ui.dealmemolocal.fragments.SelectDepartmentDialog",
 					controller: this
@@ -499,13 +499,13 @@ sap.ui.define([
 
 				}.bind(this));
 			},
-			onCreateParamCancel: function () { // added by dhiraj on 24/05/2022
+			onCreateParamCancel: function() { // added by dhiraj on 24/05/2022
 				this._oCreateParamDialog.destroy();
 
 				this.onVendorSelection();
 
 			},
-			validateBeforeCreate: function () {
+			validateBeforeCreate: function() {
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var createParamsData = vendorContractModel.getData().createParams;
 				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
@@ -518,7 +518,7 @@ sap.ui.define([
 				return statusFlag;
 			},
 
-			onCreateParamOk: function () {
+			onCreateParamOk: function() {
 				var oVaildFlag = this.validateBeforeCreate();
 				if (oVaildFlag) {
 					var vendorContractModel = this.getView().getModel("vendorContractModel");
@@ -528,7 +528,7 @@ sap.ui.define([
 				}
 
 			},
-			createParamModel: function () { // added by dhiraj on 24/05/2022
+			createParamModel: function() { // added by dhiraj on 24/05/2022
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
 				vendorContractModel.setProperty("/createParams", {
@@ -559,7 +559,7 @@ sap.ui.define([
 				//----------------------------
 			},
 
-			loadDepartmentValue: function () { // added by dhiraj on 24/05/2022
+			loadDepartmentValue: function() { // added by dhiraj on 24/05/2022
 				var oModel = this.getView().getModel();
 				sap.ui.core.BusyIndicator.show();
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
@@ -567,7 +567,7 @@ sap.ui.define([
 				sap.ui.core.BusyIndicator.show(0);
 				var oPath = "/DmDeptF4Set";
 				oModel.read(oPath, {
-					success: function (oData) {
+					success: function(oData) {
 						var sortedList = oData.results.sort((a, b) => (a.Abtnr > b.Abtnr) ? 1 : ((b.Abtnr > a.Abtnr) ? -1 : 0));
 
 						vendorContractModel.setProperty("/departmentList", sortedList);
@@ -578,13 +578,13 @@ sap.ui.define([
 						vendorContractModel.refresh(true);
 						sap.ui.core.BusyIndicator.hide();
 					}.bind(this),
-					error: function () {
+					error: function() {
 
 					}
 				});
 
 			},
-			onValueHelpDept: function () { // added by dhiraj on 24/05/2022
+			onValueHelpDept: function() { // added by dhiraj on 24/05/2022
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
 				this.oValueHelpSelectionParams = {
@@ -602,7 +602,7 @@ sap.ui.define([
 				this.openSelectionDialog();
 
 			},
-			paramsEmpty: function (oRef) {
+			paramsEmpty: function(oRef) {
 
 				var vendorContractModel = oRef.oView.getModel("vendorContractModel");
 				vendorContractModel.oData.createParams.Prreq = "";
@@ -610,12 +610,12 @@ sap.ui.define([
 				vendorContractModel.oData.createParams.Grsescr = "";
 				oRef.emptyParamsID();
 			},
-			emptyParamsID: function () {
+			emptyParamsID: function() {
 				sap.ui.getCore().byId("Prreq").setValue("");
 				sap.ui.getCore().byId("Depthd").setValue("");
 				sap.ui.getCore().byId("Grsescr").setValue("");
 			},
-			loadPrRequestorValue: function () { // added by dhiraj on 24/05/2022
+			loadPrRequestorValue: function() { // added by dhiraj on 24/05/2022
 				var oModel = this.getView().getModel();
 				sap.ui.core.BusyIndicator.show();
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
@@ -623,23 +623,23 @@ sap.ui.define([
 				sap.ui.core.BusyIndicator.show(0);
 				var oPath = "/DmPrReqF4Set";
 				oModel.read(oPath, {
-					success: function (oData) {
+					success: function(oData) {
 						var sortedList = oData.results.sort((a, b) => (a.Bukrs > b.Bukrs) ? 1 : ((b.Bukrs > a.Bukrs) ? -1 : 0));
 
 						vendorContractModel.setProperty("/prRequestorList", sortedList);
 						vendorContractModel.refresh(true);
 						sap.ui.core.BusyIndicator.hide();
 					}.bind(this),
-					error: function () {
+					error: function() {
 
 					}
 				});
 
 			},
-			onValueHelpPrRequestor: function () { // added by dhiraj on 24/05/2022
+			onValueHelpPrRequestor: function() { // added by dhiraj on 24/05/2022
 
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
-				var list = vendorContractModel.oData.prRequestorList.filter(function (obj) {
+				var list = vendorContractModel.oData.prRequestorList.filter(function(obj) {
 					return obj.Dept === vendorContractModel.oData.createParams.Zstext
 				}.bind(this))
 				vendorContractModel.setProperty("/prRequestorListS", list);
@@ -660,7 +660,7 @@ sap.ui.define([
 					MessageBox.information(oSourceBundle.getText("msgDeptCheck"));
 				}
 			},
-			loadDeptHeadValue: function () { // added by dhiraj on 24/05/2022 
+			loadDeptHeadValue: function() { // added by dhiraj on 24/05/2022 
 				var oModel = this.getView().getModel();
 				sap.ui.core.BusyIndicator.show();
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
@@ -668,23 +668,23 @@ sap.ui.define([
 				sap.ui.core.BusyIndicator.show(0);
 				var oPath = "/DmDeptHeadF4Set";
 				oModel.read(oPath, {
-					success: function (oData) {
+					success: function(oData) {
 						var sortedList = oData.results.sort((a, b) => (a.Bukrs > b.Bukrs) ? 1 : ((b.Bukrs > a.Bukrs) ? -1 : 0));
 
 						vendorContractModel.setProperty("/deptHeadList", sortedList);
 						vendorContractModel.refresh(true);
 						sap.ui.core.BusyIndicator.hide();
 					}.bind(this),
-					error: function () {
+					error: function() {
 
 					}
 				});
 
 			},
-			onValueHelpDeptHead: function () { // added by dhiraj on 24/05/2022
+			onValueHelpDeptHead: function() { // added by dhiraj on 24/05/2022
 
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
-				var list = vendorContractModel.oData.deptHeadList.filter(function (obj) {
+				var list = vendorContractModel.oData.deptHeadList.filter(function(obj) {
 					return obj.Dept === vendorContractModel.oData.createParams.Zstext
 				}.bind(this))
 				vendorContractModel.setProperty("/deptHeadListS", list);
@@ -704,7 +704,7 @@ sap.ui.define([
 					MessageBox.information(oSourceBundle.getText("msgDeptCheck"));
 				}
 			},
-			loadGrCreaterValue: function () { // added by dhiraj on 24/05/2022
+			loadGrCreaterValue: function() { // added by dhiraj on 24/05/2022
 				var oModel = this.getView().getModel();
 				sap.ui.core.BusyIndicator.show();
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
@@ -712,23 +712,23 @@ sap.ui.define([
 				sap.ui.core.BusyIndicator.show(0);
 				var oPath = "/DmGrCreteF4Set";
 				oModel.read(oPath, {
-					success: function (oData) {
+					success: function(oData) {
 						var sortedList = oData.results.sort((a, b) => (a.Bukrs > b.Bukrs) ? 1 : ((b.Bukrs > a.Bukrs) ? -1 : 0));
 
 						vendorContractModel.setProperty("/grCreaterList", sortedList);
 						vendorContractModel.refresh(true);
 						sap.ui.core.BusyIndicator.hide();
 					}.bind(this),
-					error: function () {
+					error: function() {
 
 					}
 				});
 
 			},
-			onValueHelpGrCreater: function () { // added by dhiraj on 24/05/2022
+			onValueHelpGrCreater: function() { // added by dhiraj on 24/05/2022
 
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
-				var list = vendorContractModel.oData.grCreaterList.filter(function (obj) {
+				var list = vendorContractModel.oData.grCreaterList.filter(function(obj) {
 					return obj.Dept === vendorContractModel.oData.createParams.Zstext
 				}.bind(this))
 				vendorContractModel.setProperty("/grCreaterListS", list);
@@ -749,7 +749,7 @@ sap.ui.define([
 					MessageBox.information(oSourceBundle.getText("msgDeptCheck"));
 				}
 			},
-			onActionCB: function () { // FOr replacement Checkbox.
+			onActionCB: function() { // FOr replacement Checkbox.
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
 				if (sap.ui.getCore().byId("recont").getSelected() === true) {
@@ -758,7 +758,7 @@ sap.ui.define([
 					vendorContractModel.setProperty("/createParams/Recont", false);
 				}
 			},
-			onSelectionDialogClose: function () {
+			onSelectionDialogClose: function() {
 				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
 				if (this.oValueHelpSelectionParams.dialogTitle === oSourceBundle.getText("titleVendor")) {
 					this.onNavBackFromVendorContractDetail();
@@ -767,7 +767,7 @@ sap.ui.define([
 				}
 
 			},
-			loadTaxCodes: function () {
+			loadTaxCodes: function() {
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
 				var oModel = this.getView().getModel();
@@ -783,7 +783,7 @@ sap.ui.define([
 				var aFilters = this.getFilterArray(oFilters);
 				oModel.read("/F4TaxCodeSet", {
 					filters: aFilters,
-					success: function (oData) {
+					success: function(oData) {
 						// var filteredList = oData.results.filter(function(obj) {
 						// 	return obj.Mwskz.includes("V")
 						// });
@@ -793,12 +793,12 @@ sap.ui.define([
 						sap.ui.core.BusyIndicator.hide();
 
 					}.bind(this),
-					error: function () {
+					error: function() {
 
 					}
 				});
 			},
-			loadCostCodes: function () {
+			loadCostCodes: function() {
 				var oModel = this.getView().getModel();
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
@@ -812,8 +812,8 @@ sap.ui.define([
 				oModel.callFunction("/GetContractCostCode", {
 					method: "GET",
 					urlParameters: paramObj,
-					success: function (oData, response) {
-						oData.results.map(function (obj) {
+					success: function(oData, response) {
+						oData.results.map(function(obj) {
 							obj.costValueEditable = false;
 							obj.costCodeValue = "0.00"
 						});
@@ -822,37 +822,37 @@ sap.ui.define([
 						vendorContractModel.refresh(true);
 
 					}.bind(this),
-					error: function (oError) { }
+					error: function(oError) {}
 				})
 
 			},
-			loadEpisodes: function () {
+			loadEpisodes: function() {
 				var oModel = this.getView().getModel();
 				sap.ui.core.BusyIndicator.show();
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
 				var oFilters = [{
-					"key": "Tentid",
-					"val": "IBS"
-				}, {
-					"key": "Spras",
-					"val": "EN-US"
-				}, {
-					"key": "Dmno",
-					"val": vendorContractDetailInfo.Dmno
-				}, {
-					"key": "Conttp",
-					"val": "01"
-				}
+						"key": "Tentid",
+						"val": "IBS"
+					}, {
+						"key": "Spras",
+						"val": "EN-US"
+					}, {
+						"key": "Dmno",
+						"val": vendorContractDetailInfo.Dmno
+					}, {
+						"key": "Conttp",
+						"val": "01"
+					}
 
 				];
 
 				var aFilters = this.getFilterArray(oFilters);
 				oModel.read("/F4EpiIDSet", {
 					filters: aFilters,
-					success: function (oData) {
+					success: function(oData) {
 						sap.ui.core.BusyIndicator.hide();
-						var filteredEpisodes = oData.results.filter(function (epObj) {
+						var filteredEpisodes = oData.results.filter(function(epObj) {
 							if (vendorContractDetailInfo.Contno !== "") {
 								return epObj.Vcflag !== "X" || (epObj.Contno === vendorContractDetailInfo.Contno && epObj.Contver ===
 									vendorContractDetailInfo.Contver);
@@ -860,22 +860,22 @@ sap.ui.define([
 								epObj.Vcflag !== "X";
 							}
 						});
-						var filterEpi = oData.results.filter(function (epObj) {
-							return  epObj.Vcflag !== "X" || ( epObj.Contno === vendorContractDetailInfo.Contno || epObj.Contno === "" ); 
+						var filterEpi = oData.results.filter(function(epObj) {
+							return epObj.Vcflag !== "X" || (epObj.Contno === vendorContractDetailInfo.Contno || epObj.Contno === "");
 						})
 						if (vendorContractDetailInfo.Contver == 'new') {
-						vendorContractModel.setProperty("/episodeDataList", $.extend(true, [], filteredEpisodes));
+							vendorContractModel.setProperty("/episodeDataList", $.extend(true, [], filteredEpisodes));
 						} else {
-						vendorContractModel.setProperty("/episodeDataList", $.extend(true, [], filterEpi))
+							vendorContractModel.setProperty("/episodeDataList", $.extend(true, [], filterEpi))
 						}
 						vendorContractModel.setProperty("/episodeVCList", filteredEpisodes);
-						vendorContractModel.setProperty("/episode2List" , filterEpi);
+						vendorContractModel.setProperty("/episode2List", filterEpi);
 						vendorContractModel.setProperty("/selEpisodes", filteredEpisodes);
 						vendorContractModel.refresh(true);
 						sap.ui.core.BusyIndicator.hide();
 
 					}.bind(this),
-					error: function (oError) {
+					error: function(oError) {
 						sap.ui.core.BusyIndicator.hide();
 						var oErrorResponse = JSON.parse(oError.responseText);
 						var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
@@ -883,22 +883,22 @@ sap.ui.define([
 					}
 				});
 			},
-			loadPayTerms: function () {
+			loadPayTerms: function() {
 				var oModel = this.getView().getModel();
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				oModel.read("/F4PayTermSet", {
-					success: function (oData) {
+					success: function(oData) {
 						vendorContractModel.setProperty("/payTermList", oData.results);
 						vendorContractModel.refresh(true);
 						sap.ui.core.BusyIndicator.hide();
 
 					}.bind(this),
-					error: function () {
+					error: function() {
 
 					}
 				});
 			},
-			openSelectionDialog: function () {
+			openSelectionDialog: function() {
 				Fragment.load({
 					id: this.createId("vcOpenSelectionDialog"),
 					name: "com.ui.dealmemolocal.fragments.SelectionDialog",
@@ -925,7 +925,7 @@ sap.ui.define([
 				}.bind(this));
 			},
 			//Added By Dhiraj For creating vendorcontract to default it as for production House-----------------
-			onProdHouse: function () {
+			onProdHouse: function() {
 				var oValuePath = this.oValueHelpSelectionParams.valuePath;
 				var oKeyPath = this.oValueHelpSelectionParams.keyPath;
 				var oProp = this.oValueHelpSelectionParams.propName;
@@ -942,7 +942,7 @@ sap.ui.define([
 			},
 			//-----------------------------------------------------------------------------------------
 
-			onConfirmSelection: function (oEvent) {
+			onConfirmSelection: function(oEvent) {
 				var selectedItemObj = oEvent.getParameters()['selectedItem'].getBindingContext("vendorContractModel").getObject();
 				var oValuePath = this.oValueHelpSelectionParams.valuePath;
 				var oKeyPath = this.oValueHelpSelectionParams.keyPath;
@@ -958,7 +958,7 @@ sap.ui.define([
 				}
 			},
 
-			reloadVendorContractTabs: function () {
+			reloadVendorContractTabs: function() {
 
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
@@ -970,11 +970,11 @@ sap.ui.define([
 					urlParameters: {
 						"$expand": "DmCeSet,DmCmSet,DmVdSet,DmVrSet,DmCeBalAmtSet"
 					},
-					success: function (oData) {
+					success: function(oData) {
 						sap.ui.core.BusyIndicator.show(0);
 						oData.Chnlnm = vendorContractDetailInfo.Chnlnm;
 						oData.Cntnm = vendorContractDetailInfo.Cntnm;
-						oData.DmCeSet.results.map(function (obj) {
+						oData.DmCeSet.results.map(function(obj) {
 							obj.episodeSaveFlag = true;
 							obj.Diff = ((parseFloat(obj.Coepiamt) + parseFloat(obj.Wmwst)) - (obj.Baseamt)).toFixed(2);
 						});
@@ -983,7 +983,7 @@ sap.ui.define([
 						if (oData.DmCeSet.results.length) {
 							oData.vcEpiDataColor = "Positive";
 						}
-						oData.DmCeBalAmtSet.results.map(function (obj) {
+						oData.DmCeBalAmtSet.results.map(function(obj) {
 							obj.episodeSaveFlag = true;
 							//	obj.Diff = ((parseFloat(obj.Coepiamt) + parseFloat(obj.Wmwst)) - (obj.Baseamt)).toFixed(2);
 						});
@@ -995,7 +995,7 @@ sap.ui.define([
 						}
 
 						oData.epiVCBalTabData = $.extend(true, [], oData.DmCeBalAmtSet.results);
-						oData.DmCmSet.results.map(function (obj) {
+						oData.DmCmSet.results.map(function(obj) {
 							obj.episodeSaveFlag = true;
 						});
 						oData.vcPaymentData = $.extend(true, [], oData.DmCmSet.results);
@@ -1004,7 +1004,7 @@ sap.ui.define([
 							oData.vcPaymentDataColor = "Positive";
 						}
 
-						oData.DmVdSet.results.map(function (obj) {
+						oData.DmVdSet.results.map(function(obj) {
 							obj.episodeSaveFlag = true;
 						});
 						oData.vcDeliveryData = $.extend(true, [], oData.DmVdSet.results);
@@ -1013,7 +1013,7 @@ sap.ui.define([
 						if (oData.DmVdSet.results.length) {
 							oData.vcDeliveryDataColor = "Positive";
 						}
-						oData.DmVrSet.results.map(function (vrObj) {
+						oData.DmVrSet.results.map(function(vrObj) {
 							vrObj.IPREditFlag = vrObj.Iprrht === "01" ? false : true;
 							vrObj.episodeSaveFlag = true;
 						})
@@ -1063,7 +1063,7 @@ sap.ui.define([
 						this.selCostCodesPaths = [];
 						sap.ui.core.BusyIndicator.hide();
 					}.bind(this),
-					error: function (oError) {
+					error: function(oError) {
 						sap.ui.core.BusyIndicator.hide();
 						var oErrorResponse = JSON.parse(oError.responseText);
 						var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
@@ -1074,7 +1074,7 @@ sap.ui.define([
 
 			//Episode Tab
 
-			onSelectEpisode: function () {
+			onSelectEpisode: function() {
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
 				vendorContractDetailInfo.episodeMode = 0;
@@ -1106,10 +1106,10 @@ sap.ui.define([
 					this._oSelectEpisodeDialog.open();
 				}
 			},
-			onCancelSelectEpisode: function () {
+			onCancelSelectEpisode: function() {
 				this._oSelectEpisodeDialog.close();
 			},
-			onSelectEpisodeMode: function (oEvent) {
+			onSelectEpisodeMode: function(oEvent) {
 				var oselIndex = oEvent.getSource().getSelectedIndex();
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
@@ -1121,7 +1121,7 @@ sap.ui.define([
 				}
 				vendorContractModel.refresh(true);
 			},
-			onvaluHelpTaxcode: function () {
+			onvaluHelpTaxcode: function() {
 				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
 				this.oValueHelpSelectionParams = {
 					"bindPathName": "vendorContractModel>/taxCodeList",
@@ -1137,7 +1137,7 @@ sap.ui.define([
 				};
 				this.openSelectionDialog();
 			},
-			validateBeforePush: function () {
+			validateBeforePush: function() {
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
 				var oselIndex = vendorContractDetailInfo.episodeMode;
@@ -1171,7 +1171,7 @@ sap.ui.define([
 
 				return true;
 			},
-			onLoadEpiDataTab: function () {
+			onLoadEpiDataTab: function() {
 				var validFlag = this.validateBeforePush();
 				if (validFlag) {
 					var vendorContractModel = this.getView().getModel("vendorContractModel");
@@ -1182,7 +1182,7 @@ sap.ui.define([
 						selectedEpisodeList = vendorContractDetailInfo.episodeDataList;
 					} else {
 						selectedEpisodeList = [];
-						vendorContractDetailInfo.episodeDataList.map(function (epVCObj) {
+						vendorContractDetailInfo.episodeDataList.map(function(epVCObj) {
 							if (epVCObj.Epiid >= vendorContractDetailInfo.epiFromId && epVCObj.Epiid <= vendorContractDetailInfo.epiToId) {
 								selectedEpisodeList.push(epVCObj);
 							}
@@ -1192,9 +1192,9 @@ sap.ui.define([
 
 					var episodeDealMemoInfo = vendorContractDetailInfo.DmCostSet.results;
 					var vcEpiTabData = [];
-					selectedEpisodeList.map(function (epObj) {
+					selectedEpisodeList.map(function(epObj) {
 						var episodeDealMemoDetails = []
-						episodeDealMemoInfo.map(function (epCostObj) {
+						episodeDealMemoInfo.map(function(epCostObj) {
 							if (epCostObj.Epiid === epObj.Epiid) {
 								if (epCostObj.Scostcd === "") {
 									epCostObj.Scostcd = epCostObj.Costcd;
@@ -1204,9 +1204,9 @@ sap.ui.define([
 						});
 						var selectedCostCodeContexts = this.byId(sap.ui.core.Fragment.createId("vcSelEpiDialog", "list_costcodeVC")).getSelectedContexts();
 
-						selectedCostCodeContexts.map(function (costCodeContext) {
+						selectedCostCodeContexts.map(function(costCodeContext) {
 							var oCostCodeObj = costCodeContext.getObject();
-							var epiSodeCostodeData = episodeDealMemoDetails.filter(function (epCostObj) {
+							var epiSodeCostodeData = episodeDealMemoDetails.filter(function(epCostObj) {
 								return epCostObj.Scostcd === oCostCodeObj.Costcode;
 							});
 							if (epiSodeCostodeData.length && parseInt(epiSodeCostodeData[0].Totcostamt) !== 0) {
@@ -1274,7 +1274,7 @@ sap.ui.define([
 				}
 			},
 
-			displayEpisodeTabData: function (vcEpiTabData) {
+			displayEpisodeTabData: function(vcEpiTabData) {
 				sap.ui.core.BusyIndicator.show(0);
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
@@ -1289,17 +1289,17 @@ sap.ui.define([
 				var oModel = this.getView().getModel();
 				oModel.setUseBatch(false);
 				oModel.create("/DmCoSet", oPayLoad, {
-					success: function (oData) {
+					success: function(oData) {
 						if (vendorContractDetailInfo.contractMode === "Cr" && vendorContractDetailInfo.epiVCTabData === undefined ||
 							vendorContractDetailInfo.epiVCTabData.length === 0) {
 							vendorContractDetailInfo.epiVCTabData = [];
-							oData.DmCeSet.results.map(function (obj) {
+							oData.DmCeSet.results.map(function(obj) {
 								obj.flag = "Cr";
 							});
 							vendorContractDetailInfo.epiVCTabData = vendorContractDetailInfo.epiVCTabData.concat(oData.DmCeSet.results);
 						} else {
 
-							oData.DmCeSet.results.map(function (obj) {
+							oData.DmCeSet.results.map(function(obj) {
 								var flagNewEntry = true;
 								obj.flag = "Cr";
 								for (var oInd = 0; oInd < vendorContractDetailInfo.epiVCTabData.length; oInd++) {
@@ -1323,7 +1323,7 @@ sap.ui.define([
 						vendorContractModel.refresh(true);
 						sap.ui.core.BusyIndicator.hide();
 					}.bind(this),
-					error: function (oError) {
+					error: function(oError) {
 						sap.ui.core.BusyIndicator.hide();
 						var oBody = JSON.parse(oError.responseText);
 						var oMsg = oBody.error.innererror.errordetails[0].message;
@@ -1332,7 +1332,7 @@ sap.ui.define([
 				});
 			},
 
-			onSeletEpiTblVC: function () {
+			onSeletEpiTblVC: function() {
 
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
@@ -1344,14 +1344,14 @@ sap.ui.define([
 				}
 				vendorContractModel.refresh(true);
 			},
-			onDeletevcEpi: function () {
+			onDeletevcEpi: function() {
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
 				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
 				MessageBox.confirm(oSourceBundle.getText("msgdeleteConfirmContractEpi" + vendorContractDetailInfo.Cnttp), {
 					actions: [oSourceBundle.getText("lblYes"), oSourceBundle.getText("lblNo")],
 					emphasizedAction: "Yes",
-					onClose: function (sAction) {
+					onClose: function(sAction) {
 						if (sAction === oSourceBundle.getText("lblYes")) {
 
 							this.deletevcEpiData();
@@ -1361,7 +1361,7 @@ sap.ui.define([
 					}.bind(this)
 				});
 			},
-			deletevcEpiData: function () {
+			deletevcEpiData: function() {
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
 				var oTable = this.byId(sap.ui.core.Fragment.createId("vcEpiTab", "oTbl_vcepiData"));
@@ -1372,7 +1372,7 @@ sap.ui.define([
 				oModel.setDeferredGroups(oModel.getDeferredGroups().concat(["epiVCDeleteChanges"]));
 				var mParameters = {
 					groupId: "epiVCDeleteChanges",
-					success: function (data, resp) {
+					success: function(data, resp) {
 						if (data.__batchResponses && data.__batchResponses[0].__changeResponses && data.__batchResponses[0].__changeResponses.length) {
 							oTable.removeSelections();
 							MessageToast.show(oSourceBundle.getText("msgSuccEpiDeleteSave" + vendorContractDetailInfo.Cnttp));
@@ -1385,14 +1385,14 @@ sap.ui.define([
 						}
 
 					}.bind(this),
-					error: function (oError) {
+					error: function(oError) {
 						var oErrorResponse = JSON.parse(oError.responseText);
 						var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
 						MessageBox.error(oMsg);
 					}
 				};
 
-				oContexts.map(function (oContext) {
+				oContexts.map(function(oContext) {
 					var oEpiObj = oContext.getObject()
 					var oPath = "/DmCeSet(Tentid='IBS',Dmno='" + vendorContractDetailInfo.Dmno + "',Dmver='" + vendorContractDetailInfo.Dmver +
 						"',Conttp='01',Contno='" + vendorContractDetailInfo.Contno + "',Contver='" + vendorContractDetailInfo.Contver + "',Epiid='" +
@@ -1406,7 +1406,7 @@ sap.ui.define([
 				oModel.submitChanges(mParameters);
 			},
 
-			createVCPayload: function () {
+			createVCPayload: function() {
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
 				var oPayload = {
@@ -1434,7 +1434,7 @@ sap.ui.define([
 				return oPayload;
 
 			},
-			createVCEpiData: function () {
+			createVCEpiData: function() {
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
 				var epiVCTabData = vendorContractDetailInfo.epiVCTabData;
@@ -1444,7 +1444,7 @@ sap.ui.define([
 				oModel.setDeferredGroups(oModel.getDeferredGroups().concat(["epiVCChanges"]));
 				var mParameters = {
 					groupId: "epiVCChanges",
-					success: function (data, resp) {
+					success: function(data, resp) {
 						var oData = data.__batchResponses[0].__changeResponses;
 						if (oData.length) {
 							//DmCoSet response 
@@ -1467,7 +1467,7 @@ sap.ui.define([
 						this.loadEpisodes();
 
 					}.bind(this),
-					error: function (oError) {
+					error: function(oError) {
 						var oErrorResponse = JSON.parse(oError.responseText);
 						var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
 						MessageBox.error(oMsg);
@@ -1480,7 +1480,7 @@ sap.ui.define([
 						groupId: "epiVCChanges"
 					});
 
-					epiVCTabData.map(function (oEpiVCObj) {
+					epiVCTabData.map(function(oEpiVCObj) {
 						var epiVCObj = $.extend(true, {}, oEpiVCObj);
 						if (epiVCObj.flag === "Cr") {
 							alreadySavedflag = false;
@@ -1500,7 +1500,7 @@ sap.ui.define([
 				}
 
 			},
-			updateVCEpiData: function () {
+			updateVCEpiData: function() {
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
 				var epiVCTabData = vendorContractDetailInfo.epiVCTabData;
@@ -1510,7 +1510,7 @@ sap.ui.define([
 				oModel.setDeferredGroups(oModel.getDeferredGroups().concat(["epiVCUpdateChanges"]));
 				var mParameters = {
 					groupId: "epiVCUpdateChanges",
-					success: function (data, resp) {
+					success: function(data, resp) {
 
 						var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
 						MessageToast.show(oSourceBundle.getText("msgepiVCSave" + vendorContractDetailInfo.Cnttp));
@@ -1518,13 +1518,13 @@ sap.ui.define([
 						this.loadEpisodes();
 
 					}.bind(this),
-					error: function (oError) {
+					error: function(oError) {
 						var oErrorResponse = JSON.parse(oError.responseText);
 						var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
 						MessageBox.error(oMsg);
 					}
 				};
-				epiVCTabData.map(function (oEpiVCObj) {
+				epiVCTabData.map(function(oEpiVCObj) {
 					var epiVCObj = $.extend(true, {}, oEpiVCObj);
 					if (epiVCObj.flag === "Cr") {
 						alreadySavedflag = false;
@@ -1542,7 +1542,7 @@ sap.ui.define([
 				}
 			},
 
-			createEpiTabVC: function () {
+			createEpiTabVC: function() {
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
 
@@ -1555,7 +1555,7 @@ sap.ui.define([
 
 			//Payment Tab
 
-			onEnterPayment: function () {
+			onEnterPayment: function() {
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
 				vendorContractDetailInfo.epiPaymentFromId = "";
@@ -1570,12 +1570,12 @@ sap.ui.define([
 				vendorContractDetailInfo.vcPaymentDataErrorMsg = "";
 				var DmCmSetData = vendorContractDetailInfo.DmCmSet.results;
 
-				var DmCmSetEpIds = DmCmSetData.map(function (dmcmobj) {
+				var DmCmSetEpIds = DmCmSetData.map(function(dmcmobj) {
 					return dmcmobj.Epiid;
 				});
 				var epIds = [];
 				var distEpisodes = [];
-				vendorContractDetailInfo.epiVCTabData.map(function (obj) {
+				vendorContractDetailInfo.epiVCTabData.map(function(obj) {
 					if (epIds.indexOf(obj.Epiid) === -1) {
 
 						epIds.push(obj.Epiid);
@@ -1607,7 +1607,7 @@ sap.ui.define([
 					this._oSelectPaymentDialog.open();
 				}
 			},
-			onSelectAmntType: function (oEvent) {
+			onSelectAmntType: function(oEvent) {
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
 				if (oEvent.getSource().getSelectedIndex() === 0) {
@@ -1617,7 +1617,7 @@ sap.ui.define([
 				}
 				vendorContractModel.refresh(true);
 			},
-			onSelectEpisodeModePayment: function () {
+			onSelectEpisodeModePayment: function() {
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
 				vendorContractDetailInfo.mileStonesForEpi = [];
@@ -1627,13 +1627,13 @@ sap.ui.define([
 				}
 				vendorContractModel.refresh(true);
 			},
-			onMileStoneSelectionToDetail: function () {
+			onMileStoneSelectionToDetail: function() {
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
 				vendorContractDetailInfo.mileStonesForEpi = [];
 				var oMLList = this.byId(sap.ui.core.Fragment.createId("vcPaymentDialog", "list_mlList"));
 				var selectedMLCntxts = oMLList.getSelectedContexts();
-				selectedMLCntxts.map(function (oCntext) {
+				selectedMLCntxts.map(function(oCntext) {
 
 					var oMLObj = oCntext.getObject();
 					vendorContractDetailInfo.mileStonesForEpi.push({
@@ -1653,10 +1653,10 @@ sap.ui.define([
 				//oMLList.removeSelections();
 				vendorContractModel.refresh(true);
 			},
-			onCancelPayment: function () {
+			onCancelPayment: function() {
 				this._oSelectPaymentDialog.close();
 			},
-			onValueHelpPayterm: function (oEvent) {
+			onValueHelpPayterm: function(oEvent) {
 				var oPath = oEvent.getSource().getBindingContext("vendorContractModel").sPath;
 
 				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
@@ -1673,7 +1673,7 @@ sap.ui.define([
 				};
 				this.openSelectionDialog();
 			},
-			preparePaymentpayload: function () {
+			preparePaymentpayload: function() {
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
 				var selectedEpisodeList = [];
@@ -1684,7 +1684,7 @@ sap.ui.define([
 				} else {
 					selectedEpisodeList = [];
 					vendorContractDetailInfo
-						.epPaymentList.map(function (epVCObj) {
+						.epPaymentList.map(function(epVCObj) {
 							if (epVCObj.Epiid >= vendorContractDetailInfo.epiPaymentFromId && epVCObj.Epiid <= vendorContractDetailInfo.epiPaymentToId) {
 								selectedEpisodeList.push(epVCObj);
 							}
@@ -1692,7 +1692,7 @@ sap.ui.define([
 						});
 				}
 
-				selectedEpisodeList.map(function (selEpObj) {
+				selectedEpisodeList.map(function(selEpObj) {
 					paymentPayloadArr.push({
 						Contno: vendorContractDetailInfo.Contno,
 						Conttp: "01",
@@ -1714,7 +1714,7 @@ sap.ui.define([
 					});
 				}.bind(this));
 				if (vendorContractDetailInfo.vcPaymentData.length > 0) {
-					vendorContractDetailInfo.vcPaymentData.map(function (selEpObj) {
+					vendorContractDetailInfo.vcPaymentData.map(function(selEpObj) {
 						paymentPayloadArr.push({
 							Amtper: selEpObj.Amtper,
 							Tentid: selEpObj.Tentid,
@@ -1747,13 +1747,13 @@ sap.ui.define([
 				return paymentPayloadArr;
 			},
 
-			prepareMileStonePayload: function () {
+			prepareMileStonePayload: function() {
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
 				var milestones = vendorContractDetailInfo.mileStonesForEpi;
 				var mileStonePayload = [];
 				var oAmtType = this.byId(sap.ui.core.Fragment.createId("vcPaymentDialog", "rbAmntType")).getSelectedIndex();
-				milestones.map(function (mlObj) {
+				milestones.map(function(mlObj) {
 
 					mileStonePayload.push({
 						Amtper: oAmtType === 0 ? mlObj.Dueamt : "0.00",
@@ -1765,7 +1765,7 @@ sap.ui.define([
 						Dmver: vendorContractDetailInfo.Dmver,
 						Dueamt: oAmtType === 1 ? mlObj.Dueamt : "0.00",
 						Empfk: mlObj.vendorKey,
-						Mestdt: mlObj.estDate != null ? Formatter.formatDateValForBackend(mlObj.estDate) : null ,
+						Mestdt: mlObj.estDate != null ? Formatter.formatDateValForBackend(mlObj.estDate) : null,
 						Msid: mlObj.Mstcd,
 						Msidnm: mlObj.Mstcdnm,
 						Tentid: "IBS",
@@ -1786,7 +1786,7 @@ sap.ui.define([
 			// 	vendorContractDetailInfo.refresh(true);
 			// },
 
-			validateMilestoneAchievementDate: function () {
+			validateMilestoneAchievementDate: function() {
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
 				var allowedEpisodes = [];
@@ -1794,13 +1794,13 @@ sap.ui.define([
 				response.allowedEpisodes = [];
 				if (vendorContractDetailInfo.epiPaymentFromId == "" && vendorContractDetailInfo.epiPaymentToId == "") { //All Episodes
 					var episodeList = [];
-					vendorContractDetailInfo.DmCmSet.results.map(function (obj) {
+					vendorContractDetailInfo.DmCmSet.results.map(function(obj) {
 						episodeList.push(obj.Epiid)
 					});
 					if (episodeList.length > 0) {
 						for (let i = 0; i <= episodeList.length - 1; i++) {
 							if (vendorContractDetailInfo.DmCmSet.results.findIndex(v => v.Epiid == episodeList[i] && v.Mscompdt && vendorContractDetailInfo.mileStonesForEpi
-								.findIndex(obj => obj.Mstcd != v.Msid) == -1) == -1) {
+									.findIndex(obj => obj.Mstcd != v.Msid) == -1) == -1) {
 								response.allowedEpisodes.push(episodeList[i]);
 							} else {
 								response.warningMessage = true;
@@ -1811,7 +1811,7 @@ sap.ui.define([
 				} else if (vendorContractDetailInfo.epiPaymentFromId != "" && vendorContractDetailInfo.epiPaymentToId != "") { // Range of Episodes
 					for (let i = vendorContractDetailInfo.epiPaymentFromId; i <= vendorContractDetailInfo.epiPaymentToId; i++) {
 						if (vendorContractDetailInfo.DmCmSet.results.findIndex(v => v.Mscompdt && v.Epiid == i && vendorContractDetailInfo.mileStonesForEpi
-							.findIndex(obj => obj.Mstcd != v.Msid) == -1) == -1) {
+								.findIndex(obj => obj.Mstcd != v.Msid) == -1) == -1) {
 							response.allowedEpisodes.push(i);
 						} else {
 							response.warningMessage = true;
@@ -1824,7 +1824,7 @@ sap.ui.define([
 
 			},
 
-			validateMileStoneData: function () {
+			validateMileStoneData: function() {
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
 				var milestones = vendorContractDetailInfo.mileStonesForEpi;
@@ -1883,11 +1883,11 @@ sap.ui.define([
 				return statusFlag;
 			},
 
-			processPaymentData: function (vendorContractDetailInfo) {
+			processPaymentData: function(vendorContractDetailInfo) {
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var oPayLoad = {};
 				var epiTabData = $.extend(true, [], vendorContractDetailInfo.epiVCTabData);
-				epiTabData.map(function (epitabObj) {
+				epiTabData.map(function(epitabObj) {
 					delete epitabObj.flag;
 					delete epitabObj.episodeSaveFlag;
 					delete epitabObj.Diff;
@@ -1906,17 +1906,17 @@ sap.ui.define([
 				var oModel = this.getView().getModel();
 				oModel.setUseBatch(false);
 				oModel.create("/DmCoSet", oPayLoad, {
-					success: function (oData) {
+					success: function(oData) {
 
 						if (vendorContractDetailInfo.vcPaymentData === undefined || vendorContractDetailInfo.vcPaymentData.length === 0) {
 							vendorContractDetailInfo.vcPaymentData = [];
-							oData.DmCmSet.results.map(function (obj) {
+							oData.DmCmSet.results.map(function(obj) {
 								obj.flag = "Cr";
 							});
 							vendorContractDetailInfo.vcPaymentData = vendorContractDetailInfo.vcPaymentData.concat(oData.DmCmSet.results);
 						} else {
 
-							oData.DmCmSet.results.map(function (obj) {
+							oData.DmCmSet.results.map(function(obj) {
 								var flagNewEntry = true;
 								obj.flag = "Cr";
 								for (var oInd = 0; oInd < vendorContractDetailInfo.vcPaymentData.length; oInd++) {
@@ -1942,14 +1942,14 @@ sap.ui.define([
 						vendorContractModel.refresh(true);
 						this._oSelectPaymentDialog.close();
 					}.bind(this),
-					error: function (oError) {
+					error: function(oError) {
 						var oBody = JSON.parse(oError.responseText);
 						var oMsg = oBody.error.innererror.errordetails[0].message;
 						MessageBox.error(oMsg);
 					}
 				});
 			},
-			onPushPayment: function () {
+			onPushPayment: function() {
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
 				var validateBeforePush = this.validateMileStoneData();
@@ -1963,7 +1963,7 @@ sap.ui.define([
 					MessageBox.warning("Milestone has been achieved for some episodes. Do you want to make changes to other episodes?", {
 						actions: [MessageBox.Action.OK, MessageBox.Action.CANCEL],
 						emphasizedAction: MessageBox.Action.OK,
-						onClose: function (sAction) {
+						onClose: function(sAction) {
 							switch (sAction) {
 								case MessageBox.Action.OK:
 									if (validateBeforePush) {
@@ -1986,7 +1986,7 @@ sap.ui.define([
 				// 	processPaymentData(vendorContractDetailInfo);
 				// }
 			},
-			savePaymentTabVC: function () {
+			savePaymentTabVC: function() {
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
 				var epiPaymentabData = vendorContractDetailInfo.vcPaymentData;
@@ -1997,21 +1997,21 @@ sap.ui.define([
 				oModel.setDeferredGroups(oModel.getDeferredGroups().concat(["epiPaymentVCChanges"]));
 				var mParameters = {
 					groupId: "epiPaymentVCChanges",
-					success: function (data, resp) {
+					success: function(data, resp) {
 
 						var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
 						MessageToast.show(oSourceBundle.getText("msgepiVCPaymentSave" + vendorContractDetailInfo.Cnttp));
 						this.reloadVendorContractTabs();
 
 					}.bind(this),
-					error: function (oError) {
+					error: function(oError) {
 						var oErrorResponse = JSON.parse(oError.responseText);
 						var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
 						MessageBox.error(oMsg);
 					}
 				};
 
-				epiPaymentabData.map(function (oEpiPaymentObj) {
+				epiPaymentabData.map(function(oEpiPaymentObj) {
 					var epiPaymentObj = $.extend(true, {}, oEpiPaymentObj);
 					if (epiPaymentObj.flag === "Cr") {
 						alreadySavedflag = false;
@@ -2055,7 +2055,7 @@ sap.ui.define([
 			},
 
 			//Delivery Tab
-			onSelectEpisodeModeDelivery: function (oEvent) {
+			onSelectEpisodeModeDelivery: function(oEvent) {
 				var oselIndex = oEvent.getSource().getSelectedIndex();
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
@@ -2067,7 +2067,7 @@ sap.ui.define([
 				}
 				vendorContractModel.refresh(true);
 			},
-			onEnterDelivery: function () {
+			onEnterDelivery: function() {
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
 				vendorContractModel.setProperty("/episodeRangeVisibleDelivery", false);
@@ -2078,12 +2078,12 @@ sap.ui.define([
 				vendorContractDetailInfo.vcDeliveryDataErrorMsg = "";
 
 				var DmVdSetData = vendorContractDetailInfo.DmVdSet.results;
-				var DmVdSetEpIds = DmVdSetData.map(function (dmvdobj) {
+				var DmVdSetEpIds = DmVdSetData.map(function(dmvdobj) {
 					return dmvdobj.Epiid;
 				});
 				var epIds = [];
 				var distEpisodes = [];
-				vendorContractDetailInfo.epiVCTabData.map(function (obj) {
+				vendorContractDetailInfo.epiVCTabData.map(function(obj) {
 					if (epIds.indexOf(obj.Epiid) === -1) {
 						epIds.push(obj.Epiid);
 						distEpisodes.push(obj);
@@ -2106,10 +2106,10 @@ sap.ui.define([
 					this._oSelectEpDeliveryDialog.open();
 				}
 			},
-			onCancelEpisodeSelection: function () {
+			onCancelEpisodeSelection: function() {
 				this._oSelectEpDeliveryDialog.close();
 			},
-			validateEpisodeSelection: function () {
+			validateEpisodeSelection: function() {
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
 				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
@@ -2123,7 +2123,7 @@ sap.ui.define([
 				}
 				return true;
 			},
-			onSearchDeliverables: function (oEvent) {
+			onSearchDeliverables: function(oEvent) {
 				var sValue = oEvent.getParameter("value");
 				var oFilter =
 					new Filter([
@@ -2135,7 +2135,7 @@ sap.ui.define([
 				var oBinding = oEvent.getSource().getBinding("items");
 				oBinding.filter([oFilter]);
 			},
-			onNextDeliveryVC: function () {
+			onNextDeliveryVC: function() {
 				var validateDelEp = this.validateEpisodeSelection();
 				if (validateDelEp) {
 					this._oSelectEpDeliveryDialog.close();
@@ -2156,7 +2156,7 @@ sap.ui.define([
 					}.bind(this));
 				}
 			},
-			onSeletDelTblVC: function () {
+			onSeletDelTblVC: function() {
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
 				var oContexts = this.getView().byId("oTbl_vcdelData").getSelectedContexts();
@@ -2167,7 +2167,7 @@ sap.ui.define([
 				}
 				vendorContractModel.refresh(true);
 			},
-			onDeleteDeliveryData: function () {
+			onDeleteDeliveryData: function() {
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
 				var oTable = this.getView().byId("oTbl_vcdelData");
@@ -2178,20 +2178,27 @@ sap.ui.define([
 				oModel.setDeferredGroups(oModel.getDeferredGroups().concat(["epiDelVCDeleteChanges"]));
 				var mParameters = {
 					groupId: "epiDelVCDeleteChanges",
-					success: function (data, resp) {
-						oTable.removeSelections();
-						MessageToast.show(oSourceBundle.getText("msgSuccEpiDeleteSave" + vendorContractDetailInfo.Cnttp));
-						this.reloadVendorContractTabs();
-
+					success: function(data, resp) {
+						if (data.__batchResponses.length > 0) {
+							if (data.__batchResponses[0].response.statusCode == "400") {
+								var oErrorResponse = JSON.parse(oError.responseText);
+								var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
+								MessageBox.error(oMsg);
+							} else {
+								oTable.removeSelections();
+								MessageToast.show(oSourceBundle.getText("msgSuccEpiDeleteSave" + vendorContractDetailInfo.Cnttp));
+								this.reloadVendorContractTabs();
+							}
+						}
 					}.bind(this),
-					error: function (oError) {
+					error: function(oError) {
 						var oErrorResponse = JSON.parse(oError.responseText);
 						var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
 						MessageBox.error(oMsg);
 					}
 				};
 
-				selectedContexts.map(function (oCntxt) {
+				selectedContexts.map(function(oCntxt) {
 					var oDelObj = oCntxt.getObject();
 					var oPath = "/DmVdSet(Tentid='IBS',Dmno='" + vendorContractDetailInfo.Dmno + "',Dmver='" + vendorContractDetailInfo.Dmver +
 						"',Conttp='01',Contno='" + vendorContractDetailInfo.Contno + "',Contver='" + vendorContractDetailInfo.Contver +
@@ -2203,7 +2210,7 @@ sap.ui.define([
 
 				oModel.submitChanges(mParameters);
 			},
-			prepareDeliverypayload: function (oSelDelvCodeObj) {
+			prepareDeliverypayload: function(oSelDelvCodeObj) {
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
 				var showLinkPaymentMsg = false;
@@ -2215,7 +2222,7 @@ sap.ui.define([
 					selectedEpisodeList = vendorContractDetailInfo.epDeliveryList;
 				} else {
 					selectedEpisodeList = [];
-					vendorContractDetailInfo.epDeliveryList.map(function (epVCObj) {
+					vendorContractDetailInfo.epDeliveryList.map(function(epVCObj) {
 						if (epVCObj.Epiid >= vendorContractDetailInfo.epiDeliveryFromId && epVCObj.Epiid <= vendorContractDetailInfo.epiDeliveryToId) {
 							selectedEpisodeList.push(epVCObj);
 						}
@@ -2223,9 +2230,9 @@ sap.ui.define([
 					});
 				}
 
-				selectedEpisodeList.map(function (selEpObj) {
+				selectedEpisodeList.map(function(selEpObj) {
 
-					var oContentReceiptPayObjs = vendorContractDetailInfo.vcPaymentData.filter(function (epPayObj) {
+					var oContentReceiptPayObjs = vendorContractDetailInfo.vcPaymentData.filter(function(epPayObj) {
 						return epPayObj.Epiid === selEpObj.Epiid && epPayObj.Msid === "02"
 					});
 					if (oContentReceiptPayObjs.length) {
@@ -2236,7 +2243,7 @@ sap.ui.define([
 					}
 
 				});
-				selectedEpisodeList.map(function (selEpObj) {
+				selectedEpisodeList.map(function(selEpObj) {
 					deliveryPayloadArr.push({
 
 						Contno: vendorContractDetailInfo.Contno,
@@ -2267,7 +2274,7 @@ sap.ui.define([
 					MessageBox.confirm(oSourceBundle.getText("msgisPaymentLinked"), {
 						actions: [oSourceBundle.getText("lblYes"), oSourceBundle.getText("lblNo")],
 						emphasizedAction: "Yes",
-						onClose: function (sAction) {
+						onClose: function(sAction) {
 							if (sAction === oSourceBundle.getText("lblYes")) {
 
 								var oResp = this.updateDeliveryData(deliveryPayloadArr, $.extend(true, [], vendorContractDetailInfo.vcDeliveryData));
@@ -2283,7 +2290,7 @@ sap.ui.define([
 								}
 
 							} else if (sAction === oSourceBundle.getText("lblNo")) {
-								deliveryPayloadArr.map(function (delPayloadObj) {
+								deliveryPayloadArr.map(function(delPayloadObj) {
 									delPayloadObj.Delvpay = false;
 								});
 								var oResp = this.updateDeliveryData(deliveryPayloadArr, $.extend(true, [], vendorContractDetailInfo.vcDeliveryData));
@@ -2318,14 +2325,14 @@ sap.ui.define([
 
 			},
 
-			updateDeliveryData: function (deliveryPayloadArr, delvTableData) {
+			updateDeliveryData: function(deliveryPayloadArr, delvTableData) {
 
 				var oResponse = {
 					flag: true,
 					oResTable: delvTableData
 				};
 				var alreadyPushedEpisodes = [];
-				deliveryPayloadArr.map(function (obj) {
+				deliveryPayloadArr.map(function(obj) {
 					var flagNewEntry = true;
 					obj.flag = "Cr";
 
@@ -2356,7 +2363,7 @@ sap.ui.define([
 				return oResponse;
 			},
 
-			onConfirmDeliverySelection: function (oEvent) {
+			onConfirmDeliverySelection: function(oEvent) {
 				for (var sel = 0; sel <= oEvent.getParameters()['selectedItems'].length; sel++) { //added by Dhiraj On 19/05/2022 for selecting multiple deliverables
 					var oSelDelvCodeObj = oEvent.getParameters()['selectedItems'][sel].getBindingContext("vendorContractModel").getObject();
 					this.prepareDeliverypayload(oSelDelvCodeObj);
@@ -2365,11 +2372,11 @@ sap.ui.define([
 				// var oSelDelvCodeObj = oEvent.getParameters()['selectedItem'].getBindingContext("vendorContractModel").getObject();   			
 				// 	this.prepareDeliverypayload(oSelDelvCodeObj);  //ComMented by Dhiraj On 19/05/2022 for selecting multiple deliverables
 			},
-			onSelectionDialogDeliveryClose: function () {
+			onSelectionDialogDeliveryClose: function() {
 				this._oSelectDeliveryCodeDialog.close();
 			},
 
-			saveDeliveryTabVC: function () {
+			saveDeliveryTabVC: function() {
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
 				var epiDeliverytabData = vendorContractDetailInfo.vcDeliveryData;
@@ -2379,21 +2386,21 @@ sap.ui.define([
 				oModel.setDeferredGroups(oModel.getDeferredGroups().concat(["epiDeliveryVCChanges"]));
 				var mParameters = {
 					groupId: "epiDeliveryVCChanges",
-					success: function (data, resp) {
+					success: function(data, resp) {
 
 						var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
 						MessageToast.show(oSourceBundle.getText("msgepiVCDeliverySave"));
 						this.reloadVendorContractTabs();
 
 					}.bind(this),
-					error: function (oError) {
+					error: function(oError) {
 						var oErrorResponse = JSON.parse(oError.responseText);
 						var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
 						MessageBox.error(oMsg);
 					}
 				};
 
-				epiDeliverytabData.map(function (oEpiDeliveryObj) {
+				epiDeliverytabData.map(function(oEpiDeliveryObj) {
 					var epiDeliveryObj = $.extend(true, {}, oEpiDeliveryObj);
 					if (epiDeliveryObj.flag === "Cr") {
 						alreadySavedflag = false;
@@ -2414,8 +2421,8 @@ sap.ui.define([
 			},
 
 			//IPR Rights Tab
-			onEnterIPR: function () {
-				
+			onEnterIPR: function() {
+
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
 				vendorContractModel.setProperty("/episodeRangeVisibleIPR", false);
@@ -2455,12 +2462,12 @@ sap.ui.define([
 					Mstcdnm: "Trailers and Promotions"
 				}]);
 				var DmVrSetData = vendorContractDetailInfo.DmVrSet.results;
-				var DmVrSetEpIds = DmVrSetData.map(function (dmvrobj) {
+				var DmVrSetEpIds = DmVrSetData.map(function(dmvrobj) {
 					return dmvrobj.Epiid;
 				});
 				var epIds = [];
 				var distEpisodes = [];
-				vendorContractDetailInfo.epiVCTabData.map(function (obj) {
+				vendorContractDetailInfo.epiVCTabData.map(function(obj) {
 					if (epIds.indexOf(obj.Epiid) === -1) {
 						epIds.push(obj.Epiid);
 						distEpisodes.push(obj);
@@ -2484,40 +2491,41 @@ sap.ui.define([
 					this._oSelectIPRDialog.open(this.checkNature());
 				}
 			},
-			getIPRMapping: function () {
+			getIPRMapping: function() {
 				var that = this
 				var validateIPR = this.validateIPRDetails();
 				if (validateIPR) {
-				sap.ui.core.BusyIndicator.show(0);
-				var vendorContractModel = this.getView().getModel("vendorContractModel");
-				var vendorContractDetailInfo = vendorContractModel.getData();
-				var Dmno = vendorContractDetailInfo.Dmno;
-				var Dmver = vendorContractDetailInfo.Dmver;
-				var Contno = vendorContractDetailInfo.Contno;
-				var Contver = vendorContractDetailInfo.Contver;
-				var Stdate = Formatter.formatDateValForBackend(vendorContractDetailInfo.rightStDate);
-				var Enddate =  Formatter.formatDateValForBackend(vendorContractDetailInfo.rightendDate);
-				var srvUrl = "/sap/opu/odata/IBSCMS/DEALMEMO_SRV";
-				var oModelSav = new sap.ui.model.odata.ODataModel(srvUrl, true, "", "");
-				var pValue = "/AmrMapSet?$filter=Tentid eq 'IBS' and Dmno eq '" + Dmno + "' and Dmver eq '" + Dmver + "' and Contno eq '" + Contno + "' and Contver eq '" + Contver + "' and Rhtfrdt eq datetime'" + Stdate + "' and Rhttodt eq datetime'" + Enddate + "'";
-				oModelSav.read(pValue, null, null, true, function (oData) {
-					sap.ui.core.BusyIndicator.hide();
-					vendorContractModel.setProperty("/AmortMapList", oData.results);
-					var mapList = oData.results;
-					that.mapList = oData.results;
-					vendorContractModel.refresh(true);
-					that.onPushIPR();
-				}, function (value) {
-					sap.ui.core.BusyIndicator.hide();
-					console.log(value);
+					sap.ui.core.BusyIndicator.show(0);
+					var vendorContractModel = this.getView().getModel("vendorContractModel");
+					var vendorContractDetailInfo = vendorContractModel.getData();
+					var Dmno = vendorContractDetailInfo.Dmno;
+					var Dmver = vendorContractDetailInfo.Dmver;
+					var Contno = vendorContractDetailInfo.Contno;
+					var Contver = vendorContractDetailInfo.Contver;
+					var Stdate = Formatter.formatDateValForBackend(vendorContractDetailInfo.rightStDate);
+					var Enddate = Formatter.formatDateValForBackend(vendorContractDetailInfo.rightendDate);
+					var srvUrl = "/sap/opu/odata/IBSCMS/DEALMEMO_SRV";
+					var oModelSav = new sap.ui.model.odata.ODataModel(srvUrl, true, "", "");
+					var pValue = "/AmrMapSet?$filter=Tentid eq 'IBS' and Dmno eq '" + Dmno + "' and Dmver eq '" + Dmver + "' and Contno eq '" + Contno +
+						"' and Contver eq '" + Contver + "' and Rhtfrdt eq datetime'" + Stdate + "' and Rhttodt eq datetime'" + Enddate + "'";
+					oModelSav.read(pValue, null, null, true, function(oData) {
+						sap.ui.core.BusyIndicator.hide();
+						vendorContractModel.setProperty("/AmortMapList", oData.results);
+						var mapList = oData.results;
+						that.mapList = oData.results;
+						vendorContractModel.refresh(true);
+						that.onPushIPR();
+					}, function(value) {
+						sap.ui.core.BusyIndicator.hide();
+						console.log(value);
 
-				});
-			}
+					});
+				}
 			},
-			onCancelIPRSelection: function () {
+			onCancelIPRSelection: function() {
 				this._oSelectIPRDialog.close();
 			},
-			checkNature: function () {
+			checkNature: function() {
 				var vendorContractModel = this.getView().getModel("vendorContractModel"); //edited by Dhiraj on 20/05/2022 if nature is commissioned
 				var vendorContractDetailInfo = vendorContractModel.getData(); //it should get select as all IPR	
 				if (vendorContractDetailInfo.Cntnt === "03") {
@@ -2532,7 +2540,7 @@ sap.ui.define([
 					vendorContractModel.setProperty("/rightendDate", new Date("9999-12-31"));
 				}
 			},
-			onIPRRightChange: function (oEvent) {
+			onIPRRightChange: function(oEvent) {
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
 
@@ -2552,7 +2560,7 @@ sap.ui.define([
 				}
 				//vendorContractModel.refresh(true);
 			},
-			onSelectEpisodeModeIPR: function (oEvent) {
+			onSelectEpisodeModeIPR: function(oEvent) {
 				var oselIndex = oEvent.getSource().getSelectedIndex();
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
@@ -2565,23 +2573,23 @@ sap.ui.define([
 				vendorContractModel.refresh(true);
 			},
 
-			validateIPRDetails: function () {
+			validateIPRDetails: function() {
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
 				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
 
 				if (vendorContractDetailInfo.episodeModeIPR === 1 && (vendorContractDetailInfo.epiIPRFromId === "" || vendorContractDetailInfo.epiIPRFromId ===
-					undefined || vendorContractDetailInfo.epiIPRToId === "" || vendorContractDetailInfo.epiIPRToId === undefined)) {
+						undefined || vendorContractDetailInfo.epiIPRToId === "" || vendorContractDetailInfo.epiIPRToId === undefined)) {
 					vendorContractDetailInfo.vcIPRDataMsgVisible = true;
 					vendorContractDetailInfo.vcIPRDataErrorMsg = oSourceBundle.getText("msgSelectEpisode" + vendorContractDetailInfo.Cnttp);
 					vendorContractModel.refresh(true);
 					return false;
-				// } else if (vendorContractDetailInfo.IPRRight === "" || vendorContractDetailInfo.PlatformKey === "" || vendorContractDetailInfo.totRuns ===
-				// 	"" || vendorContractDetailInfo.amortKey === "" || vendorContractDetailInfo.nonAmortKey === "") {
-				// 	vendorContractDetailInfo.vcIPRDataErrorMsg = oSourceBundle.getText("msgrequiredFieds");
-				// 	vendorContractDetailInfo.vcIPRDataMsgVisible = true;
-				// 	vendorContractModel.refresh(true);
-				// 	return false;
+					// } else if (vendorContractDetailInfo.IPRRight === "" || vendorContractDetailInfo.PlatformKey === "" || vendorContractDetailInfo.totRuns ===
+					// 	"" || vendorContractDetailInfo.amortKey === "" || vendorContractDetailInfo.nonAmortKey === "") {
+					// 	vendorContractDetailInfo.vcIPRDataErrorMsg = oSourceBundle.getText("msgrequiredFieds");
+					// 	vendorContractDetailInfo.vcIPRDataMsgVisible = true;
+					// 	vendorContractModel.refresh(true);
+					// 	return false;
 				} else if (vendorContractDetailInfo.rightStDate === null || vendorContractDetailInfo.rightendDate === null) {
 					// MessageBox.error(oSourceBundle.getText("msgrequiredFieds"));
 					vendorContractDetailInfo.vcIPRDataErrorMsg = oSourceBundle.getText("msgrequiredFieds");
@@ -2592,14 +2600,14 @@ sap.ui.define([
 					return true;
 				}
 			},
-			updateIPRData: function (IPRPayloadArr, IPRTableData) {
+			updateIPRData: function(IPRPayloadArr, IPRTableData) {
 
 				var oResponse = {
 					flag: true,
 					oResTable: IPRTableData
 				};
 				var alreadyPushedEpisodes = [];
-				IPRPayloadArr.map(function (obj) {
+				IPRPayloadArr.map(function(obj) {
 					var flagNewEntry = true;
 					obj.flag = "Cr";
 
@@ -2631,10 +2639,10 @@ sap.ui.define([
 			},
 
 			// onPushIPR: function (mlist) {
-				
+
 			// 	var validateIPR = this.validateIPRDetails();
 			// 	if (validateIPR) {
-					
+
 			// 		var vendorContractModel = this.getView().getModel("vendorContractModel");
 			// 		var vendorContractDetailInfo = vendorContractModel.getData();
 			// 		var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
@@ -2655,7 +2663,7 @@ sap.ui.define([
 			// 		}
 
 			// 		selectedEpisodeList.map(function (selEpObj) {
-						
+
 			// 			IPRPayloadArr.push({
 			// 				Tentid: "IBS",
 			// 				Dmno: vendorContractDetailInfo.Dmno,
@@ -2708,10 +2716,9 @@ sap.ui.define([
 			// 		this._oSelectIPRDialog.close();
 			// 	}
 
-
 			// },
-			onPushIPR: function () {
-			
+			onPushIPR: function() {
+
 				var validateIPR = this.validateIPRDetails();
 				if (validateIPR) {
 					var vendorContractModel = this.getView().getModel("vendorContractModel");
@@ -2725,7 +2732,7 @@ sap.ui.define([
 						selectedEpisodeList = vendorContractDetailInfo.epIPRList;
 					} else {
 						selectedEpisodeList = [];
-						vendorContractDetailInfo.epIPRList.map(function (epVCObj) {
+						vendorContractDetailInfo.epIPRList.map(function(epVCObj) {
 							if (epVCObj.Epiid >= vendorContractDetailInfo.epiIPRFromId && epVCObj.Epiid <= vendorContractDetailInfo.epiIPRToId) {
 								selectedEpisodeList.push(epVCObj);
 							}
@@ -2733,8 +2740,8 @@ sap.ui.define([
 						});
 					}
 
-					selectedEpisodeList.map(function (selEpObj) {
-						
+					selectedEpisodeList.map(function(selEpObj) {
+
 						IPRPayloadArr.push({
 							Tentid: "IBS",
 							Dmno: vendorContractDetailInfo.Dmno,
@@ -2749,8 +2756,10 @@ sap.ui.define([
 							Norun: vendorContractDetailInfo.totRuns,
 							// Leadamrtpt: vendorContractDetailInfo.amortKey,
 							// Nleadamrtpt: vendorContractDetailInfo.nonAmortKey,
-							Leadamrtpt: vendorContractDetailInfo.amortKey == "" ? mapList.find(t => t.Epiid == selEpObj.Epiid).Leadamrtpt : vendorContractDetailInfo.amortKey,
-							Nleadamrtpt: vendorContractDetailInfo.nonAmortKey == "" ? mapList.find(t => t.Epiid == selEpObj.Epiid).Nleadamrtpt : vendorContractDetailInfo.nonAmortKey,
+							Leadamrtpt: vendorContractDetailInfo.amortKey == "" ? mapList.find(t => t.Epiid == selEpObj.Epiid).Leadamrtpt : vendorContractDetailInfo
+								.amortKey,
+							Nleadamrtpt: vendorContractDetailInfo.nonAmortKey == "" ? mapList.find(t => t.Epiid == selEpObj.Epiid).Nleadamrtpt : vendorContractDetailInfo
+								.nonAmortKey,
 							Territory: vendorContractDetailInfo.territoryKey,
 							Dubstitle: vendorContractDetailInfo.selAdditionalRights.indexOf("DB") >= 0 ? true : false,
 							Stitile: vendorContractDetailInfo.selAdditionalRights.indexOf("SR") >= 0 ? true : false,
@@ -2768,8 +2777,10 @@ sap.ui.define([
 							Tertnm: sap.ui.getCore().byId(vendorContractDetailInfo.TeritoryItem).getText(),
 							// Leadnm: sap.ui.getCore().byId(vendorContractDetailInfo.AmortItem).getText(),
 							// Nonleadnm: sap.ui.getCore().byId(vendorContractDetailInfo.NonAmortItem).getText(),
-							Leadnm: vendorContractDetailInfo.amortKey != "" ? vendorContractDetailInfo.amortPatternList.find(g => g.Mstcd == vendorContractDetailInfo.amortKey ).Mstcdnm : mapList.find(g => g.Epiid == selEpObj.Epiid ).Leadnm,
-							Nonleadnm: vendorContractDetailInfo.nonAmortKey != "" ? vendorContractDetailInfo.amortPatternList.find(g => g.Mstcd == vendorContractDetailInfo.nonAmortKey ).Mstcdnm : mapList.find(g => g.Epiid == selEpObj.Epiid ).Nonleadnm,
+							Leadnm: vendorContractDetailInfo.amortKey != "" ? vendorContractDetailInfo.amortPatternList.find(g => g.Mstcd ==
+								vendorContractDetailInfo.amortKey).Mstcdnm : mapList.find(g => g.Epiid == selEpObj.Epiid).Leadnm,
+							Nonleadnm: vendorContractDetailInfo.nonAmortKey != "" ? vendorContractDetailInfo.amortPatternList.find(g => g.Mstcd ==
+								vendorContractDetailInfo.nonAmortKey).Mstcdnm : mapList.find(g => g.Epiid == selEpObj.Epiid).Nonleadnm,
 							IPREditFlag: vendorContractDetailInfo.IPRRight === "01" ? false : true,
 							flag: "Cr"
 
@@ -2791,10 +2802,9 @@ sap.ui.define([
 					this._oSelectIPRDialog.close();
 				}
 
-
 			},
 
-			onValueHelpAmort: function (oEvent) {
+			onValueHelpAmort: function(oEvent) {
 				var oPath = oEvent.getSource().getBindingContext("vendorContractModel").sPath;
 				oEvent.getSource().getBindingContext("vendorContractModel").getObject().flag = "Ch";
 				this.getView().getModel("vendorContractModel").refresh(true);
@@ -2812,7 +2822,7 @@ sap.ui.define([
 				};
 				this.openSelectionDialog();
 			},
-			onValueHelpNonAmort: function (oEvent) {
+			onValueHelpNonAmort: function(oEvent) {
 				var oPath = oEvent.getSource().getBindingContext("vendorContractModel").sPath;
 				oEvent.getSource().getBindingContext("vendorContractModel").getObject().flag = "Ch";
 				this.getView().getModel("vendorContractModel").refresh(true);
@@ -2830,7 +2840,7 @@ sap.ui.define([
 				};
 				this.openSelectionDialog();
 			},
-			onValueHelpTerritory: function (oEvent) {
+			onValueHelpTerritory: function(oEvent) {
 				var oPath = oEvent.getSource().getBindingContext("vendorContractModel").sPath;
 				oEvent.getSource().getBindingContext("vendorContractModel").getObject().flag = "Ch";
 				this.getView().getModel("vendorContractModel").refresh(true);
@@ -2849,7 +2859,7 @@ sap.ui.define([
 				this.openSelectionDialog();
 			},
 
-			saveIPRTabVC: function () {
+			saveIPRTabVC: function() {
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
 				var alreadySavedflag = true;
@@ -2860,21 +2870,21 @@ sap.ui.define([
 				oModel.setDeferredGroups(oModel.getDeferredGroups().concat(["epiIPRVCChanges"]));
 				var mParameters = {
 					groupId: "epiIPRVCChanges",
-					success: function (data, resp) {
+					success: function(data, resp) {
 
 						var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
 						MessageToast.show(oSourceBundle.getText("msgepiVCIPRSave"));
 						this.reloadVendorContractTabs();
 
 					}.bind(this),
-					error: function (oError) {
+					error: function(oError) {
 						var oErrorResponse = JSON.parse(oError.responseText);
 						var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
 						MessageBox.error(oMsg);
 					}
 				};
 
-				epiIPRtabData.map(function (oEpiIPRObj) {
+				epiIPRtabData.map(function(oEpiIPRObj) {
 					var epiIPRObj = $.extend(true, {}, oEpiIPRObj);
 					delete epiIPRObj.IPREditFlag;
 					epiIPRObj.Rhtfrdt = Formatter.formatDateValForBackend(epiIPRObj.Rhtfrdt);
@@ -2892,7 +2902,7 @@ sap.ui.define([
 
 						var oPath = "/DmVrSet(Tentid='IBS',Dmno='" + vendorContractDetailInfo.Dmno + "',Dmver='" + vendorContractDetailInfo.Dmver +
 							"',Contno='" + vendorContractDetailInfo.Contno + "',Contver='" + vendorContractDetailInfo.Contver + "',Platform='" + epiIPRObj
-								.Platform + "',Epiid='" + epiIPRObj.Epiid + "')";
+							.Platform + "',Epiid='" + epiIPRObj.Epiid + "')";
 
 						oModel.update(oPath, epiIPRObj, {
 							groupId: "epiIPRVCChanges"
@@ -2909,7 +2919,7 @@ sap.ui.define([
 
 			},
 
-			onSaveVendorContract: function () {
+			onSaveVendorContract: function() {
 				sap.ui.core.BusyIndicator.show(0);
 				var oTab = this.getView().byId("idVCTabBar").getSelectedKey();
 				if (oTab === "vcEpiData") {
@@ -2923,7 +2933,7 @@ sap.ui.define([
 				}
 				sap.ui.core.BusyIndicator.hide();
 			},
-			onSearchSelection: function (oEvent) {
+			onSearchSelection: function(oEvent) {
 				var sValue = oEvent.getParameter("value");
 				var oFilter =
 					new Filter([
@@ -2934,7 +2944,7 @@ sap.ui.define([
 				var oBinding = oEvent.getParameter("itemsBinding");
 				oBinding.filter([oFilter]);
 			},
-			onExport: function () {
+			onExport: function() {
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
 				var labelOnType = {
@@ -2990,7 +3000,7 @@ sap.ui.define([
 
 				var aData = [];
 				var epIds = [];
-				vendorContractDetailInfo.epiVCTabData.map(function (obj) {
+				vendorContractDetailInfo.epiVCTabData.map(function(obj) {
 					if (epIds.indexOf(obj.Epiid) === -1) {
 						aData.push({
 
@@ -3019,13 +3029,13 @@ sap.ui.define([
 				});
 
 				oSheet.build()
-					.then(function () {
+					.then(function() {
 						debugger;
 					})
 					.finally(oSheet.destroy);
 
 			},
-			onExportIPRDetails: function () {
+			onExportIPRDetails: function() {
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
 				var IPRRightsList = $.extend(true, [], vendorContractDetailInfo.IPRRightsList);
@@ -3123,12 +3133,12 @@ sap.ui.define([
 				});
 
 				oSheet1.build()
-					.then(function () {
+					.then(function() {
 						debugger;
 					})
 					.finally(oSheet1.destroy);
 			},
-			onUploadIPR: function () {
+			onUploadIPR: function() {
 				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
 				if (!this._oUploadIPRSheetDialog) {
 					Fragment.load({
@@ -3147,7 +3157,7 @@ sap.ui.define([
 					this._oUploadIPRSheetDialog.open();
 				}
 			},
-			getIPRPayload: function () {
+			getIPRPayload: function() {
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
 				return {
@@ -3186,27 +3196,27 @@ sap.ui.define([
 				}
 
 			},
-			uploadIPRData: function (uploadedData, oControllerRef) {
+			uploadIPRData: function(uploadedData, oControllerRef) {
 				var vendorContractModel = oControllerRef.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
 				var IPRRightsList = $.extend(true, [], vendorContractDetailInfo.IPRRightsList);
-				var IPRListIds = IPRRightsList.map(function (obj) {
+				var IPRListIds = IPRRightsList.map(function(obj) {
 					return obj.Mstcd;
 				});
 				var platformList = $.extend(true, [], vendorContractDetailInfo.platformList);
-				var platformListIds = platformList.map(function (obj) {
+				var platformListIds = platformList.map(function(obj) {
 					return obj.Mstcd;
 				});
 				var territoryList = $.extend(true, [], vendorContractDetailInfo.teritoryList);
-				var territoryListIds = territoryList.map(function (obj) {
+				var territoryListIds = territoryList.map(function(obj) {
 					return obj.Mstcd;
 				});
 				var amortPatternList = $.extend(true, [], vendorContractDetailInfo.amortPatternList);
-				var amortPatternIds = amortPatternList.map(function (obj) {
+				var amortPatternIds = amortPatternList.map(function(obj) {
 					return obj.Mstcd;
 				});
 				var nonmortPatternList = $.extend(true, [], vendorContractDetailInfo.nonAmmortPatternList);
-				var nonmortPatternListIds = nonmortPatternList.map(function (obj) {
+				var nonmortPatternListIds = nonmortPatternList.map(function(obj) {
 					return obj.Mstcd;
 				});
 				var oDateFormatter = sap.ui.core.format.DateFormat.getDateInstance({
@@ -3218,13 +3228,13 @@ sap.ui.define([
 				var oMsg = "";
 				var epIds = [];
 				var episodeList = [];
-				vendorContractDetailInfo.epiVCTabData.map(function (obj) {
+				vendorContractDetailInfo.epiVCTabData.map(function(obj) {
 					if (epIds.indexOf(obj.Epiid) === -1) {
 						epIds.push(obj.Epiid);
 						episodeList.push(obj);
 					}
 				});
-				var epiIds = episodeList.map(function (obj) {
+				var epiIds = episodeList.map(function(obj) {
 					return parseInt(obj.Epiid);
 				});
 				var IPRPayloadArr = [];
@@ -3565,22 +3575,22 @@ sap.ui.define([
 				}
 
 			},
-			handleUploadCostSheetCancel: function () {
+			handleUploadCostSheetCancel: function() {
 				this._oUploadIPRSheetDialog.close();
 			},
-			handleUploadPress: function () {
+			handleUploadPress: function() {
 				var oFileUploader = this.byId(sap.ui.core.Fragment.createId("uploadIPRSheetDialog", "fileUploader")); // get the sap.ui.unified.FileUploader
 				var file = oFileUploader.getFocusDomRef().files[0]; // get the file from the FileUploader control
 				var oControllerRef = this;
 
 				if (file && window.FileReader) {
 					var reader = new FileReader();
-					reader.onload = function (e) {
+					reader.onload = function(e) {
 						var data = e.target.result;
 						var excelsheet = XLSX.read(data, {
 							type: "binary"
 						});
-						excelsheet.SheetNames.forEach(function (sheetName) {
+						excelsheet.SheetNames.forEach(function(sheetName) {
 							var oExcelRow = XLSX.utils.sheet_to_row_object_array(excelsheet.Sheets[sheetName]); // this is the required data in Object format
 							var sJSONData = JSON.stringify(oExcelRow); // this is the required data in String format
 							oControllerRef.uploadIPRData(oExcelRow, oControllerRef);
@@ -3589,7 +3599,7 @@ sap.ui.define([
 					reader.readAsBinaryString(file);
 				}
 			},
-			onTabSelectionVC: function () {
+			onTabSelectionVC: function() {
 				var oTab = this.getView().byId("idVCTabBar").getSelectedKey();
 				var oSubTab = this.getView().byId("idVCPayTabBar2").getSelectedKey();
 				if (oTab === "releaseStatus") {
@@ -3600,7 +3610,7 @@ sap.ui.define([
 				}
 
 			},
-			onConfirmChangeVC: function () {
+			onConfirmChangeVC: function() {
 				var oModel = this.getView().getModel();
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
@@ -3609,7 +3619,7 @@ sap.ui.define([
 				MessageBox.confirm(oSourceBundle.getText("msgcreateNewVersion"), {
 					actions: [oSourceBundle.getText("lblYes"), oSourceBundle.getText("lblNo")],
 					emphasizedAction: "Yes",
-					onClose: function (sAction) {
+					onClose: function(sAction) {
 						if (sAction === oSourceBundle.getText("lblYes")) {
 
 							this.onChangeVC();
@@ -3621,7 +3631,7 @@ sap.ui.define([
 
 			},
 
-			onChangeVC: function () {
+			onChangeVC: function() {
 				sap.ui.core.BusyIndicator.show(0);
 				var oModel = this.getView().getModel();
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
@@ -3638,7 +3648,7 @@ sap.ui.define([
 				oModel.callFunction("/GenerateContVersion", {
 					method: "GET",
 					urlParameters: paramObj,
-					success: function (oData, response) {
+					success: function(oData, response) {
 						sap.ui.core.BusyIndicator.hide();
 						// vendorContractDetailInfo.setProperty("/costCodes", oData.results);
 						vendorContractModel.refresh(true);
@@ -3646,7 +3656,7 @@ sap.ui.define([
 						this.RouteVendorContractAfterChange();
 
 					}.bind(this),
-					error: function (oError) {
+					error: function(oError) {
 						sap.ui.core.BusyIndicator.hide();
 						var oErrorResponse = JSON.parse(oError.responseText);
 						var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
@@ -3655,7 +3665,7 @@ sap.ui.define([
 					}
 				})
 			},
-			RouteVendorContractAfterChange: function () {
+			RouteVendorContractAfterChange: function() {
 				var oRouter = this.getOwnerComponent().getRouter();
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
@@ -3675,7 +3685,7 @@ sap.ui.define([
 				});
 			},
 			//Release Status
-			getDateInMS: function (date, time) {
+			getDateInMS: function(date, time) {
 				date.setHours(0, 0, 0, 0);
 				var Actdt = date.getTime();
 				var Time = time;
@@ -3684,7 +3694,7 @@ sap.ui.define([
 				return DtTime;
 
 			},
-			loadMileTabDetails: function () {
+			loadMileTabDetails: function() {
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
 				var srvUrl = "/sap/opu/odata/IBSCMS/DEALMEMO_SRV";
@@ -3694,13 +3704,13 @@ sap.ui.define([
 					"' and Contno eq '" + vendorContractDetailInfo.Contno + "' and Conttp eq '01' and Contver eq'" + vendorContractDetailInfo.Contver +
 					"'";
 				var oModel = this.getView().getModel();
-				oModelSav.read(oPath, null, null, true, function (oData) {
+				oModelSav.read(oPath, null, null, true, function(oData) {
 					var oModel = new sap.ui.model.json.JSONModel(oData);
 					oModel.setSizeLimit("999999");
 
 					vendorContractModel.setProperty("/mileWiseList", oData.results);
 					vendorContractModel.refresh(true);
-				}, function (value) {
+				}, function(value) {
 					sap.ui.core.BusyIndicator.hide();
 					console.log(value);
 					//alert("fail");
@@ -3711,7 +3721,7 @@ sap.ui.define([
 				// })		
 
 			},
-			loadReleaseStatusDetails: function () {
+			loadReleaseStatusDetails: function() {
 				var oModel = this.getView().getModel();
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
@@ -3769,9 +3779,9 @@ sap.ui.define([
 				};
 				oModel.read("/DmlgSet", {
 					filters: aFilters,
-					success: function (oData) {
+					success: function(oData) {
 
-						oData.results.map(function (obj) {
+						oData.results.map(function(obj) {
 							var relStObj = $.extend(true, {}, releaseStatusObj);
 							relStObj.Author = obj.Usernm;
 							relStObj.Status = obj.Usractiondesc;
@@ -3805,7 +3815,7 @@ sap.ui.define([
 						vendorContractModel.refresh(true);
 
 					}.bind(this),
-					error: function (oError) {
+					error: function(oError) {
 						var oErrorResponse = JSON.parse(oError.responseText);
 						var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
 						MessageBox.error(oMsg);
