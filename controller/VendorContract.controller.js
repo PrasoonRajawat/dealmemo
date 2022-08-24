@@ -2179,7 +2179,7 @@ sap.ui.define([
 				oModel.setDeferredGroups(oModel.getDeferredGroups().concat(["epiDelVCDeleteChanges"]));
 				var mParameters = {
 					groupId: "epiDelVCDeleteChanges",
-					success: function (data, resp) {
+					success: function (data, resp) { 
 						oTable.removeSelections();
 						MessageToast.show(oSourceBundle.getText("msgSuccEpiDeleteSave" + vendorContractDetailInfo.Cnttp));
 						this.reloadVendorContractTabs();
