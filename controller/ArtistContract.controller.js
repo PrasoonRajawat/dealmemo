@@ -2134,7 +2134,7 @@ sap.ui.define([
 							relStObj.Status = obj.Usractiondesc;
 							relStObj.icon = iconUserActionMap[obj.Usraction].icon;
 							relStObj.state = iconUserActionMap[obj.Usraction].state;
-							if (relStObj.Actdt != null) { //Added By Dhiraj Sarang for release strategy error
+							if (obj.Actdt != null) { //Added By Dhiraj Sarang for release strategy error
 								var date = obj.Actdt;
 								date = new Date(date);
 								if (date == "Invalid Date") {
