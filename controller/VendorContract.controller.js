@@ -2179,11 +2179,18 @@ sap.ui.define([
 				oModel.setDeferredGroups(oModel.getDeferredGroups().concat(["epiDelVCDeleteChanges"]));
 				var mParameters = {
 					groupId: "epiDelVCDeleteChanges",
-					success: function (data, resp) { 
-						oTable.removeSelections();
-						MessageToast.show(oSourceBundle.getText("msgSuccEpiDeleteSave" + vendorContractDetailInfo.Cnttp));
-						this.reloadVendorContractTabs();
-
+					success: function(data, resp) {
+						if (data.__batchResponses.length > 0) {
+							if (data.__batchResponses[0].response.statusCode == "400") {
+								var oErrorResponse = JSON.parse(oError.responseText);
+								var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
+								MessageBox.error(oMsg);
+							} else {
+								oTable.removeSelections();
+								MessageToast.show(oSourceBundle.getText("msgSuccEpiDeleteSave" + vendorContractDetailInfo.Cnttp));
+								this.reloadVendorContractTabs();
+							}
+						}
 					}.bind(this),
 					error: function (oError) {
 						var oErrorResponse = JSON.parse(oError.responseText);
