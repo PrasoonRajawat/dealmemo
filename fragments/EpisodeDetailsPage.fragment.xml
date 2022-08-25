@@ -9,8 +9,8 @@
 								        <content>
 												<VBox >
 													<HBox>
-														<Label text="{i18n>Lbl_CostPerMin}" design="Bold"/>
-														<Text text="" class="sapUiTinyMarginBegin"/>
+														<Label text="{i18n>Lbl_MpmID}" design="Bold"/>
+														<Text text="{dealMemoEpisodeModel>/Mpmid" class="sapUiTinyMarginBegin"/>
 													</HBox>
 													<HBox>
 														<Label text="{i18n>Lbl_WBSElement}" design="Bold"/>
