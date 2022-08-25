@@ -976,8 +976,8 @@ sap.ui.define([
 						oData.Cntnm = vendorContractDetailInfo.Cntnm;
 						oData.DmCeSet.results.map(function (obj) {
 							obj.episodeSaveFlag = true;
-							// obj.Diff = ((parseFloat(obj.Coepiamt) + parseFloat(obj.Wmwst)) - (obj.Baseamt)).toFixed(2);
-							obj.Diff = (parseFloat(obj.Coepiamt) - (obj.Baseamt)).toFixed(2);
+							obj.Diff = ((parseFloat(obj.Coepiamt) + parseFloat(obj.Wmwst)) - (obj.Baseamt)).toFixed(2);
+							// obj.Diff = (parseFloat(obj.Coepiamt) - (obj.Coepiamt)).toFixed(2);
 						});
 						oData.epiVCTabData = $.extend(true, [], oData.DmCeSet.results);
 						oData.vcEpiDataColor = "Critical";
