@@ -3526,7 +3526,7 @@ sap.ui.define([
 				}
 				for (var i = 0; i < episodeData.length; i++) { //Added By Dhiraj For converting matid or mvid to epiid of 5 digits
 					const a = i + 1;
-					episodeData[i].Epiid = "0000" + a;
+					episodeData[i].Epiid = a;    //"0000" + a
 				}
 				return statusFlag;
 			},
