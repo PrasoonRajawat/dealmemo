@@ -1691,38 +1691,8 @@ sap.ui.define([
 
 						});
 				}
-				if (vendorContractDetailInfo.vcPaymentData.length > 0) {
-				vendorContractDetailInfo.vcPaymentData.map(function (selEpObj) {
-					paymentPayloadArr.push({
-						Amtper: selEpObj.Amtper,
-						Tentid: selEpObj.Tentid,
-						Dmno: selEpObj.Dmno,
-						Dmver: selEpObj.Dmver,
-						Contno: selEpObj.Contno,
-						Conttp: selEpObj.Conttp,
-						Contver: selEpObj.Contver,
-						Costperamt: selEpObj.Costperamt,
-						Dueamt: selEpObj.Dueamt,
-						Epiid: selEpObj.Epiid, //Episode ID
-						Epinm: selEpObj.Epinm,
-						Msid: selEpObj.Msid,
-						Empfk: selEpObj.Empfk,
-						Zterm: selEpObj.Zterm,
-						Ztermt: selEpObj.Ztermt,
-						Mestdt: selEpObj.Mestdt,
-						Msidnm: selEpObj.Msidnm,
-						Mscompdt: selEpObj.Mscompdt !== null ? Formatter.formatDateValForBackend(new Date(selEpObj.Mscompdt)) : null,
-						Prodocno: selEpObj.Prodocno,
-						Provdocyr: selEpObj.Provdocyr,
-						Invdocno: selEpObj.Invdocno,
-						Invdocyr: selEpObj.Invdocyr,
-						Sfid: selEpObj.Sfid,
-						L2sfid: selEpObj.L2sfid,
-						Updkz: "U",
-						Seqnr: selEpObj.Seqnr
-					});
-				}.bind(this));
-			}	else {
+
+				
 				selectedEpisodeList.map(function (selEpObj) {
 					paymentPayloadArr.push({
 						Contno: vendorContractDetailInfo.Contno,
@@ -1744,7 +1714,39 @@ sap.ui.define([
 						Zterm: ""
 					});
 				}.bind(this));
+				if (vendorContractDetailInfo.vcPaymentData.length > 0) {
+					vendorContractDetailInfo.vcPaymentData.map(function (selEpObj) {
+						paymentPayloadArr.push({
+							Amtper: selEpObj.Amtper,
+							Tentid: selEpObj.Tentid,
+							Dmno: selEpObj.Dmno,
+							Dmver: selEpObj.Dmver,
+							Contno: selEpObj.Contno,
+							Conttp: selEpObj.Conttp,
+							Contver: selEpObj.Contver,
+							Costperamt: selEpObj.Costperamt,
+							Dueamt: selEpObj.Dueamt,
+							Epiid: selEpObj.Epiid, //Episode ID
+							Epinm: selEpObj.Epinm,
+							Msid: selEpObj.Msid,
+							Empfk: selEpObj.Empfk,
+							Zterm: selEpObj.Zterm,
+							Ztermt: selEpObj.Ztermt,
+							Mestdt: selEpObj.Mestdt,
+							Msidnm: selEpObj.Msidnm,
+							Mscompdt: selEpObj.Mscompdt !== null ? Formatter.formatDateValForBackend(new Date(selEpObj.Mscompdt)) : null,
+							Prodocno: selEpObj.Prodocno,
+							Provdocyr: selEpObj.Provdocyr,
+							Invdocno: selEpObj.Invdocno,
+							Invdocyr: selEpObj.Invdocyr,
+							Sfid: selEpObj.Sfid,
+							L2sfid: selEpObj.L2sfid,
+							Updkz: "U",
+							Seqnr: selEpObj.Seqnr
+						});
+					}.bind(this));
 				}
+				
 				return paymentPayloadArr;
 			},
 
@@ -2179,18 +2181,11 @@ sap.ui.define([
 				oModel.setDeferredGroups(oModel.getDeferredGroups().concat(["epiDelVCDeleteChanges"]));
 				var mParameters = {
 					groupId: "epiDelVCDeleteChanges",
-					success: function(data, resp) {
-						if (data.__batchResponses.length > 0) {
-							if (data.__batchResponses[0].response.statusCode == "400") {
-								var oErrorResponse = JSON.parse(data.__batchResponses[0].response.body);
-								var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
-								MessageBox.error(oMsg);
-							} else {
-								oTable.removeSelections();
-								MessageToast.show(oSourceBundle.getText("msgSuccEpiDeleteSave" + vendorContractDetailInfo.Cnttp));
-								this.reloadVendorContractTabs();
-							}
-						}
+					success: function (data, resp) {
+						oTable.removeSelections();
+						MessageToast.show(oSourceBundle.getText("msgSuccEpiDeleteSave" + vendorContractDetailInfo.Cnttp));
+						this.reloadVendorContractTabs();
+
 					}.bind(this),
 					error: function (oError) {
 						var oErrorResponse = JSON.parse(oError.responseText);
@@ -3742,7 +3737,7 @@ sap.ui.define([
 							relStObj.Status = obj.Usractiondesc;
 							relStObj.icon = iconUserActionMap[obj.Usraction].icon;
 							relStObj.state = iconUserActionMap[obj.Usraction].state;
-							if (obj.Actdt != null) { //Added By Dhiraj Sarang for release strategy error
+							if (relStObj.Actdt != null) { //Added By Dhiraj Sarang for release strategy error
 								var date = obj.Actdt;
 								date = new Date(date);
 								if (date == "Invalid Date") {
