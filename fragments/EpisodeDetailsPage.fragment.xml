@@ -10,7 +10,7 @@
 												<VBox >
 													<HBox>
 														<Label text="{i18n>Lbl_MpmID}" design="Bold"/>
-														<Text text="{dealMemoEpisodeModel>/Mpmid" class="sapUiTinyMarginBegin"/>
+														<Text text="{dealMemoEpisodeModel>/Mpmid}" class="sapUiTinyMarginBegin"/>
 													</HBox>
 													<HBox>
 														<Label text="{i18n>Lbl_WBSElement}" design="Bold"/>
