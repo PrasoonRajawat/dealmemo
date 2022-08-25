@@ -1613,6 +1613,27 @@ sap.ui.define([
 					});
 				}
 
+				selectedEpisodeList.map(function(selEpObj) {
+					paymentPayloadArr.push({
+						Contno: artistContractDetailInfo.Contno,
+						Conttp: "02",
+						Contver: artistContractDetailInfo.Contver,
+						Dmno: artistContractDetailInfo.Dmno,
+						Dmver: artistContractDetailInfo.Dmver,
+						Dueamt: "00.0",
+						Empfk: "",
+						Epiid: selEpObj.Epiid,
+						Invdocno: "",
+						Invdocyr: "",
+						Mscompdt: null,
+						Msid: "",
+						Prodocno: "",
+						Provdocyr: "",
+						Tentid: "IBS",
+						Updkz: "I",
+						Zterm: ""
+					});
+				}.bind(this));
 				if (artistContractDetailInfo.acPaymentData.length > 0) {
 					artistContractDetailInfo.acPaymentData.map(function(selEpObj) {
 						paymentPayloadArr.push({
@@ -1644,29 +1665,6 @@ sap.ui.define([
 							Seqnr: selEpObj.Seqnr
 						});
 					}.bind(this));
-				} else {
-					
-				selectedEpisodeList.map(function(selEpObj) {
-					paymentPayloadArr.push({
-						Contno: artistContractDetailInfo.Contno,
-						Conttp: "02",
-						Contver: artistContractDetailInfo.Contver,
-						Dmno: artistContractDetailInfo.Dmno,
-						Dmver: artistContractDetailInfo.Dmver,
-						Dueamt: "00.0",
-						Empfk: "",
-						Epiid: selEpObj.Epiid,
-						Invdocno: "",
-						Invdocyr: "",
-						Mscompdt: null,
-						Msid: "",
-						Prodocno: "",
-						Provdocyr: "",
-						Tentid: "IBS",
-						Updkz: "I",
-						Zterm: ""
-					});
-				}.bind(this));
 				}
 				return paymentPayloadArr;
 			},
