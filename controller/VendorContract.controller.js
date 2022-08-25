@@ -2182,7 +2182,7 @@ sap.ui.define([
 					success: function(data, resp) {
 						if (data.__batchResponses.length > 0) {
 							if (data.__batchResponses[0].response.statusCode == "400") {
-								var oErrorResponse = JSON.parse(oError.responseText);
+								var oErrorResponse = JSON.parse(data.__batchResponses[0].response.body);
 								var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
 								MessageBox.error(oMsg);
 							} else {
