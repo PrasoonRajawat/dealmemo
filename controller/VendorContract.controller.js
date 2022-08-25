@@ -2179,11 +2179,18 @@ sap.ui.define([
 				oModel.setDeferredGroups(oModel.getDeferredGroups().concat(["epiDelVCDeleteChanges"]));
 				var mParameters = {
 					groupId: "epiDelVCDeleteChanges",
-					success: function (data, resp) {
-						oTable.removeSelections();
-						MessageToast.show(oSourceBundle.getText("msgSuccEpiDeleteSave" + vendorContractDetailInfo.Cnttp));
-						this.reloadVendorContractTabs();
-
+					success: function(data, resp) {
+						if (data.__batchResponses.length > 0) {
+							if (data.__batchResponses[0].response.statusCode == "400") {
+								var oErrorResponse = JSON.parse(data.__batchResponses[0].response.body);
+								var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
+								MessageBox.error(oMsg);
+							} else {
+								oTable.removeSelections();
+								MessageToast.show(oSourceBundle.getText("msgSuccEpiDeleteSave" + vendorContractDetailInfo.Cnttp));
+								this.reloadVendorContractTabs();
+							}
+						}
 					}.bind(this),
 					error: function (oError) {
 						var oErrorResponse = JSON.parse(oError.responseText);
@@ -3735,7 +3742,7 @@ sap.ui.define([
 							relStObj.Status = obj.Usractiondesc;
 							relStObj.icon = iconUserActionMap[obj.Usraction].icon;
 							relStObj.state = iconUserActionMap[obj.Usraction].state;
-							if (relStObj.Actdt != null) { //Added By Dhiraj Sarang for release strategy error
+							if (obj.Actdt != null) { //Added By Dhiraj Sarang for release strategy error
 								var date = obj.Actdt;
 								date = new Date(date);
 								if (date == "Invalid Date") {
