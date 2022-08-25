@@ -3334,8 +3334,8 @@ sap.ui.define([
                             if (odata.__batchResponses[0].response.statusCode == "400") {
                                 var oErrorResponse = JSON.parse(odata.__batchResponses[0].response.body);
                                 var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
+                                if(oMsg.includes("present in another Deal Memo")){
                                 MessageBox.error(oMsg);
-                               	// this.loadDealMemoList(); 
                             } else {
 						var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
 						MessageToast.show(oSourceBundle.getText("msgSuccEpiDetUpdate" + dealMemoDetailInfo.Cnttp));
@@ -3343,7 +3343,7 @@ sap.ui.define([
 						this.getView().byId("idIconTabBar2").setSelectedKey("epiDet");
 						this.changedCostCodes = [];
 						this.loadDealMemoList();
-                            }}
+                           } }}
 						// var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
 						// MessageToast.show(oSourceBundle.getText("msgSuccEpiDetUpdate" + dealMemoDetailInfo.Cnttp));
 						// this.getView().byId("idIconTabBar").setSelectedKey("cost");
