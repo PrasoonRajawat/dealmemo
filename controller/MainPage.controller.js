@@ -3335,7 +3335,7 @@ sap.ui.define([
                                 var oErrorResponse = JSON.parse(odata.__batchResponses[0].response.body);
                                 var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
                                 MessageBox.error(oMsg);
-                               	this.loadDealMemoList();
+                               	// this.loadDealMemoList(); 
                             } else {
 						var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
 						MessageToast.show(oSourceBundle.getText("msgSuccEpiDetUpdate" + dealMemoDetailInfo.Cnttp));
