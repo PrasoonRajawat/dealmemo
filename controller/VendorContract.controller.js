@@ -2182,7 +2182,7 @@ sap.ui.define([
 					groupId: "epiDelVCDeleteChanges",
 					success: function (data, resp) {
 						if (data.__batchResponses.length > 0) {
-							if (data.__batchResponses[0].response.statusCode != undefined){
+							if (data.__batchResponses[0].response != undefined){
                             if (data.__batchResponses[0].response.statusCode == "400") {
                                 var oErrorResponse = JSON.parse(data.__batchResponses[0].response.body);
                                 var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
