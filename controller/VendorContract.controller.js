@@ -2189,11 +2189,10 @@ sap.ui.define([
                                 if(oMsg.includes("Content post processing is done for episode")){
                                 MessageBox.error(oMsg);
                                	this.reloadVendorContractTabs();
-                            }} else {
+                            }}} else {
                                 oTable.removeSelections();
                                 MessageToast.show(oSourceBundle.getText("msgSuccEpiDeleteSave" + vendorContractDetailInfo.Cnttp));
                                	 this.reloadVendorContractTabs();
-                            }
                         }
 						}
 					}.bind(this),
