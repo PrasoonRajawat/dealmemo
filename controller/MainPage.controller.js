@@ -4136,7 +4136,9 @@ sap.ui.define([
 
 				var selectedIndices = this.selEpisodePaths.map(function(oPath) {
 					var arr = oPath.split("/");
-					return arr[arr.length - 1];
+					// return arr[arr.length - 1];
+					var indicesRet = parseInt(arr[arr.length - 1]);
+					return indicesRet;
 				}).sort().reverse();
 				if (selectedIndices.length) {
 					var oValToCompare = episodeDataLen;
