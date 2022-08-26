@@ -4139,7 +4139,7 @@ sap.ui.define([
 					// return arr[arr.length - 1];
 					var indicesRet = parseInt(arr[arr.length - 1]);
 					return indicesRet;
-				}).sort().reverse();
+				}).sort((a, b) => a - b).reverse();
 				if (selectedIndices.length) {
 					var oValToCompare = episodeDataLen;
 					var returnStatus = true;
