@@ -13,16 +13,16 @@
             </layoutData>
 	    </MessageStrip> -->
 	    
-			<Label text="{i18n>lblProducer}" design="Bold" class="sapUiTinyMarginTop">
-				<layoutData>
-					<l:GridData span="XL2 L2 M6 S12"/>
-				</layoutData>
-			</Label>
-			<Input width="80%" value="{dealMemoDetailModel>/Prdnm}" editable="{path:'dealMemoDetailModel>/Dmst',formatter:'.Formatter.formatEditableStatus'}">
-				<layoutData>
-					<l:GridData span="XL4 L4 M6 S12"/>
-				</layoutData>
-			</Input>
+			<!--<Label text="{i18n>lblProducer}" design="Bold" class="sapUiTinyMarginTop">-->
+			<!--	<layoutData>-->
+			<!--		<l:GridData span="XL2 L2 M6 S12"/>-->
+			<!--	</layoutData>-->
+			<!--</Label>-->
+			<!--<Input width="80%" value="{dealMemoDetailModel>/Prdnm}" editable="{path:'dealMemoDetailModel>/Dmst',formatter:'.Formatter.formatEditableStatus'}">-->
+			<!--	<layoutData>-->
+			<!--		<l:GridData span="XL4 L4 M6 S12"/>-->
+			<!--	</layoutData>-->
+			<!--</Input>-->
 			
 			<Label text="{i18n>lblExProducer}" design="Bold" class="sapUiTinyMarginTop" visible = "false">
 				<layoutData>
@@ -147,17 +147,17 @@
 			<!--	</layoutData>-->
 			<!--</Input>--><!--Commented By Dhiraj On 19/05/2022 As decided to not populate this field-->
 		
-			<Label text="{i18n>lblorilib}" design="Bold" class="sapUiTinyMarginTop">
-				<layoutData>
-					<l:GridData span="XL2 L2 M6 S12"/>
-				</layoutData>
-			</Label>
-			<ComboBox width="80%" items="{dealMemoModel>/OrigLibraryList}" selectedKey="{dealMemoDetailModel>/Orilib}" editable="{path:'dealMemoDetailModel>/Dmst',formatter:'.Formatter.formatEditableStatus'}">
-				<c:Item key="{dealMemoModel>Mstcd}" text="{dealMemoModel>Mstcdnm}"/>
-				<layoutData>
-					<l:GridData span="XL4 L4 M6 S12"/>
-				</layoutData>
-			</ComboBox>
+			<!--<Label text="{i18n>lblorilib}" design="Bold" class="sapUiTinyMarginTop">-->
+			<!--	<layoutData>-->
+			<!--		<l:GridData span="XL2 L2 M6 S12"/>-->
+			<!--	</layoutData>-->
+			<!--</Label>-->
+			<!--<ComboBox width="80%" items="{dealMemoModel>/OrigLibraryList}" selectedKey="{dealMemoDetailModel>/Orilib}" editable="{path:'dealMemoDetailModel>/Dmst',formatter:'.Formatter.formatEditableStatus'}">-->
+			<!--	<c:Item key="{dealMemoModel>Mstcd}" text="{dealMemoModel>Mstcdnm}"/>-->
+			<!--	<layoutData>-->
+			<!--		<l:GridData span="XL4 L4 M6 S12"/>-->
+			<!--	</layoutData>-->
+			<!--</ComboBox>-->
 			<Label text="{i18n>lblCurrency}" design="Bold" class="sapUiTinyMarginTop" required="true">
 				<layoutData>
 					<l:GridData span="XL2 L2 M6 S12"/>
