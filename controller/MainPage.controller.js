@@ -3607,7 +3607,7 @@ sap.ui.define([
 								if (this.changedCostCodes.indexOf(Scostcd) >= 0) {
 									if (budgetTabUpdatedCost.length) {
 										var existingCostHead = budgetTabUpdatedCost.filter(function(budgetUpObj) {
-											return budgetUpObj.Scostcd === budgetObj.Scostcd
+											return budgetUpObj.Scostcd === budgetObj.Scostcd && budgetUpObj.Costcd === budgetObj.Costcd
 										});
 										if (existingCostHead.length) {
 											var budgetCostHeadToUpdate = existingCostHead[0];
