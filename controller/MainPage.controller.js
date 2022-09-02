@@ -3711,7 +3711,7 @@ sap.ui.define([
 			checkForYearChange: function(dealMemoDetailInfo) {
 				var isChanged = false;
 				dealMemoDetailInfo.episodeData.forEach(v => {
-					if (dealMemoDetailInfo.episodeDataOriginal.findIndex(og => og.Epiid === v.Epiid && og.Gjahr !== v.Gjahr) > -1) {
+					if (dealMemoDetailInfo.episodeDataOriginal.findIndex(og => parseInt(og.Epiid) === parseInt(v.Epiid) && og.Gjahr !== v.Gjahr) > -1) {
 						isChanged = true
 					}
 				});
