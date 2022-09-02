@@ -2186,7 +2186,7 @@ sap.ui.define([
                             if (data.__batchResponses[0].response.statusCode == "400") {
                                 var oErrorResponse = JSON.parse(data.__batchResponses[0].response.body);
                                 var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
-                                if(oMsg.includes("Content post processing is done for episode")){
+                                if(oMsg.includes("Content post processing is done for")){
                                 MessageBox.error(oMsg);
                                	this.reloadVendorContractTabs();
                             }}} else {
