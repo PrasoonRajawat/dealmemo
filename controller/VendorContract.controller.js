@@ -1286,6 +1286,7 @@ sap.ui.define([
 				oPayLoad.Dmver = vendorContractDetailInfo.Dmver;
 				oPayLoad.Contno = "";
 				oPayLoad.Conttp = "01";
+				oPayLoad.Lifnr = vendorContractDetailInfo.vendorKey;
 
 				var oModel = this.getView().getModel();
 				oModel.setUseBatch(false);
