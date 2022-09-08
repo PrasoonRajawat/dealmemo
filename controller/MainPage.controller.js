@@ -88,9 +88,8 @@ sap.ui.define([
 					this.loadDefaultDealMemo = false;
 					this.linkMemo = true;
 				}
-
-				this.loadDealMemoList(dmno, dmver);
 				this.loadInitialDataFromMaster();
+				this.loadDealMemoList(dmno, dmver);
 				this.loadCAFList();
 			},
 			getDefaultFilters: function() {
