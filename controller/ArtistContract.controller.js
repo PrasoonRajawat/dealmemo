@@ -550,7 +550,7 @@ sap.ui.define([
 			onValueHelpPrRequestor: function() { // added by dhiraj on 24/05/2022
 				var artistContractModel = this.getView().getModel("artistContractModel");
 				var list = artistContractModel.oData.prRequestorList.filter(function(obj) {
-					return obj.Dept === artistContractModel.oData.createParams.Zstext
+					return obj.Dept === artistContractModel.oData.createParams.Dept
 				}.bind(this))
 				artistContractModel.setProperty("/prRequestorListS", list);
 				artistContractModel.refresh(true);
@@ -594,7 +594,7 @@ sap.ui.define([
 			onValueHelpDeptHead: function() { // added by dhiraj on 24/05/2022
 				var artistContractModel = this.getView().getModel("artistContractModel");
 				var list = artistContractModel.oData.deptHeadList.filter(function(obj) {
-					return obj.Dept === artistContractModel.oData.createParams.Zstext
+					return obj.Dept === artistContractModel.oData.createParams.Dept
 				}.bind(this))
 				artistContractModel.setProperty("/deptHeadListS", list);
 				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
@@ -637,7 +637,7 @@ sap.ui.define([
 			onValueHelpGrCreater: function() { // added by dhiraj on 24/05/2022
 				var artistContractModel = this.getView().getModel("artistContractModel");
 				var list = artistContractModel.oData.grCreaterList.filter(function(obj) {
-					return obj.Dept === artistContractModel.oData.createParams.Zstext
+					return obj.Dept === artistContractModel.oData.createParams.Dept
 				}.bind(this))
 				artistContractModel.setProperty("/grCreaterListS", list);
 
@@ -875,6 +875,9 @@ sap.ui.define([
 				var artistContractModel = this.getView().getModel(oValueModelAlias);
 				artistContractModel.setProperty(oValuePath, selectedItemObj[oProp]);
 				artistContractModel.setProperty(oKeyPath, selectedItemObj[oKey]);
+				if(oEvent.oSource.mProperties.title == 'Select Department'){
+					artistContractModel.setProperty("/createParams/Dept", selectedItemObj["Abtnr"]);
+				}
 				artistContractModel.refresh(true);
 				if (this.oValueHelpSelectionParams.callBackFunction) {
 					this.oValueHelpSelectionParams.callBackFunction(this);
@@ -1138,7 +1141,7 @@ sap.ui.define([
 					"Contver": "",
 					"Artp": artistContractDetailInfo.vendorRoleKey,
 					"Artpnm": artistContractDetailInfo.vendorRoleName,
-					"Dept": artistContractDetailInfo.createParams.Zstext,
+					"Dept": artistContractDetailInfo.createParams.Dept,
 					"Prreq": artistContractDetailInfo.createParams.Prreq,
 					"Depthd": artistContractDetailInfo.createParams.Depthd,
 					"Grsescr": artistContractDetailInfo.createParams.Grsescr

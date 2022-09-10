@@ -640,7 +640,7 @@ sap.ui.define([
 
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var list = vendorContractModel.oData.prRequestorList.filter(function (obj) {
-					return obj.Dept === vendorContractModel.oData.createParams.Zstext
+					return obj.Dept === vendorContractModel.oData.createParams.Dept
 				}.bind(this))
 				vendorContractModel.setProperty("/prRequestorListS", list);
 				vendorContractModel.refresh(true);
@@ -685,7 +685,7 @@ sap.ui.define([
 
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var list = vendorContractModel.oData.deptHeadList.filter(function (obj) {
-					return obj.Dept === vendorContractModel.oData.createParams.Zstext
+					return obj.Dept === vendorContractModel.oData.createParams.Dept
 				}.bind(this))
 				vendorContractModel.setProperty("/deptHeadListS", list);
 				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
@@ -729,7 +729,7 @@ sap.ui.define([
 
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var list = vendorContractModel.oData.grCreaterList.filter(function (obj) {
-					return obj.Dept === vendorContractModel.oData.createParams.Zstext
+					return obj.Dept === vendorContractModel.oData.createParams.Dept
 				}.bind(this))
 				vendorContractModel.setProperty("/grCreaterListS", list);
 
@@ -1429,7 +1429,7 @@ sap.ui.define([
 					"Contver": "",
 					"Artp": vendorContractDetailInfo.vendorRoleKey,
 					"Artpnm": vendorContractDetailInfo.vendorRoleName,
-					"Dept": vendorContractDetailInfo.createParams.Zstext,
+					"Dept": vendorContractDetailInfo.createParams.Dept,
 					"Prreq": vendorContractDetailInfo.createParams.Prreq,
 					"Depthd": vendorContractDetailInfo.createParams.Depthd,
 					"Grsescr": vendorContractDetailInfo.createParams.Grsescr,
