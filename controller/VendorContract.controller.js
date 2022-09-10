@@ -952,6 +952,9 @@ sap.ui.define([
 				var vendorContractModel = this.getView().getModel(oValueModelAlias);
 				vendorContractModel.setProperty(oValuePath, selectedItemObj[oProp]);
 				vendorContractModel.setProperty(oKeyPath, selectedItemObj[oKey]);
+				if(oEvent.oSource.mProperties.title == 'Select Department'){
+					vendorContractModel.setProperty("/createParams/Dept", selectedItemObj["Abtnr"]);
+				}
 				vendorContractModel.refresh(true);
 				if (this.oValueHelpSelectionParams.callBackFunction) {
 					this.oValueHelpSelectionParams.callBackFunction(this);
