@@ -484,7 +484,7 @@ sap.ui.define([
 
 						artistContractModel.setProperty("/departmentList", sortedList);
 						if (artistContractModel.oData.contractMode === "Ch") {
-							artistContractModel.oData.createParams.Zltext = artistContractModel.oData.departmentList.find(a => a.Zstext ===
+							artistContractModel.oData.createParams.Zltext = artistContractModel.oData.departmentList.find(a => a.Abtnr ===
 								artistContractModel.oData.createParams.Zstext).Zltext;
 						}
 						artistContractModel.refresh(true);
