@@ -572,7 +572,7 @@ sap.ui.define([
 
 						vendorContractModel.setProperty("/departmentList", sortedList);
 						if (vendorContractModel.oData.contractMode === "Ch") {
-							vendorContractModel.oData.createParams.Zltext = vendorContractModel.oData.departmentList.find(a => a.Zstext ===
+							vendorContractModel.oData.createParams.Zltext = vendorContractModel.oData.departmentList.find(a => a.Abtnr ===
 								vendorContractModel.oData.createParams.Zstext).Zltext;
 						}
 						vendorContractModel.refresh(true);
