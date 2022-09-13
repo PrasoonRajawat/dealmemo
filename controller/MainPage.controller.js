@@ -4670,7 +4670,7 @@ sap.ui.define([
 								//	type: EdmType.Number
 						};
 
-						if (dealMemoDetailInfo.Cnttp === "05") {
+						if (dealMemoDetailInfo.Cnttp === "05" || dealMemoDetailInfo.Cnttp === "09" ) {
 							epTypeObj = {
 
 								ind: 0,
@@ -4796,7 +4796,7 @@ sap.ui.define([
 				var noChangedepisodeData = $.extend(true, [], dealMemoDetailInfo.episodeData);
 				var episodeData = dealMemoDetailInfo.episodeData;
 				var episodeList, episodeIds;
-				if (dealMemoDetailInfo.Cnttp === "05") {
+				if (dealMemoDetailInfo.Cnttp === "05" || dealMemoDetailInfo.Cnttp === "09") {
 					episodeList = dealMemoModel.getProperty("/matchList");
 					episodeIds = episodeList.map(function(obj) {
 						return obj.Matid
@@ -4832,6 +4832,11 @@ sap.ui.define([
 							oMsg = oSourceBundle.getText("msgMovIdNonBlank" + dealMemoDetailInfo.Cnttp);
 							break;
 						} else if (aKeys.indexOf("Match ID") === -1 && dealMemoDetailInfo.Cnttp === "05") {
+							statusFlag = false;
+							oMsg = oSourceBundle.getText("msgMovIdNonBlank" + dealMemoDetailInfo.Cnttp);
+							break;
+						} 
+						else if (aKeys.indexOf("Match ID") === -1 && dealMemoDetailInfo.Cnttp === "09") {
 							statusFlag = false;
 							oMsg = oSourceBundle.getText("msgMovIdNonBlank" + dealMemoDetailInfo.Cnttp);
 							break;
