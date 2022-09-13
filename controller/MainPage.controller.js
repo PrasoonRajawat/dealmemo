@@ -3017,7 +3017,7 @@ sap.ui.define([
 							this.loadBudgetCostTabAdditional();
 						}
 						detailModelData.UploadBtnVisibility = false;
-						if (detailModelData.Cnttp === "02" || detailModelData.Cnttp === "05") {
+						if (detailModelData.Cnttp === "02" || detailModelData.Cnttp === "05" || detailModelData.Cnttp === "04" || detailModelData.Cnttp === "09") {
 							detailModelData.UploadBtnVisibility = true;
 						}
 						detailModelData.ChangeEpiVisibility = true;
