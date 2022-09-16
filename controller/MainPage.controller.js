@@ -194,7 +194,7 @@ sap.ui.define([
 				var dealMemoModel = this.getView().getModel("dealMemoModel");
 
 				dealMemoModel.setProperty("/contentTypeList", oData.results.filter(function(item) {
-					return item.Mstpcd === "01";
+					return item.Mstpcd === "01" && item.Mstcd !== "05";    
 				}));
 
 				dealMemoModel.setProperty("/contentNatureList", oData.results.filter(function(item) {
