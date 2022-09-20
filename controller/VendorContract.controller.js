@@ -2373,7 +2373,7 @@ sap.ui.define([
 			},
 
 			onConfirmDeliverySelection: function (oEvent) {
-				for (var sel = 0; sel <= oEvent.getParameters()['selectedItems'].length; sel++) { //added by Dhiraj On 19/05/2022 for selecting multiple deliverables
+				for (var sel = 0; sel < oEvent.getParameters()['selectedItems'].length; sel++) { //added by Dhiraj On 19/05/2022 for selecting multiple deliverables
 					var oSelDelvCodeObj = oEvent.getParameters()['selectedItems'][sel].getBindingContext("vendorContractModel").getObject();
 					this.prepareDeliverypayload(oSelDelvCodeObj);
 				}
