@@ -2345,8 +2345,7 @@ sap.ui.define([
 					var flagNewEntry = true;
 					obj.flag = "Cr";
 
-					// for (var oInd = 0; oInd < delvTableData.length; oInd++) { //Comeented by Mandar : 20/09/2022
-					for (var oInd = delvTableData.length; oInd >= 0; oInd--) {
+					for (var oInd = 0; oInd < delvTableData.length; oInd++) {
 						var vcEpiObj = delvTableData[oInd];
 						if (vcEpiObj.Epiid === obj.Epiid && vcEpiObj.Delvcd === obj.Delvcd && vcEpiObj.Contver === obj.Contver) {
 							alreadyPushedEpisodes.push(obj.Epiid);
