@@ -2772,7 +2772,7 @@ sap.ui.define([
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
 				var oPath = oEvent.getSource().getBindingContext("vendorContractModel").sPath;
-				if (vendorContractDetailInfo.DmVrSet.length){
+				if (vendorContractDetailInfo.DmVrSet.results.length){
 				oEvent.getSource().getBindingContext("vendorContractModel").getObject().flag = "Ch";
 				}
 				this.getView().getModel("vendorContractModel").refresh(true);
@@ -2794,7 +2794,7 @@ sap.ui.define([
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
 				var oPath = oEvent.getSource().getBindingContext("vendorContractModel").sPath;
-				if (vendorContractDetailInfo.DmVrSet.length){
+				if (vendorContractDetailInfo.DmVrSet.results.length){
 				oEvent.getSource().getBindingContext("vendorContractModel").getObject().flag = "Ch";
 				}
 				this.getView().getModel("vendorContractModel").refresh(true);
@@ -2816,7 +2816,7 @@ sap.ui.define([
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
 				var oPath = oEvent.getSource().getBindingContext("vendorContractModel").sPath;
-				if (vendorContractDetailInfo.DmVrSet.length){
+				if (vendorContractDetailInfo.DmVrSet.results.length){
 				oEvent.getSource().getBindingContext("vendorContractModel").getObject().flag = "Ch";
 				}
 				this.getView().getModel("vendorContractModel").refresh(true);
