@@ -2769,8 +2769,12 @@ sap.ui.define([
 			},
 
 			onValueHelpAmort: function (oEvent) {
+				var vendorContractModel = this.getView().getModel("vendorContractModel");
+				var vendorContractDetailInfo = vendorContractModel.getData();
 				var oPath = oEvent.getSource().getBindingContext("vendorContractModel").sPath;
+				if (vendorContractDetailInfo.DmVrSet.length){
 				oEvent.getSource().getBindingContext("vendorContractModel").getObject().flag = "Ch";
+				}
 				this.getView().getModel("vendorContractModel").refresh(true);
 				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
 				this.oValueHelpSelectionParams = {
@@ -2787,8 +2791,12 @@ sap.ui.define([
 				this.openSelectionDialog();
 			},
 			onValueHelpNonAmort: function (oEvent) {
+				var vendorContractModel = this.getView().getModel("vendorContractModel");
+				var vendorContractDetailInfo = vendorContractModel.getData();
 				var oPath = oEvent.getSource().getBindingContext("vendorContractModel").sPath;
+				if (vendorContractDetailInfo.DmVrSet.length){
 				oEvent.getSource().getBindingContext("vendorContractModel").getObject().flag = "Ch";
+				}
 				this.getView().getModel("vendorContractModel").refresh(true);
 				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
 				this.oValueHelpSelectionParams = {
@@ -2805,8 +2813,12 @@ sap.ui.define([
 				this.openSelectionDialog();
 			},
 			onValueHelpTerritory: function (oEvent) {
+				var vendorContractModel = this.getView().getModel("vendorContractModel");
+				var vendorContractDetailInfo = vendorContractModel.getData();
 				var oPath = oEvent.getSource().getBindingContext("vendorContractModel").sPath;
+				if (vendorContractDetailInfo.DmVrSet.length){
 				oEvent.getSource().getBindingContext("vendorContractModel").getObject().flag = "Ch";
+				}
 				this.getView().getModel("vendorContractModel").refresh(true);
 				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
 				this.oValueHelpSelectionParams = {
