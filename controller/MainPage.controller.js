@@ -931,6 +931,7 @@ sap.ui.define([
 					"Cntstp": this.autoPopulateValueList.Cntsb,
 					"Cntsgn": this.autoPopulateValueList.Subgr,
 					"Cntsc": dealMemoModel.getProperty("/createParams/ContscKey"),
+					"Cntscnm": dealMemoModel.getProperty("/createParams/Contsc"),
 					"Langu": this.autoPopulateValueList.Langu,
 					"Langud": this.autoPopulateValueList.Langud,
 					"Orilib":  this.autoPopulateValueList.Orilib,
