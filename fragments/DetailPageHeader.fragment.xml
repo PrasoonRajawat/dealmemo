@@ -35,7 +35,7 @@
 													</HBox>
 													<HBox>
 														<Label text="{i18n>lblSubCategory}" design="Bold"/>
-														<Text text="{dealMemoDetailModel>/Cntcatnm}" class="sapUiTinyMarginBegin"/>
+														<Text text="{dealMemoDetailModel>/Fdcntscnm}" class="sapUiTinyMarginBegin"/>
 													</HBox>
 											</VBox>
 											<VBox>
