@@ -4212,6 +4212,7 @@ sap.ui.define([
 				});
 				dmedSetDataEpi.sort().reverse();
 				detailModel.setProperty("/dmedSetDataEpi", dmedSetDataEpi);
+				detailModel.refresh(true);
 
 					if (!this._oEpiDeleteDialog) {
 						Fragment.load({
