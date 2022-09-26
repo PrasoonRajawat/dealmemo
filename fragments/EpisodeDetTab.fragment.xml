@@ -1,4 +1,3 @@
-
 <c:FragmentDefinition xmlns="sap.m" xmlns:u="sap.ui.unified" xmlns:l="sap.ui.layout" xmlns:c="sap.ui.core">
 				<Table  items="{dealMemoDetailModel>/episodeTotalData}">
 					<infoToolbar>
@@ -48,7 +47,7 @@
 																	<Button visible="{dealMemoDetailModel>/UploadBtnVisibility}" text="{i18n>Export}" press="onExport" enabled="{path:'dealMemoDetailModel>/Dmst',formatter:'.Formatter.formatEditableStatus'}"/>
 																	<Button visible="{dealMemoDetailModel>/UploadBtnVisibility}" icon="sap-icon://upload" press="onUploadDialog" enabled="{path:'dealMemoDetailModel>/Dmst',formatter:'.Formatter.formatEditableStatus'}"/>
 																	<Button visible="{dealMemoDetailModel>/deleteEpiVisibility}" text="{i18n>Btn_Delete}" press="onDeleteEpisodeConfirm" enabled="{path:'dealMemoDetailModel>/Dmst',formatter:'.Formatter.formatEditableStatus'}" />
-																	<Button visible="{dealMemoDetailModel>/deleteEpiVisibility}" text="{i18n>Btn_Delete}" press="onDeleteEpisodeDialog" enabled="{path:'dealMemoDetailModel>/Dmst',formatter:'.Formatter.formatEditableStatus'}" />
+																	<!--<Button visible="{dealMemoDetailModel>/deleteEpiVisibility}" text="{i18n>Btn_Delete}" press="onDeleteEpisodeDialog" enabled="{path:'dealMemoDetailModel>/Dmst',formatter:'.Formatter.formatEditableStatus'}" />-->
 																	<Button visible="{dealMemoDetailModel>/ChangeEpiVisibility}" text="{parts:[{value:'lblBtnChangeCostEpiDet'},{path:'dealMemoDetailModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" press="onEpisodeCostChange" enabled="{path:'dealMemoDetailModel>/Dmst',formatter:'.Formatter.formatEditableStatus'}"/>
 																	<Button  press="onCreateAdditionalEpisode"  text="{parts:[{value:'lblBtnCreateEpiDet'},{path:'dealMemoDetailModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" visible="{dealMemoDetailModel>/AddEpiVisibility}" enabled="{path:'dealMemoDetailModel>/Dmst',formatter:'.Formatter.formatEditableStatus'}"/>
 																</Toolbar>
