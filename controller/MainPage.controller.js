@@ -4200,6 +4200,16 @@ sap.ui.define([
 				this._oSelectEpDeliveryDialog.close();
 			},
 			onDeleteEpisodeDialog: function () { 
+				var detailModel = this.getView().getModel("dealMemoDetailModel");
+				var dealMemoDetailInfo = detailModel.getData();
+				dealMemoDetailInfo.setProperty("/epiDeleteFromId", "");
+				dealMemoDetailInfo.setProperty("/epiDeleteToId", "");
+				var dmedSetData = dealMemoDetailInfo.DmEpisodeSet.results;
+				var dmedSetDataEpi = dmedSetData.map(function (dmedobj) {
+					return dmedobj.Epiid && dmvdobj.Epist != '05';
+				});
+				dmedSetDataEpi.sort().reverse();
+
 					if (!this._oEpiDeleteDialog) {
 						Fragment.load({
 							id: this.createId("deleteEpiDialog"),
