@@ -4209,10 +4209,7 @@ sap.ui.define([
 				});
 				var dmedSetDataEpi = dmedSetData.sort().reverse();
 				dealMemoDetailInfo.dmedSetDataEpi = $.extend(true, [], dmedSetDataEpi);
-				
 				detailModel.refresh(true);
-			
-
 					if (!this._oEpiDeleteDialog) {
 						Fragment.load({
 							id: this.createId("deleteEpiDialog"),
@@ -4227,7 +4224,102 @@ sap.ui.define([
 					} else {
 						this._oEpiDeleteDialog.open();
 					}
+			},
+			confirmToDelete:function(){
+				episodeData.map(function(obj){
+					if (epVCObj.Epiid >= dealMemoDetailModel.epiDelFromId && epVCObj.Epiid <= dealMemoDetailModel.epiDelToId) {
+						selectedEpisodeList.push(epVCObj);
+					}
+				});
+				if(selectedEpisodeList.length > 0) {
+				this._oEpiDeleteDialog.close();
+				MessageBox.confirm(oSourceBundle.getText("msgdeleteEpiConfirm" + dealMemoDetailInfo.Cnttp), {
+					actions: [oSourceBundle.getText("lblYes"), oSourceBundle.getText("lblNo")],
+					emphasizedAction: "Yes",
+					onClose: function(sAction) {
+						if (sAction === oSourceBundle.getText("lblYes")) {
+							this.onDeleteEpisodeViaDialog(selectedEpisodeList);
+						} else if (sAction === oSourceBundle.getText("lblNo")) {
+
+						}
+					}.bind(this)
+				});
+			}else {
+				this._oEpiDeleteDialog.close();
+				MessageBox.error(oSourceBundle.getText("msgSelectAtleastOneEpi" + dealMemoDetailInfo.Cnttp));
+			}
+			},
+
+			onDeleteEpisodeViaDialog: function(selectedEpisodeList) {
+
+				var detailModel = this.getView().getModel("dealMemoDetailModel");
+				var dealMemoDetailInfo = detailModel.getData();
+				var NoOfEpisodes = dealMemoDetailInfo.Noofepi;
+				var oModel = this.getView().getModel();
+				var deleteAllEpiodes = false;
+				oModel.setUseBatch(true);
+				oModel.setChangeGroups({
+					"/DmEpisodeSet": {
+						groupId: "episodeDelete"
+					}
+				});
+				oModel.setDeferredGroups(["episodeDelete"]);
+				// if (parseInt(NoOfEpisodes) === this.selEpisodePaths.length) {
+				// 	deleteAllEpiodes = true;
+				// }
+				var mParameters = {
+					groupId: "episodeDelete",
+					success: function(odata, resp) {
+						var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
+						var oResponse = odata.__batchResponses[0];
+						if (oResponse.__changeResponses && oResponse.__changeResponses.length) {
+							if (oResponse.__changeResponses[0].statusCode === "204") {
+								MessageToast.show(oSourceBundle.getText("msgSuccEpiDeleteSave" + dealMemoDetailInfo.Cnttp));
+								detailModel.refresh(true);
+								if (deleteAllEpiodes) {
+									this.getView().byId("idIconTabBar").setSelectedKey("cost");
+									if (dealMemoDetailInfo.enableFlow === "M") {
+										this.getView().byId("idIconTabBar2").setSelectedKey("epiDet");
+									} else {
+										this.getView().byId("idIconTabBar2").setSelectedKey("costDet");
+									}
+
+									this.loadDefaultDealMemo = false;
+									this.loadDealMemoList();
+								} else {
+									this.getView().byId("idIconTabBar").setSelectedKey("cost");
+									this.getView().byId("idIconTabBar2").setSelectedKey("epiDet");
+									this.loadDealMemoList();
+								}
+								// this.byId(sap.ui.core.Fragment.createId("epiDetailTab", "oTable_epiDetail")).removeSelections();
+							}
+						} else {
+							var oError = JSON.parse(oResponse.response.body);
+							var oMsg = oError.error.innererror.errordetails[0].message;
+							MessageBox.error(oMsg);
+						}
+
+					}.bind(this),
+					error: function(oError) {
+						var oErrorResponse = JSON.parse(oError.responseText);
+						var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
+						MessageBox.error(oMsg);
+
+					}
+				};
+
+				selectedEpisodeList.map(function(itemPath) {
+					
+					var payLoadData = this.prepareEpisodePayload(oEpisodeInfo);
+					var oPath = "/DmEpisodeSet(Tentid='IBS',Dmno='" + dealMemoDetailInfo.Dmno + "',Dmver='" + dealMemoDetailInfo.Dmver + "',Epiid='" +
+					itemPath.Epiid + "',Cntid='')";
+					oModel.remove(oPath, {
+						groupId: "episodeDelete"
+					});
 				
+				}.bind(this));
+				oModel.submitChanges(mParameters);
+
 			},
 
 			onDeleteEpisode: function() {
