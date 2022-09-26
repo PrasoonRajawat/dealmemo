@@ -4200,19 +4200,19 @@ sap.ui.define([
 				this._oSelectEpDeliveryDialog.close();
 			},
 			onDeleteEpisodeDialog: function () { 
-					if (!this._oEpiCostChangeDialog) {
+					if (!this._oEpiDeleteDialog) {
 						Fragment.load({
 							id: this.createId("deleteEpiDialog"),
 							name: "com.ui.dealmemolocal.fragments.EpisodeDeleteDialog",
 							controller: this
 						}).then(function name(oFragment) {
-							this._oEpiCostChangeDialog = oFragment; //sap.ui.xmlfragment("com.ui.dealmemolocal.fragments.SelectPaymentDialog", this);
-							this.getView().addDependent(this._oEpiCostChangeDialog);
-							this._oEpiCostChangeDialog.open();
+							this._oEpiDeleteDialog = oFragment; //sap.ui.xmlfragment("com.ui.dealmemolocal.fragments.SelectPaymentDialog", this);
+							this.getView().addDependent(this._oEpiDeleteDialog);
+							this._oEpiDeleteDialog.open();
 						}.bind(this));
 
 					} else {
-						this._oEpiCostChangeDialog.open();
+						this._oEpiDeleteDialog.open();
 					}
 				
 			},
