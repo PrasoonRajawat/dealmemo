@@ -4226,7 +4226,9 @@ sap.ui.define([
 					}
 			},
 			confirmToDelete:function(){
-				episodeData.map(function(obj){
+				var detailModel = this.getView().getModel("dealMemoDetailModel");
+				var dealMemoDetailInfo = detailModel.getData();
+				dealMemoDetailInfo.episodeData.map(function(obj){
 					if (epVCObj.Epiid >= dealMemoDetailModel.epiDelFromId && epVCObj.Epiid <= dealMemoDetailModel.epiDelToId) {
 						selectedEpisodeList.push(epVCObj);
 					}
