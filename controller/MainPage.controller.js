@@ -4335,7 +4335,7 @@ sap.ui.define([
 
 				selectedEpisodeList.map(function(itemPath) {
 					
-					var payLoadData = this.prepareEpisodePayload(oEpisodeInfo);
+					var payLoadData = this.prepareEpisodePayload(itemPath);
 					var oPath = "/DmEpisodeSet(Tentid='IBS',Dmno='" + dealMemoDetailInfo.Dmno + "',Dmver='" + dealMemoDetailInfo.Dmver + "',Epiid='" +
 					itemPath.Epiid + "',Cntid='')";
 					oModel.remove(oPath, {
