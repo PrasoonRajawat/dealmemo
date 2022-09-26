@@ -4202,8 +4202,8 @@ sap.ui.define([
 			onDeleteEpisodeDialog: function () { 
 				var detailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = detailModel.getData();
-				dealMemoDetailInfo.setProperty("/epiDeleteFromId", "");
-				dealMemoDetailInfo.setProperty("/epiDeleteToId", "");
+				detailModel.setProperty("/epiDeleteFromId", "");
+				detailModel.setProperty("/epiDeleteToId", "");
 				var dmedSetData = dealMemoDetailInfo.DmEpisodeSet.results;
 				var dmedSetDataEpi = dmedSetData.map(function (dmedobj) {
 					return dmedobj.Epiid && dmvdobj.Epist != '05';
