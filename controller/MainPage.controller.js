@@ -4176,7 +4176,8 @@ sap.ui.define([
 					if (dealMemoDetailInfo.enableFlow === "M") {
 						deleteValidFlag = true;
 					} else {
-						deleteValidFlag = this.beforeDelete();
+						// deleteValidFlag = this.beforeDelete();
+						this.onDeleteEpisodeDialog();
 					}
 					if (deleteValidFlag) {
 
@@ -4210,7 +4211,7 @@ sap.ui.define([
 					dealMemoDetailInfo.episodeRangeVisibleDelivery = true;
 
 				}
-				vendorContractModel.refresh(true);
+				detailModel.refresh(true);
 			},
 			onDeleteEpisodeDialog: function () { 
 				var detailModel = this.getView().getModel("dealMemoDetailModel");
