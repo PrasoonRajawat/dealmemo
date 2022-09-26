@@ -4294,9 +4294,9 @@ sap.ui.define([
 					}
 				});
 				oModel.setDeferredGroups(["episodeDelete"]);
-				// if (parseInt(NoOfEpisodes) === this.selEpisodePaths.length) {
-				// 	deleteAllEpiodes = true;
-				// }
+				if (parseInt(NoOfEpisodes) === selectedEpisodeList.length) {
+					deleteAllEpiodes = true;
+				}
 				var mParameters = {
 					groupId: "episodeDelete",
 					success: function(odata, resp) {
