@@ -1311,6 +1311,7 @@ sap.ui.define([
 
 			},
 			onSaveArtistContract: function() {
+				this.getView().byId("btnSaveAC").setEnabled(false);
 				sap.ui.core.BusyIndicator.show(0);
 				var oTab = this.getView().byId("idACTabBar").getSelectedKey();
 				if (oTab === "acEpiData") {

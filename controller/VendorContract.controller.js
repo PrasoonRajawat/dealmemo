@@ -2896,6 +2896,7 @@ sap.ui.define([
 			},
 
 			onSaveVendorContract: function () {
+				this.getView().byId("btnSaveVC").setEnabled(false);
 				sap.ui.core.BusyIndicator.show(0);
 				var oTab = this.getView().byId("idVCTabBar").getSelectedKey();
 				if (oTab === "vcEpiData") {
