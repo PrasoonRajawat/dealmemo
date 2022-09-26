@@ -4171,13 +4171,14 @@ sap.ui.define([
 				var dealMemoDetailInfo = detailModel.getData();
 				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
 				var selRowCount = this.byId(sap.ui.core.Fragment.createId("epiDetailTab", "oTable_epiDetail")).getSelectedContexts().length;
+			if (dealMemoDetailInfo.enableFlow === "M") {
 				if (selRowCount > 0) {
 					var deleteValidFlag = false;
 					if (dealMemoDetailInfo.enableFlow === "M") {
 						deleteValidFlag = true;
 					} else {
-						// deleteValidFlag = this.beforeDelete();
-						this.onDeleteEpisodeDialog();
+						deleteValidFlag = this.beforeDelete();
+					
 					}
 					if (deleteValidFlag) {
 
@@ -4196,6 +4197,9 @@ sap.ui.define([
 				} else {
 					MessageBox.error(oSourceBundle.getText("msgSelectAtleastOneEpi" + dealMemoDetailInfo.Cnttp));
 				}
+			} else {
+					this.onDeleteEpisodeDialog();
+			}
 			},
 			onCancelEpisodeSelectionDelete: function () {
 				this._oEpiDeleteDialog.close();
