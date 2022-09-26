@@ -6,16 +6,16 @@
                     <l:GridData span="XL12 L12 M12 S12" />
                 </layoutData>
             </MessageStrip> -->
-            <!-- <HBox>
+             <HBox>
                 <items>
                     <RadioButtonGroup columns="2" selectedIndex="{dealMemoDetailModel>/episodeModeDelivery}" select="onSelectEpisodeModeDelivery">
                         <RadioButton text="{parts:[{value:'lblAllEpisode'},{path:'dealMemoDetailModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" />
                         <RadioButton text="{i18n>lblSelectFromRange}" />
                     </RadioButtonGroup>
                 </items>
-            </HBox> -->
-            <!-- <HBox visible="{dealMemoDetailModel>/episodeRangeVisibleDelivery}"> -->
-                <!-- <items> -->
+            </HBox> 
+             <HBox visible="{dealMemoDetailModel>/episodeRangeVisibleDelivery}"> 
+                 <items> 
                     <VBox>
                         <Label text="{parts:[{value:'lblSelectEpiFrom'},{path:'dealMemoDetailModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" required="true" width="100%" />
                         <ComboBox width="95%" items="{dealMemoDetailModel>/dmedSetDataEpi}" selectedKey="{dealMemoDetailModel>/epiDelFromId}">
@@ -28,8 +28,8 @@
                             <c:Item text="{dealMemoDetailModel>Epinm}" key="{dealMemoDetailModel>Epiid}" />
                         </ComboBox>
                     </VBox>
-                <!-- </items> -->
-            <!-- </HBox> -->
+                 </items> 
+             </HBox> 
         </content>
         <beginButton>
             <Button text="{i18n>lblBtnNext}" press="confirmToDelete" />
