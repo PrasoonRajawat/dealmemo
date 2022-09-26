@@ -4197,7 +4197,7 @@ sap.ui.define([
 				}
 			},
 			onCancelEpisodeSelectionDelete: function () {
-				this._oSelectEpDeliveryDialog.close();
+				this._oEpiDeleteDialog.close();
 			},
 			onDeleteEpisodeDialog: function () { 
 				var detailModel = this.getView().getModel("dealMemoDetailModel");
@@ -4211,6 +4211,7 @@ sap.ui.define([
 					return dmedobj.Epiid ;
 				});
 				dmedSetDataEpi.sort().reverse();
+				detailModel.setProperty("/dmedSetDataEpi", dmedSetDataEpi);
 
 					if (!this._oEpiDeleteDialog) {
 						Fragment.load({
