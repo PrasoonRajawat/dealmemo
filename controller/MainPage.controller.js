@@ -4252,6 +4252,7 @@ sap.ui.define([
 						selectedEpisodeList.push(obj);
 					}
 				});
+					}
 				if(selectedEpisodeList.length > 0) {
 				this._oEpiDeleteDialog.close();
 				MessageBox.confirm(oSourceBundle.getText("msgdeleteEpiConfirm" + dealMemoDetailInfo.Cnttp), {
