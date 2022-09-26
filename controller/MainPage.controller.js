@@ -4211,7 +4211,7 @@ sap.ui.define([
 				dealMemoDetailInfo.dmedSetDataEpi = $.extend(true, [], dmedSetDataEpi);
 				
 				detailModel.refresh(true);
-				dealMemoDetailModel.refresh(true);
+			
 
 					if (!this._oEpiDeleteDialog) {
 						Fragment.load({
