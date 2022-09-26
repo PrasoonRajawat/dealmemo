@@ -18,13 +18,13 @@
                 <!-- <items> -->
                     <VBox>
                         <Label text="{parts:[{value:'lblSelectEpiFrom'},{path:'dealMemoDetailModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" required="true" width="100%" />
-                        <ComboBox width="95%" items="{dealMemoDetailModel>/epDeliveryList}" selectedKey="{dealMemoDetailModel>/epiDeliveryFromId}">
+                        <ComboBox width="95%" items="{dealMemoDetailModel>/dmedSetDataEpi}" selectedKey="{dealMemoDetailModel>/epiDeliveryFromId}">
                             <c:Item text="{dealMemoDetailModel>Epinm}" key="{dealMemoDetailModel>Epiid}" />
                         </ComboBox>
                     </VBox>
                     <VBox>
                         <Label text="{parts:[{value:'lblSelectEpiTo'},{path:'dealMemoDetailModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" required="true" width="100%" />
-                        <ComboBox width="95%" items="{dealMemoDetailModel>/epDeliveryList}" selectedKey="{dealMemoDetailModel>/epiDeliveryToId}">
+                        <ComboBox width="95%" items="{dealMemoDetailModel>/dmedSetDataEpi}" selectedKey="{dealMemoDetailModel>/epiDeliveryToId}">
                             <c:Item text="{dealMemoDetailModel>Epinm}" key="{dealMemoDetailModel>Epiid}" />
                         </ComboBox>
                     </VBox>
