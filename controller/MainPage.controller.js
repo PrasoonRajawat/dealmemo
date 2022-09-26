@@ -4102,7 +4102,7 @@ sap.ui.define([
 
 			},
 			onSavePress: function(oEvent) {
-				this.getView().byId("btnSaveDM").setEnabled(false);
+				
 				sap.ui.core.BusyIndicator.show(0);
 				var selectedTab = this.getView().byId("idIconTabBar").getSelectedKey();
 				if (selectedTab == "detail") {
