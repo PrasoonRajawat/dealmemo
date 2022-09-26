@@ -4229,7 +4229,7 @@ sap.ui.define([
 				var detailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = detailModel.getData();
 				dealMemoDetailInfo.episodeData.map(function(obj){
-					if (epVCObj.Epiid >= dealMemoDetailModel.epiDelFromId && epVCObj.Epiid <= dealMemoDetailModel.epiDelToId) {
+					if (epVCObj.Epiid >= dealMemoDetailInfo.epiDelFromId && epVCObj.Epiid <= dealMemoDetailInfo.epiDelToId) {
 						selectedEpisodeList.push(epVCObj);
 					}
 				});
