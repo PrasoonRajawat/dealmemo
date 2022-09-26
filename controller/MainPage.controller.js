@@ -4199,6 +4199,19 @@ sap.ui.define([
 			onCancelEpisodeSelectionDelete: function () {
 				this._oEpiDeleteDialog.close();
 			},
+			
+				onSelectEpisodeModeDelivery: function (oEvent) {
+				var oselIndex = oEvent.getSource().getSelectedIndex();
+				var detailModel = this.getView().getModel("dealMemoDetailModel");
+				var dealMemoDetailInfo = detailModel.getData();
+				if (oselIndex == 0) {
+					dealMemoDetailInfo.episodeRangeVisibleDelivery = false;
+				} else {
+					dealMemoDetailInfo.episodeRangeVisibleDelivery = true;
+
+				}
+				vendorContractModel.refresh(true);
+			},
 			onDeleteEpisodeDialog: function () { 
 				var detailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = detailModel.getData();
@@ -4228,7 +4241,13 @@ sap.ui.define([
 			confirmToDelete:function(){
 				var detailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = detailModel.getData();
-				dealMemoDetailInfo.episodeData.map(function(obj){
+					var oselIndex = dealMemoDetailInfo.episodeModeDelivery;
+					var selectedEpisodeList = [];
+					if (oselIndex == 0) {
+					selectedEpisodeList = vendorContractDetailInfo.epDeliveryList;
+					} else {
+					selectedEpisodeList = [];
+					dealMemoDetailInfo.episodeData.map(function(obj){
 					if (obj.Epiid >= dealMemoDetailInfo.epiDelFromId && obj.Epiid <= dealMemoDetailInfo.epiDelToId) {
 						selectedEpisodeList.push(obj);
 					}
