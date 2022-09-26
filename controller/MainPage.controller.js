@@ -4229,8 +4229,8 @@ sap.ui.define([
 				var detailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = detailModel.getData();
 				dealMemoDetailInfo.episodeData.map(function(obj){
-					if (epVCObj.Epiid >= dealMemoDetailInfo.epiDelFromId && epVCObj.Epiid <= dealMemoDetailInfo.epiDelToId) {
-						selectedEpisodeList.push(epVCObj);
+					if (obj.Epiid >= dealMemoDetailInfo.epiDelFromId && obj.Epiid <= dealMemoDetailInfo.epiDelToId) {
+						selectedEpisodeList.push(obj);
 					}
 				});
 				if(selectedEpisodeList.length > 0) {
