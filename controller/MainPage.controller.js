@@ -4252,7 +4252,7 @@ sap.ui.define([
 					var oselIndex = dealMemoDetailInfo.episodeModeDelivery;
 					var selectedEpisodeList = [];
 					if (oselIndex == 0) {
-					selectedEpisodeList = vendorContractDetailInfo.epDeliveryList;
+					selectedEpisodeList = dealMemoDetailInfo.episodeData;
 					} else {
 					selectedEpisodeList = [];
 					dealMemoDetailInfo.episodeData.map(function(obj){
