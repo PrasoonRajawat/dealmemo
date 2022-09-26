@@ -4204,15 +4204,14 @@ sap.ui.define([
 				var dealMemoDetailInfo = detailModel.getData();
 				detailModel.setProperty("/epiDeleteFromId", "");
 				detailModel.setProperty("/epiDeleteToId", "");
-				var dmedSetData = dealMemoDetailInfo.DmEpisodeSet.results.filter(function (epiobj){
+				var dmedSetData = dealMemoDetailInfo.episodeData.filter(function (epiobj){
 					return  epiobj.Epist != '05';
 				});
-				var dmedSetDataEpi = dmedSetData.map(function (dmedobj) {
-					return dmedobj.Epiid ;
-				});
-				dmedSetDataEpi.sort().reverse();
-				detailModel.setProperty("/dmedSetDataEpi", dmedSetDataEpi);
+				var dmedSetDataEpi = dmedSetData.sort().reverse();
+				dealMemoDetailInfo.dmedSetDataEpi = $.extend(true, [], dmedSetDataEpi);
+				
 				detailModel.refresh(true);
+				dealMemoDetailModel.refresh(true);
 
 					if (!this._oEpiDeleteDialog) {
 						Fragment.load({
