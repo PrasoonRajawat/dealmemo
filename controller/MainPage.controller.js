@@ -4215,8 +4215,10 @@ sap.ui.define([
 			onDeleteEpisodeDialog: function () { 
 				var detailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = detailModel.getData();
+				detailModel.setProperty("/episodeRangeVisibleDelivery", false);
+				detailModel.setProperty("/episodeModeDelivery", 0);
 				detailModel.setProperty("/epiDeleteFromId", "");
-				detailModel.setProperty("/epiDeleteToId", "");
+				detailModel.setProperty("/epiDeleteToId", ""); 
 				var dmedSetData = dealMemoDetailInfo.episodeData.filter(function (epiobj){
 					return  epiobj.Epist != '05';
 				});
@@ -4241,6 +4243,7 @@ sap.ui.define([
 			confirmToDelete:function(){
 				var detailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = detailModel.getData();
+					var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
 					var oselIndex = dealMemoDetailInfo.episodeModeDelivery;
 					var selectedEpisodeList = [];
 					if (oselIndex == 0) {
