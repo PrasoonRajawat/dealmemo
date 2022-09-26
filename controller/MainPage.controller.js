@@ -4204,9 +4204,11 @@ sap.ui.define([
 				var dealMemoDetailInfo = detailModel.getData();
 				detailModel.setProperty("/epiDeleteFromId", "");
 				detailModel.setProperty("/epiDeleteToId", "");
-				var dmedSetData = dealMemoDetailInfo.DmEpisodeSet.results;
+				var dmedSetData = dealMemoDetailInfo.DmEpisodeSet.results.filter(function (epiobj){
+					return  epiobj.Epist != '05';
+				});
 				var dmedSetDataEpi = dmedSetData.map(function (dmedobj) {
-					return dmedobj.Epiid && dmedobj.Epist != '05';
+					return dmedobj.Epiid ;
 				});
 				dmedSetDataEpi.sort().reverse();
 
