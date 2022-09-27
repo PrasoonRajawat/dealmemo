@@ -3531,7 +3531,7 @@ sap.ui.define([
 				var yearChk = episodeData.map(function(yObj) {
 					return yObj.Gjahr
 				});
-				for (var year = dealMemoDetailInfo.FromYr; a <= dealMemoDetailInfo.ToYr; a++) {
+				for (var year = dealMemoDetailInfo.FromYr; year <= dealMemoDetailInfo.ToYr; year++) {
 					var yearFind = yearChk.find(y => y == year);
 
 					if (yearFind == "") {
