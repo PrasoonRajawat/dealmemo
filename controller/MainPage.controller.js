@@ -3536,7 +3536,9 @@ sap.ui.define([
 
 					if (yearFind == "" || yearFind == undefined) {
 						statusFlag = false;
-						oMsg = "Enter all the selected year to atleast one Movie"
+						var yearRange = dealMemoDetailInfo.FromYr +  " - " + dealMemoDetailInfo.ToYr;
+						oMsg = oSourceBundle.getText("msgtotEpiYearChek" + dealMemoDetailInfo.Cnttp , yearRange);
+						// oMsg = "Enter atleast one movie for each individual year in range ''"
 					}
 				}
 
