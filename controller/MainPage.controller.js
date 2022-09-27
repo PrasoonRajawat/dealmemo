@@ -194,7 +194,7 @@ sap.ui.define([
 				var dealMemoModel = this.getView().getModel("dealMemoModel");
 
 				dealMemoModel.setProperty("/contentTypeList", oData.results.filter(function(item) {
-					return item.Mstpcd === "01" && item.Mstcd !== "05";    
+					return item.Mstpcd === "01" && item.Mstcd !== "05";
 				}));
 
 				dealMemoModel.setProperty("/contentNatureList", oData.results.filter(function(item) {
@@ -294,7 +294,7 @@ sap.ui.define([
 			},
 			storeMusicListInfo: function(oData) {
 				var dealMemoModel = this.getView().getModel("dealMemoModel");
-					var musicList =  oData.results.filter(function(obj){
+				var musicList = oData.results.filter(function(obj) {
 					return obj.Mstcd == "04";
 				})
 				musicList.map(function(mvObj) {
@@ -883,7 +883,7 @@ sap.ui.define([
 					"Cntsc": this.autoPopulateValueList.Cntsc,
 					"Langu": this.autoPopulateValueList.Langu,
 					"Langud": this.autoPopulateValueList.Langud,
-					"Orilib":  this.autoPopulateValueList.Orilib,
+					"Orilib": this.autoPopulateValueList.Orilib,
 					"Noofepi": "",
 					"Amrtpercost": "0.00",
 					"Estprgreldt": "",
@@ -934,7 +934,7 @@ sap.ui.define([
 					"Cntscnm": dealMemoModel.getProperty("/createParams/Contsc"),
 					"Langu": this.autoPopulateValueList.Langu,
 					"Langud": this.autoPopulateValueList.Langud,
-					"Orilib":  this.autoPopulateValueList.Orilib,
+					"Orilib": this.autoPopulateValueList.Orilib,
 					"Noofepi": "",
 					"Amrtpercost": "0.00",
 					"Estprgreldt": null,
@@ -1068,7 +1068,7 @@ sap.ui.define([
 							oData.CurrencyEnableFlag = false;
 						}
 						oData.enableFlow = "P";
-						if (oData.Cnttp === "02" || oData.Cnttp === "05" || oData.Cnttp === "09" ||oData.Cnttp === "04") {
+						if (oData.Cnttp === "02" || oData.Cnttp === "05" || oData.Cnttp === "09" || oData.Cnttp === "04") {
 							oData.enableFlow = "M" // MovieFlow
 
 						}
@@ -1234,7 +1234,7 @@ sap.ui.define([
 					this.getView().byId("btnSaveDM").setEnabled(false);
 				} else {
 					if (dealMemoDetailInfo.Dmst == "01") {
-					this.getView().byId("btnSaveDM").setEnabled(true);
+						this.getView().byId("btnSaveDM").setEnabled(true);
 					} else {
 						this.getView().byId("btnSaveDM").setEnabled(false);
 					}
@@ -3018,7 +3018,8 @@ sap.ui.define([
 							this.loadBudgetCostTabAdditional();
 						}
 						detailModelData.UploadBtnVisibility = false;
-						if (detailModelData.Cnttp === "02" || detailModelData.Cnttp === "05" || detailModelData.Cnttp === "04" || detailModelData.Cnttp === "09") {
+						if (detailModelData.Cnttp === "02" || detailModelData.Cnttp === "05" || detailModelData.Cnttp === "04" || detailModelData.Cnttp ===
+							"09") {
 							detailModelData.UploadBtnVisibility = true;
 						}
 						detailModelData.ChangeEpiVisibility = true;
@@ -3329,22 +3330,25 @@ sap.ui.define([
 				return {
 					groupId: "eipsodeMovieChanges",
 					success: function(odata, resp) {
-						
+
 						if (odata.__batchResponses.length > 0) {
-							if (odata.__batchResponses[0].response != undefined){
-                            if (odata.__batchResponses[0].response.statusCode == "400") {
-                                var oErrorResponse = JSON.parse(odata.__batchResponses[0].response.body);
-                                var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
-                                if(oMsg.includes("present in another Deal Memo")){
-                                MessageBox.error(oMsg);
-                            }}} else {
-						var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
-						MessageToast.show(oSourceBundle.getText("msgSuccEpiDetUpdate" + dealMemoDetailInfo.Cnttp));
-						this.getView().byId("idIconTabBar").setSelectedKey("cost");
-						this.getView().byId("idIconTabBar2").setSelectedKey("epiDet");
-						this.changedCostCodes = [];
-						this.loadDealMemoList();
-                           } }
+							if (odata.__batchResponses[0].response != undefined) {
+								if (odata.__batchResponses[0].response.statusCode == "400") {
+									var oErrorResponse = JSON.parse(odata.__batchResponses[0].response.body);
+									var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
+									if (oMsg.includes("present in another Deal Memo")) {
+										MessageBox.error(oMsg);
+									}
+								}
+							} else {
+								var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
+								MessageToast.show(oSourceBundle.getText("msgSuccEpiDetUpdate" + dealMemoDetailInfo.Cnttp));
+								this.getView().byId("idIconTabBar").setSelectedKey("cost");
+								this.getView().byId("idIconTabBar2").setSelectedKey("epiDet");
+								this.changedCostCodes = [];
+								this.loadDealMemoList();
+							}
+						}
 						// var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
 						// MessageToast.show(oSourceBundle.getText("msgSuccEpiDetUpdate" + dealMemoDetailInfo.Cnttp));
 						// this.getView().byId("idIconTabBar").setSelectedKey("cost");
@@ -3522,14 +3526,30 @@ sap.ui.define([
 						Epids.push(epObj.Epiid);
 					}
 				}
+				//-----------------------------------------
+
+				var yearChk = episodeData.map(function(yObj) {
+					return yObj.Gjahr
+				});
+				for (var year = dealMemoDetailInfo.FromYr; a <= dealMemoDetailInfo.ToYr; a++) {
+					var yearFind = yearChk.find(y => y == year);
+
+					if (yearFind == "") {
+						statusFlag = false;
+						oMsg = "Enter all the selected year to atleast one Movie"
+					}
+				}
+
+				//--------------------------------
+
 				if (!statusFlag && oMsg !== "") {
 					MessageBox.error(oMsg);
 				}
 				for (var i = 0; i < episodeData.length; i++) { //Added By Dhiraj For converting matid or mvid to epiid of 5 digits
 					const a = i + 1;
 					var str = a.toString();
-					episodeData[i].Epiid = str;    //"0000" + a
-					
+					episodeData[i].Epiid = str; //"0000" + a
+
 				}
 				return statusFlag;
 			},
@@ -3711,7 +3731,8 @@ sap.ui.define([
 			checkForYearChange: function(dealMemoDetailInfo) {
 				var isChanged = false;
 				dealMemoDetailInfo.episodeData.forEach(v => {
-					if (dealMemoDetailInfo.episodeDataOriginal.findIndex(og => parseInt(og.Epiid) === parseInt(v.Epiid) && og.Gjahr !== v.Gjahr) > -1) {
+					if (dealMemoDetailInfo.episodeDataOriginal.findIndex(og => parseInt(og.Epiid) === parseInt(v.Epiid) && og.Gjahr !== v.Gjahr) > -
+						1) {
 						isChanged = true
 					}
 				});
@@ -4102,7 +4123,7 @@ sap.ui.define([
 
 			},
 			onSavePress: function(oEvent) {
-				
+
 				sap.ui.core.BusyIndicator.show(0);
 				var selectedTab = this.getView().byId("idIconTabBar").getSelectedKey();
 				if (selectedTab == "detail") {
@@ -4171,41 +4192,41 @@ sap.ui.define([
 				var dealMemoDetailInfo = detailModel.getData();
 				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
 				var selRowCount = this.byId(sap.ui.core.Fragment.createId("epiDetailTab", "oTable_epiDetail")).getSelectedContexts().length;
-			if (dealMemoDetailInfo.enableFlow === "M") {
-				if (selRowCount > 0) {
-					var deleteValidFlag = false;
-					if (dealMemoDetailInfo.enableFlow === "M") {
-						deleteValidFlag = true;
+				if (dealMemoDetailInfo.enableFlow === "M") {
+					if (selRowCount > 0) {
+						var deleteValidFlag = false;
+						if (dealMemoDetailInfo.enableFlow === "M") {
+							deleteValidFlag = true;
+						} else {
+							deleteValidFlag = this.beforeDelete();
+
+						}
+						if (deleteValidFlag) {
+
+							MessageBox.confirm(oSourceBundle.getText("msgdeleteEpiConfirm" + dealMemoDetailInfo.Cnttp), {
+								actions: [oSourceBundle.getText("lblYes"), oSourceBundle.getText("lblNo")],
+								emphasizedAction: "Yes",
+								onClose: function(sAction) {
+									if (sAction === oSourceBundle.getText("lblYes")) {
+										this.onDeleteEpisode();
+									} else if (sAction === oSourceBundle.getText("lblNo")) {
+
+									}
+								}.bind(this)
+							});
+						}
 					} else {
-						deleteValidFlag = this.beforeDelete();
-					
-					}
-					if (deleteValidFlag) {
-
-						MessageBox.confirm(oSourceBundle.getText("msgdeleteEpiConfirm" + dealMemoDetailInfo.Cnttp), {
-							actions: [oSourceBundle.getText("lblYes"), oSourceBundle.getText("lblNo")],
-							emphasizedAction: "Yes",
-							onClose: function(sAction) {
-								if (sAction === oSourceBundle.getText("lblYes")) {
-									this.onDeleteEpisode();
-								} else if (sAction === oSourceBundle.getText("lblNo")) {
-
-								}
-							}.bind(this)
-						});
+						MessageBox.error(oSourceBundle.getText("msgSelectAtleastOneEpi" + dealMemoDetailInfo.Cnttp));
 					}
 				} else {
-					MessageBox.error(oSourceBundle.getText("msgSelectAtleastOneEpi" + dealMemoDetailInfo.Cnttp));
-				}
-			} else {
 					this.onDeleteEpisodeDialog();
-			}
+				}
 			},
-			onCancelEpisodeSelectionDelete: function () {
+			onCancelEpisodeSelectionDelete: function() {
 				this._oEpiDeleteDialog.close();
 			},
-			
-				onSelectEpisodeModeDelivery: function (oEvent) {
+
+			onSelectEpisodeModeDelivery: function(oEvent) {
 				var oselIndex = oEvent.getSource().getSelectedIndex();
 				var detailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = detailModel.getData();
@@ -4217,91 +4238,91 @@ sap.ui.define([
 				}
 				detailModel.refresh(true);
 			},
-			onDeleteEpisodeDialog: function () { 
+			onDeleteEpisodeDialog: function() {
 				var detailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = detailModel.getData();
 				detailModel.setProperty("/episodeRangeVisibleDelivery", false);
 				detailModel.setProperty("/episodeModeDelivery", 0);
 				detailModel.setProperty("/epiDelFromId", "");
-				detailModel.setProperty("/epiDelToId", ""); 
-				var dmedSetData = dealMemoDetailInfo.episodeData.filter(function (epiobj){
-					return  epiobj.Epist != '05';
+				detailModel.setProperty("/epiDelToId", "");
+				var dmedSetData = dealMemoDetailInfo.episodeData.filter(function(epiobj) {
+					return epiobj.Epist != '05';
 				});
 				var dmedSetDataEpi = dmedSetData.sort().reverse();
 				dealMemoDetailInfo.dmedSetDataEpi = $.extend(true, [], dmedSetDataEpi);
 				detailModel.refresh(true);
-					if (!this._oEpiDeleteDialog) {
-						Fragment.load({
-							id: this.createId("deleteEpiDialog"),
-							name: "com.ui.dealmemolocal.fragments.EpisodeDeleteDialog",
-							controller: this
-						}).then(function name(oFragment) {
-							this._oEpiDeleteDialog = oFragment; //sap.ui.xmlfragment("com.ui.dealmemolocal.fragments.SelectPaymentDialog", this);
-							this.getView().addDependent(this._oEpiDeleteDialog);
-							this._oEpiDeleteDialog.open();
-						}.bind(this));
-
-					} else {
+				if (!this._oEpiDeleteDialog) {
+					Fragment.load({
+						id: this.createId("deleteEpiDialog"),
+						name: "com.ui.dealmemolocal.fragments.EpisodeDeleteDialog",
+						controller: this
+					}).then(function name(oFragment) {
+						this._oEpiDeleteDialog = oFragment; //sap.ui.xmlfragment("com.ui.dealmemolocal.fragments.SelectPaymentDialog", this);
+						this.getView().addDependent(this._oEpiDeleteDialog);
 						this._oEpiDeleteDialog.open();
-					}
+					}.bind(this));
+
+				} else {
+					this._oEpiDeleteDialog.open();
+				}
 			},
-			confirmToDelete:function(){
+			confirmToDelete: function() {
 				var detailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = detailModel.getData();
-					var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
-					var oselIndex = dealMemoDetailInfo.episodeModeDelivery;
-					var selectedEpisodeList = [];
-					if (oselIndex == 0) {
+				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
+				var oselIndex = dealMemoDetailInfo.episodeModeDelivery;
+				var selectedEpisodeList = [];
+				if (oselIndex == 0) {
 					selectedEpisodeList = dealMemoDetailInfo.dmedSetDataEpi;
-					} else {
+				} else {
 					selectedEpisodeList = [];
-					dealMemoDetailInfo.dmedSetDataEpi.map(function(obj){
-					if (obj.Epiid <= dealMemoDetailInfo.epiDelFromId && obj.Epiid >= dealMemoDetailInfo.epiDelToId) {
-						selectedEpisodeList.push(obj); 
-					}
-				});
-					}
-				if(selectedEpisodeList.length > 0) {
-					if(this.checkDlete(selectedEpisodeList)){
-				this._oEpiDeleteDialog.close();
-				MessageBox.confirm(oSourceBundle.getText("msgdeleteEpiConfirm" + dealMemoDetailInfo.Cnttp), {
-					actions: [oSourceBundle.getText("lblYes"), oSourceBundle.getText("lblNo")],
-					emphasizedAction: "Yes",
-					onClose: function(sAction) {
-						if (sAction === oSourceBundle.getText("lblYes")) {
-							this.onDeleteEpisodeViaDialog(selectedEpisodeList);
-						} else if (sAction === oSourceBundle.getText("lblNo")) {
-
+					dealMemoDetailInfo.dmedSetDataEpi.map(function(obj) {
+						if (obj.Epiid <= dealMemoDetailInfo.epiDelFromId && obj.Epiid >= dealMemoDetailInfo.epiDelToId) {
+							selectedEpisodeList.push(obj);
 						}
-					}.bind(this)
-				});
-					}else {
-					
-				MessageBox.error("Select the Last No. of Episode");
+					});
+				}
+				if (selectedEpisodeList.length > 0) {
+					if (this.checkDlete(selectedEpisodeList)) {
+						this._oEpiDeleteDialog.close();
+						MessageBox.confirm(oSourceBundle.getText("msgdeleteEpiConfirm" + dealMemoDetailInfo.Cnttp), {
+							actions: [oSourceBundle.getText("lblYes"), oSourceBundle.getText("lblNo")],
+							emphasizedAction: "Yes",
+							onClose: function(sAction) {
+								if (sAction === oSourceBundle.getText("lblYes")) {
+									this.onDeleteEpisodeViaDialog(selectedEpisodeList);
+								} else if (sAction === oSourceBundle.getText("lblNo")) {
+
+								}
+							}.bind(this)
+						});
+					} else {
+
+						MessageBox.error("Select the Last No. of Episode");
 					}
-			}else {
-				this._oEpiDeleteDialog.close();
-				MessageBox.error(oSourceBundle.getText("msgSelectAtleastOneEpi" + dealMemoDetailInfo.Cnttp));
-			}
+				} else {
+					this._oEpiDeleteDialog.close();
+					MessageBox.error(oSourceBundle.getText("msgSelectAtleastOneEpi" + dealMemoDetailInfo.Cnttp));
+				}
 			},
-			
-			checkDlete: function(selectedEpisodeList){
-						var detailModel = this.getView().getModel("dealMemoDetailModel");
+
+			checkDlete: function(selectedEpisodeList) {
+				var detailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = detailModel.getData();
-				var dmedSetData = dealMemoDetailInfo.episodeData.filter(function (epiobj){
-					return  epiobj.Epist != '05';
+				var dmedSetData = dealMemoDetailInfo.episodeData.filter(function(epiobj) {
+					return epiobj.Epist != '05';
 				});
 				var dmedSetDataEpi = dmedSetData.sort().reverse();
-				var epiData = dmedSetDataEpi.map(function(oEpi){
+				var epiData = dmedSetDataEpi.map(function(oEpi) {
 					return oEpi.Epiid;
 				});
-				var checkEpi = selectedEpisodeList.map(function(oChkEpi){
+				var checkEpi = selectedEpisodeList.map(function(oChkEpi) {
 					return oChkEpi.Epiid;
 				});
 				var check = true;
-				if(checkEpi[0] == epiData[0]){
+				if (checkEpi[0] == epiData[0]) {
 					check = true;
-				}else{
+				} else {
 					check = false;
 				}
 				return check;
@@ -4366,14 +4387,14 @@ sap.ui.define([
 				};
 
 				selectedEpisodeList.map(function(itemPath) {
-					
+
 					var payLoadData = this.prepareEpisodePayload(itemPath);
 					var oPath = "/DmEpisodeSet(Tentid='IBS',Dmno='" + dealMemoDetailInfo.Dmno + "',Dmver='" + dealMemoDetailInfo.Dmver + "',Epiid='" +
-					itemPath.Epiid + "',Cntid='')";
+						itemPath.Epiid + "',Cntid='')";
 					oModel.remove(oPath, {
 						groupId: "episodeDelete"
 					});
-				
+
 				}.bind(this));
 				oModel.submitChanges(mParameters);
 
@@ -4466,8 +4487,8 @@ sap.ui.define([
 				}.bind(this));
 
 			},
-				onConfirmSubmitDm: function() {
-					sap.ui.core.BusyIndicator.show(0);
+			onConfirmSubmitDm: function() {
+				sap.ui.core.BusyIndicator.show(0);
 				var oModel = this.getView().getModel();
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
@@ -4482,16 +4503,16 @@ sap.ui.define([
 					urlParameters: paramObj,
 					success: function(oData, response) {
 						sap.ui.core.BusyIndicator.hide();
-						if(oData.results.length > 0 && oData.results[0].Cnttp == "I") {
+						if (oData.results.length > 0 && oData.results[0].Cnttp == "I") {
 							var oMsg = oData.results[0].Prdnm
-							sap.m.MessageBox.show(oMsg , {
+							sap.m.MessageBox.show(oMsg, {
 								icon: sap.m.MessageBox.Icon.INFORMATION,
 								title: "Information",
 								onClose: function() {
 									that.submitDialog(oData);
 								}
 							});
-							
+
 						} else {
 							this.submitDialog(oData);
 						}
@@ -4503,18 +4524,18 @@ sap.ui.define([
 						MessageBox.error(oMsg);
 					}
 				});
-				
+
 			},
 			submitDialog: function(oData) {
-					var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
-					var dmWaers = oData.results[0].Waers
+				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
+				var dmWaers = oData.results[0].Waers
 					// var locAmt = oData.results[0].LoclCrcyAmt
-				    var locKey = oData.results[0].LoclCrcyKey
-					var dollarIndianLocale = Intl.NumberFormat('en-IN');
-					var locAmt = dollarIndianLocale.format(oData.results[0].LoclCrcyAmt)
-				    if(dmWaers != "INR") {
-					var text = "Equivalent local currency deal value is " + locAmt +" "+ locKey + ". Do you want to submit for an approval?" 
-					MessageBox.confirm( text , {
+				var locKey = oData.results[0].LoclCrcyKey
+				var dollarIndianLocale = Intl.NumberFormat('en-IN');
+				var locAmt = dollarIndianLocale.format(oData.results[0].LoclCrcyAmt)
+				if (dmWaers != "INR") {
+					var text = "Equivalent local currency deal value is " + locAmt + " " + locKey + ". Do you want to submit for an approval?"
+					MessageBox.confirm(text, {
 						actions: [oSourceBundle.getText("lblYes"), oSourceBundle.getText("lblNo")],
 						emphasizedAction: "Yes",
 						onClose: function(sAction) {
@@ -4525,9 +4546,9 @@ sap.ui.define([
 							}
 						}.bind(this)
 					});
-				    } else {
-				    	this.onSubmitDm();
-				    }
+				} else {
+					this.onSubmitDm();
+				}
 			},
 
 			onSubmitDm: function() {
@@ -4574,7 +4595,7 @@ sap.ui.define([
 							if (sAction === oSourceBundle.getText("lblYes")) {
 								this.onChangeDm();
 							} else if (sAction === oSourceBundle.getText("lblNo")) {
-							
+
 							}
 						}.bind(this)
 					});
@@ -4854,7 +4875,7 @@ sap.ui.define([
 								//	type: EdmType.Number
 						};
 
-						if (dealMemoDetailInfo.Cnttp === "05" || dealMemoDetailInfo.Cnttp === "09" ) {
+						if (dealMemoDetailInfo.Cnttp === "05" || dealMemoDetailInfo.Cnttp === "09") {
 							epTypeObj = {
 
 								ind: 0,
@@ -5019,8 +5040,7 @@ sap.ui.define([
 							statusFlag = false;
 							oMsg = oSourceBundle.getText("msgMovIdNonBlank" + dealMemoDetailInfo.Cnttp);
 							break;
-						} 
-						else if (aKeys.indexOf("Match ID") === -1 && dealMemoDetailInfo.Cnttp === "09") {
+						} else if (aKeys.indexOf("Match ID") === -1 && dealMemoDetailInfo.Cnttp === "09") {
 							statusFlag = false;
 							oMsg = oSourceBundle.getText("msgMovIdNonBlank" + dealMemoDetailInfo.Cnttp);
 							break;
