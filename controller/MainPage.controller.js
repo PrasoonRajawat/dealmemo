@@ -4257,7 +4257,7 @@ sap.ui.define([
 					selectedEpisodeList = [];
 					dealMemoDetailInfo.dmedSetDataEpi.map(function(obj){
 					if (obj.Epiid <= dealMemoDetailInfo.epiDelFromId && obj.Epiid >= dealMemoDetailInfo.epiDelToId) {
-						selectedEpisodeList.push(obj);
+						selectedEpisodeList.push(obj); 
 					}
 				});
 					}
