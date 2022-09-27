@@ -4293,10 +4293,10 @@ sap.ui.define([
 				});
 				var dmedSetDataEpi = dmedSetData.sort().reverse();
 				var epiData = dmedSetDataEpi.map(function(oEpi){
-					return Epiid;
+					return oEpi.Epiid;
 				});
 				var checkEpi = selectedEpisodeList.map(function(oChkEpi){
-					return Epiid;
+					return oChkEpi.Epiid;
 				});
 				var check = true;
 				if(checkEpi[0] == epiData[0]){
