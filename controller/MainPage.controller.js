@@ -4222,8 +4222,8 @@ sap.ui.define([
 				var dealMemoDetailInfo = detailModel.getData();
 				detailModel.setProperty("/episodeRangeVisibleDelivery", false);
 				detailModel.setProperty("/episodeModeDelivery", 0);
-				detailModel.setProperty("/epiDeleteFromId", "");
-				detailModel.setProperty("/epiDeleteToId", ""); 
+				detailModel.setProperty("/epiDelFromId", "");
+				detailModel.setProperty("/epiDelToId", ""); 
 				var dmedSetData = dealMemoDetailInfo.episodeData.filter(function (epiobj){
 					return  epiobj.Epist != '05';
 				});
@@ -4255,8 +4255,8 @@ sap.ui.define([
 					selectedEpisodeList = dealMemoDetailInfo.episodeData;
 					} else {
 					selectedEpisodeList = [];
-					dealMemoDetailInfo.episodeData.map(function(obj){
-					if (obj.Epiid >= dealMemoDetailInfo.epiDelFromId && obj.Epiid <= dealMemoDetailInfo.epiDelToId) {
+					dealMemoDetailInfo.dmedSetDataEpi.map(function(obj){
+					if (obj.Epiid <= dealMemoDetailInfo.epiDelFromId && obj.Epiid >= dealMemoDetailInfo.epiDelToId) {
 						selectedEpisodeList.push(obj);
 					}
 				});
