@@ -3534,7 +3534,7 @@ sap.ui.define([
 				for (var year = dealMemoDetailInfo.FromYr; year <= dealMemoDetailInfo.ToYr; year++) {
 					var yearFind = yearChk.find(y => y == year);
 
-					if (yearFind == "") {
+					if (yearFind == "" || yearFind == undefined) {
 						statusFlag = false;
 						oMsg = "Enter all the selected year to atleast one Movie"
 					}
