@@ -4262,6 +4262,7 @@ sap.ui.define([
 				});
 					}
 				if(selectedEpisodeList.length > 0) {
+					if(this.checkDlete(selectedEpisodeList)){
 				this._oEpiDeleteDialog.close();
 				MessageBox.confirm(oSourceBundle.getText("msgdeleteEpiConfirm" + dealMemoDetailInfo.Cnttp), {
 					actions: [oSourceBundle.getText("lblYes"), oSourceBundle.getText("lblNo")],
@@ -4274,10 +4275,36 @@ sap.ui.define([
 						}
 					}.bind(this)
 				});
+					}else {
+					
+				MessageBox.error("Select the Last No. of Episode");
+					}
 			}else {
 				this._oEpiDeleteDialog.close();
 				MessageBox.error(oSourceBundle.getText("msgSelectAtleastOneEpi" + dealMemoDetailInfo.Cnttp));
 			}
+			},
+			
+			checkDlete: function(selectedEpisodeList){
+						var detailModel = this.getView().getModel("dealMemoDetailModel");
+				var dealMemoDetailInfo = detailModel.getData();
+				var dmedSetData = dealMemoDetailInfo.episodeData.filter(function (epiobj){
+					return  epiobj.Epist != '05';
+				});
+				var dmedSetDataEpi = dmedSetData.sort().reverse();
+				var epiData = dmedSetDataEpi.map(function(oEpi){
+					return Epiid;
+				});
+				var checkEpi = selectedEpisodeList.map(function(oChkEpi){
+					return Epiid;
+				});
+				var check = true;
+				if(checkEpi[0] == epiData[0]){
+					check = true;
+				}else{
+					check = false;
+				}
+				return check;
 			},
 
 			onDeleteEpisodeViaDialog: function(selectedEpisodeList) {
