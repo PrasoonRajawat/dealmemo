@@ -1763,6 +1763,7 @@ sap.ui.define([
 				return statusFlag;
 			},
 			processMilestoneData: function() {
+				sap.ui.core.BusyIndicator.show(0);
 				var artistContractModel = this.getView().getModel("artistContractModel");
 				var artistContractDetailInfo = artistContractModel.getData();
 				var oPayLoad = {};
@@ -1786,6 +1787,7 @@ sap.ui.define([
 				oModel.setUseBatch(false);
 				oModel.create("/DmCoSet", oPayLoad, {
 					success: function(oData) {
+						sap.ui.core.BusyIndicator.hide();
 						if (artistContractDetailInfo.acPaymentData === undefined || artistContractDetailInfo.acPaymentData.length === 0) {
 							artistContractDetailInfo.acPaymentData = [];
 							oData.DmCmSet.results.map(function(obj) {
@@ -1821,6 +1823,7 @@ sap.ui.define([
 					}.bind(this),
 
 					error: function(oError) {
+						sap.ui.core.BusyIndicator.hide();
 						var oBody = JSON.parse(oError.responseText);
 						var oMsg = oBody.error.innererror.errordetails[0].message;
 						MessageBox.error(oMsg);
@@ -1863,6 +1866,7 @@ sap.ui.define([
 			},
 
 			savePaymentTab: function() {
+				sap.ui.core.BusyIndicator.show(0);
 				var artistContractModel = this.getView().getModel("artistContractModel");
 				var artistContractDetailInfo = artistContractModel.getData();
 				var epiPaymentabData = artistContractDetailInfo.acPaymentData;
@@ -1874,15 +1878,17 @@ sap.ui.define([
 				var mParameters = {
 					groupId: "epiPaymentACChanges",
 					success: function(data, resp) {
-
+						sap.ui.core.BusyIndicator.hide();
 						var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
 						MessageToast.show(oSourceBundle.getText("msgArtistContractSave", artistContractDetailInfo.Contno));
 						this.reloadArtistContractTabs();
 
 					}.bind(this),
 					error: function(odata, resp) {
+						sap.ui.core.BusyIndicator.hide();
 						console.log(resp);
 					}
+					
 				};
 
 				epiPaymentabData.map(function(oEpiPaymentObj) {
@@ -1924,6 +1930,7 @@ sap.ui.define([
 				} else {
 					oModel.submitChanges(mParameters);
 				}
+				sap.ui.core.BusyIndicator.hide();
 			},
 			onEditArtistContract: function() {
 				var artistContractModel = this.getView().getModel("artistContractModel");
