@@ -4331,7 +4331,7 @@ sap.ui.define([
 			},
 
 			onDeleteEpisodeViaDialog: function(selectedEpisodeList) {
-
+				sap.ui.core.BusyIndicator.show(0);
 				var detailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = detailModel.getData();
 				var NoOfEpisodes = dealMemoDetailInfo.Noofepi;
@@ -4374,13 +4374,16 @@ sap.ui.define([
 								// this.byId(sap.ui.core.Fragment.createId("epiDetailTab", "oTable_epiDetail")).removeSelections();
 							}
 						} else {
+								sap.ui.core.BusyIndicator.hide();
 							var oError = JSON.parse(oResponse.response.body);
 							var oMsg = oError.error.innererror.errordetails[0].message;
 							MessageBox.error(oMsg);
+							
 						}
 
 					}.bind(this),
 					error: function(oError) {
+						sap.ui.core.BusyIndicator.hide();
 						var oErrorResponse = JSON.parse(oError.responseText);
 						var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
 						MessageBox.error(oMsg);
@@ -4399,11 +4402,11 @@ sap.ui.define([
 
 				}.bind(this));
 				oModel.submitChanges(mParameters);
-
+				sap.ui.core.BusyIndicator.hide();
 			},
 
 			onDeleteEpisode: function() {
-
+					sap.ui.core.BusyIndicator.show(0);
 				var detailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = detailModel.getData();
 				var NoOfEpisodes = dealMemoDetailInfo.Noofepi;
@@ -4446,6 +4449,7 @@ sap.ui.define([
 								this.byId(sap.ui.core.Fragment.createId("epiDetailTab", "oTable_epiDetail")).removeSelections();
 							}
 						} else {
+								sap.ui.core.BusyIndicator.hide();
 							var oError = JSON.parse(oResponse.response.body);
 							var oMsg = oError.error.innererror.errordetails[0].message;
 							MessageBox.error(oMsg);
@@ -4453,6 +4457,7 @@ sap.ui.define([
 
 					}.bind(this),
 					error: function(oError) {
+							sap.ui.core.BusyIndicator.hide();
 						var oErrorResponse = JSON.parse(oError.responseText);
 						var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
 						MessageBox.error(oMsg);
@@ -4471,7 +4476,7 @@ sap.ui.define([
 
 				}.bind(this));
 				oModel.submitChanges(mParameters);
-
+				sap.ui.core.BusyIndicator.hide();
 			},
 			handleEpiRowSelection: function(oEvent) {
 				var oSelItems = oEvent.getParameters()['listItems'];
