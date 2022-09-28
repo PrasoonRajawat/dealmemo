@@ -1367,6 +1367,7 @@ sap.ui.define([
 				});
 			},
 			deletevcEpiData: function () {
+				sap.ui.core.BusyIndicator.show(0);
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
 				var oTable = this.byId(sap.ui.core.Fragment.createId("vcEpiTab", "oTbl_vcepiData"));
@@ -1384,6 +1385,7 @@ sap.ui.define([
 							this.reloadVendorContractTabs();
 							this.loadEpisodes();
 						} else if (data.__batchResponses[0].response.statusCode === "400") {
+							sap.ui.core.BusyIndicator.hide();
 							var oError = JSON.parse(data.__batchResponses[0].response.body);
 							var oMsg = oError.error.innererror.errordetails[0].message;
 							MessageBox.error(oMsg);
@@ -1391,6 +1393,7 @@ sap.ui.define([
 
 					}.bind(this),
 					error: function (oError) {
+						sap.ui.core.BusyIndicator.hide();
 						var oErrorResponse = JSON.parse(oError.responseText);
 						var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
 						MessageBox.error(oMsg);
@@ -1409,6 +1412,7 @@ sap.ui.define([
 				}.bind(this));
 
 				oModel.submitChanges(mParameters);
+				sap.ui.core.BusyIndicator.hide();
 			},
 
 			createVCPayload: function () {
@@ -1440,6 +1444,7 @@ sap.ui.define([
 
 			},
 			createVCEpiData: function () {
+				sap.ui.core.BusyIndicator.show(0);
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
 				var epiVCTabData = vendorContractDetailInfo.epiVCTabData;
@@ -1473,6 +1478,7 @@ sap.ui.define([
 
 					}.bind(this),
 					error: function (oError) {
+						sap.ui.core.BusyIndicator.hide();
 						var oErrorResponse = JSON.parse(oError.responseText);
 						var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
 						MessageBox.error(oMsg);
@@ -1503,9 +1509,10 @@ sap.ui.define([
 				} else {
 					oModel.submitChanges(mParameters);
 				}
-
+				sap.ui.core.BusyIndicator.hide();
 			},
 			updateVCEpiData: function () {
+				sap.ui.core.BusyIndicator.show(0);
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
 				var epiVCTabData = vendorContractDetailInfo.epiVCTabData;
@@ -1524,6 +1531,7 @@ sap.ui.define([
 
 					}.bind(this),
 					error: function (oError) {
+						sap.ui.core.BusyIndicator.hide();
 						var oErrorResponse = JSON.parse(oError.responseText);
 						var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
 						MessageBox.error(oMsg);
@@ -1545,6 +1553,7 @@ sap.ui.define([
 				} else {
 					oModel.submitChanges(mParameters);
 				}
+				sap.ui.core.BusyIndicator.hide();
 			},
 
 			createEpiTabVC: function () {
@@ -2174,6 +2183,7 @@ sap.ui.define([
 				vendorContractModel.refresh(true);
 			},
 			onDeleteDeliveryData: function () {
+				sap.ui.core.BusyIndicator.show(0);
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
 				var oTable = this.getView().byId("oTbl_vcdelData");
@@ -2186,6 +2196,7 @@ sap.ui.define([
 					groupId: "epiDelVCDeleteChanges",
 					success: function (data, resp) {
 						if (data.__batchResponses.length > 0) {
+							sap.ui.core.BusyIndicator.hide();
 							if (data.__batchResponses[0].response != undefined){
                             if (data.__batchResponses[0].response.statusCode == "400") {
                                 var oErrorResponse = JSON.parse(data.__batchResponses[0].response.body);
@@ -2194,6 +2205,7 @@ sap.ui.define([
                                 MessageBox.error(oMsg);
                                	this.reloadVendorContractTabs();
                             }}} else {
+                            	sap.ui.core.BusyIndicator.hide();
                                 oTable.removeSelections();
                                 MessageToast.show(oSourceBundle.getText("msgSuccEpiDeleteSave" + vendorContractDetailInfo.Cnttp));
                                	 this.reloadVendorContractTabs();
@@ -2201,6 +2213,7 @@ sap.ui.define([
 						}
 					}.bind(this),
 					error: function (oError) {
+						sap.ui.core.BusyIndicator.hide();
 						var oErrorResponse = JSON.parse(oError.responseText);
 						var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
 						MessageBox.error(oMsg);
@@ -2218,6 +2231,7 @@ sap.ui.define([
 				}.bind(this));
 
 				oModel.submitChanges(mParameters);
+				sap.ui.core.BusyIndicator.hide();
 			},
 			prepareDeliverypayload: function (oSelDelvCodeObj) {
 				var vendorContractModel = this.getView().getModel("vendorContractModel");

@@ -2404,6 +2404,7 @@ sap.ui.define([
 
 			},
 			onApplyChangeCost: function() {
+				sap.ui.core.BusyIndicator.show(0);
 				var validFlag = this.validateChangeCost();
 				if (validFlag) {
 					var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
@@ -2425,7 +2426,7 @@ sap.ui.define([
 					this.calculateEpisodeHeadCost();
 					this._oEpiCostChangeDialog.close();
 				}
-
+				sap.ui.core.BusyIndicator.hide();
 			},
 			onCancelChangeCost: function() {
 				this.changeEpiCostFlag = false;

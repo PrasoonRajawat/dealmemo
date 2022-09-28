@@ -1442,6 +1442,7 @@ sap.ui.define([
 				});
 			},
 			deleteEpiData: function() {
+				sap.ui.core.BusyIndicator.show(0);
 				var artistContractModel = this.getView().getModel("artistContractModel");
 				var artistContractDetailInfo = artistContractModel.getData();
 				var oTable = this.byId(sap.ui.core.Fragment.createId("acEpiTab", "oTbl_acepiData"));
@@ -1453,6 +1454,7 @@ sap.ui.define([
 				var mParameters = {
 					groupId: "epiACDeleteChanges",
 					success: function(data, resp) {
+						sap.ui.core.BusyIndicator.hide();
 						oTable.removeSelections();
 						MessageToast.show(oSourceBundle.getText("msgSuccEpiDeleteSave" + artistContractDetailInfo.Cnttp));
 						this.reloadArtistContractTabs();
@@ -1460,6 +1462,7 @@ sap.ui.define([
 
 					}.bind(this),
 					error: function(odata, resp) {
+						sap.ui.core.BusyIndicator.hide();
 						console.log(resp);
 					}
 				};
@@ -1476,6 +1479,7 @@ sap.ui.define([
 				}.bind(this));
 
 				oModel.submitChanges(mParameters);
+				
 			},
 
 			//Payment Tab
