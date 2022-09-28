@@ -1899,6 +1899,7 @@ sap.ui.define([
 			},
 
 			processPaymentData: function (vendorContractDetailInfo) {
+				sap.ui.core.BusyIndicator.show(0);
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var oPayLoad = {};
 				var epiTabData = $.extend(true, [], vendorContractDetailInfo.epiVCTabData);
@@ -1922,7 +1923,7 @@ sap.ui.define([
 				oModel.setUseBatch(false);
 				oModel.create("/DmCoSet", oPayLoad, {
 					success: function (oData) {
-
+						sap.ui.core.BusyIndicator.hide();
 						if (vendorContractDetailInfo.vcPaymentData === undefined || vendorContractDetailInfo.vcPaymentData.length === 0) {
 							vendorContractDetailInfo.vcPaymentData = [];
 							oData.DmCmSet.results.map(function (obj) {
@@ -1958,6 +1959,7 @@ sap.ui.define([
 						this._oSelectPaymentDialog.close();
 					}.bind(this),
 					error: function (oError) {
+						sap.ui.core.BusyIndicator.hide();
 						var oBody = JSON.parse(oError.responseText);
 						var oMsg = oBody.error.innererror.errordetails[0].message;
 						MessageBox.error(oMsg);
