@@ -8,9 +8,9 @@
 										<Toolbar>
 											<Label text="{i18n>lblRightsInfo}"/>
 											<ToolbarSpacer></ToolbarSpacer>
-											<Button text="{i18n>lblExportIPRTemplate}" visible="{vendorContractModel>/saveVisible}" press="onExport" enabled="{path:'vendorContractModel>/Dmst',formatter:'.Formatter.formatEditableStatus'}"/>
-											<Button text="{i18n>lblExportIPRDetails}" visible="{vendorContractModel>/saveVisible}" press="onExportIPRDetails" enabled="{path:'vendorContractModel>/Dmst',formatter:'.Formatter.formatEditableStatus'}"/>
-											<Button icon="sap-icon://upload" visible="{vendorContractModel>/saveVisible}" press="onUploadIPR" enabled="{path:'vendorContractModel>/Dmst',formatter:'.Formatter.formatEditableStatus'}"/>
+											<Button text="{i18n>lblExportIPRTemplate}" visible="{vendorContractModel>/saveVisible}" press="onExport" enabled="{path:'vendorContractModel>/Dmst',formatter:'.Formatter.formatEditableContStatus'}"/>
+											<Button text="{i18n>lblExportIPRDetails}" visible="{vendorContractModel>/saveVisible}" press="onExportIPRDetails" enabled="{path:'vendorContractModel>/Dmst',formatter:'.Formatter.formatEditableContStatus'}"/>
+											<Button icon="sap-icon://upload" visible="{vendorContractModel>/saveVisible}" press="onUploadIPR" enabled="{path:'vendorContractModel>/Dmst',formatter:'.Formatter.formatEditableContStatus'}"/>
 																
 										</Toolbar>
 									</infoToolbar>
