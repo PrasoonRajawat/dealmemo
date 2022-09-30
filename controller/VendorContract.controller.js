@@ -3267,14 +3267,14 @@ sap.ui.define([
 					//					oMsg =  oSourceBundle.getText("msgNoOfRunNonBlank");
 					//					break;
 					//				}
-					else if (aKeys.indexOf("Leading Amort Pattern") === -1) {
-						statusFlag = false;
-						oMsg = oSourceBundle.getText("msgLeadingAmrtNonBlank");
-						break;
-					} else if (aKeys.indexOf("Non Leading Amort Pattern") === -1) {
-						statusFlag = false;
-						oMsg = oSourceBundle.getText("msgNonLeadingAmrtNonBlank");
-						break;
+					// else if (aKeys.indexOf("Leading Amort Pattern") === -1) {
+					// 	statusFlag = false;
+					// 	oMsg = oSourceBundle.getText("msgLeadingAmrtNonBlank");
+					// 	break;
+					// } else if (aKeys.indexOf("Non Leading Amort Pattern") === -1) {
+					// 	statusFlag = false;
+					// 	oMsg = oSourceBundle.getText("msgNonLeadingAmrtNonBlank");
+					// 	break;
 					} else if (aKeys.indexOf("Territory") === -1) {
 						statusFlag = false;
 						oMsg = oSourceBundle.getText("msgTerritoryNonBlank");
