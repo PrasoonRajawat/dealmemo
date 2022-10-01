@@ -111,9 +111,9 @@ sap.ui.define([
 				var vendorContractDetailInfo = vendorContractModel.getData();
 				var responseFlag = this.checkForUnsavedData();
 				if (responseFlag) {
-					if(vendorContractDetailInfo.App == "App"){
-						this.navToContApp();	
-					} else { 
+					if (vendorContractDetailInfo.App == "App") {
+						this.navToContApp();
+					} else {
 						this.navToDealMemo();
 					}
 				} else {
@@ -123,11 +123,11 @@ sap.ui.define([
 						emphasizedAction: "Yes",
 						onClose: function (sAction) {
 							if (sAction === oSourceBundle.getText("lblYes")) {
-						if(vendorContractDetailInfo.App == "App"){
-							this.navToContApp();	
-						} else { 
-							this.navToDealMemo();
-							}
+								if (vendorContractDetailInfo.App == "App") {
+									this.navToContApp();
+								} else {
+									this.navToDealMemo();
+								}
 							} else if (sAction === oSourceBundle.getText("lblNo")) {
 
 							}
@@ -136,30 +136,30 @@ sap.ui.define([
 				}
 
 			},
-			
+
 			navToContApp: function () {
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
-				
+
 				var dmno = vendorContractDetailInfo.Dmno;
 				var dmver = vendorContractDetailInfo.Dmver;
 				var conttp = vendorContractDetailInfo.Conttp;
 				var host = window.location.origin;
 				var path = window.location.pathname;
-				
-				var finalURL = host + path + "#ZVendorContract-display&/main/" + dmno + "/" + dmver + "/" + conttp ;
+
+				var finalURL = host + path + "#ZVendorContract-display&/main/" + dmno + "/" + dmver + "/" + conttp;
 				sap.m.URLHelper.redirect(finalURL, false);
 			},
 
 			navToDealMemo: function () {
-					var vendorContractModel = this.getView().getModel("vendorContractModel");
+				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
 				if (this.newContractCreated) {
 					this.newContractCreated = false;
 					window.history.go(-2);
-				} else if (vendorContractDetailInfo.App){
+				} else if (vendorContractDetailInfo.App) {
 					history.back();
-				}	else {
+				} else {
 					window.history.go(-1);
 				}
 			},
@@ -573,7 +573,7 @@ sap.ui.define([
 						vendorContractModel.setProperty("/departmentList", sortedList);
 						if (vendorContractModel.oData.contractMode === "Ch") {
 							vendorContractModel.oData.createParams.Zltext = vendorContractModel.oData.departmentList.find(a => a.Abtnr ===
-								vendorContractModel.oData.createParams.Zstext).Zltext;   
+								vendorContractModel.oData.createParams.Zstext).Zltext;
 						}
 						vendorContractModel.refresh(true);
 						sap.ui.core.BusyIndicator.hide();
@@ -861,15 +861,15 @@ sap.ui.define([
 							}
 						});
 						var filterEpi = oData.results.filter(function (epObj) {
-							return  epObj.Vcflag !== "X" || ( epObj.Contno === vendorContractDetailInfo.Contno || epObj.Contno === "" ); 
+							return epObj.Vcflag !== "X" || (epObj.Contno === vendorContractDetailInfo.Contno || epObj.Contno === "");
 						})
 						if (vendorContractDetailInfo.Contver == 'new') {
-						vendorContractModel.setProperty("/episodeDataList", $.extend(true, [], filteredEpisodes));
+							vendorContractModel.setProperty("/episodeDataList", $.extend(true, [], filteredEpisodes));
 						} else {
-						vendorContractModel.setProperty("/episodeDataList", $.extend(true, [], filterEpi))
+							vendorContractModel.setProperty("/episodeDataList", $.extend(true, [], filterEpi))
 						}
 						vendorContractModel.setProperty("/episodeVCList", filteredEpisodes);
-						vendorContractModel.setProperty("/episode2List" , filterEpi);
+						vendorContractModel.setProperty("/episode2List", filterEpi);
 						vendorContractModel.setProperty("/selEpisodes", filteredEpisodes);
 						vendorContractModel.refresh(true);
 						sap.ui.core.BusyIndicator.hide();
@@ -952,7 +952,7 @@ sap.ui.define([
 				var vendorContractModel = this.getView().getModel(oValueModelAlias);
 				vendorContractModel.setProperty(oValuePath, selectedItemObj[oProp]);
 				vendorContractModel.setProperty(oKeyPath, selectedItemObj[oKey]);
-				if(oEvent.oSource.mProperties.title == 'Select Department'){
+				if (oEvent.oSource.mProperties.title == 'Select Department') {
 					vendorContractModel.setProperty("/createParams/Dept", selectedItemObj["Abtnr"]);
 				}
 				vendorContractModel.refresh(true);
@@ -1706,7 +1706,7 @@ sap.ui.define([
 						});
 				}
 
-				
+
 				selectedEpisodeList.map(function (selEpObj) {
 					paymentPayloadArr.push({
 						Contno: vendorContractDetailInfo.Contno,
@@ -1758,7 +1758,7 @@ sap.ui.define([
 						});
 					}.bind(this));
 				}
-				
+
 				return paymentPayloadArr;
 			},
 
@@ -1780,7 +1780,7 @@ sap.ui.define([
 						Dmver: vendorContractDetailInfo.Dmver,
 						Dueamt: oAmtType === 1 ? mlObj.Dueamt : "0.00",
 						Empfk: mlObj.vendorKey,
-						Mestdt: mlObj.estDate != null ? Formatter.formatDateValForBackend(mlObj.estDate) : null ,
+						Mestdt: mlObj.estDate != null ? Formatter.formatDateValForBackend(mlObj.estDate) : null,
 						Msid: mlObj.Mstcd,
 						Msidnm: mlObj.Mstcdnm,
 						Tentid: "IBS",
@@ -2199,19 +2199,21 @@ sap.ui.define([
 					success: function (data, resp) {
 						if (data.__batchResponses.length > 0) {
 							sap.ui.core.BusyIndicator.hide();
-							if (data.__batchResponses[0].response != undefined){
-                            if (data.__batchResponses[0].response.statusCode == "400") {
-                                var oErrorResponse = JSON.parse(data.__batchResponses[0].response.body);
-                                var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
-                                if(oMsg.includes("Content Receipt has been done for")){
-                                MessageBox.error(oMsg);
-                               	this.reloadVendorContractTabs();
-                            }}} else {
-                            	sap.ui.core.BusyIndicator.hide();
-                                oTable.removeSelections();
-                                MessageToast.show(oSourceBundle.getText("msgSuccEpiDeleteSave" + vendorContractDetailInfo.Cnttp));
-                               	 this.reloadVendorContractTabs();
-                        }
+							if (data.__batchResponses[0].response != undefined) {
+								if (data.__batchResponses[0].response.statusCode == "400") {
+									var oErrorResponse = JSON.parse(data.__batchResponses[0].response.body);
+									var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
+									if (oMsg.includes("Content Receipt has been done for")) {
+										MessageBox.error(oMsg);
+										this.reloadVendorContractTabs();
+									}
+								}
+							} else {
+								sap.ui.core.BusyIndicator.hide();
+								oTable.removeSelections();
+								MessageToast.show(oSourceBundle.getText("msgSuccEpiDeleteSave" + vendorContractDetailInfo.Cnttp));
+								this.reloadVendorContractTabs();
+							}
 						}
 					}.bind(this),
 					error: function (oError) {
@@ -2448,7 +2450,7 @@ sap.ui.define([
 
 			//IPR Rights Tab
 			onEnterIPR: function () {
-				
+
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
 				vendorContractModel.setProperty("/episodeRangeVisibleIPR", false);
@@ -2521,31 +2523,31 @@ sap.ui.define([
 				var that = this
 				var validateIPR = this.validateIPRDetails();
 				if (validateIPR) {
-				sap.ui.core.BusyIndicator.show(0);
-				var vendorContractModel = this.getView().getModel("vendorContractModel");
-				var vendorContractDetailInfo = vendorContractModel.getData();
-				var Dmno = vendorContractDetailInfo.Dmno;
-				var Dmver = vendorContractDetailInfo.Dmver;
-				var Contno = vendorContractDetailInfo.Contno;
-				var Contver = vendorContractDetailInfo.Contver;
-				var Stdate = Formatter.formatDateValForBackend(vendorContractDetailInfo.rightStDate);
-				var Enddate =  Formatter.formatDateValForBackend(vendorContractDetailInfo.rightendDate);
-				var srvUrl = "/sap/opu/odata/IBSCMS/DEALMEMO_SRV";
-				var oModelSav = new sap.ui.model.odata.ODataModel(srvUrl, true, "", "");
-				var pValue = "/AmrMapSet?$filter=Tentid eq 'IBS' and Dmno eq '" + Dmno + "' and Dmver eq '" + Dmver + "' and Contno eq '" + Contno + "' and Contver eq '" + Contver + "' and Rhtfrdt eq datetime'" + Stdate + "' and Rhttodt eq datetime'" + Enddate + "'";
-				oModelSav.read(pValue, null, null, true, function (oData) {
-					sap.ui.core.BusyIndicator.hide();
-					vendorContractModel.setProperty("/AmortMapList", oData.results);
-					var mapList = oData.results;
-					that.mapList = oData.results;
-					vendorContractModel.refresh(true);
-					that.onPushIPR();
-				}, function (value) {
-					sap.ui.core.BusyIndicator.hide();
-					console.log(value);
+					sap.ui.core.BusyIndicator.show(0);
+					var vendorContractModel = this.getView().getModel("vendorContractModel");
+					var vendorContractDetailInfo = vendorContractModel.getData();
+					var Dmno = vendorContractDetailInfo.Dmno;
+					var Dmver = vendorContractDetailInfo.Dmver;
+					var Contno = vendorContractDetailInfo.Contno;
+					var Contver = vendorContractDetailInfo.Contver;
+					var Stdate = Formatter.formatDateValForBackend(vendorContractDetailInfo.rightStDate);
+					var Enddate = Formatter.formatDateValForBackend(vendorContractDetailInfo.rightendDate);
+					var srvUrl = "/sap/opu/odata/IBSCMS/DEALMEMO_SRV";
+					var oModelSav = new sap.ui.model.odata.ODataModel(srvUrl, true, "", "");
+					var pValue = "/AmrMapSet?$filter=Tentid eq 'IBS' and Dmno eq '" + Dmno + "' and Dmver eq '" + Dmver + "' and Contno eq '" + Contno + "' and Contver eq '" + Contver + "' and Rhtfrdt eq datetime'" + Stdate + "' and Rhttodt eq datetime'" + Enddate + "'";
+					oModelSav.read(pValue, null, null, true, function (oData) {
+						sap.ui.core.BusyIndicator.hide();
+						vendorContractModel.setProperty("/AmortMapList", oData.results);
+						var mapList = oData.results;
+						that.mapList = oData.results;
+						vendorContractModel.refresh(true);
+						that.onPushIPR();
+					}, function (value) {
+						sap.ui.core.BusyIndicator.hide();
+						console.log(value);
 
-				});
-			}
+					});
+				}
 			},
 			onCancelIPRSelection: function () {
 				this._oSelectIPRDialog.close();
@@ -2609,12 +2611,12 @@ sap.ui.define([
 					vendorContractDetailInfo.vcIPRDataErrorMsg = oSourceBundle.getText("msgSelectEpisode" + vendorContractDetailInfo.Cnttp);
 					vendorContractModel.refresh(true);
 					return false;
-				// } else if (vendorContractDetailInfo.IPRRight === "" || vendorContractDetailInfo.PlatformKey === "" || vendorContractDetailInfo.totRuns ===
-				// 	"" || vendorContractDetailInfo.amortKey === "" || vendorContractDetailInfo.nonAmortKey === "") {
-				// 	vendorContractDetailInfo.vcIPRDataErrorMsg = oSourceBundle.getText("msgrequiredFieds");
-				// 	vendorContractDetailInfo.vcIPRDataMsgVisible = true;
-				// 	vendorContractModel.refresh(true);
-				// 	return false;
+					// } else if (vendorContractDetailInfo.IPRRight === "" || vendorContractDetailInfo.PlatformKey === "" || vendorContractDetailInfo.totRuns ===
+					// 	"" || vendorContractDetailInfo.amortKey === "" || vendorContractDetailInfo.nonAmortKey === "") {
+					// 	vendorContractDetailInfo.vcIPRDataErrorMsg = oSourceBundle.getText("msgrequiredFieds");
+					// 	vendorContractDetailInfo.vcIPRDataMsgVisible = true;
+					// 	vendorContractModel.refresh(true);
+					// 	return false;
 				} else if (vendorContractDetailInfo.rightStDate === null || vendorContractDetailInfo.rightendDate === null) {
 					// MessageBox.error(oSourceBundle.getText("msgrequiredFieds"));
 					vendorContractDetailInfo.vcIPRDataErrorMsg = oSourceBundle.getText("msgrequiredFieds");
@@ -2663,9 +2665,9 @@ sap.ui.define([
 				return oResponse;
 			},
 
-			
+
 			onPushIPR: function () {
-			
+
 				var validateIPR = this.validateIPRDetails();
 				if (validateIPR) {
 					var vendorContractModel = this.getView().getModel("vendorContractModel");
@@ -2688,83 +2690,83 @@ sap.ui.define([
 					}
 
 					selectedEpisodeList.map(function (selEpObj) {
-						if(mapList.length > 0) {
-						IPRPayloadArr.push({
-							Tentid: "IBS",
-							Dmno: vendorContractDetailInfo.Dmno,
-							Dmver: vendorContractDetailInfo.Dmver,
-							Epiid: selEpObj.Epiid, //Episode ID
-							Contno: vendorContractDetailInfo.Contno,
-							Conttp: "01",
-							Contver: vendorContractDetailInfo.Contver,
-							Iprrht: vendorContractDetailInfo.IPRRight,
-							Rhtfrdt: vendorContractDetailInfo.rightStDate,
-							Rhttodt: vendorContractDetailInfo.rightendDate,
-							Norun: vendorContractDetailInfo.totRuns,
-							// Leadamrtpt: vendorContractDetailInfo.amortKey,
-							// Nleadamrtpt: vendorContractDetailInfo.nonAmortKey,
-							Leadamrtpt: vendorContractDetailInfo.amortKey == "" ? mapList.find(t => t.Epiid == selEpObj.Epiid).Leadamrtpt : vendorContractDetailInfo.amortKey,
-							Nleadamrtpt: vendorContractDetailInfo.nonAmortKey == "" ? mapList.find(t => t.Epiid == selEpObj.Epiid).Nleadamrtpt : vendorContractDetailInfo.nonAmortKey,
-							Territory: vendorContractDetailInfo.territoryKey,
-							Dubstitle: vendorContractDetailInfo.selAdditionalRights.indexOf("DB") >= 0 ? true : false,
-							Stitile: vendorContractDetailInfo.selAdditionalRights.indexOf("SR") >= 0 ? true : false,
-							Ntrpt: vendorContractDetailInfo.selAdditionalRights.indexOf("NR") >= 0 ? true : false,
-							Exclrht: vendorContractDetailInfo.selAdditionalRights.indexOf("ER") >= 0 ? true : false,
-							Estdt: vendorContractDetailInfo.selAdditionalRights.indexOf("ED") >= 0 ? true : false,
-							Rhtstepid: "",
-							Period: "",
-							Dur: "",
-							Platform: vendorContractDetailInfo.PlatformKey,
-							Platformdsc: sap.ui.getCore().byId(vendorContractDetailInfo.PlatformItem).getText(),
-							//for display
-							Epinm: selEpObj.Epinm,
-							Iprnm: sap.ui.getCore().byId(vendorContractDetailInfo.IPRItem).getText(),
-							Tertnm: sap.ui.getCore().byId(vendorContractDetailInfo.TeritoryItem).getText(),
-							// Leadnm: sap.ui.getCore().byId(vendorContractDetailInfo.AmortItem).getText(),
-							// Nonleadnm: sap.ui.getCore().byId(vendorContractDetailInfo.NonAmortItem).getText(),
-							Leadnm: vendorContractDetailInfo.amortKey != "" ? vendorContractDetailInfo.amortPatternList.find(g => g.Mstcd == vendorContractDetailInfo.amortKey ).Mstcdnm : mapList.find(g => g.Epiid == selEpObj.Epiid ).Leadnm,
-							Nonleadnm: vendorContractDetailInfo.nonAmortKey != "" ? vendorContractDetailInfo.amortPatternList.find(g => g.Mstcd == vendorContractDetailInfo.nonAmortKey ).Mstcdnm : mapList.find(g => g.Epiid == selEpObj.Epiid ).Nonleadnm,
-							IPREditFlag: vendorContractDetailInfo.IPRRight === "01" ? false : true,
-							flag: "Cr"
-							
-						});
-					} else {
-						IPRPayloadArr.push({
-							Tentid: "IBS",
-							Dmno: vendorContractDetailInfo.Dmno,
-							Dmver: vendorContractDetailInfo.Dmver,
-							Epiid: selEpObj.Epiid, //Episode ID
-							Contno: vendorContractDetailInfo.Contno,
-							Conttp: "01",
-							Contver: vendorContractDetailInfo.Contver,
-							Iprrht: vendorContractDetailInfo.IPRRight,
-							Rhtfrdt: vendorContractDetailInfo.rightStDate,
-							Rhttodt: vendorContractDetailInfo.rightendDate,
-							Norun: vendorContractDetailInfo.totRuns,
-							Leadamrtpt: vendorContractDetailInfo.amortKey,
-							Nleadamrtpt: vendorContractDetailInfo.nonAmortKey,
-							Territory: vendorContractDetailInfo.territoryKey,
-							Dubstitle: vendorContractDetailInfo.selAdditionalRights.indexOf("DB") >= 0 ? true : false,
-							Stitile: vendorContractDetailInfo.selAdditionalRights.indexOf("SR") >= 0 ? true : false,
-							Ntrpt: vendorContractDetailInfo.selAdditionalRights.indexOf("NR") >= 0 ? true : false,
-							Exclrht: vendorContractDetailInfo.selAdditionalRights.indexOf("ER") >= 0 ? true : false,
-							Estdt: vendorContractDetailInfo.selAdditionalRights.indexOf("ED") >= 0 ? true : false,
-							Rhtstepid: "",
-							Period: "",
-							Dur: "",
-							Platform: vendorContractDetailInfo.PlatformKey,
-							Platformdsc: sap.ui.getCore().byId(vendorContractDetailInfo.PlatformItem).getText(),
-							//for display
-							Epinm: selEpObj.Epinm,
-							Iprnm: sap.ui.getCore().byId(vendorContractDetailInfo.IPRItem).getText(),
-							Tertnm: sap.ui.getCore().byId(vendorContractDetailInfo.TeritoryItem).getText(),
-							Leadnm: vendorContractDetailInfo.amortKey != "" ? sap.ui.getCore().byId(vendorContractDetailInfo.AmortItem).getText() : "",
-							Nonleadnm:  vendorContractDetailInfo.nonAmortKey != "" ? sap.ui.getCore().byId(vendorContractDetailInfo.NonAmortItem).getText() : "", 
-							IPREditFlag: vendorContractDetailInfo.IPRRight === "01" ? false : true,
-							flag: "Cr"
-							
-						});
-					}
+						if (mapList.length > 0) {
+							IPRPayloadArr.push({
+								Tentid: "IBS",
+								Dmno: vendorContractDetailInfo.Dmno,
+								Dmver: vendorContractDetailInfo.Dmver,
+								Epiid: selEpObj.Epiid, //Episode ID
+								Contno: vendorContractDetailInfo.Contno,
+								Conttp: "01",
+								Contver: vendorContractDetailInfo.Contver,
+								Iprrht: vendorContractDetailInfo.IPRRight,
+								Rhtfrdt: vendorContractDetailInfo.rightStDate,
+								Rhttodt: vendorContractDetailInfo.rightendDate,
+								Norun: vendorContractDetailInfo.totRuns,
+								// Leadamrtpt: vendorContractDetailInfo.amortKey,
+								// Nleadamrtpt: vendorContractDetailInfo.nonAmortKey,
+								Leadamrtpt: vendorContractDetailInfo.amortKey == "" ? mapList.find(t => t.Epiid == selEpObj.Epiid).Leadamrtpt : vendorContractDetailInfo.amortKey,
+								Nleadamrtpt: vendorContractDetailInfo.nonAmortKey == "" ? mapList.find(t => t.Epiid == selEpObj.Epiid).Nleadamrtpt : vendorContractDetailInfo.nonAmortKey,
+								Territory: vendorContractDetailInfo.territoryKey,
+								Dubstitle: vendorContractDetailInfo.selAdditionalRights.indexOf("DB") >= 0 ? true : false,
+								Stitile: vendorContractDetailInfo.selAdditionalRights.indexOf("SR") >= 0 ? true : false,
+								Ntrpt: vendorContractDetailInfo.selAdditionalRights.indexOf("NR") >= 0 ? true : false,
+								Exclrht: vendorContractDetailInfo.selAdditionalRights.indexOf("ER") >= 0 ? true : false,
+								Estdt: vendorContractDetailInfo.selAdditionalRights.indexOf("ED") >= 0 ? true : false,
+								Rhtstepid: "",
+								Period: "",
+								Dur: "",
+								Platform: vendorContractDetailInfo.PlatformKey,
+								Platformdsc: sap.ui.getCore().byId(vendorContractDetailInfo.PlatformItem).getText(),
+								//for display
+								Epinm: selEpObj.Epinm,
+								Iprnm: sap.ui.getCore().byId(vendorContractDetailInfo.IPRItem).getText(),
+								Tertnm: sap.ui.getCore().byId(vendorContractDetailInfo.TeritoryItem).getText(),
+								// Leadnm: sap.ui.getCore().byId(vendorContractDetailInfo.AmortItem).getText(),
+								// Nonleadnm: sap.ui.getCore().byId(vendorContractDetailInfo.NonAmortItem).getText(),
+								Leadnm: vendorContractDetailInfo.amortKey != "" ? vendorContractDetailInfo.amortPatternList.find(g => g.Mstcd == vendorContractDetailInfo.amortKey).Mstcdnm : mapList.find(g => g.Epiid == selEpObj.Epiid).Leadnm,
+								Nonleadnm: vendorContractDetailInfo.nonAmortKey != "" ? vendorContractDetailInfo.amortPatternList.find(g => g.Mstcd == vendorContractDetailInfo.nonAmortKey).Mstcdnm : mapList.find(g => g.Epiid == selEpObj.Epiid).Nonleadnm,
+								IPREditFlag: vendorContractDetailInfo.IPRRight === "01" ? false : true,
+								flag: "Cr"
+
+							});
+						} else {
+							IPRPayloadArr.push({
+								Tentid: "IBS",
+								Dmno: vendorContractDetailInfo.Dmno,
+								Dmver: vendorContractDetailInfo.Dmver,
+								Epiid: selEpObj.Epiid, //Episode ID
+								Contno: vendorContractDetailInfo.Contno,
+								Conttp: "01",
+								Contver: vendorContractDetailInfo.Contver,
+								Iprrht: vendorContractDetailInfo.IPRRight,
+								Rhtfrdt: vendorContractDetailInfo.rightStDate,
+								Rhttodt: vendorContractDetailInfo.rightendDate,
+								Norun: vendorContractDetailInfo.totRuns,
+								Leadamrtpt: vendorContractDetailInfo.amortKey,
+								Nleadamrtpt: vendorContractDetailInfo.nonAmortKey,
+								Territory: vendorContractDetailInfo.territoryKey,
+								Dubstitle: vendorContractDetailInfo.selAdditionalRights.indexOf("DB") >= 0 ? true : false,
+								Stitile: vendorContractDetailInfo.selAdditionalRights.indexOf("SR") >= 0 ? true : false,
+								Ntrpt: vendorContractDetailInfo.selAdditionalRights.indexOf("NR") >= 0 ? true : false,
+								Exclrht: vendorContractDetailInfo.selAdditionalRights.indexOf("ER") >= 0 ? true : false,
+								Estdt: vendorContractDetailInfo.selAdditionalRights.indexOf("ED") >= 0 ? true : false,
+								Rhtstepid: "",
+								Period: "",
+								Dur: "",
+								Platform: vendorContractDetailInfo.PlatformKey,
+								Platformdsc: sap.ui.getCore().byId(vendorContractDetailInfo.PlatformItem).getText(),
+								//for display
+								Epinm: selEpObj.Epinm,
+								Iprnm: sap.ui.getCore().byId(vendorContractDetailInfo.IPRItem).getText(),
+								Tertnm: sap.ui.getCore().byId(vendorContractDetailInfo.TeritoryItem).getText(),
+								Leadnm: vendorContractDetailInfo.amortKey != "" ? sap.ui.getCore().byId(vendorContractDetailInfo.AmortItem).getText() : "",
+								Nonleadnm: vendorContractDetailInfo.nonAmortKey != "" ? sap.ui.getCore().byId(vendorContractDetailInfo.NonAmortItem).getText() : "",
+								IPREditFlag: vendorContractDetailInfo.IPRRight === "01" ? false : true,
+								flag: "Cr"
+
+							});
+						}
 					}.bind(this));
 
 					var oResp = this.updateIPRData(IPRPayloadArr, $.extend(true, [], vendorContractDetailInfo.vcIPRData));
@@ -2788,8 +2790,8 @@ sap.ui.define([
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
 				var oPath = oEvent.getSource().getBindingContext("vendorContractModel").sPath;
-				if (vendorContractDetailInfo.DmVrSet.results.length){
-				oEvent.getSource().getBindingContext("vendorContractModel").getObject().flag = "Ch";
+				if (vendorContractDetailInfo.DmVrSet.results.length) {
+					oEvent.getSource().getBindingContext("vendorContractModel").getObject().flag = "Ch";
 				}
 				this.getView().getModel("vendorContractModel").refresh(true);
 				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
@@ -2810,8 +2812,8 @@ sap.ui.define([
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
 				var oPath = oEvent.getSource().getBindingContext("vendorContractModel").sPath;
-				if (vendorContractDetailInfo.DmVrSet.results.length){
-				oEvent.getSource().getBindingContext("vendorContractModel").getObject().flag = "Ch";
+				if (vendorContractDetailInfo.DmVrSet.results.length) {
+					oEvent.getSource().getBindingContext("vendorContractModel").getObject().flag = "Ch";
 				}
 				this.getView().getModel("vendorContractModel").refresh(true);
 				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
@@ -2832,8 +2834,8 @@ sap.ui.define([
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
 				var oPath = oEvent.getSource().getBindingContext("vendorContractModel").sPath;
-				if (vendorContractDetailInfo.DmVrSet.results.length){
-				oEvent.getSource().getBindingContext("vendorContractModel").getObject().flag = "Ch";
+				if (vendorContractDetailInfo.DmVrSet.results.length) {
+					oEvent.getSource().getBindingContext("vendorContractModel").getObject().flag = "Ch";
 				}
 				this.getView().getModel("vendorContractModel").refresh(true);
 				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
@@ -3506,30 +3508,54 @@ sap.ui.define([
 
 							}
 						}
-						if (aKey === "Leading Amort Pattern") {
-							if (epiObj[aKey] === "" || epiObj[aKey] === null) {
-								statusFlag = false;
-								oMsg = oSourceBundle.getText("msgLeadingAmrtNonBlank");
-								break;
-							} else {
+						sap.ui.core.BusyIndicator.show(0);
+						var vendorContractModel = this.getView().getModel("vendorContractModel");
+						var vendorContractDetailInfo = vendorContractModel.getData();
+						var Dmno = vendorContractDetailInfo.Dmno;
+						var Dmver = vendorContractDetailInfo.Dmver;
+						var Contno = vendorContractDetailInfo.Contno;
+						var Contver = vendorContractDetailInfo.Contver;
+						var Stdate = IPRPayload.Rhtfrdt;
+						var Enddate = IPRPayload.Rhttodt;
+						var srvUrl = "/sap/opu/odata/IBSCMS/DEALMEMO_SRV";
+						var oModelSav = new sap.ui.model.odata.ODataModel(srvUrl, true, "", "");
+						var pValue = "/AmrMapSet?$filter=Tentid eq 'IBS' and Dmno eq '" + Dmno + "' and Dmver eq '" + Dmver + "' and Contno eq '" + Contno + "' and Contver eq '" + Contver + "' and Rhtfrdt eq datetime'" + Stdate + "' and Rhttodt eq datetime'" + Enddate + "'";
+						oModelSav.read(pValue, null, null, true, function (oData) {
+							sap.ui.core.BusyIndicator.hide();
 
-								IPRPayload.Leadamrtpt = epiObj[aKey].split("-")[0].trim();
-								IPRPayload.Leadnm = epiObj[aKey].split("-")[1].trim();
+							var mapList = oData.results;
 
+							if (aKey === "Leading Amort Pattern") {
+								if (epiObj[aKey] === "" || epiObj[aKey] === null) {
+									IPRPayload.Leadamrtpt = mapList.find(t => t.Epiid == IPRPayload.Epiid).Leadamrtpt;
+									IPRPayload.Leadnm = mapList.find(g => g.Epiid == IPRPayload.Epiid).Leadnm;
+	
+
+								} else {
+
+									IPRPayload.Leadamrtpt = epiObj[aKey].split("-")[0].trim();
+									IPRPayload.Leadnm = epiObj[aKey].split("-")[1].trim();
+
+								}
 							}
-						}
-						if (aKey === "Non Leading Amort Pattern") {
-							if (epiObj[aKey] === "" || epiObj[aKey] === null) {
-								statusFlag = false;
-								oMsg = oSourceBundle.getText("msgNonLeadingAmrtNonBlank");
-								break;
-							} else {
+							if (aKey === "Non Leading Amort Pattern") {
+								if (epiObj[aKey] === "" || epiObj[aKey] === null) {
+									IPRPayload.Nleadamrtpt = mapList.find(t => t.Epiid == IPRPayload.Epiid).Nleadamrtpt;
+									IPRPayload.Nonleadnm = mapList.find(g => g.Epiid == IPRPayload.Epiid).Nonleadnm;		
+								} else {
 
-								IPRPayload.Nleadamrtpt = epiObj[aKey].split("-")[0].trim();
-								IPRPayload.Nonleadnm = epiObj[aKey].split("-")[1].trim();
+									IPRPayload.Nleadamrtpt = epiObj[aKey].split("-")[0].trim();
+									IPRPayload.Nonleadnm = epiObj[aKey].split("-")[1].trim();
 
+								}
 							}
-						}
+
+						}, function (value) {
+							sap.ui.core.BusyIndicator.hide();
+							console.log(value);
+
+						});
+
 						if (aKey === "Territory") {
 							if (epiObj[aKey] === "" || epiObj[aKey] === null) {
 								statusFlag = false;
