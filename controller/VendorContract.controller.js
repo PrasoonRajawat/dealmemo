@@ -3508,6 +3508,7 @@ sap.ui.define([
 
 							}
 						}
+						if(statusFlag) {
 						sap.ui.core.BusyIndicator.show(0);
 						var vendorContractModel = this.getView().getModel("vendorContractModel");
 						var vendorContractDetailInfo = vendorContractModel.getData();
@@ -3528,6 +3529,7 @@ sap.ui.define([
 							console.log(value);
 
 						});
+					}
 
 						if (aKey === "Leading Amort Pattern") {
 							if (epiObj[aKey] === "" || epiObj[aKey] === null) {
