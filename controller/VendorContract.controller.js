@@ -3508,6 +3508,7 @@ sap.ui.define([
 
 							}
 						}
+						var mapList = [];
 						if(statusFlag) {
 						sap.ui.core.BusyIndicator.show(0);
 						var vendorContractModel = this.getView().getModel("vendorContractModel");
@@ -3523,7 +3524,7 @@ sap.ui.define([
 						var pValue = "/AmrMapSet?$filter=Tentid eq 'IBS' and Dmno eq '" + Dmno + "' and Dmver eq '" + Dmver + "' and Contno eq '" + Contno + "' and Contver eq '" + Contver + "' and Rhtfrdt eq datetime'" + Stdate + "' and Rhttodt eq datetime'" + Enddate + "'";
 						oModelSav.read(pValue, null, null, true, function (oData) {
 							sap.ui.core.BusyIndicator.hide();
-							var mapList = oData.results;
+							 mapList = oData.results;
 						}, function (value) {
 							sap.ui.core.BusyIndicator.hide();
 							console.log(value);
