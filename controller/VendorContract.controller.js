@@ -3529,24 +3529,18 @@ sap.ui.define([
 								var vendorContractModel = that.getView().getModel("vendorContractModel");
 								var vendorContractDetailInfo = vendorContractModel.getData();
 
-								if (aKey === "Leading Amort Pattern") {
+								
 									if ((epiObj[aKey] === "" || epiObj[aKey] === null) && mapList.length > 0) {
 										vendorContractDetailInfo.vcIPRData.find(t => t.Epiid == IPRPayload.Epiid).Leadamrtpt = mapList.find(t => t.Epiid == IPRPayload.Epiid).Leadamrtpt;
 										vendorContractDetailInfo.vcIPRData.find(t => t.Epiid == IPRPayload.Epiid).Leadnm = mapList.find(g => g.Epiid == IPRPayload.Epiid).Leadnm;
-									} else {
-										vendorContractDetailInfo.vcIPRData.find(t => t.Epiid == IPRPayload.Epiid).Leadamrtpt = epiObj[aKey].split("-")[0].trim();
-										vendorContractDetailInfo.vcIPRData.find(t => t.Epiid == IPRPayload.Epiid).Leadnm = epiObj[aKey].split("-")[1].trim();
 									}
-								}
-								if (aKey === "Non Leading Amort Pattern") {
+								
+								
 									if ((epiObj[aKey] === "" || epiObj[aKey] === null) && mapList.length > 0) {
 										vendorContractDetailInfo.vcIPRData.find(t => t.Epiid == IPRPayload.Epiid).Nleadamrtpt = mapList.find(t => t.Epiid == IPRPayload.Epiid).Nleadamrtpt;
 										vendorContractDetailInfo.vcIPRData.find(t => t.Epiid == IPRPayload.Epiid).Nonleadnm = mapList.find(g => g.Epiid == IPRPayload.Epiid).Nonleadnm;
-									} else {
-										vendorContractDetailInfo.vcIPRData.find(t => t.Epiid == IPRPayload.Epiid).Nleadamrtpt = epiObj[aKey].split("-")[0].trim();
-										vendorContractDetailInfo.vcIPRData.find(t => t.Epiid == IPRPayload.Epiid).Nonleadnm = epiObj[aKey].split("-")[1].trim();
-									}
-								}
+									} 
+								
 								vendorContractModel.refresh(true);
 							}, function (value) {
 								sap.ui.core.BusyIndicator.hide();
