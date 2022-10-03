@@ -3508,6 +3508,7 @@ sap.ui.define([
 
 							}
 						}
+						var that = this;
 						var mapList = [];
 						if (statusFlag) {
 							sap.ui.core.BusyIndicator.show(0);
@@ -3525,7 +3526,7 @@ sap.ui.define([
 							oModelSav.read(pValue, null, null, true, function (oData) {
 								sap.ui.core.BusyIndicator.hide();
 								mapList = oData.results;
-								var vendorContractModel = this.getView().getModel("vendorContractModel");
+								var vendorContractModel = that.getView().getModel("vendorContractModel");
 								var vendorContractDetailInfo = vendorContractModel.getData();
 
 								if (aKey === "Leading Amort Pattern") {
