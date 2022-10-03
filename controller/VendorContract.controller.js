@@ -3517,8 +3517,8 @@ sap.ui.define([
 						var Dmver = vendorContractDetailInfo.Dmver;
 						var Contno = vendorContractDetailInfo.Contno;
 						var Contver = vendorContractDetailInfo.Contver;
-						var Stdate = IPRPayload.Rhtfrdt;
-						var Enddate = IPRPayload.Rhttodt;
+						var Stdate = Formatter.formatDateValForBackend(IPRPayload.Rhtfrdt);
+						var Enddate = Formatter.formatDateValForBackend(IPRPayload.Rhttodt);
 						var srvUrl = "/sap/opu/odata/IBSCMS/DEALMEMO_SRV";
 						var oModelSav = new sap.ui.model.odata.ODataModel(srvUrl, true, "", "");
 						var pValue = "/AmrMapSet?$filter=Tentid eq 'IBS' and Dmno eq '" + Dmno + "' and Dmver eq '" + Dmver + "' and Contno eq '" + Contno + "' and Contver eq '" + Contver + "' and Rhtfrdt eq datetime'" + Stdate + "' and Rhttodt eq datetime'" + Enddate + "'";
@@ -3533,7 +3533,7 @@ sap.ui.define([
 					}
 
 						if (aKey === "Leading Amort Pattern") {
-							if (epiObj[aKey] === "" || epiObj[aKey] === null) {
+							if ((epiObj[aKey] === "" || epiObj[aKey] === null) && mapList.length > 0) {
 								IPRPayload.Leadamrtpt = mapList.find(t => t.Epiid == IPRPayload.Epiid).Leadamrtpt;
 								IPRPayload.Leadnm = mapList.find(g => g.Epiid == IPRPayload.Epiid).Leadnm;
 
@@ -3546,7 +3546,7 @@ sap.ui.define([
 							}
 						}
 						if (aKey === "Non Leading Amort Pattern") {
-							if (epiObj[aKey] === "" || epiObj[aKey] === null) {
+							if ((epiObj[aKey] === "" || epiObj[aKey] === null) && mapList.length > 0) {
 								IPRPayload.Nleadamrtpt = mapList.find(t => t.Epiid == IPRPayload.Epiid).Nleadamrtpt;
 								IPRPayload.Nonleadnm = mapList.find(g => g.Epiid == IPRPayload.Epiid).Nonleadnm;		
 							} else {
