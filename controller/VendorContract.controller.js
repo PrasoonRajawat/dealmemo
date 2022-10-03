@@ -3529,19 +3529,21 @@ sap.ui.define([
 								var vendorContractModel = that.getView().getModel("vendorContractModel");
 								var vendorContractDetailInfo = vendorContractModel.getData();
 
-								
-									if (vendorContractDetailInfo.vcIPRData.find(t => t.Epiid == IPRPayload.Epiid).Leadamrtpt === "" && mapList.length > 0) {
-										vendorContractDetailInfo.vcIPRData.find(t => t.Epiid == IPRPayload.Epiid).Leadamrtpt = mapList.find(t => t.Epiid == IPRPayload.Epiid).Leadamrtpt;
-										vendorContractDetailInfo.vcIPRData.find(t => t.Epiid == IPRPayload.Epiid).Leadnm = mapList.find(g => g.Epiid == IPRPayload.Epiid).Leadnm;
+									for (var i = 0 ; i <=vendorContractDetailInfo.vcIPRData ; i++) {
+										var Epiidchk = vendorContractDetailInfo.vcIPRData[i].Epiid;
+									if (vendorContractDetailInfo.vcIPRData.find(t => t.Epiid == Epiidchk).Leadamrtpt === "" && mapList.length > 0) {
+										vendorContractDetailInfo.vcIPRData.find(t => t.Epiid == Epiidchk).Leadamrtpt = mapList.find(t => t.Epiid == Epiidchk).Leadamrtpt;
+										vendorContractDetailInfo.vcIPRData.find(t => t.Epiid == Epiidchk).Leadnm = mapList.find(g => g.Epiid == Epiidchk).Leadnm;
 									}
 								
 								
-									if (vendorContractDetailInfo.vcIPRData.find(t => t.Epiid == IPRPayload.Epiid).Nleadamrtpt === "" && mapList.length > 0) {
-										vendorContractDetailInfo.vcIPRData.find(t => t.Epiid == IPRPayload.Epiid).Nleadamrtpt = mapList.find(t => t.Epiid == IPRPayload.Epiid).Nleadamrtpt;
-										vendorContractDetailInfo.vcIPRData.find(t => t.Epiid == IPRPayload.Epiid).Nonleadnm = mapList.find(g => g.Epiid == IPRPayload.Epiid).Nonleadnm;
+									if (vendorContractDetailInfo.vcIPRData.find(t => t.Epiid == Epiidchk).Nleadamrtpt === "" && mapList.length > 0) {
+										vendorContractDetailInfo.vcIPRData.find(t => t.Epiid == Epiidchk).Nleadamrtpt = mapList.find(t => t.Epiid == Epiidchk).Nleadamrtpt;
+										vendorContractDetailInfo.vcIPRData.find(t => t.Epiid == Epiidchk).Nonleadnm = mapList.find(g => g.Epiid == Epiidchk).Nonleadnm;
 									} 
 								
 								vendorContractModel.refresh(true);
+									}
 							}, function (value) {
 								sap.ui.core.BusyIndicator.hide();
 								console.log(value);
