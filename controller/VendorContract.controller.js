@@ -3608,6 +3608,7 @@ sap.ui.define([
 				this._oUploadIPRSheetDialog.close();
 			},
 			handleUploadPress: function () {
+				sap.ui.core.BusyIndicator.show(0);
 				var oFileUploader = this.byId(sap.ui.core.Fragment.createId("uploadIPRSheetDialog", "fileUploader")); // get the sap.ui.unified.FileUploader
 				var file = oFileUploader.getFocusDomRef().files[0]; // get the file from the FileUploader control
 				var oControllerRef = this;
@@ -3627,6 +3628,7 @@ sap.ui.define([
 					};
 					reader.readAsBinaryString(file);
 				}
+				sap.ui.core.BusyIndicator.hide();
 			},
 			onTabSelectionVC: function () {
 				var oTab = this.getView().byId("idVCTabBar").getSelectedKey();
