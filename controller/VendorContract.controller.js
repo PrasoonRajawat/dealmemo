@@ -3555,7 +3555,7 @@ sap.ui.define([
 						}
 
 						if (aKey === "Leading Amort Pattern") {
-							if (epiObj[aKey] === "" || epiObj[aKey] === null) {
+							if (epiObj[aKey] !== "" || epiObj[aKey] !== null) {
 								IPRPayload.Leadamrtpt = epiObj[aKey].split("-")[0].trim();
 								IPRPayload.Leadnm = epiObj[aKey].split("-")[1].trim();
 							}
