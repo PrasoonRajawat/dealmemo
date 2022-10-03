@@ -3530,13 +3530,13 @@ sap.ui.define([
 								var vendorContractDetailInfo = vendorContractModel.getData();
 
 								
-									if ((epiObj["Leading Amort Pattern"] === "" || epiObj["Leading Amort Pattern"] === null) && mapList.length > 0) {
+									if (vendorContractDetailInfo.vcIPRData.find(t => t.Epiid == IPRPayload.Epiid).Leadamrtpt === "" && mapList.length > 0) {
 										vendorContractDetailInfo.vcIPRData.find(t => t.Epiid == IPRPayload.Epiid).Leadamrtpt = mapList.find(t => t.Epiid == IPRPayload.Epiid).Leadamrtpt;
 										vendorContractDetailInfo.vcIPRData.find(t => t.Epiid == IPRPayload.Epiid).Leadnm = mapList.find(g => g.Epiid == IPRPayload.Epiid).Leadnm;
 									}
 								
 								
-									if ((epiObj["Non Leading Amort Pattern"] === "" || epiObj["Non Leading Amort Pattern"] === null) && mapList.length > 0) {
+									if (vendorContractDetailInfo.vcIPRData.find(t => t.Epiid == IPRPayload.Epiid).Nleadamrtpt === "" && mapList.length > 0) {
 										vendorContractDetailInfo.vcIPRData.find(t => t.Epiid == IPRPayload.Epiid).Nleadamrtpt = mapList.find(t => t.Epiid == IPRPayload.Epiid).Nleadamrtpt;
 										vendorContractDetailInfo.vcIPRData.find(t => t.Epiid == IPRPayload.Epiid).Nonleadnm = mapList.find(g => g.Epiid == IPRPayload.Epiid).Nonleadnm;
 									} 
