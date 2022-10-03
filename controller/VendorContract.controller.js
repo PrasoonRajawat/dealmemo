@@ -3529,7 +3529,7 @@ sap.ui.define([
 								var vendorContractModel = that.getView().getModel("vendorContractModel");
 								var vendorContractDetailInfo = vendorContractModel.getData();
 
-									for (var i = 0 ; i <=vendorContractDetailInfo.vcIPRData ; i++) {
+									for (var i = 0 ; i <=vendorContractDetailInfo.vcIPRData.length ; i++) {
 										var Epiidchk = vendorContractDetailInfo.vcIPRData[i].Epiid;
 									if (vendorContractDetailInfo.vcIPRData.find(t => t.Epiid == Epiidchk).Leadamrtpt === "" && mapList.length > 0) {
 										vendorContractDetailInfo.vcIPRData.find(t => t.Epiid == Epiidchk).Leadamrtpt = mapList.find(t => t.Epiid == Epiidchk).Leadamrtpt;
