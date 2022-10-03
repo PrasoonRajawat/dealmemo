@@ -3525,6 +3525,25 @@ sap.ui.define([
 						oModelSav.read(pValue, null, null, true, function (oData) {
 							sap.ui.core.BusyIndicator.hide();
 							 mapList = oData.results;
+							 
+						if (aKey === "Leading Amort Pattern") {
+							if ((epiObj[aKey] === "" || epiObj[aKey] === null) && mapList.length > 0) {
+								IPRPayload.Leadamrtpt = mapList.find(t => t.Epiid == IPRPayload.Epiid).Leadamrtpt;
+								IPRPayload.Leadnm = mapList.find(g => g.Epiid == IPRPayload.Epiid).Leadnm;
+							} else {
+								IPRPayload.Leadamrtpt = epiObj[aKey].split("-")[0].trim();
+								IPRPayload.Leadnm = epiObj[aKey].split("-")[1].trim();
+							}
+						}
+						if (aKey === "Non Leading Amort Pattern") {
+							if ((epiObj[aKey] === "" || epiObj[aKey] === null) && mapList.length > 0) {
+								IPRPayload.Nleadamrtpt = mapList.find(t => t.Epiid == IPRPayload.Epiid).Nleadamrtpt;
+								IPRPayload.Nonleadnm = mapList.find(g => g.Epiid == IPRPayload.Epiid).Nonleadnm;		
+							} else {
+								IPRPayload.Nleadamrtpt = epiObj[aKey].split("-")[0].trim();
+								IPRPayload.Nonleadnm = epiObj[aKey].split("-")[1].trim();
+							}
+						}
 						}, function (value) {
 							sap.ui.core.BusyIndicator.hide();
 							console.log(value);
@@ -3533,28 +3552,16 @@ sap.ui.define([
 					}
 
 						if (aKey === "Leading Amort Pattern") {
-							if ((epiObj[aKey] === "" || epiObj[aKey] === null) && mapList.length > 0) {
-								IPRPayload.Leadamrtpt = mapList.find(t => t.Epiid == IPRPayload.Epiid).Leadamrtpt;
-								IPRPayload.Leadnm = mapList.find(g => g.Epiid == IPRPayload.Epiid).Leadnm;
-
-
-							} else {
-
+							if (epiObj[aKey] === "" || epiObj[aKey] === null) {
 								IPRPayload.Leadamrtpt = epiObj[aKey].split("-")[0].trim();
 								IPRPayload.Leadnm = epiObj[aKey].split("-")[1].trim();
-
-							}
+							} 
 						}
 						if (aKey === "Non Leading Amort Pattern") {
-							if ((epiObj[aKey] === "" || epiObj[aKey] === null) && mapList.length > 0) {
-								IPRPayload.Nleadamrtpt = mapList.find(t => t.Epiid == IPRPayload.Epiid).Nleadamrtpt;
-								IPRPayload.Nonleadnm = mapList.find(g => g.Epiid == IPRPayload.Epiid).Nonleadnm;		
-							} else {
-
+							if (epiObj[aKey] !== "" || epiObj[aKey] !== null) {
 								IPRPayload.Nleadamrtpt = epiObj[aKey].split("-")[0].trim();
 								IPRPayload.Nonleadnm = epiObj[aKey].split("-")[1].trim();
-
-							}
+							} 
 						}
 
 
