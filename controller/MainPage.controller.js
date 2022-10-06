@@ -4520,12 +4520,12 @@ sap.ui.define([
 								title: "Information",
 								onClose: function() { 
 									if((parseFloat(oData.results[0].LoclCrcyAmt) >= parseFloat("750000000.00")) && (dealMemoDetailInfo.AttachmentDetails.length <= 0)) {
-										var oWarningMsg = "'Attachment of Cofa approval is mandatory' if deal amount exceeds INR 75CR"
+										var oWarningMsg = "'Attachment of COFA approval is mandatory' if deal amount exceeds INR 75 CR"
 										sap.m.MessageBox.show(oWarningMsg, {
 											icon: sap.m.MessageBox.Icon.INFORMATION,
 											title: "Information",
 											onClose: function() { 
-										// that.submitDialog(oData);
+										that.submitDialog(oData);
 											}
 										});
 									} else {
@@ -4537,12 +4537,12 @@ sap.ui.define([
 
 						} else {
 							if((parseFloat(oData.results[0].LoclCrcyAmt) >= parseFloat("750000000.00")) && (dealMemoDetailInfo.AttachmentDetails.length <= 0)) {
-								var oWarningMsg = "'Attachment of Cofa approval is mandatory' if deal amount exceeds INR 75CR"
+								var oWarningMsg = "'Attachment of COFA approval is mandatory' if deal amount exceeds INR 75 CR"
 								sap.m.MessageBox.show(oWarningMsg, {
 									icon: sap.m.MessageBox.Icon.INFORMATION,
 									title: "Information",
 									onClose: function() { 
-								// that.submitDialog(oData);
+								that.submitDialog(oData);
 									}
 								});
 							} else {
