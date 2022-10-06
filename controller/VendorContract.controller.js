@@ -2613,24 +2613,24 @@ sap.ui.define([
 					vendorContractDetailInfo.vcIPRDataErrorMsg = oSourceBundle.getText("msgSelectEpisode" + vendorContractDetailInfo.Cnttp);
 					vendorContractModel.refresh(true);
 					return false;
-					// } else if (vendorContractDetailInfo.IPRRight === "" || vendorContractDetailInfo.PlatformKey === "" || vendorContractDetailInfo.totRuns ===
+				} else if (vendorContractDetailInfo.IPRRight === "" || vendorContractDetailInfo.PlatformKey === "" || vendorContractDetailInfo.totRuns === "") {
 					// 	"" || vendorContractDetailInfo.amortKey === "" || vendorContractDetailInfo.nonAmortKey === "") {
-					// 	vendorContractDetailInfo.vcIPRDataErrorMsg = oSourceBundle.getText("msgrequiredFieds");
-					// 	vendorContractDetailInfo.vcIPRDataMsgVisible = true;
-					// 	vendorContractModel.refresh(true);
-					// 	return false;
+					vendorContractDetailInfo.vcIPRDataErrorMsg = oSourceBundle.getText("msgrequiredFieds");
+					vendorContractDetailInfo.vcIPRDataMsgVisible = true;
+					vendorContractModel.refresh(true);
+					return false;
 				} else if (vendorContractDetailInfo.rightStDate === null || vendorContractDetailInfo.rightendDate === null) {
 					// MessageBox.error(oSourceBundle.getText("msgrequiredFieds"));
 					vendorContractDetailInfo.vcIPRDataErrorMsg = oSourceBundle.getText("msgrequiredFieds");
 					vendorContractDetailInfo.vcIPRDataMsgVisible = true;
 					vendorContractModel.refresh(true);
 					return false;
-				} else if (vendorContractDetailInfo.rightStDate < fstFisYear || vendorContractDetailInfo.rightStDate > toFisYear){
+				} else if (vendorContractDetailInfo.rightStDate < fstFisYear || vendorContractDetailInfo.rightStDate > toFisYear) {
 					vendorContractDetailInfo.vcIPRDataErrorMsg = oSourceBundle.getText("ficalyeariprchk");
 					vendorContractDetailInfo.vcIPRDataMsgVisible = true;
 					vendorContractModel.refresh(true);
 					return false;
-				}else {
+				} else {
 					return true;
 				}
 			},
@@ -3536,21 +3536,21 @@ sap.ui.define([
 								var vendorContractModel = that.getView().getModel("vendorContractModel");
 								var vendorContractDetailInfo = vendorContractModel.getData();
 
-									for (var i = 0 ; i <=vendorContractDetailInfo.vcIPRData.length ; i++) {
-										var Epiidchk = vendorContractDetailInfo.vcIPRData[i].Epiid;
+								for (var i = 0; i <= vendorContractDetailInfo.vcIPRData.length; i++) {
+									var Epiidchk = vendorContractDetailInfo.vcIPRData[i].Epiid;
 									if (vendorContractDetailInfo.vcIPRData.find(t => t.Epiid == Epiidchk).Leadamrtpt === "" && mapList.length > 0) {
 										vendorContractDetailInfo.vcIPRData.find(t => t.Epiid == Epiidchk).Leadamrtpt = mapList.find(t => t.Epiid == Epiidchk).Leadamrtpt;
 										vendorContractDetailInfo.vcIPRData.find(t => t.Epiid == Epiidchk).Leadnm = mapList.find(g => g.Epiid == Epiidchk).Leadnm;
 									}
-								
-								
+
+
 									if (vendorContractDetailInfo.vcIPRData.find(t => t.Epiid == Epiidchk).Nleadamrtpt === "" && mapList.length > 0) {
 										vendorContractDetailInfo.vcIPRData.find(t => t.Epiid == Epiidchk).Nleadamrtpt = mapList.find(t => t.Epiid == Epiidchk).Nleadamrtpt;
 										vendorContractDetailInfo.vcIPRData.find(t => t.Epiid == Epiidchk).Nonleadnm = mapList.find(g => g.Epiid == Epiidchk).Nonleadnm;
-									} 
-								
-								vendorContractModel.refresh(true);
 									}
+
+									vendorContractModel.refresh(true);
+								}
 							}, function (value) {
 								sap.ui.core.BusyIndicator.hide();
 								console.log(value);
