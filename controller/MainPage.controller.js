@@ -1121,7 +1121,7 @@ sap.ui.define([
 						this._yearChanged = false;
 						this.contentSubTypeList(oData);
 						sap.ui.core.BusyIndicator.hide();
-
+						this.loadAttachments();
 						this.loadChangeCostTemplate();
 						var blankModel = new sap.ui.model.json.JSONModel();
 						this.getView().byId("lblComments").setModel(blankModel);
@@ -4511,18 +4511,43 @@ sap.ui.define([
 					urlParameters: paramObj,
 					success: function(oData, response) {
 						sap.ui.core.BusyIndicator.hide();
+						var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
+						var dealMemoDetailInfo = dealMemoDetailModel.getData();
 						if (oData.results.length > 0 && oData.results[0].Cnttp == "I") {
 							var oMsg = oData.results[0].Prdnm
 							sap.m.MessageBox.show(oMsg, {
 								icon: sap.m.MessageBox.Icon.INFORMATION,
 								title: "Information",
-								onClose: function() {
-									that.submitDialog(oData);
+								onClose: function() { 
+									if((parseFloat(oData.results[0].LoclCrcyAmt) >= parseFloat("750000000.00")) && (dealMemoDetailInfo.AttachmentDetails.length <= 0)) {
+										var oWarningMsg = "'Attachment of Cofa approval is mandatory' if deal amount exceeds INR 75CR"
+										sap.m.MessageBox.show(oWarningMsg, {
+											icon: sap.m.MessageBox.Icon.INFORMATION,
+											title: "Information",
+											onClose: function() { 
+										// that.submitDialog(oData);
+											}
+										});
+									} else {
+										that.submitDialog(oData);
+									}
+									
 								}
 							});
 
 						} else {
-							this.submitDialog(oData);
+							if((parseFloat(oData.results[0].LoclCrcyAmt) >= parseFloat("750000000.00")) && (dealMemoDetailInfo.AttachmentDetails.length <= 0)) {
+								var oWarningMsg = "'Attachment of Cofa approval is mandatory' if deal amount exceeds INR 75CR"
+								sap.m.MessageBox.show(oWarningMsg, {
+									icon: sap.m.MessageBox.Icon.INFORMATION,
+									title: "Information",
+									onClose: function() { 
+								// that.submitDialog(oData);
+									}
+								});
+							} else {
+								that.submitDialog(oData);
+							}
 						}
 					}.bind(this),
 					error: function(oError) {
@@ -5838,7 +5863,11 @@ sap.ui.define([
 					success: function(oData) {
 						sap.ui.core.BusyIndicator.hide();
 						dealMemoDetailInfo.AttachmentDetails = oData.results;
-						dealMemoDetailInfo.attachmentTabColor = "Positive";
+						if(oData.results.length > 0) {
+							dealMemoDetailInfo.attachmentTabColor = "Positive";
+						} else {
+							dealMemoDetailInfo.attachmentTabColor = "Critical";
+						}
 						dealMemoDetailModel.refresh(true);
 					},
 					error: function(oError) {
