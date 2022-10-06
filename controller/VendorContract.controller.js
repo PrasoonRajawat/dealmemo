@@ -2625,7 +2625,7 @@ sap.ui.define([
 					vendorContractDetailInfo.vcIPRDataMsgVisible = true;
 					vendorContractModel.refresh(true);
 					return false;
-				} else if (vendorContractDetailInfo.rightStDate >= fstFisYear || vendorContractDetailInfo.rightStDate <= toFisYear) {
+				} else if (vendorContractDetailInfo.rightStDate < fstFisYear || vendorContractDetailInfo.rightStDate > toFisYear) {
 					vendorContractDetailInfo.vcIPRDataErrorMsg = oSourceBundle.getText("ficalyeariprchk");
 					vendorContractDetailInfo.vcIPRDataMsgVisible = true;
 					vendorContractModel.refresh(true);
