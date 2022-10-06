@@ -43,7 +43,7 @@
 			<Input width="95%" showValueHelp="true" value="{vendorContractModel>/taxCodeName}" valueHelpRequest="onvaluHelpTaxcode"/>
 		</VBox>
 		<VBox class="sapUiTinyMarginTop">
-			<Label required="true" text="{parts:[{value:'lblSelectCostCode'},{path:'vendorContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" width="100%"/>
+			<Label required="true" text="{parts:[{value:'lblvcSelectCostCode'},{path:'vendorContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" width="100%"/>
 			<List id="list_costcodeVC" mode="MultiSelect" width="99%" class="classBoxBorder" items="{vendorContractModel>/costCodeList}">
 				<items>
 					<StandardListItem title="{vendorContractModel>Costdesc}"/>
