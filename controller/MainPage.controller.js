@@ -4525,7 +4525,7 @@ sap.ui.define([
 											icon: sap.m.MessageBox.Icon.INFORMATION,
 											title: "Information",
 											onClose: function() { 
-										that.submitDialog(oData);
+										// that.submitDialog(oData);
 											}
 										});
 									} else {
@@ -4542,7 +4542,7 @@ sap.ui.define([
 									icon: sap.m.MessageBox.Icon.INFORMATION,
 									title: "Information",
 									onClose: function() { 
-								that.submitDialog(oData);
+								// that.submitDialog(oData);
 									}
 								});
 							} else {
