@@ -2604,6 +2604,8 @@ sap.ui.define([
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
 				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
+				var fstFisYear = new Date("04-01" + "-" + vendorContractDetailInfo.FromYr);
+				var toFisYear = new Date("03-31" + "-" + (parseInt(vendorContractDetailInfo.ToYr) + 1));
 
 				if (vendorContractDetailInfo.episodeModeIPR === 1 && (vendorContractDetailInfo.epiIPRFromId === "" || vendorContractDetailInfo.epiIPRFromId ===
 					undefined || vendorContractDetailInfo.epiIPRToId === "" || vendorContractDetailInfo.epiIPRToId === undefined)) {
@@ -2623,7 +2625,12 @@ sap.ui.define([
 					vendorContractDetailInfo.vcIPRDataMsgVisible = true;
 					vendorContractModel.refresh(true);
 					return false;
-				} else {
+				} else if (vendorContractDetailInfo.rightStDate < fstFisYear || vendorContractDetailInfo.rightStDate > toFisYear){
+					vendorContractDetailInfo.vcIPRDataErrorMsg = oSourceBundle.getText("ficalyeariprchk");
+					vendorContractDetailInfo.vcIPRDataMsgVisible = true;
+					vendorContractModel.refresh(true);
+					return false;
+				}else {
 					return true;
 				}
 			},
