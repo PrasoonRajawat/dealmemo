@@ -444,12 +444,18 @@ sap.ui.define([
 			createParamModel: function() { // added by dhiraj on 24/05/2022
 				var artistContractModel = this.getView().getModel("artistContractModel");
 				artistContractModel.setProperty("/createParams", {
-					"Zstext": "",
-					"Zltext": "",
-					"Prreq": "",
-					"Depthd": "",
-					"Dept": "",
-					"Grsescr": "",
+					"Zstext": artistContractModel.oData.Abtnr != "" ? artistContractModel.oData.Abtnr : "",
+					"Zltext": artistContractModel.oData.Zltext != "" ? artistContractModel.oData.Zltext : "",
+					"Prreq": artistContractModel.oData.Prreq != "" ? artistContractModel.oData.Prreq : "",
+					"Depthd": artistContractModel.oData.Depthd != "" ? artistContractModel.oData.Depthd : "",
+					"Dept":  artistContractModel.oData.Abtnr != "" ? artistContractModel.oData.Abtnr : "",
+					"Grsescr": artistContractModel.oData.Grsescr != "" ? artistContractModel.oData.Grsescr : "",
+					// "Zstext": "",
+					// "Zltext": "",
+					// "Prreq": "",
+					// "Depthd": "",
+					// "Dept": "",
+					// "Grsescr": "",
 					"Recont": false
 				});
 				if (artistContractModel.oData.contractMode === "Ch") {
