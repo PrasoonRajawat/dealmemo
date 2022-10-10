@@ -532,12 +532,12 @@ sap.ui.define([
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
 				vendorContractModel.setProperty("/createParams", {
-					"Zstext": "",
-					"Zltext": "",
-					"Prreq": "",
-					"Depthd": "",
-					"Dept": "",
-					"Grsescr": "",
+					"Zstext": vendorContractModel.oData.Abtnr != "" ? vendorContractModel.oData.Abtnr : "",
+					"Zltext": vendorContractModel.oData.Zltext != "" ? vendorContractModel.oData.Zltext : "",
+					"Prreq": vendorContractModel.oData.Prreq != "" ? vendorContractModel.oData.Prreq : "",
+					"Depthd": vendorContractModel.oData.Depthd != "" ? vendorContractModel.oData.Depthd : "",
+					"Dept":  vendorContractModel.oData.Abtnr != "" ? vendorContractModel.oData.Abtnr : "",
+					"Grsescr": vendorContractModel.oData.Grsescr != "" ? vendorContractModel.oData.Grsescr : "",
 					"Recont": vendorContractDetailInfo.Cntsc === "Z0" ? true : false
 				});
 				if (vendorContractModel.oData.contractMode === "Ch") {
