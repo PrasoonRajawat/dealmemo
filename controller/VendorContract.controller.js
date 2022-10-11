@@ -2868,6 +2868,7 @@ sap.ui.define([
 			},
 
 			saveIPRTabVC: function () {
+				sap.ui.core.BusyIndicator.show(0);
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
 				var alreadySavedflag = true;
@@ -2879,13 +2880,14 @@ sap.ui.define([
 				var mParameters = {
 					groupId: "epiIPRVCChanges",
 					success: function (data, resp) {
-
+						sap.ui.core.BusyIndicator.hide();
 						var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
 						MessageToast.show(oSourceBundle.getText("msgepiVCIPRSave"));
 						this.reloadVendorContractTabs();
 
 					}.bind(this),
 					error: function (oError) {
+						sap.ui.core.BusyIndicator.hide();
 						var oErrorResponse = JSON.parse(oError.responseText);
 						var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
 						MessageBox.error(oMsg);
@@ -2924,7 +2926,7 @@ sap.ui.define([
 				} else {
 					oModel.submitChanges(mParameters);
 				}
-
+				sap.ui.core.BusyIndicator.hide();
 			},
 
 			onSaveVendorContract: function () {
