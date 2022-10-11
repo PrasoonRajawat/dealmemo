@@ -2235,17 +2235,34 @@ sap.ui.define([
 				}
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var yearBudgetData = dealMemoDetailModel.getProperty(mapObj[selectedKey]);
-				dealMemoDetailModel.setProperty("/YearBudgetInfo", yearBudgetData);
+				
 				if(yearBudgetData.length){
-					var platAmt = 0;
 					for ( let i = 0 ; i < yearBudgetData.length ; i ++) {
-						platAmt = platAmt + parseFloat(yearBudgetData[i].Totalamt);
+						var Totalamt = Totalamt + parseFloat(yearBudgetData[i].Totalamt);
+						var Ficamt = Ficamt + parseFloat(yearBudgetData[i].Ficamt);
+						var Inhouseamt = Inhouseamt +  parseFloat(yearBudgetData[i].Inhouseamt);
+						var Inhsamt = Inhsamt +  parseFloat(yearBudgetData[i].Inhsamt);
+						var Spikeamt = Spikeamt +  parseFloat(yearBudgetData[i].Spikeamt);
+						var Prdhsamt = Prdhsamt +  parseFloat(yearBudgetData[i].Prdhsamt);
 					}
-					var dollarIndianLocale = Intl.NumberFormat('en-IN');
-					var platAmt = dollarIndianLocale.format(platAmt);
-					var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
-					this.getView().byId("pltBudg").setText(oSourceBundle.getText("lblplatAmtText" + selectedKey , platAmt))
+				var totalYearBud = 	{
+						"Tentid": dealMemoDetailModel.oData.Tentid,
+						"Dmno": dealMemoDetailModel.oData.Dmno,
+						"Dmver": dealMemoDetailModel.oData.Dmver,
+						"Platform": selectedKey,
+						"Gjahr": "Total",
+						"Noofepi": dealMemoDetailModel.oData.Noofepi,
+						"Prdhsamt": yearObj.Prdhsamt,
+						"Inhsamt": Inhsamt,
+						"Inhouseamt": Inhouseamt,
+						"Ficamt": Ficamt,
+						"Spikeamt": Spikeamt,
+						"Totalamt": Totalamt,
+						"Recst": "I"
+					};
+					yearBudgetData.push(totalYearBud);
 				}
+				dealMemoDetailModel.setProperty("/YearBudgetInfo", yearBudgetData);
 				dealMemoDetailModel.refresh(true);
 
 			},
