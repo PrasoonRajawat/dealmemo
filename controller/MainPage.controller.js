@@ -2244,7 +2244,7 @@ sap.ui.define([
 					var dollarIndianLocale = Intl.NumberFormat('en-IN');
 					var platAmt = dollarIndianLocale.format(platAmt);
 					var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
-					this.getView().byId("pltBudg").setText(oSourceBundle.getText("platAmtText" + selectedKey , platAmt))
+					this.getView().byId("pltBudg").setText(oSourceBundle.getText("lblplatAmtText" + selectedKey , platAmt))
 				}
 				dealMemoDetailModel.refresh(true);
 
