@@ -6,6 +6,8 @@
 														<content>
 															<Label text="Year-wise budget"/>
 															<ToolbarSpacer/>
+															<Label id = "pltBudg" text=""/>
+															<ToolbarSpacer/>
 															<ComboBox id="cbplatformchnge" change="handlePlatformChange" selectedKey="01" class="sapUiSizeCompact" >
 															<items>
 															<c:Item text="Owner Channel" key="01"/>		<!--Changed By Dhiraj On 19/05/2022-->	
@@ -63,6 +65,22 @@
 									</cells>
 								</ColumnListItem>
 							</items>
+							<infoToolbar>
+														<Toolbar>
+														<content>
+															<Label text="Year-wise budget"/>
+															<ToolbarSpacer/>
+															<Label id = "pltBudg" text=""/>
+															<ToolbarSpacer/>
+															<ComboBox id="cbplatformchnge" change="handlePlatformChange" selectedKey="01" class="sapUiSizeCompact" >
+															<items>
+															<c:Item text="Owner Channel" key="01"/>		<!--Changed By Dhiraj On 19/05/2022-->	
+															<c:Item text="Other Channel" key="02"/>
+															</items>
+															</ComboBox>
+														</content>
+													</Toolbar>
+															</infoToolbar>
 							</Table>
 							</VBox>
 							<VBox visible="{= ${dealMemoDetailModel>/yearWiseMainTable} === true ? false : true }">
