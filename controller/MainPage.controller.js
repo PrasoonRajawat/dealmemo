@@ -2244,7 +2244,7 @@ sap.ui.define([
 				var yearBudgetDataTot = dealMemoDetailModel.getProperty(mapObjTot[selectedKey]);
 				
 				dealMemoDetailModel.setProperty("/YearBudgetInfo", yearBudgetData);
-				dealMemoDetailModel.setProperty("yearWiseTableTot", yearBudgetDataTot);
+				dealMemoDetailModel.setProperty("/yearWiseTableTot", yearBudgetDataTot);
 				dealMemoDetailModel.refresh(true);
 
 			},
