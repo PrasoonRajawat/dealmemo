@@ -2235,15 +2235,20 @@ sap.ui.define([
 				}
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var yearBudgetData = dealMemoDetailModel.getProperty(mapObj[selectedKey]);
-				
+				var Totalamt = 0;
+				var Ficamt = 0;
+				var Inhouseamt = 0;
+				var Inhsamt = 0;
+				var Spikeamt = 0;
+				var Prdhsamt = 0;
 				if(yearBudgetData.length){
 					for ( let i = 0 ; i < yearBudgetData.length ; i ++) {
-						var Totalamt = Totalamt + parseFloat(yearBudgetData[i].Totalamt);
-						var Ficamt = Ficamt + parseFloat(yearBudgetData[i].Ficamt);
-						var Inhouseamt = Inhouseamt +  parseFloat(yearBudgetData[i].Inhouseamt);
-						var Inhsamt = Inhsamt +  parseFloat(yearBudgetData[i].Inhsamt);
-						var Spikeamt = Spikeamt +  parseFloat(yearBudgetData[i].Spikeamt);
-						var Prdhsamt = Prdhsamt +  parseFloat(yearBudgetData[i].Prdhsamt);
+						Totalamt = Totalamt + parseFloat(yearBudgetData[i].Totalamt);
+						Ficamt = Ficamt + parseFloat(yearBudgetData[i].Ficamt);
+						Inhouseamt = Inhouseamt +  parseFloat(yearBudgetData[i].Inhouseamt);
+						Inhsamt = Inhsamt +  parseFloat(yearBudgetData[i].Inhsamt);
+						Spikeamt = Spikeamt +  parseFloat(yearBudgetData[i].Spikeamt);
+						Prdhsamt = Prdhsamt +  parseFloat(yearBudgetData[i].Prdhsamt);
 					}
 				var totalYearBud = 	{
 						"Tentid": dealMemoDetailModel.oData.Tentid,
@@ -2252,7 +2257,7 @@ sap.ui.define([
 						"Platform": selectedKey,
 						"Gjahr": "Total",
 						"Noofepi": dealMemoDetailModel.oData.Noofepi,
-						"Prdhsamt": yearObj.Prdhsamt,
+						"Prdhsamt": Prdhsamt,
 						"Inhsamt": Inhsamt,
 						"Inhouseamt": Inhouseamt,
 						"Ficamt": Ficamt,
