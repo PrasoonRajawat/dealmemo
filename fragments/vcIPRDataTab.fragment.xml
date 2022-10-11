@@ -48,7 +48,7 @@
 											<cells>
 												<ObjectIdentifier title="{vendorContractModel>Epinm}"></ObjectIdentifier>
 												<ObjectIdentifier title="{vendorContractModel>Platformdsc}"></ObjectIdentifier>
-												<DatePicker dateValue="{path:'vendorContractModel>Rhtfrdt'}" valueFormat="yyyy-MM-dd" displayFormat="dd-MM-yyyy" editable="{vendorContractModel>IPREditFlag}" placeholder="dd-mm-yyyy" enabled="{vendorContractModel>/saveVisible}" change="onChangeIPRDet"></DatePicker>
+												<DatePicker dateValue="{path:'vendorContractModel>Rhtfrdt'}" valueFormat="yyyy-MM-dd" displayFormat="dd-MM-yyyy"  placeholder="dd-mm-yyyy" enabled="{vendorContractModel>/saveVisible}" change="onChangeIPRDet"></DatePicker>
 												<DatePicker dateValue="{path:'vendorContractModel>Rhttodt'}" valueFormat="yyyy-MM-dd" displayFormat="dd-MM-yyyy"  editable="{vendorContractModel>IPREditFlag}" placeholder="dd-mm-yyyy" enabled="{vendorContractModel>/saveVisible}"  change="onChangeIPRDet"></DatePicker>
 												<Input  maxLength="3" value="{vendorContractModel>Norun}" editable="{vendorContractModel>IPREditFlag}" enabled="{vendorContractModel>/saveVisible}"></Input>
 												<Input value="{vendorContractModel>Leadnm}" showValueHelp="true" valueHelpRequest="onValueHelpAmort"  tooltip="{vendorContractModel>Leadnm}" enabled="{vendorContractModel>/saveVisible}"></Input>
