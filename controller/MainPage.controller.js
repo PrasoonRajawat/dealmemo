@@ -2244,7 +2244,7 @@ sap.ui.define([
 				var yearBudgetDataTot = dealMemoDetailModel.getProperty(mapObjTot[selectedKey]);
 				
 				dealMemoDetailModel.setProperty("/YearBudgetInfo", yearBudgetData);
-				dealMemoDetailModel.setProperty("yearWiseTableTot", yearBudgetDataTot )
+				dealMemoDetailModel.setProperty("yearWiseTableTot", yearBudgetDataTot);
 				dealMemoDetailModel.refresh(true);
 
 			},
@@ -2282,9 +2282,9 @@ sap.ui.define([
 						"Totalamt": Totalamt,
 						"Recst": "I"
 					};
-					
+					var yearTot = yearTot.push(totalYearBud)
 				}
-				return totalYearBud;
+				return yearTot;
 			},
 			onChangeEpisodeCost: function() {
 				this.calculateEpisodeHeadCost();
