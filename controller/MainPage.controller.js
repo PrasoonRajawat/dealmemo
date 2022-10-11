@@ -2265,7 +2265,7 @@ sap.ui.define([
 						"Totalamt": Totalamt,
 						"Recst": "I"
 					};
-					yearBudgetData.push(totalYearBud);
+					yearBudgetData.push($.extend(true, {}, totalYearBud));
 				}
 				dealMemoDetailModel.setProperty("/YearBudgetInfo", yearBudgetData);
 				dealMemoDetailModel.refresh(true);
