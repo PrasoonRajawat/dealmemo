@@ -63,30 +63,30 @@
         <Table items="{dealMemoDetailModel>/yearWiseTableTot}">
             <infoToolbar>
                 <Toolbar>
-                    <Label text="{i18n>Lbl_TotalBudget}" />
+                    <Label text="" />
                 </Toolbar>
             </infoToolbar>
             <columns>
 			<Column minScreenWidth="Desktop" hAlign="Right" demandPopin="true" popinDisplay="Inline">
-                    <Label text="Total Episodes" design="Bold" />
+                    <Label text="Episodes" design="Bold" />
                 </Column>
                 <Column minScreenWidth="Desktop" hAlign="Right" demandPopin="true" popinDisplay="Inline">
-                    <Label text="Total Acquisition Budget" design="Bold" />
+                    <Label text="Acquisition Budget" design="Bold" />
                 </Column>
                 <Column minScreenWidth="Desktop" hAlign="Right" demandPopin="true" popinDisplay="Inline">
-                    <Label text="Total External Budget" design="Bold" />
+                    <Label text="External Budget" design="Bold" />
                 </Column>
                 <Column minScreenWidth="Desktop" hAlign="Right" demandPopin="true" popinDisplay="Inline">
-                    <Label text="Total Inhouse Budget" design="Bold" />
+                    <Label text="Inhouse Budget" design="Bold" />
                 </Column>
                 <Column minScreenWidth="Desktop" hAlign="Right" demandPopin="true" popinDisplay="Inline">
-                    <Label text="Total Fiction/Non Fiction Budget" design="Bold" />
+                    <Label text="Fiction/Non Fiction Budget" design="Bold" />
                 </Column>
                 <Column minScreenWidth="Desktop" hAlign="Right" demandPopin="true" popinDisplay="Inline">
-                    <Label text="Total Spike Cost" design="Bold" />
+                    <Label text="Spike Cost" design="Bold" />
                 </Column>
                 <Column minScreenWidth="Desktop" hAlign="Right" demandPopin="true" popinDisplay="Inline">
-                    <Label text="Total Total Budget" design="Bold" />
+                    <Label text="Total Budget" design="Bold" />
                 </Column>
             </columns>
             <items>
