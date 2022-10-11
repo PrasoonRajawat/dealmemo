@@ -2587,6 +2587,13 @@ sap.ui.define([
 				}
 				//vendorContractModel.refresh(true);
 			},
+			onChangeIPRDet: function (oEvent) {
+				var vendorContractModel = this.getView().getModel("vendorContractModel");
+				var vendorContractDetailInfo = vendorContractModel.getData();
+				if (vendorContractDetailInfo.DmVrSet.results.length) {
+					oEvent.getSource().getBindingContext("vendorContractModel").getObject().flag = "Ch";
+				}
+			},
 			onSelectEpisodeModeIPR: function (oEvent) {
 				var oselIndex = oEvent.getSource().getSelectedIndex();
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
