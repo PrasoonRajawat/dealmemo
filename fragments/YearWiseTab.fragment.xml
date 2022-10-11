@@ -6,6 +6,8 @@
 														<content>
 															<Label text="Year-wise budget"/>
 															<ToolbarSpacer/>
+															<Label id = "pltBudg" text=""/>
+															<ToolbarSpacer/>
 															<ComboBox id="cbplatformchnge" change="handlePlatformChange" selectedKey="01" class="sapUiSizeCompact" >
 															<items>
 															<c:Item text="Owner Channel" key="01"/>		<!--Changed By Dhiraj On 19/05/2022-->	
@@ -14,13 +16,8 @@
 															</ComboBox>
 														</content>
 													</Toolbar>
-														<Toolbar>
-														<content>
-															<ToolbarSpacer/>
-															<Label id = "pltBudg" text=""/>
-														</content>
-													</Toolbar>
 															</infoToolbar>
+															
 							<columns>
 								<Column width="4em">
 								<Label text="Year" design="Bold"/>
