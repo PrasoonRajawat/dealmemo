@@ -2263,7 +2263,7 @@ sap.ui.define([
 						"Tentid": dealMemoDetailModel.oData.Tentid,
 						"Dmno": dealMemoDetailModel.oData.Dmno,
 						"Dmver": dealMemoDetailModel.oData.Dmver,
-						"Platform": selectedKey,
+						"Platform": yearBudgetData[0].Platform,
 						"Gjahr": "Total",
 						"Noofepi": dealMemoDetailModel.oData.Noofepi,
 						"Prdhsamt": Prdhsamt,
