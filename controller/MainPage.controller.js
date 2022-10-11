@@ -2236,6 +2236,16 @@ sap.ui.define([
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var yearBudgetData = dealMemoDetailModel.getProperty(mapObj[selectedKey]);
 				dealMemoDetailModel.setProperty("/YearBudgetInfo", yearBudgetData);
+				if(yearBudgetData.length){
+					var platAmt = 0;
+					for ( let i = 0 ; i < yearBudgetData.length ; i ++) {
+						platAmt = platAmt + parseFloat(yearBudgetData[i].Totalamt);
+					}
+					var dollarIndianLocale = Intl.NumberFormat('en-IN');
+					var platAmt = dollarIndianLocale.format(platAmt);
+					var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
+					this.getView().byId("pltBudg").setText(oSourceBundle.getText("platAmtText" + selectedKey , platAmt))
+				}
 				dealMemoDetailModel.refresh(true);
 
 			},
