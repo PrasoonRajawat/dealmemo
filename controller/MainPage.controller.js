@@ -2282,7 +2282,8 @@ sap.ui.define([
 						"Totalamt": Totalamt,
 						"Recst": "I"
 					};
-					var yearTot = yearTot.push(totalYearBud)
+					var yearTot = [];
+					yearTot.push(totalYearBud)
 				}
 				return yearTot;
 			},
