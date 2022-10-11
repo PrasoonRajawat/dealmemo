@@ -1034,12 +1034,12 @@ sap.ui.define([
 						oData.msgVisible = false;
 						oData.errorMsg = "";
 						oData.YearBudgetAllInfo = oData.DmYCSet.results;
-						oData.YearBudgetLin = oData.DmYCSet.results.filter(function(obj) {
+						oData.YearBudgetLin = handleTotalBudgetYear(oData.DmYCSet.results.filter(function(obj) {
 							return obj.Platform === "01"
-						});
-						oData.YearBudgetNonLin = oData.DmYCSet.results.filter(function(obj) {
+						}));
+						oData.YearBudgetNonLin = handleTotalBudgetYear(oData.DmYCSet.results.filter(function(obj) {
 							return obj.Platform === "02"
-						});
+						}));
 						oData.YearBudgetInfo = oData.DmYCSet.results;
 						oData.episodeData = oData.DmEpisodeSet.results;
 
@@ -2235,6 +2235,15 @@ sap.ui.define([
 				}
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var yearBudgetData = dealMemoDetailModel.getProperty(mapObj[selectedKey]);
+				
+				dealMemoDetailModel.setProperty("/YearBudgetInfo", yearBudgetData);
+				dealMemoDetailModel.refresh(true);
+
+			},
+			handleTotalBudgetYear : function(yearBudgetData){
+				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
+				var dealMemoDetailInfo = dealMemoDetailModel.getData();
+
 				var Totalamt = 0;
 				var Ficamt = 0;
 				var Inhouseamt = 0;
@@ -2267,9 +2276,7 @@ sap.ui.define([
 					};
 					yearBudgetData.push($.extend(true, {}, totalYearBud));
 				}
-				dealMemoDetailModel.setProperty("/YearBudgetInfo", yearBudgetData);
-				dealMemoDetailModel.refresh(true);
-
+				return yearBudgetData;
 			},
 			onChangeEpisodeCost: function() {
 				this.calculateEpisodeHeadCost();
@@ -3153,10 +3160,15 @@ sap.ui.define([
 							var yearBudgetLin = oData.DmYCSet.results.filter(function(obj) {
 								return obj.Platform === "01"
 							});
+							yearBudgetLin = handleTotalBudgetYear(yearBudgetLin);
 							detailModel.setProperty("/YearBudgetLin", yearBudgetLin);
-							detailModel.setProperty("/YearBudgetNonLin", oData.DmYCSet.results.filter(function(obj) {
+							
+							var yearBudgetNonLin = oData.DmYCSet.results.filter(function(obj) {
 								return obj.Platform === "02"
-							}));
+							});
+							yearBudgetNonLin = handleTotalBudgetYear(yearBudgetNonLin);
+							detailModel.setProperty("/YearBudgetNonLin", );
+							
 							detailModel.setProperty("/YearBudgetInfo", yearBudgetLin);
 							detailModel.refresh(true);
 						}.bind(this),
