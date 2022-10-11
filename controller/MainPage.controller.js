@@ -2258,6 +2258,7 @@ sap.ui.define([
 				var Inhsamt = 0;
 				var Spikeamt = 0;
 				var Prdhsamt = 0;
+				var yearTot = [];
 				if(yearBudgetData.length){
 					for ( let i = 0 ; i < yearBudgetData.length ; i ++) {
 						Totalamt = Totalamt + parseFloat(yearBudgetData[i].Totalamt);
@@ -2282,8 +2283,8 @@ sap.ui.define([
 						"Totalamt": Totalamt,
 						"Recst": "I"
 					};
-					var yearTot = [];
-					yearTot.push(totalYearBud)
+					
+					yearTot.push($.extend(true, {}, totalYearBud))
 				}
 				return yearTot;
 			},
