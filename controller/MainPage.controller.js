@@ -1034,12 +1034,14 @@ sap.ui.define([
 						oData.msgVisible = false;
 						oData.errorMsg = "";
 						oData.YearBudgetAllInfo = oData.DmYCSet.results;
-						oData.YearBudgetLin = this.handleTotalBudgetYear(oData.DmYCSet.results.filter(function(obj) {
+						oData.YearBudgetLin = oData.DmYCSet.results.filter(function(obj) {
 							return obj.Platform === "01"
-						}));
-						oData.YearBudgetNonLin = this.handleTotalBudgetYear(oData.DmYCSet.results.filter(function(obj) {
+						});
+						oData.YearBudgetLinTot = this.handleTotalBudgetYear(oData.YearBudgetLin)
+						oData.YearBudgetNonLin = oData.DmYCSet.results.filter(function(obj) {
 							return obj.Platform === "02"
-						}));
+						});
+						oData.YearBudgetNonLinTot = this.handleTotalBudgetYear(oData.YearBudgetNonLin)
 						oData.YearBudgetInfo = oData.DmYCSet.results;
 						oData.episodeData = oData.DmEpisodeSet.results;
 
@@ -2233,10 +2235,16 @@ sap.ui.define([
 					"01": "/YearBudgetLin",
 					"02": "/YearBudgetNonLin"
 				}
+				var mapObjTot = {
+					"01": "/YearBudgetLinTot",
+					"02": "/YearBudgetNonLinTot"
+				}
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var yearBudgetData = dealMemoDetailModel.getProperty(mapObj[selectedKey]);
+				var yearBudgetDataTot = dealMemoDetailModel.getProperty(mapObjTot[selectedKey]);
 				
 				dealMemoDetailModel.setProperty("/YearBudgetInfo", yearBudgetData);
+				dealMemoDetailModel.setProperty("yearWiseTableTot", yearBudgetDataTot )
 				dealMemoDetailModel.refresh(true);
 
 			},
@@ -2274,9 +2282,9 @@ sap.ui.define([
 						"Totalamt": Totalamt,
 						"Recst": "I"
 					};
-					yearBudgetData.push($.extend(true, {}, totalYearBud));
+					
 				}
-				return yearBudgetData;
+				return totalYearBud;
 			},
 			onChangeEpisodeCost: function() {
 				this.calculateEpisodeHeadCost();
@@ -3157,19 +3165,23 @@ sap.ui.define([
 					oModel.create("/DmHeaderSet", postPayload, {
 						success: function(oData) {
 							detailModel.setProperty("/YearBudgetAllInfo", oData.DmYCSet.results);
+
 							var yearBudgetLin = oData.DmYCSet.results.filter(function(obj) {
 								return obj.Platform === "01"
 							});
-							yearBudgetLin = this.handleTotalBudgetYear(yearBudgetLin);
+							var yearBudgetLinTot = this.handleTotalBudgetYear(yearBudgetLin);
 							detailModel.setProperty("/YearBudgetLin", yearBudgetLin);
-							
+							detailModel.setProperty("/yearBudgetLinTot", yearBudgetLinTot);
+
 							var yearBudgetNonLin = oData.DmYCSet.results.filter(function(obj) {
 								return obj.Platform === "02"
 							});
-							yearBudgetNonLin = this.handleTotalBudgetYear(yearBudgetNonLin);
-							detailModel.setProperty("/YearBudgetNonLin", );
-							
+							var yearBudgetNonLinTot = this.handleTotalBudgetYear(yearBudgetNonLin);
+
+							detailModel.setProperty("/YearBudgetNonLin", yearBudgetNonLin);
+							detailModel.setProperty("/yearBudgetNonLinTot", yearBudgetNonLinTot);
 							detailModel.setProperty("/YearBudgetInfo", yearBudgetLin);
+							detailModel.setProperty("/yearWiseTableTot" , yearBudgetNonLinTot )
 							detailModel.refresh(true);
 						}.bind(this),
 						error: function(oError) {

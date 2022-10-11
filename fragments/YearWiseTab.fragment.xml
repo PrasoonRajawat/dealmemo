@@ -1,79 +1,112 @@
 <c:FragmentDefinition xmlns="sap.m" xmlns:u="sap.ui.unified" xmlns:l="sap.ui.layout" xmlns:c="sap.ui.core">
-<VBox visible="{dealMemoDetailModel>/yearWiseMainTable}">
-	<Table id="tbYearCostBudget"  items="{dealMemoDetailModel>/YearBudgetInfo}" itemPress="onYearBudgetPress">
-													<infoToolbar>
-														<Toolbar>
-														<content>
-															<Label text="Year-wise budget"/>
-															<ToolbarSpacer/>
-															<Label id = "pltBudg" text=""/>
-															<ToolbarSpacer/>
-															<ComboBox id="cbplatformchnge" change="handlePlatformChange" selectedKey="01" class="sapUiSizeCompact" >
-															<items>
-															<c:Item text="Owner Channel" key="01"/>		<!--Changed By Dhiraj On 19/05/2022-->	
-															<c:Item text="Other Channel" key="02"/>
-															</items>
-															</ComboBox>
-														</content>
-													</Toolbar>
-															</infoToolbar>
-							<columns>
-								<Column width="4em">
-								<Label text="Year" design="Bold"/>
-								</Column>
-								<Column width="8em" minScreenWidth="Desktop" hAlign="Right" demandPopin="true" popinDisplay="Inline">
-								<Label text="{parts:[{value:'lblTblColEpisodesYearWise'},{path:'dealMemoDetailModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" design="Bold"/>
-								</Column>
-								<Column   minScreenWidth="Desktop" hAlign="Right" demandPopin="true" popinDisplay="Inline">
-								<Label text="Acquisition Budget" design="Bold"/>
-								</Column>
-								<Column  minScreenWidth="Desktop" hAlign="Right" demandPopin="true" popinDisplay="Inline">
-								<Label text="External Budget" design="Bold"/>
-								</Column>
-								<Column   minScreenWidth="Desktop" hAlign="Right" demandPopin="true" popinDisplay="Inline">
-								<Label text="Inhouse Budget" design="Bold"/>
-								</Column>
-								<Column   minScreenWidth="Desktop"  hAlign="Right" demandPopin="true" popinDisplay="Inline">
-								<Label text="Fiction/Non Fiction Budget"  design="Bold"/>
-								</Column>
-								<Column  minScreenWidth="Desktop" hAlign="Right" demandPopin="true" popinDisplay="Inline">
-								<Label text="Spike Cost" design="Bold"/>
-								</Column>
-								<Column  minScreenWidth="Desktop" hAlign="Right" demandPopin="true" popinDisplay="Inline">
-								<Label text="Total Budget" design="Bold"/>
-								</Column>
-							</columns>
-							<items>
-								<ColumnListItem type="Navigation" class="sapUiSizeCompact">
-									<cells>
-									 <ObjectIdentifier title="{dealMemoDetailModel>Gjahr}" class="sapUiTinyMarginTop"/>
-									 <Text text="{dealMemoDetailModel>Noofepi}" class="sapUiSizeCompact"/>
-									 <Label text="{ parts: [ {path: 'dealMemoDetailModel>Prdhsamt'}, {path: 'dealMemoDetailModel>Waers'} ], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false,minFractionDigits: 2, maxFractionDigits: 2 } }"
-									textAlign="Right"/>
-									 <Label text="{ parts: [ {path: 'dealMemoDetailModel>Inhsamt'}, {path: 'dealMemoDetailModel>Waers'} ], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false,minFractionDigits: 2, maxFractionDigits: 2 } }"
-									textAlign="Right"/>
-									 <Label text="{ parts: [ {path: 'dealMemoDetailModel>Inhouseamt'}, {path: 'dealMemoDetailModel>Waers'} ], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false,minFractionDigits: 2, maxFractionDigits: 2 } }"
-									textAlign="Right"/>
-									 <Label text="{ parts: [ {path: 'dealMemoDetailModel>Ficamt'}, {path: 'dealMemoDetailModel>Waers'} ], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false,minFractionDigits: 2, maxFractionDigits: 2 } }"
-									textAlign="Right"/>
-									 <Label text="{ parts: [ {path: 'dealMemoDetailModel>Spikeamt'}, {path: 'dealMemoDetailModel>Waers'} ], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false,minFractionDigits: 2, maxFractionDigits: 2 } }"
-									textAlign="Right"/>
-									 <Label text="{ parts: [ {path: 'dealMemoDetailModel>Totalamt'}, {path: 'dealMemoDetailModel>Waers'} ], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false,minFractionDigits: 2, maxFractionDigits: 2 } }"
-									textAlign="Right"/>
-									
-									</cells>
-								</ColumnListItem>
-							</items>
-							</Table>
-							</VBox>
-							<VBox visible="{= ${dealMemoDetailModel>/yearWiseMainTable} === true ? false : true }">
-									<Toolbar>
-										<Button type="Transparent" icon="sap-icon://navigation-left-arrow" press="onNavBackYearEpDetails"/>
-										<ToolbarSpacer/>
- 										<ObjectIdentifier title="{i18n>Lbl_TotalBudget}"/>
-										 <ToolbarSpacer/>
-									</Toolbar>
-								<c:Fragment fragmentName="com.ui.dealmemolocal.fragments.EpisodeDetTab" type="XML" />
-							</VBox>
-							
+    <VBox visible="{dealMemoDetailModel>/yearWiseMainTable}">
+        <Table id="tbYearCostBudget" items="{dealMemoDetailModel>/YearBudgetInfo}" itemPress="onYearBudgetPress">
+            <infoToolbar>
+                <Toolbar>
+                    <content>
+                        <Label text="Year-wise budget" />
+                        <ToolbarSpacer />
+                        <Label id="pltBudg" text="" />
+                        <ToolbarSpacer />
+                        <ComboBox id="cbplatformchnge" change="handlePlatformChange" selectedKey="01" class="sapUiSizeCompact">
+                            <items>
+                                <c:Item text="Owner Channel" key="01" />
+                                <!--Changed By Dhiraj On 19/05/2022-->
+                                <c:Item text="Other Channel" key="02" />
+                            </items>
+                        </ComboBox>
+                    </content>
+                </Toolbar>
+            </infoToolbar>
+            <columns>
+                <Column width="4em">
+                    <Label text="Year" design="Bold" />
+                </Column>
+                <Column width="8em" minScreenWidth="Desktop" hAlign="Right" demandPopin="true" popinDisplay="Inline">
+                    <Label text="{parts:[{value:'lblTblColEpisodesYearWise'},{path:'dealMemoDetailModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" design="Bold" />
+                </Column>
+                <Column minScreenWidth="Desktop" hAlign="Right" demandPopin="true" popinDisplay="Inline">
+                    <Label text="Acquisition Budget" design="Bold" />
+                </Column>
+                <Column minScreenWidth="Desktop" hAlign="Right" demandPopin="true" popinDisplay="Inline">
+                    <Label text="External Budget" design="Bold" />
+                </Column>
+                <Column minScreenWidth="Desktop" hAlign="Right" demandPopin="true" popinDisplay="Inline">
+                    <Label text="Inhouse Budget" design="Bold" />
+                </Column>
+                <Column minScreenWidth="Desktop" hAlign="Right" demandPopin="true" popinDisplay="Inline">
+                    <Label text="Fiction/Non Fiction Budget" design="Bold" />
+                </Column>
+                <Column minScreenWidth="Desktop" hAlign="Right" demandPopin="true" popinDisplay="Inline">
+                    <Label text="Spike Cost" design="Bold" />
+                </Column>
+                <Column minScreenWidth="Desktop" hAlign="Right" demandPopin="true" popinDisplay="Inline">
+                    <Label text="Total Budget" design="Bold" />
+                </Column>
+            </columns>
+            <items>
+                <ColumnListItem type="Navigation" class="sapUiSizeCompact">
+                    <cells>
+                        <ObjectIdentifier title="{dealMemoDetailModel>Gjahr}" class="sapUiTinyMarginTop" />
+                        <Text text="{dealMemoDetailModel>Noofepi}" class="sapUiSizeCompact" />
+                        <Label text="{ parts: [ {path: 'dealMemoDetailModel>Prdhsamt'}, {path: 'dealMemoDetailModel>Waers'} ], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false,minFractionDigits: 2, maxFractionDigits: 2 } }" textAlign="Right" />
+                        <Label text="{ parts: [ {path: 'dealMemoDetailModel>Inhsamt'}, {path: 'dealMemoDetailModel>Waers'} ], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false,minFractionDigits: 2, maxFractionDigits: 2 } }" textAlign="Right" />
+                        <Label text="{ parts: [ {path: 'dealMemoDetailModel>Inhouseamt'}, {path: 'dealMemoDetailModel>Waers'} ], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false,minFractionDigits: 2, maxFractionDigits: 2 } }" textAlign="Right" />
+                        <Label text="{ parts: [ {path: 'dealMemoDetailModel>Ficamt'}, {path: 'dealMemoDetailModel>Waers'} ], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false,minFractionDigits: 2, maxFractionDigits: 2 } }" textAlign="Right" />
+                        <Label text="{ parts: [ {path: 'dealMemoDetailModel>Spikeamt'}, {path: 'dealMemoDetailModel>Waers'} ], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false,minFractionDigits: 2, maxFractionDigits: 2 } }" textAlign="Right" />
+                        <Label text="{ parts: [ {path: 'dealMemoDetailModel>Totalamt'}, {path: 'dealMemoDetailModel>Waers'} ], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false,minFractionDigits: 2, maxFractionDigits: 2 } }" textAlign="Right" />
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+
+        <Table items="{dealMemoDetailModel>/yearWiseTableTot}">
+            <infoToolbar>
+                <Toolbar>
+                    <Label text="{i18n>Lbl_TotalBudget}" />
+                </Toolbar>
+            </infoToolbar>
+            <columns>
+                <Column minScreenWidth="Desktop" hAlign="Right" demandPopin="true" popinDisplay="Inline">
+                    <Label text="Acquisition Budget" design="Bold" />
+                </Column>
+                <Column minScreenWidth="Desktop" hAlign="Right" demandPopin="true" popinDisplay="Inline">
+                    <Label text="External Budget" design="Bold" />
+                </Column>
+                <Column minScreenWidth="Desktop" hAlign="Right" demandPopin="true" popinDisplay="Inline">
+                    <Label text="Inhouse Budget" design="Bold" />
+                </Column>
+                <Column minScreenWidth="Desktop" hAlign="Right" demandPopin="true" popinDisplay="Inline">
+                    <Label text="Fiction/Non Fiction Budget" design="Bold" />
+                </Column>
+                <Column minScreenWidth="Desktop" hAlign="Right" demandPopin="true" popinDisplay="Inline">
+                    <Label text="Spike Cost" design="Bold" />
+                </Column>
+                <Column minScreenWidth="Desktop" hAlign="Right" demandPopin="true" popinDisplay="Inline">
+                    <Label text="Total Budget" design="Bold" />
+                </Column>
+            </columns>
+            <items>
+                <ColumnListItem>
+                    <cells>
+                        <Label text="{ parts: [ {path: 'dealMemoDetailModel>Prdhsamt'}, {path: 'dealMemoDetailModel>Waers'} ], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false,minFractionDigits: 2, maxFractionDigits: 2 } }" textAlign="Right" />
+                        <Label text="{ parts: [ {path: 'dealMemoDetailModel>Inhsamt'}, {path: 'dealMemoDetailModel>Waers'} ], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false,minFractionDigits: 2, maxFractionDigits: 2 } }" textAlign="Right" />
+                        <Label text="{ parts: [ {path: 'dealMemoDetailModel>Inhouseamt'}, {path: 'dealMemoDetailModel>Waers'} ], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false,minFractionDigits: 2, maxFractionDigits: 2 } }" textAlign="Right" />
+                        <Label text="{ parts: [ {path: 'dealMemoDetailModel>Ficamt'}, {path: 'dealMemoDetailModel>Waers'} ], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false,minFractionDigits: 2, maxFractionDigits: 2 } }" textAlign="Right" />
+                        <Label text="{ parts: [ {path: 'dealMemoDetailModel>Spikeamt'}, {path: 'dealMemoDetailModel>Waers'} ], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false,minFractionDigits: 2, maxFractionDigits: 2 } }" textAlign="Right" />
+                        <Label text="{ parts: [ {path: 'dealMemoDetailModel>Totalamt'}, {path: 'dealMemoDetailModel>Waers'} ], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false,minFractionDigits: 2, maxFractionDigits: 2 } }" textAlign="Right" />
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+    </VBox>
+    <VBox visible="{= ${dealMemoDetailModel>/yearWiseMainTable} === true ? false : true }">
+        <Toolbar>
+            <Button type="Transparent" icon="sap-icon://navigation-left-arrow" press="onNavBackYearEpDetails" />
+            <ToolbarSpacer />
+            <ObjectIdentifier title="{i18n>Lbl_TotalBudget}" />
+            <ToolbarSpacer />
+        </Toolbar>
+        <c:Fragment fragmentName="com.ui.dealmemolocal.fragments.EpisodeDetTab" type="XML" />
+    </VBox>
 </c:FragmentDefinition>
