@@ -1,28 +1,28 @@
 sap.ui.define([
-		"sap/ui/core/mvc/Controller",
-		"sap/ui/model/Filter",
-		"sap/ui/model/FilterOperator",
-		"com/ui/dealmemolocal/model/formatter",
-		"sap/m/MessageBox",
-		"sap/m/MessageToast",
-		"sap/ui/core/Fragment",
-		"sap/ui/core/routing/History"
-	],
+	"sap/ui/core/mvc/Controller",
+	"sap/ui/model/Filter",
+	"sap/ui/model/FilterOperator",
+	"com/ui/dealmemolocal/model/formatter",
+	"sap/m/MessageBox",
+	"sap/m/MessageToast",
+	"sap/ui/core/Fragment",
+	"sap/ui/core/routing/History"
+],
 	/**
 	 * @param {typeof sap.ui.core.mvc.Controller} Controller
 	 */
-	function(Controller, Filter, FilterOperator, Formatter, MessageBox, MessageToast, Fragment, History) {
+	function (Controller, Filter, FilterOperator, Formatter, MessageBox, MessageToast, Fragment, History) {
 		"use strict";
 
 		return Controller.extend("com.ui.dealmemolocal.controller.ArtistContract", {
 			Formatter: Formatter,
 
-			onInit: function() {
+			onInit: function () {
 
 				this.getOwnerComponent().getRouter().attachRouteMatched(this.onRouteMatchedArtistContract, this);
 			},
 
-			onRouteMatchedArtistContract: function(oEvent) {
+			onRouteMatchedArtistContract: function (oEvent) {
 				var oName = oEvent.getParameter("name");
 				if (oName === "ArtistContract") {
 					var oModel = new sap.ui.model.json.JSONModel();
@@ -48,7 +48,7 @@ sap.ui.define([
 
 				}
 			},
-			checkForUnsavedData: function() {
+			checkForUnsavedData: function () {
 				var oTab = this.getView().byId("idACTabBar").getSelectedKey();
 				var oTableData = [];
 				var artistContractModel = this.getView().getModel("artistContractModel");
@@ -57,7 +57,7 @@ sap.ui.define([
 				if (artistContractDetailInfo.epiTabData) {
 					oTableData = artistContractDetailInfo.epiTabData;
 					if (oTableData.length > 0) {
-						oTableData.map(function(oTabObj) {
+						oTableData.map(function (oTabObj) {
 							if (oTabObj.flag === "Cr" || oTabObj.flag === "Ch") {
 								unsavedFlag = true;
 							}
@@ -67,7 +67,7 @@ sap.ui.define([
 				if (artistContractDetailInfo.acPaymentData) {
 					oTableData = artistContractDetailInfo.acPaymentData;
 					if (oTableData.length > 0) {
-						oTableData.map(function(oTabObj) {
+						oTableData.map(function (oTabObj) {
 							if (oTabObj.flag === "Cr" || oTabObj.flag === "Ch") {
 								unsavedFlag = true;
 							}
@@ -81,14 +81,14 @@ sap.ui.define([
 					return true;
 				}
 			},
-			onNavBackFromArtistContract: function() {
+			onNavBackFromArtistContract: function () {
 				var artistContractModel = this.getView().getModel("artistContractModel");
 				var artistContractDetailInfo = artistContractModel.getData();
 				var responseFlag = this.checkForUnsavedData();
 				if (responseFlag) {
-						if(artistContractDetailInfo.App == "App"){
-						this.navToContApp();	
-					} else { 
+					if (artistContractDetailInfo.App == "App") {
+						this.navToContApp();
+					} else {
 						this.navToDealMemo();
 					}
 				} else {
@@ -96,13 +96,13 @@ sap.ui.define([
 					MessageBox.confirm(oSourceBundle.getText("msgUnsaveDataWar"), {
 						actions: [oSourceBundle.getText("lblYes"), oSourceBundle.getText("lblNo")],
 						emphasizedAction: "Yes",
-						onClose: function(sAction) {
+						onClose: function (sAction) {
 							if (sAction === oSourceBundle.getText("lblYes")) {
-								if(artistContractDetailInfo.App == "App"){
-						this.navToContApp();	
-					} else { 
-						this.navToDealMemo();
-					}
+								if (artistContractDetailInfo.App == "App") {
+									this.navToContApp();
+								} else {
+									this.navToDealMemo();
+								}
 							} else if (sAction === oSourceBundle.getText("lblNo")) {
 
 							}
@@ -110,21 +110,21 @@ sap.ui.define([
 					});
 				}
 			},
-				navToContApp: function () {
+			navToContApp: function () {
 				var artistContractModel = this.getView().getModel("artistContractModel");
 				var artistContractDetailInfo = artistContractModel.getData();
-				
+
 				var dmno = artistContractDetailInfo.Dmno;
 				var dmver = artistContractDetailInfo.Dmver;
 				var conttp = artistContractDetailInfo.Conttp;
 				var host = window.location.origin;
 				var path = window.location.pathname;
-				
-				var finalURL = host + path + "#ZVendorContract-display&/main/" + dmno + "/" + dmver + "/" + conttp ;
+
+				var finalURL = host + path + "#ZVendorContract-display&/main/" + dmno + "/" + dmver + "/" + conttp;
 				sap.m.URLHelper.redirect(finalURL, false);
 			},
-			
-			navToDealMemo: function() {
+
+			navToDealMemo: function () {
 				if (this.newContractCreated) {
 					this.newContractCreated = false;
 					window.history.go(-2);
@@ -132,9 +132,9 @@ sap.ui.define([
 					window.history.go(-1);
 				}
 			},
-			getFilterArray: function(arr) {
+			getFilterArray: function (arr) {
 				var filterArr = [];
-				arr.map(function(obj) {
+				arr.map(function (obj) {
 					filterArr.push(
 						new Filter(obj.key, "EQ", obj.val)
 					);
@@ -142,7 +142,7 @@ sap.ui.define([
 				return filterArr;
 
 			},
-			loadDealMemoDetails: function() {
+			loadDealMemoDetails: function () {
 				var artistContractModel = this.getView().getModel("artistContractModel");
 				var artistContractDetailInfo = artistContractModel.getData();
 				var odetailEntityPath = "/DmHeaderSet(Tentid='IBS',Dmno='" + artistContractDetailInfo.Dmno + "',Dmver='" + artistContractDetailInfo
@@ -154,7 +154,7 @@ sap.ui.define([
 					urlParameters: {
 						"$expand": "DmCostSet,DmCoSet"
 					},
-					success: function(oData) {
+					success: function (oData) {
 						Object.assign(artistContractDetailInfo, oData);
 						artistContractModel.refresh(true);
 						this.loadTaxCodes();
@@ -166,13 +166,13 @@ sap.ui.define([
 						}
 						sap.ui.core.BusyIndicator.hide();
 					}.bind(this),
-					error: function() {
+					error: function () {
 						sap.ui.core.BusyIndicator.hide();
 					}
 				});
 			},
 
-			createContract: function() {
+			createContract: function () {
 				var artistContractModel = this.getView().getModel("artistContractModel");
 				var artistContractDetailInfo = artistContractModel.getData();
 				var oPath = "/DmCoSet(Tentid='IBS',Dmno='" + artistContractDetailInfo.Dmno + "',Dmver='" + artistContractDetailInfo.Dmver +
@@ -180,7 +180,7 @@ sap.ui.define([
 				var oModel = this.getView().getModel();
 
 				oModel.read(oPath, {
-					success: function(oData) {
+					success: function (oData) {
 						artistContractModel.setProperty("/Avlartbud", oData.Avlartbud);
 						artistContractModel.setProperty("/Totartbud", oData.Totartbud);
 						artistContractModel.setProperty("/Othartamt", oData.Othartamt);
@@ -218,13 +218,13 @@ sap.ui.define([
 						this.loadVendors();
 						// }
 					}.bind(this),
-					error: function(oError) {
+					error: function (oError) {
 						var oErrorResponse = JSON.parse(oError.responseText);
 						var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
 						MessageBox.error(oMsg, {
 							actions: [MessageBox.Action.CLOSE],
 							emphasizedAction: MessageBox.Action.CLOSE,
-							onClose: function(sAction) {
+							onClose: function (sAction) {
 								this.navToDealMemo();
 							}.bind(this)
 						});
@@ -233,15 +233,15 @@ sap.ui.define([
 				});
 
 			},
-			validateSubmit: function() {
+			validateSubmit: function () {
 				var artistContractModel = this.getView().getModel("artistContractModel");
 				var artistContractDetailInfo = artistContractModel.getData();
 				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
 				var statusFlag = true;
-				if ( !artistContractDetailInfo.DmCeSet.results.length ) {
+				if (!artistContractDetailInfo.DmCeSet.results.length) {
 					statusFlag = false;
 					MessageBox.error(oSourceBundle.getText("msgrequiredTabs"));
-				} else if ( !artistContractDetailInfo.DmCmSet.results.length ) {
+				} else if (!artistContractDetailInfo.DmCmSet.results.length) {
 					statusFlag = false;
 					MessageBox.error(oSourceBundle.getText("msgrequiredTabs"));
 				} else {
@@ -249,43 +249,43 @@ sap.ui.define([
 				}
 				return statusFlag;
 			},
-			onSubmitAC: function() {
-				
+			onSubmitAC: function () {
+
 				var validKey = this.validateSubmit();
 				if (validKey) {
-				sap.ui.core.BusyIndicator.show(0);
-				var oModel = this.getView().getModel();
-				var artistContractModel = this.getView().getModel("artistContractModel");
-				var artistContractDetailInfo = artistContractModel.getData();
-				var paramObj = {
-					"IV_TENTID": "IBS",
-					"IV_DMNO": artistContractDetailInfo.Dmno,
-					"IV_DMVER": artistContractDetailInfo.Dmver,
-					"IV_CONTNO": artistContractDetailInfo.Contno,
-					"IV_CONTVER": artistContractDetailInfo.Contver,
-					"IV_CONTTP": artistContractDetailInfo.Conttp
+					sap.ui.core.BusyIndicator.show(0);
+					var oModel = this.getView().getModel();
+					var artistContractModel = this.getView().getModel("artistContractModel");
+					var artistContractDetailInfo = artistContractModel.getData();
+					var paramObj = {
+						"IV_TENTID": "IBS",
+						"IV_DMNO": artistContractDetailInfo.Dmno,
+						"IV_DMVER": artistContractDetailInfo.Dmver,
+						"IV_CONTNO": artistContractDetailInfo.Contno,
+						"IV_CONTVER": artistContractDetailInfo.Contver,
+						"IV_CONTTP": artistContractDetailInfo.Conttp
 
-				};
-				oModel.callFunction("/SubmitCont", {
-					method: "GET",
-					urlParameters: paramObj,
-					success: function(oData, response) {
-						sap.ui.core.BusyIndicator.hide();
-						// dealMemoDetailModel.setProperty("/costCodes", oData.results);
-						artistContractModel.refresh(true);
-						this.loadDealMemoDetails();
+					};
+					oModel.callFunction("/SubmitCont", {
+						method: "GET",
+						urlParameters: paramObj,
+						success: function (oData, response) {
+							sap.ui.core.BusyIndicator.hide();
+							// dealMemoDetailModel.setProperty("/costCodes", oData.results);
+							artistContractModel.refresh(true);
+							this.loadDealMemoDetails();
 
-					}.bind(this),
-					error: function(oError) {
-						sap.ui.core.BusyIndicator.hide();
-						var oErrorResponse = JSON.parse(oError.responseText);
-						var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
-						MessageBox.error(oMsg);
-					}
-				});
-			}
+						}.bind(this),
+						error: function (oError) {
+							sap.ui.core.BusyIndicator.hide();
+							var oErrorResponse = JSON.parse(oError.responseText);
+							var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
+							MessageBox.error(oMsg);
+						}
+					});
+				}
 			},
-			displayContract: function() {
+			displayContract: function () {
 				var artistContractModel = this.getView().getModel("artistContractModel");
 				artistContractModel.setProperty("/contractMode", "Ch");
 				this.createParamModel();
@@ -294,16 +294,16 @@ sap.ui.define([
 				this.reloadArtistContractTabs();
 			},
 
-			storeMasterCodeInfo: function(oData) {
+			storeMasterCodeInfo: function (oData) {
 				var artistContractModel = this.getView().getModel("artistContractModel");
-				artistContractModel.setProperty("/vendorRoleList", oData.results.filter(function(item) {
+				artistContractModel.setProperty("/vendorRoleList", oData.results.filter(function (item) {
 					return item.Mstpcd === "09";
 				}));
-				artistContractModel.setProperty("/mileStoneList", oData.results.filter(function(item) {
+				artistContractModel.setProperty("/mileStoneList", oData.results.filter(function (item) {
 					return item.Mstpcd === "08";
 				}));
 			},
-			loadInitialDataFromMaster: function() {
+			loadInitialDataFromMaster: function () {
 
 				var filteArr = [
 
@@ -327,15 +327,15 @@ sap.ui.define([
 
 				oModel.read("/DDMastCdSet", {
 					filters: aFilters,
-					success: function(oData) {
+					success: function (oData) {
 						this.storeMasterCodeInfo(oData);
 					}.bind(this),
-					error: function() {
+					error: function () {
 
 					}
 				});
 			},
-			loadVendors: function() {
+			loadVendors: function () {
 				var oModel = this.getView().getModel();
 				sap.ui.core.BusyIndicator.show();
 				var artistContractModel = this.getView().getModel("artistContractModel");
@@ -343,7 +343,7 @@ sap.ui.define([
 				sap.ui.core.BusyIndicator.show(0);
 				var oPath = "/F4LFB1Set?$filter=Bukrs eq '" + artistContractDetailInfo.Bukrs + "'";
 				oModel.read(oPath, {
-					success: function(oData) {
+					success: function (oData) {
 						//                    	var sortedList = oData.results.sort(function(a,b){
 						//                    	    return a.Lifnr - b.Lifnr;
 						//                    	    }
@@ -356,12 +356,12 @@ sap.ui.define([
 						this.onVendorSelection();
 
 					}.bind(this),
-					error: function() {
+					error: function () {
 
 					}
 				});
 			},
-			onVendorSelection: function() {
+			onVendorSelection: function () {
 				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
 				this.oValueHelpSelectionParams = {
 					"bindPathName": "artistContractModel>/vendorsList",
@@ -377,7 +377,7 @@ sap.ui.define([
 				};
 				this.openSelectionDialog();
 			},
-			loadVendorRoles: function(oRef) {
+			loadVendorRoles: function (oRef) {
 				var oSourceBundle = oRef.getView().getModel("i18n").getResourceBundle();
 				oRef.oValueHelpSelectionParams = {
 					"bindPathName": "artistContractModel>/vendorRoleList",
@@ -394,12 +394,12 @@ sap.ui.define([
 				oRef.openSelectionDialog();
 			},
 			//Added by dhiraj on 31/05/2022
-			editDepartment: function(oRef) {
+			editDepartment: function (oRef) {
 				this.editDepartment = true;
 				oRef.loadDepartment();
 			},
 
-			loadDepartment: function() { // added by dhiraj on 24/05/2022
+			loadDepartment: function () { // added by dhiraj on 24/05/2022
 				Fragment.load({
 					name: "com.ui.dealmemolocal.fragments.SelectDepartmentDialogAC",
 					controller: this
@@ -412,13 +412,13 @@ sap.ui.define([
 
 				}.bind(this));
 			},
-			onCreateParamCancel: function() { // added by dhiraj on 24/05/2022
+			onCreateParamCancel: function () { // added by dhiraj on 24/05/2022
 				this._oCreateParamDialog.destroy();
 
 				this.createContract();
 
 			},
-			validateBeforeCreate: function() {
+			validateBeforeCreate: function () {
 				var artistContractModel = this.getView().getModel("artistContractModel");
 				var createParamsData = artistContractModel.getData().createParams;
 				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
@@ -431,7 +431,7 @@ sap.ui.define([
 				return statusFlag;
 			},
 
-			onCreateParamOk: function() {
+			onCreateParamOk: function () {
 				var oVaildFlag = this.validateBeforeCreate();
 				if (oVaildFlag) {
 					var artistContractModel = this.getView().getModel("artistContractModel");
@@ -441,14 +441,14 @@ sap.ui.define([
 				}
 
 			},
-			createParamModel: function() { // added by dhiraj on 24/05/2022
+			createParamModel: function () { // added by dhiraj on 24/05/2022
 				var artistContractModel = this.getView().getModel("artistContractModel");
 				artistContractModel.setProperty("/createParams", {
 					"Zstext": artistContractModel.oData.Abtnr != "" ? artistContractModel.oData.Abtnr : "",
 					"Zltext": artistContractModel.oData.Zltext != "" ? artistContractModel.oData.Zltext : "",
 					"Prreq": artistContractModel.oData.Prreq != "" ? artistContractModel.oData.Prreq : "",
 					"Depthd": artistContractModel.oData.Depthd != "" ? artistContractModel.oData.Depthd : "",
-					"Dept":  artistContractModel.oData.Abtnr != "" ? artistContractModel.oData.Abtnr : "",
+					"Dept": artistContractModel.oData.Abtnr != "" ? artistContractModel.oData.Abtnr : "",
 					"Grsescr": artistContractModel.oData.Grsescr != "" ? artistContractModel.oData.Grsescr : "",
 					// "Zstext": "",
 					// "Zltext": "",
@@ -477,7 +477,7 @@ sap.ui.define([
 				//----------------------------
 			},
 
-			loadDepartmentValue: function() { // added by dhiraj on 24/05/2022
+			loadDepartmentValue: function () { // added by dhiraj on 24/05/2022
 				var oModel = this.getView().getModel();
 				sap.ui.core.BusyIndicator.show();
 				var artistContractModel = this.getView().getModel("artistContractModel");
@@ -485,7 +485,7 @@ sap.ui.define([
 				sap.ui.core.BusyIndicator.show(0);
 				var oPath = "/DmDeptF4Set";
 				oModel.read(oPath, {
-					success: function(oData) {
+					success: function (oData) {
 						var sortedList = oData.results.sort((a, b) => (a.Abtnr > b.Abtnr) ? 1 : ((b.Abtnr > a.Abtnr) ? -1 : 0));
 
 						artistContractModel.setProperty("/departmentList", sortedList);
@@ -496,13 +496,13 @@ sap.ui.define([
 						artistContractModel.refresh(true);
 						sap.ui.core.BusyIndicator.hide();
 					}.bind(this),
-					error: function() {
+					error: function () {
 
 					}
 				});
 
 			},
-			onValueHelpDept: function() { // added by dhiraj on 24/05/2022
+			onValueHelpDept: function () { // added by dhiraj on 24/05/2022
 				var artistContractModel = this.getView().getModel("artistContractModel");
 				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
 				this.oValueHelpSelectionParams = {
@@ -520,19 +520,19 @@ sap.ui.define([
 				this.openSelectionDialog();
 
 			},
-			paramsEmpty: function(oRef) {
+			paramsEmpty: function (oRef) {
 				var artistContractModel = oRef.oView.getModel("artistContractModel");
 				artistContractModel.oData.createParams.Prreq = "";
 				artistContractModel.oData.createParams.Depthd = "";
 				artistContractModel.oData.createParams.Grsescr = "";
 				oRef.emptyParamsID();
 			},
-			emptyParamsID: function() {
+			emptyParamsID: function () {
 				sap.ui.getCore().byId("Prreq").setValue("");
 				sap.ui.getCore().byId("Depthd").setValue("");
 				sap.ui.getCore().byId("Grsescr").setValue("");
 			},
-			loadPrRequestorValue: function() { // added by dhiraj on 24/05/2022
+			loadPrRequestorValue: function () { // added by dhiraj on 24/05/2022
 				var oModel = this.getView().getModel();
 				sap.ui.core.BusyIndicator.show();
 				var artistContractModel = this.getView().getModel("artistContractModel");
@@ -540,22 +540,22 @@ sap.ui.define([
 				sap.ui.core.BusyIndicator.show(0);
 				var oPath = "/DmPrReqF4Set";
 				oModel.read(oPath, {
-					success: function(oData) {
+					success: function (oData) {
 						var sortedList = oData.results.sort((a, b) => (a.Bukrs > b.Bukrs) ? 1 : ((b.Bukrs > a.Bukrs) ? -1 : 0));
 
 						artistContractModel.setProperty("/prRequestorList", sortedList);
 						artistContractModel.refresh(true);
 						sap.ui.core.BusyIndicator.hide();
 					}.bind(this),
-					error: function() {
+					error: function () {
 
 					}
 				});
 
 			},
-			onValueHelpPrRequestor: function() { // added by dhiraj on 24/05/2022
+			onValueHelpPrRequestor: function () { // added by dhiraj on 24/05/2022
 				var artistContractModel = this.getView().getModel("artistContractModel");
-				var list = artistContractModel.oData.prRequestorList.filter(function(obj) {
+				var list = artistContractModel.oData.prRequestorList.filter(function (obj) {
 					return obj.Dept === artistContractModel.oData.createParams.Dept
 				}.bind(this))
 				artistContractModel.setProperty("/prRequestorListS", list);
@@ -576,7 +576,7 @@ sap.ui.define([
 					MessageBox.information(oSourceBundle.getText("msgDeptCheck"));
 				}
 			},
-			loadDeptHeadValue: function() { // added by dhiraj on 24/05/2022 
+			loadDeptHeadValue: function () { // added by dhiraj on 24/05/2022 
 				var oModel = this.getView().getModel();
 				sap.ui.core.BusyIndicator.show();
 				var artistContractModel = this.getView().getModel("artistContractModel");
@@ -584,22 +584,22 @@ sap.ui.define([
 				sap.ui.core.BusyIndicator.show(0);
 				var oPath = "/DmDeptHeadF4Set";
 				oModel.read(oPath, {
-					success: function(oData) {
+					success: function (oData) {
 						var sortedList = oData.results.sort((a, b) => (a.Bukrs > b.Bukrs) ? 1 : ((b.Bukrs > a.Bukrs) ? -1 : 0));
 
 						artistContractModel.setProperty("/deptHeadList", sortedList);
 						artistContractModel.refresh(true);
 						sap.ui.core.BusyIndicator.hide();
 					}.bind(this),
-					error: function() {
+					error: function () {
 
 					}
 				});
 
 			},
-			onValueHelpDeptHead: function() { // added by dhiraj on 24/05/2022
+			onValueHelpDeptHead: function () { // added by dhiraj on 24/05/2022
 				var artistContractModel = this.getView().getModel("artistContractModel");
-				var list = artistContractModel.oData.deptHeadList.filter(function(obj) {
+				var list = artistContractModel.oData.deptHeadList.filter(function (obj) {
 					return obj.Dept === artistContractModel.oData.createParams.Dept
 				}.bind(this))
 				artistContractModel.setProperty("/deptHeadListS", list);
@@ -619,7 +619,7 @@ sap.ui.define([
 					MessageBox.information(oSourceBundle.getText("msgDeptCheck"));
 				}
 			},
-			loadGrCreaterValue: function() { // added by dhiraj on 24/05/2022
+			loadGrCreaterValue: function () { // added by dhiraj on 24/05/2022
 				var oModel = this.getView().getModel();
 				sap.ui.core.BusyIndicator.show();
 				var artistContractModel = this.getView().getModel("artistContractModel");
@@ -627,22 +627,22 @@ sap.ui.define([
 				sap.ui.core.BusyIndicator.show(0);
 				var oPath = "/DmGrCreteF4Set";
 				oModel.read(oPath, {
-					success: function(oData) {
+					success: function (oData) {
 						var sortedList = oData.results.sort((a, b) => (a.Bukrs > b.Bukrs) ? 1 : ((b.Bukrs > a.Bukrs) ? -1 : 0));
 
 						artistContractModel.setProperty("/grCreaterList", sortedList);
 						artistContractModel.refresh(true);
 						sap.ui.core.BusyIndicator.hide();
 					}.bind(this),
-					error: function() {
+					error: function () {
 
 					}
 				});
 
 			},
-			onValueHelpGrCreater: function() { // added by dhiraj on 24/05/2022
+			onValueHelpGrCreater: function () { // added by dhiraj on 24/05/2022
 				var artistContractModel = this.getView().getModel("artistContractModel");
-				var list = artistContractModel.oData.grCreaterList.filter(function(obj) {
+				var list = artistContractModel.oData.grCreaterList.filter(function (obj) {
 					return obj.Dept === artistContractModel.oData.createParams.Dept
 				}.bind(this))
 				artistContractModel.setProperty("/grCreaterListS", list);
@@ -663,7 +663,7 @@ sap.ui.define([
 					MessageBox.information(oSourceBundle.getText("msgDeptCheck"));
 				}
 			},
-			onActionCB: function() { // FOr replacement Checkbox.
+			onActionCB: function () { // FOr replacement Checkbox.
 				var artistContractModel = this.getView().getModel("vendorContractModel");
 				var artistContractDetailInfo = artistContractModel.getData();
 				if (sap.ui.getCore().byId("recont").getSelected() === true) {
@@ -672,7 +672,7 @@ sap.ui.define([
 					artistContractModel.setProperty("/createParams/Recont", false);
 				}
 			},
-			onSelectionDialogClose: function() {
+			onSelectionDialogClose: function () {
 				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
 				if (this.oValueHelpSelectionParams.dialogTitle === oSourceBundle.getText("titleVendor")) {
 					this.navToDealMemo();
@@ -681,7 +681,7 @@ sap.ui.define([
 				}
 
 			},
-			loadTaxCodes: function() {
+			loadTaxCodes: function () {
 				var artistContractModel = this.getView().getModel("artistContractModel");
 				var artistContractDetailInfo = artistContractModel.getData();
 				var oModel = this.getView().getModel();
@@ -697,7 +697,7 @@ sap.ui.define([
 				var aFilters = this.getFilterArray(oFilters);
 				oModel.read("/F4TaxCodeSet", {
 					filters: aFilters,
-					success: function(oData) {
+					success: function (oData) {
 						// var filteredList = oData.results.filter(function(obj) {
 						// 	return obj.Mwskz.includes("V")
 						// });
@@ -707,12 +707,12 @@ sap.ui.define([
 						sap.ui.core.BusyIndicator.hide();
 
 					}.bind(this),
-					error: function() {
+					error: function () {
 
 					}
 				});
 			},
-			loadCostCodes: function() {
+			loadCostCodes: function () {
 				var oModel = this.getView().getModel();
 				var artistContractModel = this.getView().getModel("artistContractModel");
 				var artistContractDetailInfo = artistContractModel.getData();
@@ -726,8 +726,8 @@ sap.ui.define([
 				oModel.callFunction("/GetContractCostCode", {
 					method: "GET",
 					urlParameters: paramObj,
-					success: function(oData, response) {
-						oData.results.map(function(obj) {
+					success: function (oData, response) {
+						oData.results.map(function (obj) {
 							obj.costValueEditable = false;
 							obj.costCodeValue = "0.00"
 						});
@@ -739,19 +739,19 @@ sap.ui.define([
 						//   						}
 
 					}.bind(this),
-					error: function(oError) {}
+					error: function (oError) { }
 				})
 
 			},
-			calculateAvailableBudget: function() {
+			calculateAvailableBudget: function () {
 				var artistContractModel = this.getView().getModel("artistContractModel");
 				var artistContractDetailInfo = artistContractModel.getData();
-				var budgetData = artistContractDetailInfo.DmCostSet.results.filter(function(DmBudObj) {
+				var budgetData = artistContractDetailInfo.DmCostSet.results.filter(function (DmBudObj) {
 					return DmBudObj.Epiid === "00000"
 				});
 				var totalBudget = 0;
-				artistContractDetailInfo.costCodes.map(function(costCodeObj) {
-					var costCodeArr = budgetData.filter(function(budObj) {
+				artistContractDetailInfo.costCodes.map(function (costCodeObj) {
+					var costCodeArr = budgetData.filter(function (budObj) {
 						return budObj.Scostcd === costCodeObj.Costcode;
 					});
 					if (costCodeArr.legth) {
@@ -763,57 +763,57 @@ sap.ui.define([
 				artistContractDetailInfo.Avlartbud = totalBudget.toString();
 				artistContractModel.refresh(true);
 			},
-			loadEpisodes: function() {
+			loadEpisodes: function () {
 				var oModel = this.getView().getModel();
 				sap.ui.core.BusyIndicator.show();
 				var artistContractModel = this.getView().getModel("artistContractModel");
 				var artistContractDetailInfo = artistContractModel.getData();
 				var oFilters = [{
-						"key": "Tentid",
-						"val": "IBS"
-					}, {
-						"key": "Spras",
-						"val": "EN-US"
-					}, {
-						"key": "Dmno",
-						"val": artistContractDetailInfo.Dmno
-					}, {
-						"key": "Conttp",
-						"val": "02"
-					}
+					"key": "Tentid",
+					"val": "IBS"
+				}, {
+					"key": "Spras",
+					"val": "EN-US"
+				}, {
+					"key": "Dmno",
+					"val": artistContractDetailInfo.Dmno
+				}, {
+					"key": "Conttp",
+					"val": "02"
+				}
 
 				];
 
 				var aFilters = this.getFilterArray(oFilters);
 				oModel.read("/F4EpiIDSet", {
 					filters: aFilters,
-					success: function(oData) {
+					success: function (oData) {
 						sap.ui.core.BusyIndicator.hide();
 						//	var filteredEpisodes = oData.results.filter(function(epObj){return epObj.Vcflag === "";});
 						artistContractModel.setProperty("/episodeList", oData.results);
 						artistContractModel.refresh(true);
 					}.bind(this),
-					error: function(oError) {
+					error: function (oError) {
 						sap.ui.core.BusyIndicator.hide();
 					}
 				});
 			},
-			loadPayTerms: function() {
+			loadPayTerms: function () {
 				var oModel = this.getView().getModel();
 				var artistContractModel = this.getView().getModel("artistContractModel");
 				oModel.read("/F4PayTermSet", {
-					success: function(oData) {
+					success: function (oData) {
 						artistContractModel.setProperty("/payTermList", oData.results);
 						artistContractModel.refresh(true);
 						sap.ui.core.BusyIndicator.hide();
 
 					}.bind(this),
-					error: function() {
+					error: function () {
 
 					}
 				});
 			},
-			onSelectEpisodeMode: function() {
+			onSelectEpisodeMode: function () {
 				var oSelModeIndex = this.byId(sap.ui.core.Fragment.createId("acEpisodeDialog", "rbEpisideMode")).getSelectedIndex();
 				var artistContractModel = this.getView().getModel("artistContractModel");
 				var artistContractDetailInfo = artistContractModel.getData();
@@ -824,7 +824,7 @@ sap.ui.define([
 				}
 				artistContractModel.refresh(true);
 			},
-			onSelectionACostCodes: function(oEvent) {
+			onSelectionACostCodes: function (oEvent) {
 				var oParams = oEvent.getParameters();
 				var oSelected = oParams['selected'];
 				var artistContractModel = this.getView().getModel("artistContractModel");
@@ -836,7 +836,7 @@ sap.ui.define([
 				artistContractModel.refresh(true);
 
 			},
-			onvaluHelpTaxcode: function() {
+			onvaluHelpTaxcode: function () {
 				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
 				this.oValueHelpSelectionParams = {
 					"bindPathName": "artistContractModel>/taxCodeList",
@@ -848,11 +848,11 @@ sap.ui.define([
 					"valuePath": "/taxCodeName",
 					"valueModel": "artistContractModel",
 					"dialogTitle": oSourceBundle.getText("titleTaxCode")
-						//"callBackFunction":	oRef.createVendorContract
+					//"callBackFunction":	oRef.createVendorContract
 				};
 				this.openSelectionDialog();
 			},
-			openSelectionDialog: function() {
+			openSelectionDialog: function () {
 				Fragment.load({
 					id: this.createId("acTaxCodeSelectionDialog"),
 					name: "com.ui.dealmemolocal.fragments.SelectionDialog",
@@ -871,7 +871,7 @@ sap.ui.define([
 					this._oSelectionDialog.open();
 				}.bind(this));
 			},
-			onConfirmSelection: function(oEvent) {
+			onConfirmSelection: function (oEvent) {
 				var selectedItemObj = oEvent.getParameters()['selectedItem'].getBindingContext("artistContractModel").getObject();
 				var oValuePath = this.oValueHelpSelectionParams.valuePath;
 				var oKeyPath = this.oValueHelpSelectionParams.keyPath;
@@ -881,7 +881,7 @@ sap.ui.define([
 				var artistContractModel = this.getView().getModel(oValueModelAlias);
 				artistContractModel.setProperty(oValuePath, selectedItemObj[oProp]);
 				artistContractModel.setProperty(oKeyPath, selectedItemObj[oKey]);
-				if(oEvent.oSource.mProperties.title == 'Select Department'){
+				if (oEvent.oSource.mProperties.title == 'Select Department') {
 					artistContractModel.setProperty("/createParams/Dept", selectedItemObj["Abtnr"]);
 				}
 				artistContractModel.refresh(true);
@@ -889,7 +889,7 @@ sap.ui.define([
 					this.oValueHelpSelectionParams.callBackFunction(this);
 				}
 			},
-			onSelectEpisodeAC: function() {
+			onSelectEpisodeAC: function () {
 				var artistContractModel = this.getView().getModel("artistContractModel");
 				var artistContractDetailInfo = artistContractModel.getData();
 				artistContractDetailInfo.episodeRangeVisible = false;
@@ -921,7 +921,7 @@ sap.ui.define([
 				}
 
 			},
-			validateBeforePush: function() {
+			validateBeforePush: function () {
 				var artistContractModel = this.getView().getModel("artistContractModel");
 				var artistContractDetailInfo = artistContractModel.getData();
 				var oselIndex = artistContractDetailInfo.episodeMode;
@@ -966,7 +966,7 @@ sap.ui.define([
 				}
 				return true;
 			},
-			validateMilestoneAchievementDate: function() {
+			validateMilestoneAchievementDate: function () {
 				var artistContractModel = this.getView().getModel("artistContractModel");
 				var artistContractDetailInfo = artistContractModel.getData();
 				var allowedEpisodes = [];
@@ -974,13 +974,13 @@ sap.ui.define([
 				response.allowedEpisodes = [];
 				if (artistContractDetailInfo.epiPaymentFromId == "" && artistContractDetailInfo.epiPaymentToId == "") { //All Episodes
 					var episodeList = [];
-					artistContractDetailInfo.DmCmSet.results.map(function(obj) {
+					artistContractDetailInfo.DmCmSet.results.map(function (obj) {
 						episodeList.push(obj.Epiid)
 					});
 					if (episodeList.length > 0) {
 						for (let i = 0; i <= episodeList.length - 1; i++) {
 							if (artistContractDetailInfo.DmCmSet.results.findIndex(v => v.Epiid == episodeList[i] && v.Mscompdt && artistContractDetailInfo.mileStonesForEpi
-									.findIndex(obj => obj.Mstcd != v.Msid) == -1) == -1) {
+								.findIndex(obj => obj.Mstcd != v.Msid) == -1) == -1) {
 								response.allowedEpisodes.push(episodeList[i]);
 							} else {
 								response.warningMessage = true;
@@ -991,7 +991,7 @@ sap.ui.define([
 				} else if (artistContractDetailInfo.epiPaymentFromId != "" && artistContractDetailInfo.epiPaymentToId != "") { // Range of Episodes
 					for (let i = artistContractDetailInfo.epiPaymentFromId; i <= artistContractDetailInfo.epiPaymentToId; i++) {
 						if (artistContractDetailInfo.DmCmSet.results.findIndex(v => v.Mscompdt && v.Epiid == i && artistContractDetailInfo.mileStonesForEpi
-								.findIndex(obj => obj.Mstcd != v.Msid) == -1) == -1) {
+							.findIndex(obj => obj.Mstcd != v.Msid) == -1) == -1) {
 							response.allowedEpisodes.push(i);
 						} else {
 							response.warningMessage = true;
@@ -1004,7 +1004,7 @@ sap.ui.define([
 
 			},
 
-			processPaymentData: function() {
+			processPaymentData: function () {
 				var artistContractModel = this.getView().getModel("artistContractModel");
 				var artistContractDetailInfo = artistContractModel.getData();
 				var selectedEpisodeList = [];
@@ -1013,67 +1013,109 @@ sap.ui.define([
 					selectedEpisodeList = artistContractDetailInfo.episodeList;
 				} else {
 					selectedEpisodeList = [];
-					artistContractDetailInfo.episodeList.map(function(epObj) {
+					artistContractDetailInfo.episodeList.map(function (epObj) {
 						if (epObj.Epiid >= artistContractDetailInfo.epiFromId && epObj.Epiid <= artistContractDetailInfo.epiToId) {
 							selectedEpisodeList.push(epObj);
 						}
 
 					});
 				}
-
+				var Noofepi = selectedEpisodeList.length;
 				var EpiTabData = [];
 				var selectedCostCodeContexts = this.byId(sap.ui.core.Fragment.createId("acEpisodeDialog", "list_costCodes")).getSelectedContexts()
-				selectedEpisodeList.map(function(epObj) {
+				selectedEpisodeList.map(function (epObj, i) {
+					if (selectedEpisodeList.length !== i + 1) {
+						selectedCostCodeContexts.map(function (selCostCodeContext) {
+							if (selectedCostCodeObj.costCodeValue !== 0) {
+								var selectedCostCodeObj = selCostCodeContext.getObject();
+								var totalCost = selectedCostCodeObj.costCodeValue;
+								if (totalCost != 0) {
+									var remainCost = totalCost - (parseFloat(selectedCostCodeObj.costCodeValue / Noofepi).toFixed(2) * Noofepi);
+								} else {
+									remainCost = 0;
+								}
+								var lastEpiCost = (parseFloat(selectedCostCodeObj.costCodeValue / Noofepi)) + remainCost;
 
-					selectedCostCodeContexts.map(function(selCostCodeContext) {
 
-						var selectedCostCodeObj = selCostCodeContext.getObject();
-						if (selectedCostCodeObj.costCodeValue !== 0) {
-							var oEpiDataObj = {
-								Tentid: "IBS",
-								Dmno: artistContractDetailInfo.Dmno,
-								Dmver: artistContractDetailInfo.Dmver,
-								Contno: "",
-								Contver: "",
-								Epiid: epObj.Epiid,
-								Epinm: epObj.Epinm,
-								Conttp: "02",
-								Baseamt: "00.0",
-								Totepiamt: selectedCostCodeObj.costCodeValue.toString(),
-								Wmwst: "00.0",
-								Mwskz: artistContractDetailInfo.taxCodeKey,
-								Coepiamt: selectedCostCodeObj.costCodeValue.toString(),
-								Costcd: selectedCostCodeObj.Costcode,
-								Costdesc: selectedCostCodeObj.Costdesc
+								var oEpiDataObj = {
+									Tentid: "IBS",
+									Dmno: artistContractDetailInfo.Dmno,
+									Dmver: artistContractDetailInfo.Dmver,
+									Contno: "",
+									Contver: "",
+									Epiid: epObj.Epiid,
+									Epinm: epObj.Epinm,
+									Conttp: "02",
+									Baseamt: "00.0",
+									Totepiamt: lastEpiCost.toString(),
+									Wmwst: "00.0",
+									Mwskz: artistContractDetailInfo.taxCodeKey,
+									Coepiamt: selectedCostCodeObj.costCodeValue.toString(),
+									Costcd: selectedCostCodeObj.Costcode,
+									Costdesc: selectedCostCodeObj.Costdesc
 
-							};
-							if (artistContractDetailInfo.contractMode === "Ch") {
-								oEpiDataObj.Contno = artistContractDetailInfo.Contno;
-								oEpiDataObj.Contver = artistContractDetailInfo.Contver;
+								};
+								if (artistContractDetailInfo.contractMode === "Ch") {
+									oEpiDataObj.Contno = artistContractDetailInfo.Contno;
+									oEpiDataObj.Contver = artistContractDetailInfo.Contver;
+								}
+
+								EpiTabData.push(oEpiDataObj)
 							}
 
-							EpiTabData.push(oEpiDataObj)
-						}
+						})
+					} else {
+						selectedCostCodeContexts.map(function (selCostCodeContext) {
 
-					})
+							var selectedCostCodeObj = selCostCodeContext.getObject();
+							if (selectedCostCodeObj.costCodeValue !== 0) {
+								var perEpiValue = parseFloat(selectedCostCodeObj.costCodeValue / Noofepi).toFixed(2);
 
+								var oEpiDataObj = {
+									Tentid: "IBS",
+									Dmno: artistContractDetailInfo.Dmno,
+									Dmver: artistContractDetailInfo.Dmver,
+									Contno: "",
+									Contver: "",
+									Epiid: epObj.Epiid,
+									Epinm: epObj.Epinm,
+									Conttp: "02",
+									Baseamt: "00.0",
+									Totepiamt: perEpiValue.toString(),
+									Wmwst: "00.0",
+									Mwskz: artistContractDetailInfo.taxCodeKey,
+									Coepiamt: selectedCostCodeObj.costCodeValue.toString(),
+									Costcd: selectedCostCodeObj.Costcode,
+									Costdesc: selectedCostCodeObj.Costdesc
+
+								};
+								if (artistContractDetailInfo.contractMode === "Ch") {
+									oEpiDataObj.Contno = artistContractDetailInfo.Contno;
+									oEpiDataObj.Contver = artistContractDetailInfo.Contver;
+								}
+
+								EpiTabData.push(oEpiDataObj)
+							}
+
+						})
+					}
 				}.bind(this));
 
 				this.displayEpisodeTabData(EpiTabData);
 
 				this._oSelectEpisodeDialog.close();
 			},
-			onPushEpiDataTab: function() {
+			onPushEpiDataTab: function () {
 				var validationFlag = this.validateBeforePush();
 				if (validationFlag) {
 					this.processPaymentData();
 				}
 
 			},
-			onCancelSelectEpisode: function() {
+			onCancelSelectEpisode: function () {
 				this._oSelectEpisodeDialog.close();
 			},
-			displayEpisodeTabData: function(EpiTabData) {
+			displayEpisodeTabData: function (EpiTabData) {
 				sap.ui.core.BusyIndicator.show(0);
 				var artistContractModel = this.getView().getModel("artistContractModel");
 				var artistContractDetailInfo = artistContractModel.getData();
@@ -1088,17 +1130,17 @@ sap.ui.define([
 				var oModel = this.getView().getModel();
 				oModel.setUseBatch(false);
 				oModel.create("/DmCoSet", oPayLoad, {
-					success: function(oData) {
+					success: function (oData) {
 						if (artistContractDetailInfo.contractMode === "Cr" && artistContractDetailInfo.epiTabData === undefined ||
 							artistContractDetailInfo.epiTabData.length === 0) {
 							artistContractDetailInfo.epiTabData = [];
-							oData.DmCeSet.results.map(function(obj) {
+							oData.DmCeSet.results.map(function (obj) {
 								obj.flag = "Cr";
 							});
 							artistContractDetailInfo.epiTabData = artistContractDetailInfo.epiTabData.concat(oData.DmCeSet.results);
 						} else {
 							var artistEpiData = artistContractDetailInfo.epiTabData;
-							oData.DmCeSet.results.map(function(obj) {
+							oData.DmCeSet.results.map(function (obj) {
 								var flagNewEntry = true;
 								obj.flag = "Cr";
 								for (var oInd = 0; oInd < artistEpiData.length; oInd++) {
@@ -1123,13 +1165,13 @@ sap.ui.define([
 						artistContractModel.refresh(true);
 						sap.ui.core.BusyIndicator.hide();
 					}.bind(this),
-					error: function(oError) {
+					error: function (oError) {
 						sap.ui.core.BusyIndicator.hide();
 						console.log(oError);
 					}
 				});
 			},
-			createContractPayload: function() {
+			createContractPayload: function () {
 				var artistContractModel = this.getView().getModel("artistContractModel");
 				var artistContractDetailInfo = artistContractModel.getData();
 				var oPayload = {
@@ -1156,7 +1198,7 @@ sap.ui.define([
 				return oPayload;
 
 			},
-			createEpiData: function() {
+			createEpiData: function () {
 				var artistContractModel = this.getView().getModel("artistContractModel");
 				var artistContractDetailInfo = artistContractModel.getData();
 				var epiTabData = artistContractDetailInfo.epiTabData;
@@ -1166,7 +1208,7 @@ sap.ui.define([
 				oModel.setDeferredGroups(oModel.getDeferredGroups().concat(["epiACChanges"]));
 				var mParameters = {
 					groupId: "epiACChanges",
-					success: function(odata, resp) {
+					success: function (odata, resp) {
 						var oResponse = odata.__batchResponses[0];
 						if (oResponse.__changeResponses && oResponse.__changeResponses.length) {
 							//if(oResponse.__changeResponses[0].statusCode === "204"){
@@ -1212,7 +1254,7 @@ sap.ui.define([
 						//	    				this.loadEpisodes();
 
 					}.bind(this),
-					error: function(oError) {
+					error: function (oError) {
 
 						var oMsg = oError.error.innererror.errordetails[0].message;
 						MessageBox.error(oMsg);
@@ -1224,7 +1266,7 @@ sap.ui.define([
 						groupId: "epiACChanges"
 					});
 
-					epiTabData.map(function(epiObj) {
+					epiTabData.map(function (epiObj) {
 						if (epiObj.flag === "Cr") {
 							alreadySavedflag = false;
 							var payloadEpiObj = $.extend(true, {}, epiObj);
@@ -1247,7 +1289,7 @@ sap.ui.define([
 				}
 
 			},
-			updateEpiData: function() {
+			updateEpiData: function () {
 				var artistContractModel = this.getView().getModel("artistContractModel");
 				var artistContractDetailInfo = artistContractModel.getData();
 				var epiTabData = artistContractDetailInfo.epiTabData;
@@ -1258,7 +1300,7 @@ sap.ui.define([
 				oModel.setDeferredGroups(oModel.getDeferredGroups().concat(["epiACUpdateChanges"]));
 				var mParameters = {
 					groupId: "epiACUpdateChanges",
-					success: function(odata, resp) {
+					success: function (odata, resp) {
 						var oResponse = odata.__batchResponses[0];
 						if (oResponse.response && oResponse.response.statusCode === "400") {
 							var oError = JSON.parse(oResponse.response.body);
@@ -1272,11 +1314,11 @@ sap.ui.define([
 						}
 
 					}.bind(this),
-					error: function(odata, resp) {
+					error: function (odata, resp) {
 						console.log(resp);
 					}
 				};
-				epiTabData.map(function(oEpiObj) {
+				epiTabData.map(function (oEpiObj) {
 					var epiObj = $.extend(true, {}, oEpiObj);
 					epiObj.Coepiamt = epiObj.Coepiamt.toString();
 					delete epiObj.Diff;
@@ -1306,7 +1348,7 @@ sap.ui.define([
 					oModel.submitChanges(mParameters);
 				}
 			},
-			createEpiTab: function() {
+			createEpiTab: function () {
 				var artistContractModel = this.getView().getModel("artistContractModel");
 				var artistContractDetailInfo = artistContractModel.getData();
 				if (artistContractDetailInfo.contractMode === "Cr") {
@@ -1316,7 +1358,7 @@ sap.ui.define([
 				}
 
 			},
-			onSaveArtistContract: function() {
+			onSaveArtistContract: function () {
 				this.getView().byId("btnSaveAC").setEnabled(false);
 				sap.ui.core.BusyIndicator.show(0);
 				var oTab = this.getView().byId("idACTabBar").getSelectedKey();
@@ -1327,8 +1369,8 @@ sap.ui.define([
 				}
 				sap.ui.core.BusyIndicator.hide();
 			},
-			reloadArtistContractTabs: function() {
-			
+			reloadArtistContractTabs: function () {
+
 				var artistContractModel = this.getView().getModel("artistContractModel");
 				var artistContractDetailInfo = artistContractModel.getData();
 				var oPath = "/DmCoSet(Tentid='IBS',Dmno='" + artistContractDetailInfo.Dmno + "',Dmver='" + artistContractDetailInfo.Dmver +
@@ -1339,9 +1381,9 @@ sap.ui.define([
 					urlParameters: {
 						"$expand": "DmCeSet,DmCmSet,DmCeBalAmtSet"
 					},
-					success: function(oData) {
-							sap.ui.core.BusyIndicator.show(0);
-						oData.DmCeSet.results.map(function(obj) {
+					success: function (oData) {
+						sap.ui.core.BusyIndicator.show(0);
+						oData.DmCeSet.results.map(function (obj) {
 							obj.Diff = (parseFloat(obj.Coepiamt) - (parseFloat(obj.Baseamt) + parseFloat(obj.Wmwst))).toFixed(2);
 							obj.epiCostEditFlag = false;
 							obj.episodeSaveFlag = true;
@@ -1354,7 +1396,7 @@ sap.ui.define([
 							artistContractDetailInfo.EpiDataColor = "Positive";
 						}
 
-						oData.DmCeBalAmtSet.results.map(function(obj) {
+						oData.DmCeBalAmtSet.results.map(function (obj) {
 							obj.episodeSaveFlag = true;
 							//	obj.Diff = ((parseFloat(obj.Coepiamt) + parseFloat(obj.Wmwst)) - (obj.Baseamt)).toFixed(2);
 						});
@@ -1367,7 +1409,7 @@ sap.ui.define([
 
 						artistContractDetailInfo.epiNonCostCodeTabData = $.extend(true, [], oData.DmCeBalAmtSet.results);
 
-						oData.DmCmSet.results.map(function(obj) {
+						oData.DmCmSet.results.map(function (obj) {
 							obj.episodeSaveFlag = true;
 						});
 						artistContractDetailInfo.acPaymentData = oData.DmCmSet.results;
@@ -1416,12 +1458,12 @@ sap.ui.define([
 						this.getView().byId("idSubIconTabBarac").setSelectedKey("acSubEpiDataNoCostCd");
 						sap.ui.core.BusyIndicator.hide();
 					}.bind(this),
-					error: function(oError) {
+					error: function (oError) {
 						sap.ui.core.BusyIndicator.hide();
 					}
 				})
 			},
-			onSeletEpiTbl: function() {
+			onSeletEpiTbl: function () {
 				var artistContractModel = this.getView().getModel("artistContractModel");
 				var oContexts = this.byId(sap.ui.core.Fragment.createId("acEpiTab", "oTbl_acepiData")).getSelectedContexts();
 				if (oContexts.length) {
@@ -1431,14 +1473,14 @@ sap.ui.define([
 				}
 				artistContractModel.refresh(true);
 			},
-			onDeleteEpi: function() {
+			onDeleteEpi: function () {
 				var artistContractModel = this.getView().getModel("artistContractModel");
 				var artistContractDetailInfo = artistContractModel.getData();
 				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
 				MessageBox.confirm(oSourceBundle.getText("msgdeleteConfirmContractEpi" + artistContractDetailInfo.Cnttp), {
 					actions: [oSourceBundle.getText("lblYes"), oSourceBundle.getText("lblNo")],
 					emphasizedAction: "Yes",
-					onClose: function(sAction) {
+					onClose: function (sAction) {
 						if (sAction === oSourceBundle.getText("lblYes")) {
 							this.deleteEpiData();
 						} else if (sAction === oSourceBundle.getText("lblNo")) {
@@ -1447,7 +1489,7 @@ sap.ui.define([
 					}.bind(this)
 				});
 			},
-			deleteEpiData: function() {
+			deleteEpiData: function () {
 				sap.ui.core.BusyIndicator.show(0);
 				var artistContractModel = this.getView().getModel("artistContractModel");
 				var artistContractDetailInfo = artistContractModel.getData();
@@ -1459,7 +1501,7 @@ sap.ui.define([
 				oModel.setDeferredGroups(oModel.getDeferredGroups().concat(["epiACDeleteChanges"]));
 				var mParameters = {
 					groupId: "epiACDeleteChanges",
-					success: function(data, resp) {
+					success: function (data, resp) {
 						sap.ui.core.BusyIndicator.hide();
 						oTable.removeSelections();
 						MessageToast.show(oSourceBundle.getText("msgSuccEpiDeleteSave" + artistContractDetailInfo.Cnttp));
@@ -1467,13 +1509,13 @@ sap.ui.define([
 						//jQuery.sap.intervalCall(500, this, "reloadArtistContractTabs", [this]);
 
 					}.bind(this),
-					error: function(odata, resp) {
+					error: function (odata, resp) {
 						sap.ui.core.BusyIndicator.hide();
 						console.log(resp);
 					}
 				};
 
-				oContexts.map(function(oContext) {
+				oContexts.map(function (oContext) {
 					var oEpiObj = oContext.getObject()
 					var oPath = "/DmCeSet(Tentid='IBS',Dmno='" + artistContractDetailInfo.Dmno + "',Dmver='" + artistContractDetailInfo.Dmver +
 						"',Conttp='02',Contno='" + artistContractDetailInfo.Contno + "',Contver='" + artistContractDetailInfo.Contver + "',Epiid='" +
@@ -1485,12 +1527,12 @@ sap.ui.define([
 				}.bind(this));
 
 				oModel.submitChanges(mParameters);
-				
+
 			},
 
 			//Payment Tab
 
-			onEnterPayment: function() {
+			onEnterPayment: function () {
 				var artistContractModel = this.getView().getModel("artistContractModel");
 				var artistContractDetailInfo = artistContractModel.getData();
 				artistContractDetailInfo.epiPaymentFromId = "";
@@ -1504,12 +1546,12 @@ sap.ui.define([
 				artistContractDetailInfo.pushBtnEnable = false;
 				artistContractDetailInfo.colPercAmntLabel = "Amount";
 				var DmCmSetData = artistContractDetailInfo.DmCoSet.DmCmSet.results;
-				var DmCmSetEpIds = DmCmSetData.map(function(dmcmobj) {
+				var DmCmSetEpIds = DmCmSetData.map(function (dmcmobj) {
 					return dmcmobj.Epiid;
 				});
 				var epIds = [];
 				var distEpisodes = [];
-				artistContractDetailInfo.epiTabData.map(function(obj) {
+				artistContractDetailInfo.epiTabData.map(function (obj) {
 					if (epIds.indexOf(obj.Epiid) === -1) {
 
 						epIds.push(obj.Epiid);
@@ -1541,7 +1583,7 @@ sap.ui.define([
 					this._oSelectPaymentDialogAC.open();
 				}
 			},
-			onSelectAmntType: function(oEvent) {
+			onSelectAmntType: function (oEvent) {
 				var artistContractModel = this.getView().getModel("artistContractModel");
 				var artistContractDetailInfo = artistContractModel.getData();
 				if (oEvent.getSource().getSelectedIndex() === 0) {
@@ -1551,7 +1593,7 @@ sap.ui.define([
 				}
 				artistContractModel.refresh(true);
 			},
-			onSelectEpisodeModePayment: function() {
+			onSelectEpisodeModePayment: function () {
 				var artistContractModel = this.getView().getModel("artistContractModel");
 				var artistContractDetailInfo = artistContractModel.getData();
 				artistContractDetailInfo.mileStonesForEpi = [];
@@ -1561,14 +1603,14 @@ sap.ui.define([
 				}
 				artistContractModel.refresh(true);
 			},
-			onMileStoneSelectionToDetail: function() {
+			onMileStoneSelectionToDetail: function () {
 				var artistContractModel = this.getView().getModel("artistContractModel");
 				var artistContractDetailInfo = artistContractModel.getData();
 
 				artistContractDetailInfo.mileStonesForEpi = [];
 				var oMLList = this.byId(sap.ui.core.Fragment.createId("acPaymentDialog", "list_mlListAC"));
 				var selectedMLCntxts = oMLList.getSelectedContexts();
-				selectedMLCntxts.map(function(oCntext) {
+				selectedMLCntxts.map(function (oCntext) {
 
 					var oMLObj = oCntext.getObject();
 					artistContractDetailInfo.mileStonesForEpi.push({
@@ -1588,10 +1630,10 @@ sap.ui.define([
 				//oMLList.removeSelections();
 				artistContractModel.refresh(true);
 			},
-			onCancelPayment: function() {
+			onCancelPayment: function () {
 				this._oSelectPaymentDialogAC.close();
 			},
-			onValueHelpPayterm: function(oEvent) {
+			onValueHelpPayterm: function (oEvent) {
 				var oPath = oEvent.getSource().getBindingContext("artistContractModel").sPath;
 
 				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
@@ -1609,7 +1651,7 @@ sap.ui.define([
 				this.openSelectionDialog();
 			},
 
-			preparePaymentpayload: function() {
+			preparePaymentpayload: function () {
 				var artistContractModel = this.getView().getModel("artistContractModel");
 				var artistContractDetailInfo = artistContractModel.getData();
 				var selectedEpisodeList = [];
@@ -1619,7 +1661,7 @@ sap.ui.define([
 					selectedEpisodeList = artistContractDetailInfo.epPaymentList;
 				} else {
 					selectedEpisodeList = [];
-					artistContractDetailInfo.epPaymentList.map(function(epACObj) {
+					artistContractDetailInfo.epPaymentList.map(function (epACObj) {
 						if (epACObj.Epiid >= artistContractDetailInfo.epiPaymentFromId && epACObj.Epiid <= artistContractDetailInfo.epiPaymentToId) {
 							selectedEpisodeList.push(epACObj);
 						}
@@ -1627,7 +1669,7 @@ sap.ui.define([
 					});
 				}
 
-				selectedEpisodeList.map(function(selEpObj) {
+				selectedEpisodeList.map(function (selEpObj) {
 					paymentPayloadArr.push({
 						Contno: artistContractDetailInfo.Contno,
 						Conttp: "02",
@@ -1649,7 +1691,7 @@ sap.ui.define([
 					});
 				}.bind(this));
 				if (artistContractDetailInfo.acPaymentData.length > 0) {
-					artistContractDetailInfo.acPaymentData.map(function(selEpObj) {
+					artistContractDetailInfo.acPaymentData.map(function (selEpObj) {
 						paymentPayloadArr.push({
 							Amtper: selEpObj.Amtper,
 							Tentid: selEpObj.Tentid,
@@ -1681,13 +1723,13 @@ sap.ui.define([
 				return paymentPayloadArr;
 			},
 
-			prepareMileStonePayload: function() {
+			prepareMileStonePayload: function () {
 				var artistContractModel = this.getView().getModel("artistContractModel");
 				var artistContractDetailInfo = artistContractModel.getData();
 				var milestones = artistContractDetailInfo.mileStonesForEpi;
 				var mileStonePayload = [];
 				var oAmtType = this.byId(sap.ui.core.Fragment.createId("acPaymentDialog", "rbAmntTypeAC")).getSelectedIndex();
-				milestones.map(function(mlObj) {
+				milestones.map(function (mlObj) {
 
 					mileStonePayload.push({
 						Amtper: oAmtType === 0 ? mlObj.Dueamt : "0.00",
@@ -1710,7 +1752,7 @@ sap.ui.define([
 				return mileStonePayload;
 			},
 
-			validateMileStoneData: function() {
+			validateMileStoneData: function () {
 				var artistContractModel = this.getView().getModel("artistContractModel");
 				var artistContractDetailInfo = artistContractModel.getData();
 				var milestones = artistContractDetailInfo.mileStonesForEpi;
@@ -1768,13 +1810,13 @@ sap.ui.define([
 				}
 				return statusFlag;
 			},
-			processMilestoneData: function() {
+			processMilestoneData: function () {
 				sap.ui.core.BusyIndicator.show(0);
 				var artistContractModel = this.getView().getModel("artistContractModel");
 				var artistContractDetailInfo = artistContractModel.getData();
 				var oPayLoad = {};
 				var epiTabData = $.extend(true, [], artistContractDetailInfo.epiTabData);
-				epiTabData.map(function(epitabObj) {
+				epiTabData.map(function (epitabObj) {
 					delete epitabObj.flag;
 					delete epitabObj.Diff;
 					delete epitabObj.epiCostEditFlag;
@@ -1792,17 +1834,17 @@ sap.ui.define([
 				var oModel = this.getView().getModel();
 				oModel.setUseBatch(false);
 				oModel.create("/DmCoSet", oPayLoad, {
-					success: function(oData) {
+					success: function (oData) {
 						sap.ui.core.BusyIndicator.hide();
 						if (artistContractDetailInfo.acPaymentData === undefined || artistContractDetailInfo.acPaymentData.length === 0) {
 							artistContractDetailInfo.acPaymentData = [];
-							oData.DmCmSet.results.map(function(obj) {
+							oData.DmCmSet.results.map(function (obj) {
 								obj.flag = "Cr";
 							});
 							artistContractDetailInfo.acPaymentData = artistContractDetailInfo.acPaymentData.concat(oData.DmCmSet.results);
 						} else {
 
-							oData.DmCmSet.results.map(function(obj) {
+							oData.DmCmSet.results.map(function (obj) {
 								var flagNewEntry = true;
 								obj.flag = "Cr";
 								for (var oInd = 0; oInd < artistContractDetailInfo.acPaymentData.length; oInd++) {
@@ -1828,7 +1870,7 @@ sap.ui.define([
 						this._oSelectPaymentDialogAC.close();
 					}.bind(this),
 
-					error: function(oError) {
+					error: function (oError) {
 						sap.ui.core.BusyIndicator.hide();
 						var oBody = JSON.parse(oError.responseText);
 						var oMsg = oBody.error.innererror.errordetails[0].message;
@@ -1837,7 +1879,7 @@ sap.ui.define([
 					}
 				});
 			},
-			onPushPayment: function() {
+			onPushPayment: function () {
 				var artistContractModel = this.getView().getModel("artistContractModel");
 				var artistContractDetailInfo = artistContractModel.getData();
 				var validateBeforePush = this.validateMileStoneData();
@@ -1850,7 +1892,7 @@ sap.ui.define([
 					MessageBox.warning("Milestone has been achieved for some episodes. Do you want to make changes to other episodes?", {
 						actions: [MessageBox.Action.OK, MessageBox.Action.CANCEL],
 						emphasizedAction: MessageBox.Action.OK,
-						onClose: function(sAction) {
+						onClose: function (sAction) {
 							switch (sAction) {
 								case MessageBox.Action.OK:
 									if (validateBeforePush) {
@@ -1871,7 +1913,7 @@ sap.ui.define([
 				}
 			},
 
-			savePaymentTab: function() {
+			savePaymentTab: function () {
 				sap.ui.core.BusyIndicator.show(0);
 				var artistContractModel = this.getView().getModel("artistContractModel");
 				var artistContractDetailInfo = artistContractModel.getData();
@@ -1883,21 +1925,21 @@ sap.ui.define([
 				oModel.setDeferredGroups(oModel.getDeferredGroups().concat(["epiPaymentACChanges"]));
 				var mParameters = {
 					groupId: "epiPaymentACChanges",
-					success: function(data, resp) {
+					success: function (data, resp) {
 						sap.ui.core.BusyIndicator.hide();
 						var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
 						MessageToast.show(oSourceBundle.getText("msgArtistContractSave", artistContractDetailInfo.Contno));
 						this.reloadArtistContractTabs();
 
 					}.bind(this),
-					error: function(odata, resp) {
+					error: function (odata, resp) {
 						sap.ui.core.BusyIndicator.hide();
 						console.log(resp);
 					}
-					
+
 				};
 
-				epiPaymentabData.map(function(oEpiPaymentObj) {
+				epiPaymentabData.map(function (oEpiPaymentObj) {
 					var epiPaymentObj = $.extend(true, {}, oEpiPaymentObj);
 					if (epiPaymentObj.flag === "Cr") {
 						alreadySavedflag = false;
@@ -1918,7 +1960,7 @@ sap.ui.define([
 
 						}
 					} else if (epiPaymentObj.flag === "Ch") {
-							alreadySavedflag = false;
+						alreadySavedflag = false;
 						delete epiPaymentObj.flag;
 						var oPath = "/DmCmSet(Tentid='IBS',Dmno='" + artistContractDetailInfo.Dmno + "',Dmver='" + artistContractDetailInfo.Dmver +
 							"',Conttp='02',Contno='" + artistContractDetailInfo.Contno + "',Contver='" + artistContractDetailInfo.Contver + "',Epiid='" +
@@ -1938,21 +1980,21 @@ sap.ui.define([
 				}
 				sap.ui.core.BusyIndicator.hide();
 			},
-			onEditArtistContract: function() {
+			onEditArtistContract: function () {
 				var artistContractModel = this.getView().getModel("artistContractModel");
 				var artistContractDetailInfo = artistContractModel.getData();
 				artistContractDetailInfo.saveVisible = true;
 				this.getView().byId("btnEditAC").setVisible(false);
 				artistContractModel.refresh(true);
 			},
-			onEpisodeCostChange: function(oEvent) {
+			onEpisodeCostChange: function (oEvent) {
 				var oEpiObj = oEvent.getSource().getBindingContext("artistContractModel").getObject();
 				if (oEpiObj.flag !== "Cr" || oEpiObj.flag === undefined || oEpiObj.flag === "") {
 					oEpiObj.flag = "Ch";
 				};
 				this.getView().getModel("artistContractModel").refresh(true);
 			},
-			onSearchSelection: function(oEvent) {
+			onSearchSelection: function (oEvent) {
 				var sValue = oEvent.getParameter("value");
 				var oFilter =
 					new Filter([
@@ -1963,7 +2005,7 @@ sap.ui.define([
 				var oBinding = oEvent.getParameter("itemsBinding");
 				oBinding.filter([oFilter]);
 			},
-			onConfirmChangeAC: function() {
+			onConfirmChangeAC: function () {
 				var oModel = this.getView().getModel();
 				var artistContractModel = this.getView().getModel("artistContractModel");
 				var artistContractDetailInfo = artistContractModel.getData();
@@ -1972,7 +2014,7 @@ sap.ui.define([
 				MessageBox.confirm(oSourceBundle.getText("msgcreateNewVersion"), {
 					actions: [oSourceBundle.getText("lblYes"), oSourceBundle.getText("lblNo")],
 					emphasizedAction: "Yes",
-					onClose: function(sAction) {
+					onClose: function (sAction) {
 						if (sAction === oSourceBundle.getText("lblYes")) {
 
 							this.onChangeAC();
@@ -1983,7 +2025,7 @@ sap.ui.define([
 				});
 
 			},
-			onChangeAC: function() {
+			onChangeAC: function () {
 				sap.ui.core.BusyIndicator.show(0);
 				var oModel = this.getView().getModel();
 				var artistContractModel = this.getView().getModel("artistContractModel");
@@ -2000,7 +2042,7 @@ sap.ui.define([
 				oModel.callFunction("/GenerateContVersion", {
 					method: "GET",
 					urlParameters: paramObj,
-					success: function(oData, response) {
+					success: function (oData, response) {
 						sap.ui.core.BusyIndicator.hide();
 						// vendorContractDetailInfo.setProperty("/costCodes", oData.results);
 						artistContractModel.refresh(true);
@@ -2008,7 +2050,7 @@ sap.ui.define([
 						this.RouteArtistContractAfterChange();
 
 					}.bind(this),
-					error: function(oError) {
+					error: function (oError) {
 						sap.ui.core.BusyIndicator.hide();
 						var oErrorResponse = JSON.parse(oError.responseText);
 						var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
@@ -2017,7 +2059,7 @@ sap.ui.define([
 					}
 				})
 			},
-			RouteArtistContractAfterChange: function() {
+			RouteArtistContractAfterChange: function () {
 				var oRouter = this.getOwnerComponent().getRouter();
 				var artistContractModel = this.getView().getModel("artistContractModel");
 				var artistContractDetailInfo = artistContractModel.getData();
@@ -2037,7 +2079,7 @@ sap.ui.define([
 				});
 			},
 			//Release Status
-			onTabSelectionAC: function() {
+			onTabSelectionAC: function () {
 				var oTab = this.getView().byId("idACTabBar").getSelectedKey();
 				var oSubTab = this.getView().byId("idACPayTabBar2").getSelectedKey();
 				if (oTab === "releaseStatus") {
@@ -2049,7 +2091,7 @@ sap.ui.define([
 
 			},
 
-			getDateInMS: function(date, time) {
+			getDateInMS: function (date, time) {
 				date.setHours(0, 0, 0, 0);
 				var Actdt = date.getTime();
 				var Time = time;
@@ -2058,7 +2100,7 @@ sap.ui.define([
 				return DtTime;
 
 			},
-			loadMileTabDetails: function() {
+			loadMileTabDetails: function () {
 				var artistContractModel = this.getView().getModel("artistContractModel");
 				var artistContractDetailInfo = artistContractModel.getData();
 				var srvUrl = "/sap/opu/odata/IBSCMS/DEALMEMO_SRV";
@@ -2068,13 +2110,13 @@ sap.ui.define([
 					"' and Contno eq '" + artistContractDetailInfo.Contno + "' and Conttp eq '01' and Contver eq'" + artistContractDetailInfo.Contver +
 					"'";
 				var oModel = this.getView().getModel();
-				oModelSav.read(oPath, null, null, true, function(oData) {
+				oModelSav.read(oPath, null, null, true, function (oData) {
 					var oModel = new sap.ui.model.json.JSONModel(oData);
 					oModel.setSizeLimit("999999");
 
 					artistContractModel.setProperty("/mileWiseList", oData.results);
 					artistContractModel.refresh(true);
-				}, function(value) {
+				}, function (value) {
 					sap.ui.core.BusyIndicator.hide();
 					console.log(value);
 					//alert("fail");
@@ -2085,7 +2127,7 @@ sap.ui.define([
 				// })		
 
 			},
-			loadReleaseStatusDetails: function() {
+			loadReleaseStatusDetails: function () {
 				var oModel = this.getView().getModel();
 				var artistContractModel = this.getView().getModel("artistContractModel");
 				var artistContractDetailInfo = artistContractModel.getData();
@@ -2143,9 +2185,9 @@ sap.ui.define([
 				};
 				oModel.read("/DmlgSet", {
 					filters: aFilters,
-					success: function(oData) {
+					success: function (oData) {
 
-						oData.results.map(function(obj) {
+						oData.results.map(function (obj) {
 							var relStObj = $.extend(true, {}, releaseStatusObj);
 							relStObj.Author = obj.Usernm;
 							relStObj.Status = obj.Usractiondesc;
@@ -2179,7 +2221,7 @@ sap.ui.define([
 						artistContractModel.refresh(true);
 
 					}.bind(this),
-					error: function(oError) {
+					error: function (oError) {
 						var oErrorResponse = JSON.parse(oError.responseText);
 						var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
 						MessageBox.error(oMsg);
