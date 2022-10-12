@@ -2270,7 +2270,7 @@ sap.ui.define([
 						Inhsamt = Inhsamt +  parseFloat(yearBudgetData[i].Inhsamt);
 						Spikeamt = Spikeamt +  parseFloat(yearBudgetData[i].Spikeamt);
 						Prdhsamt = Prdhsamt +  parseFloat(yearBudgetData[i].Prdhsamt);
-						Noofepi = Noofepi +  parseFloat(yearBudgetData[i].NoofEpi);
+						Noofepi = Noofepi +  parseFloat(yearBudgetData[i].Noofepi);
 					}
 				var totalYearBud = 	{
 						"Tentid": dealMemoDetailModel.oData.Tentid,
