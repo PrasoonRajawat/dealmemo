@@ -2240,6 +2240,8 @@ sap.ui.define([
 					"02": "/YearBudgetNonLinTot"
 				}
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
+				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
+				this.getView().byId("lblYearplattotal").setText(oSourceBundle.getText("lblplatAmtText" + selectedKey))
 				var yearBudgetData = dealMemoDetailModel.getProperty(mapObj[selectedKey]);
 				var yearBudgetDataTot = dealMemoDetailModel.getProperty(mapObjTot[selectedKey]);
 				
@@ -2259,6 +2261,7 @@ sap.ui.define([
 				var Spikeamt = 0;
 				var Prdhsamt = 0;
 				var yearTot = [];
+				var Noofepi= 0 ;
 				if(yearBudgetData.length){
 					for ( let i = 0 ; i < yearBudgetData.length ; i ++) {
 						Totalamt = Totalamt + parseFloat(yearBudgetData[i].Totalamt);
@@ -2267,6 +2270,7 @@ sap.ui.define([
 						Inhsamt = Inhsamt +  parseFloat(yearBudgetData[i].Inhsamt);
 						Spikeamt = Spikeamt +  parseFloat(yearBudgetData[i].Spikeamt);
 						Prdhsamt = Prdhsamt +  parseFloat(yearBudgetData[i].Prdhsamt);
+						Noofepi = Noofepi +  parseFloat(yearBudgetData[i].NoofEpi);
 					}
 				var totalYearBud = 	{
 						"Tentid": dealMemoDetailModel.oData.Tentid,
@@ -2275,7 +2279,7 @@ sap.ui.define([
 						"Platform": yearBudgetData[0].Platform,
 						"Noofepi":dealMemoDetailModel.oData.Noofepi,
 						"Gjahr": "Total",
-						"Noofepi": dealMemoDetailModel.oData.Noofepi,
+						"Noofepi": Noofepi,
 						"Prdhsamt": Prdhsamt,
 						"Inhsamt": Inhsamt,
 						"Inhouseamt": Inhouseamt,
