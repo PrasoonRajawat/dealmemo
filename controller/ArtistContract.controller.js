@@ -1024,7 +1024,7 @@ sap.ui.define([
 				var EpiTabData = [];
 				var selectedCostCodeContexts = this.byId(sap.ui.core.Fragment.createId("acEpisodeDialog", "list_costCodes")).getSelectedContexts()
 				selectedEpisodeList.map(function (epObj, i) {
-					if (selectedEpisodeList.length !== i + 1) {
+					if (selectedEpisodeList.length === i + 1) {
 						selectedCostCodeContexts.map(function (selCostCodeContext) {
 								var selectedCostCodeObj = selCostCodeContext.getObject();
 								if (selectedCostCodeObj.costCodeValue !== 0) {
