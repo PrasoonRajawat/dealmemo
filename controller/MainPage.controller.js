@@ -2240,6 +2240,8 @@ sap.ui.define([
 					"02": "/YearBudgetNonLinTot"
 				}
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
+				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
+				this.getView().byId("lblYearplattotal").setText(oSourceBundle.getText("lblplatAmtText" + selectedKey))
 				var yearBudgetData = dealMemoDetailModel.getProperty(mapObj[selectedKey]);
 				var yearBudgetDataTot = dealMemoDetailModel.getProperty(mapObjTot[selectedKey]);
 				
