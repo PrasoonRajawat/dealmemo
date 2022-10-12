@@ -1084,7 +1084,7 @@ sap.ui.define([
 									Totepiamt: perEpiValue.toString(),
 									Wmwst: "00.0",
 									Mwskz: artistContractDetailInfo.taxCodeKey,
-									Coepiamt: lastEpiCost.toString(),
+									Coepiamt: perEpiValue.toString(),
 									Costcd: selectedCostCodeObj.Costcode,
 									Costdesc: selectedCostCodeObj.Costdesc
 
