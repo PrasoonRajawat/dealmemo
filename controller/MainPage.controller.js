@@ -3188,7 +3188,7 @@ sap.ui.define([
 							detailModel.setProperty("/YearBudgetNonLin", yearBudgetNonLin);
 							detailModel.setProperty("/YearBudgetNonLinTot", yearBudgetNonLinTot);
 							detailModel.setProperty("/YearBudgetInfo", yearBudgetLin);
-							detailModel.setProperty("/yearWiseTableTot" , yearBudgetNonLinTot )
+							detailModel.setProperty("/yearWiseTableTot" , yearBudgetLinTot )
 							detailModel.refresh(true);
 						}.bind(this),
 						error: function(oError) {
