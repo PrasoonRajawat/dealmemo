@@ -532,7 +532,7 @@ sap.ui.define([
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
 				vendorContractModel.setProperty("/createParams", {
-					"Zstext": vendorContractModel.oData.Abtnr != "" ? vendorContractModel.oData.Abtnr : "",
+					"Zstext": vendorContractModel.oData.Zstext != "" ? vendorContractModel.oData.Zstext : "",
 					"Zltext": vendorContractModel.oData.Zltext != "" ? vendorContractModel.oData.Zltext : "",
 					"Prreq": vendorContractModel.oData.Prreq != "" ? vendorContractModel.oData.Prreq : "",
 					"Depthd": vendorContractModel.oData.Depthd != "" ? vendorContractModel.oData.Depthd : "",
