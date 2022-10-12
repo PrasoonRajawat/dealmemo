@@ -3178,7 +3178,7 @@ sap.ui.define([
 							});
 							var yearBudgetLinTot = this.handleTotalBudgetYear(yearBudgetLin);
 							detailModel.setProperty("/YearBudgetLin", yearBudgetLin);
-							detailModel.setProperty("/yearBudgetLinTot", yearBudgetLinTot);
+							detailModel.setProperty("/YearBudgetLinTot", yearBudgetLinTot);
 
 							var yearBudgetNonLin = oData.DmYCSet.results.filter(function(obj) {
 								return obj.Platform === "02"
@@ -3186,7 +3186,7 @@ sap.ui.define([
 							var yearBudgetNonLinTot = this.handleTotalBudgetYear(yearBudgetNonLin);
 
 							detailModel.setProperty("/YearBudgetNonLin", yearBudgetNonLin);
-							detailModel.setProperty("/yearBudgetNonLinTot", yearBudgetNonLinTot);
+							detailModel.setProperty("/YearBudgetNonLinTot", yearBudgetNonLinTot);
 							detailModel.setProperty("/YearBudgetInfo", yearBudgetLin);
 							detailModel.setProperty("/yearWiseTableTot" , yearBudgetNonLinTot )
 							detailModel.refresh(true);
