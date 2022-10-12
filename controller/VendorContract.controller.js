@@ -2593,6 +2593,7 @@ sap.ui.define([
 				var vendorContractDetailInfo = vendorContractModel.getData();
 				if (vendorContractDetailInfo.DmVrSet.results.length) {
 					oEvent.getSource().getBindingContext("vendorContractModel").getObject().flag = "Ch";
+					this.getView().getModel("vendorContractModel").refresh(true);
 				}
 			},
 			onSelectEpisodeModeIPR: function (oEvent) {
