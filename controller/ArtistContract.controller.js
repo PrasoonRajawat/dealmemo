@@ -1026,8 +1026,8 @@ sap.ui.define([
 				selectedEpisodeList.map(function (epObj, i) {
 					if (selectedEpisodeList.length !== i + 1) {
 						selectedCostCodeContexts.map(function (selCostCodeContext) {
-							if (selectedCostCodeObj.costCodeValue !== 0) {
 								var selectedCostCodeObj = selCostCodeContext.getObject();
+								if (selectedCostCodeObj.costCodeValue !== 0) {
 								var totalCost = selectedCostCodeObj.costCodeValue;
 								if (totalCost != 0) {
 									var remainCost = totalCost - (parseFloat(selectedCostCodeObj.costCodeValue / Noofepi).toFixed(2) * Noofepi);
