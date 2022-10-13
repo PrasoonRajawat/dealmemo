@@ -71,7 +71,7 @@
 			</VBox>
 			
 			<VBox width="50%" class="sapUiTinyMarginBegin">
-				<Label text="{i18n>lblTerritory}" required="true"/>
+				<Label text="{i18n>lblTerritory}"/>
 				<ComboBox width="100%" items="{vendorContractModel>/teritoryList}"  selectedItemId ="{vendorContractModel>/TeritoryItem}" selectedKey="{vendorContractModel>/territoryKey}">
 					<c:Item text="{vendorContractModel>Mstcdnm}" key="{vendorContractModel>Mstcd}"/>
 				</ComboBox>

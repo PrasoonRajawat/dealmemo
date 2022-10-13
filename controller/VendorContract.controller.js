@@ -2622,8 +2622,8 @@ sap.ui.define([
 					vendorContractDetailInfo.vcIPRDataErrorMsg = oSourceBundle.getText("msgSelectEpisode" + vendorContractDetailInfo.Cnttp);
 					vendorContractModel.refresh(true);
 					return false;
-				} else if (vendorContractDetailInfo.IPRRight === "" || vendorContractDetailInfo.PlatformKey === "" || vendorContractDetailInfo.totRuns === "") {
-					// 	"" || vendorContractDetailInfo.amortKey === "" || vendorContractDetailInfo.nonAmortKey === "") {
+				} else if (vendorContractDetailInfo.IPRRight === "" || vendorContractDetailInfo.totRuns === "") {
+					// 	"" || vendorContractDetailInfo.amortKey === "" || vendorContractDetailInfo.nonAmortKey === "" || vendorContractDetailInfo.PlatformKey === "" ) {
 					vendorContractDetailInfo.vcIPRDataErrorMsg = oSourceBundle.getText("msgrequiredFieds");
 					vendorContractDetailInfo.vcIPRDataMsgVisible = true;
 					vendorContractModel.refresh(true);
