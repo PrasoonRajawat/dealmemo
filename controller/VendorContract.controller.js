@@ -2622,8 +2622,8 @@ sap.ui.define([
 					vendorContractDetailInfo.vcIPRDataErrorMsg = oSourceBundle.getText("msgSelectEpisode" + vendorContractDetailInfo.Cnttp);
 					vendorContractModel.refresh(true);
 					return false;
-				} else if (vendorContractDetailInfo.IPRRight === "" || vendorContractDetailInfo.totRuns === "") {
-					// 	"" || vendorContractDetailInfo.amortKey === "" || vendorContractDetailInfo.nonAmortKey === "" || vendorContractDetailInfo.PlatformKey === "" ) {
+				} else if (vendorContractDetailInfo.IPRRight === "" || vendorContractDetailInfo.PlatformKey === "" || vendorContractDetailInfo.totRuns === "") {
+					// 	"" || vendorContractDetailInfo.amortKey === "" || vendorContractDetailInfo.nonAmortKey === "") {
 					vendorContractDetailInfo.vcIPRDataErrorMsg = oSourceBundle.getText("msgrequiredFieds");
 					vendorContractDetailInfo.vcIPRDataMsgVisible = true;
 					vendorContractModel.refresh(true);
@@ -2737,7 +2737,7 @@ sap.ui.define([
 								//for display
 								Epinm: selEpObj.Epinm,
 								Iprnm: sap.ui.getCore().byId(vendorContractDetailInfo.IPRItem).getText(),
-								Tertnm: sap.ui.getCore().byId(vendorContractDetailInfo.TeritoryItem).getText(),
+								Tertnm: vendorContractDetailInfo.territoryKey != "" ? vendorContractDetailInfo.teritoryList.find(g => g.Mstcd == vendorContractDetailInfo.territoryKey).Mstcdnm : "",
 								// Leadnm: sap.ui.getCore().byId(vendorContractDetailInfo.AmortItem).getText(),
 								// Nonleadnm: sap.ui.getCore().byId(vendorContractDetailInfo.NonAmortItem).getText(),
 								Leadnm: vendorContractDetailInfo.amortKey != "" ? vendorContractDetailInfo.amortPatternList.find(g => g.Mstcd == vendorContractDetailInfo.amortKey).Mstcdnm : mapList.find(g => g.Epiid == selEpObj.Epiid).Leadnm,
@@ -2775,7 +2775,7 @@ sap.ui.define([
 								//for display
 								Epinm: selEpObj.Epinm,
 								Iprnm: sap.ui.getCore().byId(vendorContractDetailInfo.IPRItem).getText(),
-								Tertnm: sap.ui.getCore().byId(vendorContractDetailInfo.TeritoryItem).getText(),
+								Tertnm: vendorContractDetailInfo.territoryKey != "" ? vendorContractDetailInfo.teritoryList.find(g => g.Mstcd == vendorContractDetailInfo.territoryKey).Mstcdnm : "",
 								Leadnm: vendorContractDetailInfo.amortKey != "" ? sap.ui.getCore().byId(vendorContractDetailInfo.AmortItem).getText() : "",
 								Nonleadnm: vendorContractDetailInfo.nonAmortKey != "" ? sap.ui.getCore().byId(vendorContractDetailInfo.NonAmortItem).getText() : "",
 								IPREditFlag: vendorContractDetailInfo.IPRRight === "01" ? false : true,
