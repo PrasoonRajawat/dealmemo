@@ -4980,12 +4980,29 @@ sap.ui.define([
 
 							}
 
-						}
+						} else if (dealMemoDetailInfo.Cnttp === "04") {
+							epTypeObj = {
 
+								ind: 0,
+								label: 'Music ID',
+								property: 'MusicID'
+
+							}
+						}
 						var aCols = [
 
 							epTypeObj, {
 								ind: 1,
+								label: 'Description',
+								property: 'Description',
+								//	type: EdmType.Number
+							}
+						];
+
+						 aCols = [
+
+							epTypeObj, {
+								ind: 2,
 								label: 'Year',
 								property: 'Year',
 								//	type: EdmType.Number
@@ -5000,7 +5017,7 @@ sap.ui.define([
 								}
 								if (obj.enableAcquisition) {
 									aCols.push({
-										ind: 1,
+										ind: 2,
 										label: 'Acquisition - ' + costCodeDesc + "/" + obj.Costcd,
 										property: 'Year',
 										//		type: EdmType.Number
@@ -5008,7 +5025,7 @@ sap.ui.define([
 								}
 								if (obj.enableExternal) {
 									aCols.push({
-										ind: 1,
+										ind: 2,
 										label: 'External - ' + costCodeDesc + "/" + obj.Costcd,
 										property: 'Year',
 										//	type: EdmType.Number
@@ -5016,7 +5033,7 @@ sap.ui.define([
 								}
 								if (obj.enableInhouse) {
 									aCols.push({
-										ind: 1,
+										ind: 2,
 										label: 'Inhouse - ' + costCodeDesc + "/" + obj.Costcd,
 										property: 'Year',
 										//	type: EdmType.Number
