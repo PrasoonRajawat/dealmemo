@@ -53,7 +53,7 @@
 												<Input  maxLength="3" value="{vendorContractModel>Norun}" editable="{vendorContractModel>IPREditFlag}" enabled="{vendorContractModel>/saveVisible}" change="onChangeIPRDet"></Input>
 												<Input value="{vendorContractModel>Leadnm}" showValueHelp="true" valueHelpRequest="onValueHelpAmort"  tooltip="{vendorContractModel>Leadnm}" enabled="{vendorContractModel>/saveVisible}"></Input>
 												<Input value="{vendorContractModel>Nonleadnm}" showValueHelp="true" valueHelpRequest="onValueHelpNonAmort"  tooltip="{vendorContractModel>NonLeadnm}" enabled="{vendorContractModel>/saveVisible}"></Input>
-												<Input value="{vendorContractModel>Tertnm}" showValueHelp="true" valueHelpRequest="onValueHelpTerritory" enabled="{vendorContractModel>/saveVisible}"></Input>
+												<Input value="{vendorContractModel>Tertnm}" showValueHelp="true" valueHelpRequest="onValueHelpTerritory" enabled="{vendorContractModel>/saveVisible}" change= "onChangeTerritory"></Input>
 											</cells>
 										</ColumnListItem>
 									</items>
