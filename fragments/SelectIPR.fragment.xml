@@ -72,7 +72,7 @@
 			
 			<VBox width="50%" class="sapUiTinyMarginBegin">
 				<Label text="{i18n>lblTerritory}"/>
-				<ComboBox width="100%" items="{vendorContractModel>/teritoryList}"  selectedItemId ="{vendorContractModel>/TeritoryItem}" selectedKey="{vendorContractModel>/territoryKey}">
+				<ComboBox width="100%" items="{vendorContractModel>/teritoryList}"  selectedItemId ="{vendorContractModel>/TeritoryItem}" selectedKey="{vendorContractModel>/territoryKey}" change= "onChangeTerritory">
 					<c:Item text="{vendorContractModel>Mstcdnm}" key="{vendorContractModel>Mstcd}"/>
 				</ComboBox>
 			</VBox>

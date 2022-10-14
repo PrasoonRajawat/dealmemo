@@ -2596,6 +2596,19 @@ sap.ui.define([
 					this.getView().getModel("vendorContractModel").refresh(true);
 				}
 			},
+			onChangeTerritory: function (oEvent) {
+				var vendorContractModel = this.getView().getModel("vendorContractModel");
+				var vendorContractDetailInfo = vendorContractModel.getData();
+				var oPath = oEvent.getSource().getBindingContext("vendorContractModel").sPath;
+				if (vendorContractDetailInfo.DmVrSet.results.length) {
+					oEvent.getSource().getBindingContext("vendorContractModel").getObject().flag = "Ch";
+					if(oEvent.getSource().mProperties.value == ""){
+						oEvent.getSource().getBindingContext("vendorContractModel").getObject().Territory = "";
+						oEvent.getSource().getBindingContext("vendorContractModel").getObject().Tertnm = "";
+					}
+				}
+				this.getView().getModel("vendorContractModel").refresh(true);
+			},
 			onSelectEpisodeModeIPR: function (oEvent) {
 				var oselIndex = oEvent.getSource().getSelectedIndex();
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
