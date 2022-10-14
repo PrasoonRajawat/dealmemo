@@ -5233,6 +5233,8 @@ sap.ui.define([
 								} else {
 									episodeData[oIndex]['Gjahr'] = mvObj[aKey];
 								}
+							} else if (aKey == "Description") {
+								
 							} else {
 								var costCode = aKey.split("/")[1];
 								if (episodeData[oIndex].epiSodeCostSheet.length > 0) {
