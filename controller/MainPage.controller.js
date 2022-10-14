@@ -4996,17 +4996,18 @@ sap.ui.define([
 								label: 'Description',
 								property: 'Description',
 								//	type: EdmType.Number
-							}
-						];
-
-						 aCols = [
-
-							epTypeObj, {
+							},
+							{
 								ind: 2,
 								label: 'Year',
 								property: 'Year',
 								//	type: EdmType.Number
 							}
+						];
+
+						 aCols = [
+
+							
 						];
 
 						costSheetFormatted.map(function(obj) {
