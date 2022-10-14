@@ -5005,10 +5005,7 @@ sap.ui.define([
 							}
 						];
 
-						 aCols = [
-
-							
-						];
+						
 
 						costSheetFormatted.map(function(obj) {
 							if (!obj.hasChild) {
