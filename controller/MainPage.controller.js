@@ -5122,6 +5122,11 @@ sap.ui.define([
 					episodeIds = episodeList.map(function(obj) {
 						return obj.Mvid
 					});
+				} else if (dealMemoDetailInfo.Cnttp === "04") {
+					episodeList = dealMemoModel.getProperty("/musicList");
+					episodeIds = episodeList.map(function(obj) {
+						return obj.Mvid
+					});
 				}
 				// var movieList = dealMemoModel.getProperty("/movieList");
 				var movieIds = episodeList.map(function(obj) {
@@ -5220,6 +5225,35 @@ sap.ui.define([
 									//error message Movie id does not exist
 								}
 
+							} else if (aKey === "Music ID") {
+
+								if (uploadedMatchIds.indexOf(mvObj[aKey]) >= 0) {
+									statusFlag = false;
+									oMsg = oSourceBundle.getText("msgDuplicateMovIdInExcel" + dealMemoDetailInfo.Cnttp, mvObj[aKey]);
+									break;
+								} else {
+									uploadedMatchIds.push(mvObj[aKey]);
+								}
+
+								if (episodeIds.indexOf(mvObj[aKey]) >= 0) {
+
+									var mvIndex = episodeIds.indexOf(mvObj[aKey]);
+									if (episodeList[mvIndex].Mpmid === "") {
+										statusFlag = false;
+										oMsg = oSourceBundle.getText("msgNOMPMExist" + dealMemoDetailInfo.Cnttp, mvObj[aKey]);
+										break;
+									} else {
+										episodeData[oIndex]['Epiid'] = mvObj[aKey];
+										episodeData[oIndex]['Epinm'] = episodeList[mvIndex].Matnm;
+									}
+
+								} else {
+									statusFlag = false;
+									oMsg = oSourceBundle.getText("msgMovieIdNoExist" + dealMemoDetailInfo.Cnttp, mvObj[aKey]);
+									break;
+									//error message Movie id does not exist
+								}
+								
 							} else if (aKey === "Year") {
 
 								if (!(parseInt(mvObj[aKey]) >= parseInt(dealMemoDetailInfo.FromYr) && parseInt(mvObj[aKey]) <= parseInt(dealMemoDetailInfo.ToYr))) {
