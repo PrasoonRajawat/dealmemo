@@ -1064,6 +1064,7 @@ sap.ui.define([
 						this.getView().byId("idIconSubTabBar2").setSelectedKey("vcSubEpiDataNoCostCd");
 						Object.assign(vendorContractDetailInfo, oData);
 						vendorContractModel.refresh(true);
+						this.calculateEpisode();
 						this.selCostCodesPaths = [];
 						sap.ui.core.BusyIndicator.hide();
 					}.bind(this),
