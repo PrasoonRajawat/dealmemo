@@ -84,7 +84,7 @@
 										design="Horizontal" icon="sap-icon://money-bills" iconColor="{artistContractModel>/vcPaymentDataColor}" class="sapMITBHead"
 										enabled="{artistContractModel>/vcTabEnable}">
 										<content>
-											<c:Fragment fragmentName="com.ui.dealmemolocal.fragments.vcSeriesWiseMilestone" type="XML"/>
+											<core:Fragment fragmentName="com.ui.dealmemolocal.fragments.vcSeriesWiseMilestone" type="XML"/>
 										</content>
 									</IconTabFilter>
 									</items>
