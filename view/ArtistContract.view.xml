@@ -81,10 +81,10 @@
 										</IconTabFilter>
 										<IconTabFilter key="mileMpml2"
 										text="Series Summary"
-										design="Horizontal" icon="sap-icon://money-bills" iconColor="{artistContractModel>/vcPaymentDataColor}" class="sapMITBHead"
+										design="Horizontal" icon="sap-icon://money-bills" iconColor="{artistContractModel>/paymentDataColor}" class="sapMITBHead"
 										enabled="{artistContractModel>/vcTabEnable}">
 										<content>
-											<core:Fragment fragmentName="com.ui.dealmemolocal.fragments.vcSeriesWiseMilestone" type="XML"/>
+											<core:Fragment fragmentName="com.ui.dealmemolocal.fragments.acSeriesWiseMilestone" type="XML"/>
 										</content>
 									</IconTabFilter>
 									</items>
