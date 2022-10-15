@@ -664,7 +664,7 @@ sap.ui.define([
 				}
 			},
 			onActionCB: function () { // FOr replacement Checkbox.
-				var artistContractModel = this.getView().getModel("vendorContractModel");
+				var artistContractModel = this.getView().getModel("artistContractModel");
 				var artistContractDetailInfo = artistContractModel.getData();
 				if (sap.ui.getCore().byId("recont").getSelected() === true) {
 					artistContractModel.setProperty("/createParams/Recont", true);
@@ -2044,7 +2044,7 @@ sap.ui.define([
 					urlParameters: paramObj,
 					success: function (oData, response) {
 						sap.ui.core.BusyIndicator.hide();
-						// vendorContractDetailInfo.setProperty("/costCodes", oData.results);
+						// artistContractDetailInfo.setProperty("/costCodes", oData.results);
 						artistContractModel.refresh(true);
 						this.newVersionCreated = true;
 						this.RouteArtistContractAfterChange();
@@ -2122,10 +2122,32 @@ sap.ui.define([
 					//alert("fail");
 				});
 				// var count = {};
-				// vendorContractDetailInfo.DmCmSet.results.forEach(v =>{
+				// artistContractDetailInfo.DmCmSet.results.forEach(v =>{
 				// 	count[v] = (count[v] || 0 ) + 1
 				// })		
 
+			},
+			calculateEpisode: function () {
+				var artistContractModel = this.getView().getModel("artistContractModel");
+				var artistContractDetailInfo = artistContractModel.getData();
+				var srvUrl = "/sap/opu/odata/IBSCMS/DEALMEMO_SRV";
+				var oModelSav = new sap.ui.model.odata.ODataModel(srvUrl, true, "", "");
+				var oPath = "/DmCmMileWiseSet?$filter=Tentid eq 'IBS'and Dmno eq '" + artistContractDetailInfo.Dmno + "' and Dmver eq '" +
+					artistContractDetailInfo.Dmver +
+					"' and Contno eq '" + artistContractDetailInfo.Contno + "' and Conttp eq '01' and Contver eq'" + artistContractDetailInfo.Contver +
+					"'";
+				var oModel = this.getView().getModel();
+				oModelSav.read(oPath, null, null, true, function (oData) {
+					var oModel = new sap.ui.model.json.JSONModel(oData);
+					oModel.setSizeLimit("999999");
+
+					artistContractModel.setProperty("/mileMpml2List", oData.results);
+					artistContractModel.refresh(true);
+				}, function (value) {
+					sap.ui.core.BusyIndicator.hide();
+					console.log(value);
+					//alert("fail");
+				});
 			},
 			loadReleaseStatusDetails: function () {
 				var oModel = this.getView().getModel();

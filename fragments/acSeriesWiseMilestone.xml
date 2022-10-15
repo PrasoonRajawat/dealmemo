@@ -1,0 +1,46 @@
+<c:FragmentDefinition xmlns="sap.m" xmlns:u="sap.ui.unified" xmlns:l="sap.ui.layout" xmlns:c="sap.ui.core">
+		<Table
+		headerText="Products"
+		items="{artistContractModel>/mileMpml2List}" >
+		<columns>
+			<Column mergeDuplicates="true">
+				<header>
+					<Text text="Series" />
+				</header>
+			</Column>
+			<Column mergeDuplicates="false">
+				<header>
+					<Text text="Milestone" />
+				</header>
+			</Column>
+			<Column
+				minScreenWidth="Tablet"
+				demandPopin="true"
+				 >
+				<header>
+					<Text text="Version" />
+				</header>
+			</Column>
+			<Column
+				minScreenWidth="Tablet"
+				demandPopin="true"
+				 >
+				<header>
+					<Text text="{parts:[{value:'lblTblColEpisodesYearWise'},{path:'artistContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" />
+				</header>
+			</Column>
+			<Column >
+				<header>
+					<Text text="Amount Due" />
+				</header>
+			</Column>
+		</columns>
+		<ColumnListItem >
+			<Text text="{artistContractModel>Mpml2}" />
+			<Text text="{artistContractModel>Msidnm}" />
+			<Text text="{artistContractModel>Dmver}" />
+			<Text text="{artistContractModel>Epiid}" class="sapUiSizeCompact"/>
+			<Label text="{path:'artistContractModel>Dueamt', type:'sap.ui.model.type.Float',formatOptions: { maxFractionDigits: 2 }}"></Label>
+		</ColumnListItem>
+	</Table>
+</c:FragmentDefinition>
