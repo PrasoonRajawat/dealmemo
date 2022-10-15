@@ -2133,7 +2133,7 @@ sap.ui.define([
 				var artistContractDetailInfo = artistContractModel.getData();
 				var srvUrl = "/sap/opu/odata/IBSCMS/DEALMEMO_SRV";
 				var oModelSav = new sap.ui.model.odata.ODataModel(srvUrl, true, "", "");
-				var oPath = "/DmCmMileWiseSet?$filter=Tentid eq 'IBS'and Dmno eq '" + artistContractDetailInfo.Dmno + "' and Dmver eq '" +
+				var oPath = "/DmMpml2SumSet?$filter=Tentid eq 'IBS'and Dmno eq '" + artistContractDetailInfo.Dmno + "' and Dmver eq '" +
 					artistContractDetailInfo.Dmver +
 					"' and Contno eq '" + artistContractDetailInfo.Contno + "' and Conttp eq '01' and Contver eq'" + artistContractDetailInfo.Contver +
 					"'";
