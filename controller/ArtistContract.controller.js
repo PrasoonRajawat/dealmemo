@@ -1455,6 +1455,7 @@ sap.ui.define([
 							}
 						}
 						artistContractModel.refresh(true);
+						this.calculateEpisode();
 						this.getView().byId("idSubIconTabBarac").setSelectedKey("acSubEpiDataNoCostCd");
 						sap.ui.core.BusyIndicator.hide();
 					}.bind(this),
