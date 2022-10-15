@@ -1,136 +1,115 @@
-<mvc:View controllerName="com.ui.dealmemolocal.controller.ArtistContract" xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m" xmlns:u="sap.uxap" xmlns:core="sap.ui.core">
-    <App>
-        <Page title="{i18n>lblIcnTbFltAC}" id="artistContractPage" navButtonPress="onNavBackFromArtistContract" showNavButton="true">
-            <content>
-                <Panel expandable="false" expanded="true" backgroundDesign="Transparent" id="idObjHd">
-                    <!--Made expandable="false" and added "id" property By  Lakshmana on 27.05.2020  for Deal Memo Changes-->
-                    <ObjectHeader
-                        title="{i18n>lblArtistContract} : {artistContractModel>/vendorName} ({artistContractModel>/vendorRoleName})"
-                        number="{ parts: [ {path: 'artistContractModel>/Totcost'}, {path: 'artistContractModel>/Waers'} ], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false,minFractionDigits: 2, maxFractionDigits: 2 } }"
-                        intro="{artistContractModel>/Contno}({artistContractModel>/Contver})"
-                        numberUnit="{artistContractModel>/Waers}"
-                        responsive="true"
-                        fullScreenOptimized="true"
-                        numberState="Success"
-                    >
-                        <statuses>
-                            <ObjectStatus text="{artistContractModel>/Contstatdesc}" state="{path:'artistContractModel>/Contstat',formatter:'.Formatter.formatDealMemoStatus'}" />
-                            <ObjectStatus title="{i18n>lblDealMemo}" text="{artistContractModel>/Dmno}" />
-                            <ObjectStatus title="{i18n>lblTotBudget}" text="{path:'artistContractModel>/Totartbud', type:'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 2 }}" />
-                            <ObjectStatus title="{i18n>lblContent}" text="{artistContractModel>/Cntnm}" />
-                            <ObjectStatus title="{i18n>lblCostOtherContract}" text="{path:'artistContractModel>/Othartamt', type:'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 2 }}" />
-                            <ObjectStatus title="{i18n>lblAvailableBudget}" text="{path:'artistContractModel>/Avlartbud', type:'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 2 }}" />
-                            <ObjectStatus title="{i18n>lblPurchaseOrder}" text="{artistContractModel>/Ebeln}" />
-                            <ObjectStatus id="clmno" title="CLM Number" text="{artistContractModel>/Clmno}" />
-                            <ObjectStatus id="clmst" title="CLM Status" text="{artistContractModel>/Clmstdesc}" />
-                            <ObjectStatus id="department" title="Department" text="{artistContractModel>/createParams/Zltext}" />
-                            <ObjectStatus id="zprrequest" title="PR Request" text="{artistContractModel>/createParams/Prreq}" />
-                            <ObjectStatus id="DeparmentHead" title="Deparment Head" text="{artistContractModel>/createParams/Depthd}" />
-                            <ObjectStatus id="grsescreate" title="GR SES Creator" text="{artistContractModel>/createParams/Grsescr}" />
-                        </statuses>
-                    </ObjectHeader>
-                </Panel>
-                <IconTabBar id="idACTabBar" expanded="{device>/isNoPhone}" visible="true" selectedKey="acEpiData" select="onTabSelectionAC" class="sapUiResponsiveContentPadding" expandable="false">
-                    <items>
-                        <IconTabFilter key="acEpiData" text="{parts:[{value:'lblEpisodeData'},{path:'artistContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" design="Horizontal" icon="sap-icon://list" iconColor="{artistContractModel>/EpiDataColor}">
-                            <IconTabBar id="idSubIconTabBarac" expandable="false">
-                                <items>
-                                    <IconTabFilter
-                                        key="acSubEpiDataNoCostCd"
-                                        text="{parts:[{value:'lblEpisodeDetails'},{path:'artistContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}"
-                                        design="Horizontal"
-                                        icon="sap-icon://list"
-                                        iconColor="{artistContractModel>/EpiNonCostCdDataColor}"
-                                        visible="{artistContractModel>/enableEpiNonCostCdTab}"
-                                    >
-                                        <content>
-                                            <core:Fragment id="acEpiTabNoCostCd" fragmentName="com.ui.dealmemolocal.fragments.artistEpiDataNonCostCdTab" type="XML" />
-                                        </content>
-                                    </IconTabFilter>
-                                    <IconTabFilter key="acSubEpiData" text="{i18n>lblCostCodeBreakup}" design="Horizontal" icon="sap-icon://list" iconColor="{artistContractModel>/EpiDataColor}">
-                                        <content>
-                                            <core:Fragment id="acEpiTab" fragmentName="com.ui.dealmemolocal.fragments.artistEpiDataTab" type="XML" />
-                                        </content>
-                                    </IconTabFilter>
-                                </items>
-                            </IconTabBar>
-                        </IconTabFilter>
-                        <IconTabSeparator icon="sap-icon://open-command-field" />
-                        <IconTabFilter
-                            key="acPaymentData"
-                            text="{parts:[{value:'lblEpisodePayment'},{path:'artistContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}"
-                            design="Horizontal"
-                            icon="sap-icon://money-bills"
-                            iconColor="{artistContractModel>/paymentDataColor}"
-                            class="sapMITBHead"
-                            enabled="{artistContractModel>/acTabEnable}"
-                        >
-                            <content>
-                                <!--<core:Fragment fragmentName="com.ui.dealmemolocal.fragments.artistPaymentDataTab" type="XML" /> -->
-                                <IconTabBar id="idACPayTabBar2" expandable="false" select="onTabSelectionAC">
-                                    <items>
-                                        <IconTabFilter
-                                            key="acPaymentData1"
-                                            text="{parts:[{value:'lblEpisodePayment'},{path:'artistContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}"
-                                            design="Horizontal"
-                                            icon="sap-icon://money-bills"
-                                            iconColor="{artistContractModel>/paymentDataColor}"
-                                            class="sapMITBHead"
-                                            enabled="{artistContractModel>/acTabEnable}"
-                                        >
-                                            <content>
-                                                <core:Fragment fragmentName="com.ui.dealmemolocal.fragments.artistPaymentDataTab" type="XML" />
-                                            </content>
-                                        </IconTabFilter>
-                                        <IconTabFilter
-                                            key="milestoneTab"
-                                            text="{parts:[{value:'lblEpisodeSummary'},{path:'artistContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}"
-                                            design="Horizontal"
-                                            icon="sap-icon://money-bills"
-                                            iconColor="{artistContractModel>/paymentDataColor}"
-                                            class="sapMITBHead"
-                                            enabled="{artistContractModel>/acTabEnable}"
-                                        >
-                                            <content>
-                                                <core:Fragment fragmentName="com.ui.dealmemolocal.fragments.acMilestoneDataTab" type="XML" />
-                                            </content>
-                                        </IconTabFilter>
-                                        <IconTabFilter key="mileMpml2" text="Series Summary" design="Horizontal" icon="sap-icon://money-bills" iconColor="{artistContractModel>/vcPaymentDataColor}" class="sapMITBHead" enabled="{artistContractModel>/vcTabEnable}">
-                                            <content>
-                                                <c:Fragment fragmentName="com.ui.dealmemolocal.fragments.acSeriesWiseMilestone" type="XML" />
-                                            </content>
-                                        </IconTabFilter>
-                                    </items>
-                                </IconTabBar>
-                            </content>
-                        </IconTabFilter>
-                        <IconTabFilter
-                            id="idReleaseStatusTab"
-                            text="{i18n>lblReleaseSt}"
-                            key="releaseStatus"
-                            icon="sap-icon://order-status"
-                            class="sapMITBHead"
-                            iconColor="{path:'artistContractModel>/relStatustabcolor'}"
-                            design="Horizontal"
-                            enabled="{= ${artistContractModel>/Contstat} !== '01' ? true : false }"
-                            visible="{artistContractModel>/releaseTabVisible}"
-                        >
-                            <content>
-                                <core:Fragment fragmentName="com.ui.dealmemolocal.fragments.DealMemoTabs.ReleaseStatus.ReleaseStatusTabAC" type="XML" />
-                            </content>
-                        </IconTabFilter>
-                    </items>
-                </IconTabBar>
-            </content>
-            <footer>
-                <Toolbar>
-                    <ToolbarSpacer />
-                    <Button id="btnSaveAC" text="{i18n>btnSave}" visible="{artistContractModel>/saveVisible}" press="onSaveArtistContract" enabled="{path:'artistContractModel>/Contstat',formatter:'.Formatter.formatEditableContStatus'}" />
-                    <Button id="btnEditAC" text="{i18n>btnTxtEdit}" press="onEditArtistContract" enabled="{path:'artistContractModel>/Contstat',formatter:'.Formatter.formatEditableContStatus'}" />
-                    <Button id="btnSubmitAC" text="{i18n>btnTxtSubmit}" press="onSubmitAC" visible="{artistContractModel>/submitVisible}" />
-                    <Button id="btnChangeAC" text="{i18n>btnTxtChange}" visible="{artistContractModel>/changeVisible}" press="onConfirmChangeAC" />
-                </Toolbar>
-            </footer>
-        </Page>
-    </App>
+<mvc:View controllerName="com.ui.dealmemolocal.controller.ArtistContract" xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m"
+	xmlns:u="sap.uxap" xmlns:core="sap.ui.core">
+	<App>
+		<Page title="{i18n>lblIcnTbFltAC}" id="artistContractPage" navButtonPress="onNavBackFromArtistContract" showNavButton="true">
+			<content>
+				<Panel expandable="false" expanded="true" backgroundDesign="Transparent" id="idObjHd">
+					<!--Made expandable="false" and added "id" property By  Lakshmana on 27.05.2020  for Deal Memo Changes-->
+					<ObjectHeader title="{i18n>lblArtistContract} : {artistContractModel>/vendorName} ({artistContractModel>/vendorRoleName})"
+						number="{ parts: [ {path: 'artistContractModel>/Totcost'}, {path: 'artistContractModel>/Waers'} ], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false,minFractionDigits: 2, maxFractionDigits: 2 } }"
+						intro="{artistContractModel>/Contno}({artistContractModel>/Contver})" numberUnit="{artistContractModel>/Waers}" responsive="true"
+						fullScreenOptimized="true" numberState="Success">
+						<statuses>
+								<ObjectStatus text="{artistContractModel>/Contstatdesc}" state="{path:'artistContractModel>/Contstat',formatter:'.Formatter.formatDealMemoStatus'}" />
+								<ObjectStatus title="{i18n>lblDealMemo}" text="{artistContractModel>/Dmno}"/>
+							<ObjectStatus title="{i18n>lblTotBudget}"
+								text="{path:'artistContractModel>/Totartbud', type:'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 2 }}"/>
+							<ObjectStatus title="{i18n>lblContent}" text="{artistContractModel>/Cntnm}"/>
+							<ObjectStatus title="{i18n>lblCostOtherContract}"
+								text="{path:'artistContractModel>/Othartamt', type:'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 2 }}"/>
+							<ObjectStatus title="{i18n>lblAvailableBudget}"
+								text="{path:'artistContractModel>/Avlartbud', type:'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 2 }}"/>
+							<ObjectStatus title="{i18n>lblPurchaseOrder}" text="{artistContractModel>/Ebeln}"/>
+							<ObjectStatus id="clmno" title="CLM Number" text="{artistContractModel>/Clmno}"/>
+							<ObjectStatus id="clmst" title="CLM Status" text="{artistContractModel>/Clmstdesc}"/>
+							<ObjectStatus id="department" title="Department" text="{artistContractModel>/createParams/Zltext}"/>
+							<ObjectStatus id="zprrequest" title="PR Request" text="{artistContractModel>/createParams/Prreq}"/>
+							<ObjectStatus id="DeparmentHead" title="Deparment Head" text="{artistContractModel>/createParams/Depthd}"/>
+							<ObjectStatus id="grsescreate" title="GR SES Creator" text="{artistContractModel>/createParams/Grsescr}"/>
+						</statuses>
+					</ObjectHeader>
+				</Panel>
+				<IconTabBar id="idACTabBar" expanded="{device>/isNoPhone}" visible="true" selectedKey="acEpiData" select="onTabSelectionAC"
+					class="sapUiResponsiveContentPadding" expandable="false">
+					<items>
+						<IconTabFilter key="acEpiData"
+							text="{parts:[{value:'lblEpisodeData'},{path:'artistContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}"
+							design="Horizontal" icon="sap-icon://list" iconColor="{artistContractModel>/EpiDataColor}">
+							<IconTabBar id="idSubIconTabBarac" expandable="false">
+								<items>
+									<IconTabFilter key="acSubEpiDataNoCostCd"
+										text="{parts:[{value:'lblEpisodeDetails'},{path:'artistContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}"
+										design="Horizontal" icon="sap-icon://list" iconColor="{artistContractModel>/EpiNonCostCdDataColor}"
+										visible="{artistContractModel>/enableEpiNonCostCdTab}">
+										<content>
+											<core:Fragment id="acEpiTabNoCostCd" fragmentName="com.ui.dealmemolocal.fragments.artistEpiDataNonCostCdTab" type="XML"/>
+										</content>
+									</IconTabFilter>
+									<IconTabFilter key="acSubEpiData" text="{i18n>lblCostCodeBreakup}" design="Horizontal" icon="sap-icon://list"
+										iconColor="{artistContractModel>/EpiDataColor}">
+										<content>
+											<core:Fragment id="acEpiTab" fragmentName="com.ui.dealmemolocal.fragments.artistEpiDataTab" type="XML"/>
+										</content>
+									</IconTabFilter>
+								</items>
+							</IconTabBar>
+						</IconTabFilter>
+						<IconTabSeparator icon="sap-icon://open-command-field"/>
+						<IconTabFilter key="acPaymentData"
+							text="{parts:[{value:'lblEpisodePayment'},{path:'artistContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}"
+							design="Horizontal" icon="sap-icon://money-bills" iconColor="{artistContractModel>/paymentDataColor}" class="sapMITBHead"
+							enabled="{artistContractModel>/acTabEnable}">
+							<content>
+								<!--<core:Fragment fragmentName="com.ui.dealmemolocal.fragments.artistPaymentDataTab" type="XML" /> -->
+								<IconTabBar id="idACPayTabBar2" expandable="false" select="onTabSelectionAC">
+									<items>
+										<IconTabFilter key="acPaymentData1"
+											text="{parts:[{value:'lblEpisodePayment'},{path:'artistContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}"
+											design="Horizontal" icon="sap-icon://money-bills" iconColor="{artistContractModel>/paymentDataColor}" class="sapMITBHead"
+											enabled="{artistContractModel>/acTabEnable}">
+											<content>
+												<core:Fragment fragmentName="com.ui.dealmemolocal.fragments.artistPaymentDataTab" type="XML"/>
+											</content>
+										</IconTabFilter>
+										<IconTabFilter key="milestoneTab"
+											text="{parts:[{value:'lblEpisodeSummary'},{path:'artistContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}"
+											design="Horizontal" icon="sap-icon://money-bills" iconColor="{artistContractModel>/paymentDataColor}" class="sapMITBHead"
+											enabled="{artistContractModel>/acTabEnable}">
+											<content>
+												<core:Fragment fragmentName="com.ui.dealmemolocal.fragments.acMilestoneDataTab" type="XML"/>
+											</content>
+										</IconTabFilter>
+										<IconTabFilter key="mileMpml2"
+										text="Series Summary"
+										design="Horizontal" icon="sap-icon://money-bills" iconColor="{artistContractModel>/vcPaymentDataColor}" class="sapMITBHead"
+										enabled="{artistContractModel>/vcTabEnable}">
+										<content>
+											<c:Fragment fragmentName="com.ui.dealmemolocal.fragments.vcSeriesWiseMilestone" type="XML"/>
+										</content>
+									</IconTabFilter>
+									</items>
+								</IconTabBar>
+							</content>
+						</IconTabFilter>
+						<IconTabFilter id="idReleaseStatusTab" text="{i18n>lblReleaseSt}" key="releaseStatus" icon="sap-icon://order-status" class="sapMITBHead"
+							iconColor="{path:'artistContractModel>/relStatustabcolor'}" design="Horizontal"
+							enabled="{= ${artistContractModel>/Contstat} !== '01' ? true : false }" visible="{artistContractModel>/releaseTabVisible}">
+							<content>
+								<core:Fragment fragmentName="com.ui.dealmemolocal.fragments.DealMemoTabs.ReleaseStatus.ReleaseStatusTabAC" type="XML"/>
+							</content>
+						</IconTabFilter>
+					</items>
+				</IconTabBar>
+			</content>
+			<footer>
+				<Toolbar>
+					<ToolbarSpacer/>
+					<Button id = "btnSaveAC" text="{i18n>btnSave}" visible="{artistContractModel>/saveVisible}" press="onSaveArtistContract" enabled="{path:'artistContractModel>/Contstat',formatter:'.Formatter.formatEditableContStatus'}"/>
+					<Button id="btnEditAC" text="{i18n>btnTxtEdit}" press="onEditArtistContract" enabled="{path:'artistContractModel>/Contstat',formatter:'.Formatter.formatEditableContStatus'}" />
+					<Button id="btnSubmitAC" text="{i18n>btnTxtSubmit}" press="onSubmitAC" visible="{artistContractModel>/submitVisible}"/>
+					<Button id="btnChangeAC" text="{i18n>btnTxtChange}" visible="{artistContractModel>/changeVisible}" press="onConfirmChangeAC"/>
+				</Toolbar>
+			</footer>
+		</Page>
+	</App>
 </mvc:View>
