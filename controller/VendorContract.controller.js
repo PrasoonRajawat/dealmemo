@@ -2072,6 +2072,7 @@ sap.ui.define([
 
 			},
 
+			
 			//Delivery Tab
 			onSelectEpisodeModeDelivery: function (oEvent) {
 				var oselIndex = oEvent.getSource().getSelectedIndex();
@@ -3788,6 +3789,29 @@ sap.ui.define([
 				// })		
 
 			},
+			calculateEpisode: function () {
+				var vendorContractModel = this.getView().getModel("vendorContractModel");
+				var vendorContractDetailInfo = vendorContractModel.getData();
+				var srvUrl = "/sap/opu/odata/IBSCMS/DEALMEMO_SRV";
+				var oModelSav = new sap.ui.model.odata.ODataModel(srvUrl, true, "", "");
+				var oPath = "/DmCmMileWiseSet?$filter=Tentid eq 'IBS'and Dmno eq '" + vendorContractDetailInfo.Dmno + "' and Dmver eq '" +
+					vendorContractDetailInfo.Dmver +
+					"' and Contno eq '" + vendorContractDetailInfo.Contno + "' and Conttp eq '01' and Contver eq'" + vendorContractDetailInfo.Contver +
+					"'";
+				var oModel = this.getView().getModel();
+				oModelSav.read(oPath, null, null, true, function (oData) {
+					var oModel = new sap.ui.model.json.JSONModel(oData);
+					oModel.setSizeLimit("999999");
+
+					vendorContractModel.setProperty("/mileMpml2List", oData.results);
+					vendorContractModel.refresh(true);
+				}, function (value) {
+					sap.ui.core.BusyIndicator.hide();
+					console.log(value);
+					//alert("fail");
+				});
+			},
+
 			loadReleaseStatusDetails: function () {
 				var oModel = this.getView().getModel();
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
