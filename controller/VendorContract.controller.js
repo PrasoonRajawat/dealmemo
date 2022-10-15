@@ -3795,7 +3795,7 @@ sap.ui.define([
 				var vendorContractDetailInfo = vendorContractModel.getData();
 				var srvUrl = "/sap/opu/odata/IBSCMS/DEALMEMO_SRV";
 				var oModelSav = new sap.ui.model.odata.ODataModel(srvUrl, true, "", "");
-				var oPath = "/DmCmMileWiseSet?$filter=Tentid eq 'IBS'and Dmno eq '" + vendorContractDetailInfo.Dmno + "' and Dmver eq '" +
+				var oPath = "/DmMpml2SumSet?$filter=Tentid eq 'IBS'and Dmno eq '" + vendorContractDetailInfo.Dmno + "' and Dmver eq '" +
 					vendorContractDetailInfo.Dmver +
 					"' and Contno eq '" + vendorContractDetailInfo.Contno + "' and Conttp eq '01' and Contver eq'" + vendorContractDetailInfo.Contver +
 					"'";
