@@ -1938,7 +1938,7 @@ sap.ui.define([
 								obj.flag = "Cr";
 								for (var oInd = 0; oInd < vendorContractDetailInfo.vcPaymentData.length; oInd++) {
 									var vcEpiObj = vendorContractDetailInfo.vcPaymentData[oInd];
-									if (vcEpiObj.Epiid === obj.Epiid && vcEpiObj.Msid === obj.Msid && vcEpiObj.Contver === obj.Contver && vcEpiObj.Dueamt === obj.Dueamt) {
+									if (vcEpiObj.Epiid === obj.Epiid && vcEpiObj.Msid === obj.Msid && vcEpiObj.Contver === obj.Contver) {
 										flagNewEntry = false;
 										break;
 									}
@@ -1973,7 +1973,7 @@ sap.ui.define([
 				var validateBeforePush = this.validateMileStoneData();
 				var validationResponse = this.validateMilestoneAchievementDate();
 				var continueProcessing = true;
-				validationResponse.warningMessage = false; // As sugested by sourabh
+				// validationResponse.warningMessage = false; // As sugested by sourabh
 				if (validationResponse.warningMessage) {
 					if (validationResponse.allowedEpisodes.length == 0) {
 						MessageBox.error("Milestone has already been achieved, no changes can be made.");
