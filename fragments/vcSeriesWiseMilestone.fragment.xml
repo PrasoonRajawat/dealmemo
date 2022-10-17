@@ -3,7 +3,7 @@
 		items="{vendorContractModel>/mileMpml2List}" >
 		<infoToolbar>
 			<Toolbar>
-				<Label text="{parts:[{value:'lblEpiMpmData'},{path:'artistContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}"/>
+				<Label text="{parts:[{value:'lblEpiMpmData'},{path:'vendorContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}"/>
 				<ToolbarSpacer></ToolbarSpacer>
 			</Toolbar>
 		</infoToolbar>
