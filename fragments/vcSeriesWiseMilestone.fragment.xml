@@ -10,7 +10,7 @@
 		<columns>
 			<Column mergeDuplicates="true">
 				<header>
-					<Text text="Series" />
+					<Text text="{parts:[{value:'lblVCContent'},{path:'vendorContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" />
 				</header>
 			</Column>
 			<Column mergeDuplicates="false">
