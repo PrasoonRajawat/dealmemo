@@ -13,6 +13,9 @@
 					<ObjectIdentifier title="{parts:[{value:'lblVCContent'},{path:'vendorContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" />
 				</header>
 			</Column>
+			<Column  mergeDuplicates="true" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
+					<ObjectIdentifier title="{parts:[{value:'lblEpisodeDesc'},{path:'vendorContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}"></ObjectIdentifier>
+			</Column>
 			<Column mergeDuplicates="false" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
 				<header>
 					<ObjectIdentifier title="Milestone" />
@@ -35,6 +38,7 @@
 			</Column>
 		</columns>
 		<ColumnListItem >
+			<ObjectIdentifier title="{vendorContractModel>Mpml2}"></ObjectIdentifier>
 			<ObjectIdentifier title="{vendorContractModel>Epinm}"></ObjectIdentifier>
 			<Text text="{vendorContractModel>Msidnm}" />
 			<Text text="{vendorContractModel>Dmver}" />
