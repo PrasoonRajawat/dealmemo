@@ -8,35 +8,29 @@
 			</Toolbar>
 		</infoToolbar>
 		<columns>
-			<Column mergeDuplicates="true">
+			<Column mergeDuplicates="true" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
 				<header>
-					<Text text="{parts:[{value:'lblVCContent'},{path:'vendorContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" />
+					<ObjectIdentifier title="{parts:[{value:'lblVCContent'},{path:'vendorContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" />
 				</header>
 			</Column>
-			<Column mergeDuplicates="false">
+			<Column mergeDuplicates="false" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
 				<header>
-					<Text text="Milestone" />
+					<ObjectIdentifier title="Milestone" />
 				</header>
 			</Column>
-			<Column
-				minScreenWidth="Tablet"
-				demandPopin="true"
-				 >
+			<Column minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
 				<header>
-					<Text text="Version" />
+					<ObjectIdentifier title="Version" />
 				</header>
 			</Column>
-			<Column
-				minScreenWidth="Tablet"
-				demandPopin="true"
-				 >
+			<Column minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
 				<header>
-					<Text text="{parts:[{value:'lblTblColEpisodesYearWise'},{path:'vendorContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" />
+					<ObjectIdentifier title="{parts:[{value:'lblTblColEpisodesYearWise'},{path:'vendorContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" />
 				</header>
 			</Column>
-			<Column >
+			<Column minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
 				<header>
-					<Text text="Amount Due" />
+					<ObjectIdentifier title="Amount Due" />
 				</header>
 			</Column>
 		</columns>
