@@ -80,20 +80,20 @@
 											<c:Fragment fragmentName="com.ui.dealmemolocal.fragments.vcPaymentDataTab" type="XML"/>
 										</content>
 									</IconTabFilter>
+									<IconTabFilter key="mileMpml2"
+										text="{parts:[{value:'lblEpiMpmSumm'},{path:'vendorContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}"
+										design="Horizontal" icon="sap-icon://money-bills" iconColor="{vendorContractModel>/vcPaymentDataColor}" class="sapMITBHead"
+										enabled="{vendorContractModel>/vcTabEnable}">
+										<content>
+											<c:Fragment fragmentName="com.ui.dealmemolocal.fragments.vcSeriesWiseMilestone" type="XML"/>
+										</content>
+									</IconTabFilter>
 									<IconTabFilter key="milestoneTab"
 										text="{parts:[{value:'lblEpisodeSummary'},{path:'vendorContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}"
 										design="Horizontal" icon="sap-icon://money-bills" iconColor="{vendorContractModel>/vcPaymentDataColor}" class="sapMITBHead"
 										enabled="{vendorContractModel>/vcTabEnable}">
 										<content>
 											<c:Fragment fragmentName="com.ui.dealmemolocal.fragments.vcMilestoneDataTab" type="XML"/>
-										</content>
-									</IconTabFilter>
-									<IconTabFilter key="mileMpml2"
-										text="Series Summary"
-										design="Horizontal" icon="sap-icon://money-bills" iconColor="{vendorContractModel>/vcPaymentDataColor}" class="sapMITBHead"
-										enabled="{vendorContractModel>/vcTabEnable}">
-										<content>
-											<c:Fragment fragmentName="com.ui.dealmemolocal.fragments.vcSeriesWiseMilestone" type="XML"/>
 										</content>
 									</IconTabFilter>
 								</items>

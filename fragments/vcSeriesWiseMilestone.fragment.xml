@@ -1,7 +1,12 @@
 <c:FragmentDefinition xmlns="sap.m" xmlns:u="sap.ui.unified" xmlns:l="sap.ui.layout" xmlns:c="sap.ui.core">
 		<Table
-		headerText="Products"
 		items="{vendorContractModel>/mileMpml2List}" >
+		<infoToolbar>
+			<Toolbar>
+				<Label text="{parts:[{value:'lblEpiMpmData'},{path:'artistContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}"/>
+				<ToolbarSpacer></ToolbarSpacer>
+			</Toolbar>
+		</infoToolbar>
 		<columns>
 			<Column mergeDuplicates="true">
 				<header>
