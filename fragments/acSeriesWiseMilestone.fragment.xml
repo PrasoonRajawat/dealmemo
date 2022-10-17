@@ -35,7 +35,7 @@
 			</Column>
 		</columns>
 		<ColumnListItem >
-			<ObjectIdentifier title="{vendorContractModel>Epinm}"></ObjectIdentifier>
+			<ObjectIdentifier title="{artistContractModel>Epinm}"></ObjectIdentifier>
 			<Text text="{artistContractModel>Msidnm}" />
 			<Text text="{artistContractModel>Dmver}" />
 			<Text text="{artistContractModel>Epiid}" class="sapUiSizeCompact"/>
