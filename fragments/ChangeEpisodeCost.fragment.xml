@@ -48,7 +48,7 @@
 		<Table id="oTable_changeCost" items="{dealMemoDetailModel>/changeCostData}">
 			<infoToolbar>
 				<Toolbar>
-					<Label text="{parts:[{value:'lbl_BudgetDtlschange'},{path:'dealMemoDetailModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}"/>
+					<Label text="{parts:[{value:'lbl_BudgetDtlschange'},{path:'dealMemoDetailModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'} (differential amount)"/>
 				</Toolbar>
 			</infoToolbar>
 			<columns>
