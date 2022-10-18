@@ -38,7 +38,7 @@
 			</Column>
 		</columns>
 		<ColumnListItem >
-			<ObjectIdentifier title="{vendorContractModel>Mpml2}-{vendorContractModel>Epinm}"></ObjectIdentifier>
+			<ObjectIdentifier title="{vendorContractModel>Mpml2}" text = "{vendorContractModel>Epinm}"></ObjectIdentifier>
 			<!-- <ObjectIdentifier title="{vendorContractModel>Epinm}"></ObjectIdentifier> -->
 			<Text text="{vendorContractModel>Msidnm}" />
 			<Text text="{vendorContractModel>Dmver}" />
