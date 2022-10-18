@@ -116,7 +116,7 @@ sap.ui.define([
 
 				var dmno = artistContractDetailInfo.Dmno;
 				var dmver = artistContractDetailInfo.Dmver;
-				var conttp = artistContractDetailInfo.Conttp;
+				var conttp = "02";
 				var host = window.location.origin;
 				var path = window.location.pathname;
 
