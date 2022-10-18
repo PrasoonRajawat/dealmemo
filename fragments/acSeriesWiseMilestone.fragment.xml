@@ -13,9 +13,9 @@
 					<ObjectIdentifier title="{parts:[{value:'lblVCContent'},{path:'artistContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" />
 				</header>
 			</Column>
-			<Column  mergeDuplicates="true" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
+			<!-- <Column  mergeDuplicates="true" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
 					<ObjectIdentifier title="{parts:[{value:'lblEpisodeDesc'},{path:'artistContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}"></ObjectIdentifier>
-			</Column>
+			</Column> -->
 			<Column mergeDuplicates="false" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
 				<header>
 					<ObjectIdentifier title="Milestone" />
@@ -38,8 +38,8 @@
 			</Column>
 		</columns>
 		<ColumnListItem >
-		<ObjectIdentifier title="{artistContractModel>Mpml2}"></ObjectIdentifier>
-			<ObjectIdentifier title="{artistContractModel>Epinm}"></ObjectIdentifier>
+		<ObjectIdentifier title="{artistContractModel>Mpml2}" text = "{artistContractModel>Epinm}"></ObjectIdentifier>
+			<!-- <ObjectIdentifier title="{artistContractModel>Epinm}"></ObjectIdentifier> -->
 			<Text text="{artistContractModel>Msidnm}" />
 			<Text text="{artistContractModel>Dmver}" />
 			<Text text="{artistContractModel>Epiid}" class="sapUiSizeCompact"/>
