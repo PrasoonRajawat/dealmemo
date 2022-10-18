@@ -143,7 +143,7 @@ sap.ui.define([
 
 				var dmno = vendorContractDetailInfo.Dmno;
 				var dmver = vendorContractDetailInfo.Dmver;
-				var conttp = vendorContractDetailInfo.Conttp;
+				var conttp = "01";
 				var host = window.location.origin;
 				var path = window.location.pathname;
 
