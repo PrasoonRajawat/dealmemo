@@ -1056,7 +1056,7 @@ sap.ui.define([
 						oData.saveVisible = true;
 						oData.attachmentTabColor = "Critical";
 
-						oData.attachURL = oModel.sServiceUrl + "/AttachmentSet(Tentid='IBS',Dmno='" + oData.Dmno + "',Dmver='" + oData.Dmver +
+						oData.attachURL = oModel.sServiceUrl + "/AttachmentSet(Tentid='IBS',Contno='" + oData.Contno + "',Contver='" + oData.Contver +
 							"',Instanceid='')/AttachmentMedSet";
 						oData.fileTypeList = ["jpg", "doc", "xls", "pdf", "xlsx", "docx"];
 						if (this.displayContractFlag) {
@@ -3971,7 +3971,7 @@ sap.ui.define([
 					var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
 					var oModel = this.getView().getModel();
 					var docId = oEvent.getParameter("documentId");
-					var oPath = "/AttachmentSet(Tentid='IBS',Dmno='" + vendorContractDetailInfo.Dmno + "',Dmver='" + vendorContractDetailInfo.Dmver +
+					var oPath = "/AttachmentSet(Tentid='IBS',Contno='" + vendorContractDetailInfo.Contno + "',Contver='" + vendorContractDetailInfo.Contver +
 						"',Instanceid='" + docId + "')";
 					oModel.remove(oPath, {
 						success: function(oData) {
@@ -3992,8 +3992,8 @@ sap.ui.define([
 					var oModel = this.getView().getModel();
 					var aFilters = [
 						new Filter("Tentid", "EQ", "IBS"),
-						new Filter("Dmno", "EQ", vendorContractDetailInfo.Dmno),
-						new Filter("Dmver", "EQ", vendorContractDetailInfo.Dmver),
+						new Filter("Contno", "EQ", vendorContractDetailInfo.Contno),
+						new Filter("Contver", "EQ", vendorContractDetailInfo.Contver),
 						new Filter("Instanceid", "EQ", ''),
 					];
 					sap.ui.core.BusyIndicator.show(0);

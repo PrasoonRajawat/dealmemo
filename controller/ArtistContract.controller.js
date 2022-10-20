@@ -1447,7 +1447,7 @@ sap.ui.define([
 						Object.assign(artistContractDetailInfo, oData);
 						artistContractDetailInfo.attachmentTabColor = "Critical";
 
-						artistContractDetailInfo.attachURL = oModel.sServiceUrl + "/AttachmentSet(Tentid='IBS',Dmno='" + artistContractDetailInfo.Dmno + "',Dmver='" + artistContractDetailInfo.Dmver +
+						artistContractDetailInfo.attachURL = oModel.sServiceUrl + "/AttachmentSet(Tentid='IBS',Contno='" + artistContractDetailInfo.Contno + "',Contver='" + artistContractDetailInfo.Contver +
 							"',Instanceid='')/AttachmentMedSet";
 							artistContractDetailInfo.fileTypeList = ["jpg", "doc", "xls", "pdf", "xlsx", "docx"];
 
@@ -1461,6 +1461,7 @@ sap.ui.define([
 						}
 						artistContractModel.refresh(true);
 						this.calculateEpisode();
+						this.loadAttachments();
 						this.getView().byId("idSubIconTabBarac").setSelectedKey("acSubEpiDataNoCostCd");
 						sap.ui.core.BusyIndicator.hide();
 					}.bind(this),
@@ -2307,7 +2308,7 @@ sap.ui.define([
 				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
 				var oModel = this.getView().getModel();
 				var docId = oEvent.getParameter("documentId");
-				var oPath = "/AttachmentSet(Tentid='IBS',Dmno='" + artistContractDetailInfo.Dmno + "',Dmver='" + artistContractDetailInfo.Dmver +
+				var oPath = "/AttachmentSet(Tentid='IBS',Contno='" + artistContractDetailInfo.Contno + "',Contver='" + artistContractDetailInfo.Contver +
 					"',Instanceid='" + docId + "')";
 				oModel.remove(oPath, {
 					success: function(oData) {
@@ -2328,8 +2329,8 @@ sap.ui.define([
 				var oModel = this.getView().getModel();
 				var aFilters = [
 					new Filter("Tentid", "EQ", "IBS"),
-					new Filter("Dmno", "EQ", artistContractDetailInfo.Dmno),
-					new Filter("Dmver", "EQ", artistContractDetailInfo.Dmver),
+					new Filter("Contno", "EQ", artistContractDetailInfo.Contno),
+					new Filter("Contver", "EQ", artistContractDetailInfo.Contver),
 					new Filter("Instanceid", "EQ", ''),
 				];
 				sap.ui.core.BusyIndicator.show(0);
