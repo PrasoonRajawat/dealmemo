@@ -70,7 +70,7 @@
 							text="{parts:[{value:'lblEpisodePayment'},{path:'vendorContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}"
 							design="Horizontal" icon="sap-icon://money-bills" iconColor="{vendorContractModel>/vcPaymentDataColor}" class="sapMITBHead"
 							enabled="{vendorContractModel>/vcTabEnable}">
-							<IconTabBar id="idVCPayTabBar2" expandable="false" select="onTabSelectionVC">
+							<IconTabBar id="idVCPayTabBar2" expandable="false" selectedKey = "vcPaymentData1" select="onTabSelectionVC">
 								<items>
 									<IconTabFilter key="vcPaymentData1"
 										text="{parts:[{value:'lblEpisodePayment'},{path:'vendorContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}"
@@ -120,6 +120,50 @@
 								<core:Fragment fragmentName="com.ui.dealmemolocal.fragments.DealMemoTabs.ReleaseStatus.ReleaseStatusTabVC" type="XML"/>
 							</content>
 						</IconTabFilter>
+							<IconTabFilter id="idAttachmentTab" key="attachment" text="{i18n>lblAttach}" icon="sap-icon://attachment" class="sapMITBHead" visible="{= ${vendorContractModel>/Contno} !==  'new' ? true : false }" iconColor="{vendorContractModel>/attachmentTabColor}" design="Horizontal">
+										<content>
+										<UploadCollection
+											id="UploadCollection"
+											maximumFilenameLength="55"
+											maximumFileSize="1000"
+											multiple="true" 
+											showSeparators="All" 
+											mode="SingleSelectMaster" 
+											sameFilenameAllowed="true"
+											change="onChange"
+											uploadComplete="onUploadComplete"
+											beforeUploadStarts="onBeforeUploadStarts"
+											uploadEnabled="{path:'vendorContractModel>/Dmst',formatter:'.Formatter.formatEditableStatus'}"
+											uploadButtonInvisible="false"
+											fileType="{vendorContractModel>/fileTypeList}"
+											typeMissmatch="onTypeMissmatch"
+											fileSizeExceed="onFileSizeExceed"
+											filenameLengthExceed="onFilenameLengthExceed"
+											fileDeleted="onFileDeleted"
+											items="{vendorContractModel>/AttachmentDetails}">
+												<items>
+													<UploadCollectionItem
+														documentId="{vendorContractModel>Instanceid}"
+														fileName="{vendorContractModel>Filename}"
+														mimeType="{vendorContractModel>mimeType}"
+														url="{vendorContractModel>Docurl}"
+														enableEdit="false"
+														enableDelete="{path:'vendorContractModel>/Dmst',formatter:'.Formatter.formatEditableStatus'}"
+														visibleDelete="{path:'vendorContractModel>/Dmst',formatter:'.Formatter.formatEditableStatus'}"
+														visibleEdit="false">
+														
+													</UploadCollectionItem>
+												</items>
+											
+											</UploadCollection>
+											<!-- <UploadCollection items="{/AttDetSet/results}" selectionChange="onChange" 	beforeUploadStarts="onBeforeUploadStarts" uploadComplete="onUploadComplete"
+											uploadUrl="{dealMemoDetailModel>/attachURL}"	maximumFilenameLength="55" maximumFileSize="10" multiple="true" showSeparators="All" mode="SingleSelectMaster" sameFilenameAllowed="true"
+										   	 fileType="['Doc','Docx','Xls','Xlsx','Pdf','Jpg']">     
+											<UploadCollectionItem contributor="{AttBy}" fileName="{Filename}" mimeType="{Mimetype}" uploadedDate="{Erfdt}"
+												enableEdit="false" enableDelete="{Enbdele}" visibleEdit="false" visibleDelete="{Visdel}" documentId="{Instanceid}" url="{DocUrl}"></UploadCollectionItem>
+											</UploadCollection> -->
+										</content>
+								</IconTabFilter>
 					</items>
 				</IconTabBar>
 			</content>
