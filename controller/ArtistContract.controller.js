@@ -2258,6 +2258,103 @@ sap.ui.define([
 				})
 			},
 
+
+			//Attachmment Tab
+
+			onChange: function(oEvent) {
+				var artistContractModel = this.getView().getModel("artistContractModel");
+				var artistContractDetailInfo = artistContractModel.getData();
+				var oUploadCollection = oEvent.getSource();
+				oUploadCollection.setUploadUrl(artistContractDetailInfo.attachURL);
+				var oModel = this.getView().getModel();
+				// Header Token
+				var oCustomerHeaderToken = new sap.m.UploadCollectionParameter({
+					name: "x-csrf-token",
+					value: oModel.getHeaders()['x-csrf-token']
+				});
+				oUploadCollection.addHeaderParameter(oCustomerHeaderToken);
+
+			},
+			onBeforeUploadStarts: function(oEvent) {
+				// Header Slug
+				var oCustomerHeaderSlug = new sap.m.UploadCollectionParameter({
+					name: "slug",
+					value: oEvent.getParameter("fileName")
+				});
+				oEvent.getParameters().addHeaderParameter(oCustomerHeaderSlug);
+
+			},
+			onUploadComplete: function() {
+				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
+				MessageToast.show(oSourceBundle.getText("msgUpldSucc"));
+				this.loadAttachments();
+			},
+			onTypeMissmatch: function(oEvent) {
+				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
+				MessageBox.error(oSourceBundle.getText("msgFileTypeMismatch"));
+			},
+			onFileSizeExceed: function() {
+				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
+				MessageBox.error(oSourceBundle.getText("msgFileSizeExceed"));
+			},
+			onFilenameLengthExceed: function() {
+				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
+				MessageBox.error(oSourceBundle.getText("msgFileNameLenExceed"));
+			},
+			onFileDeleted: function(oEvent) {
+				var artistContractModel = this.getView().getModel("artistContractModel");
+				var artistContractDetailInfo = artistContractModel.getData();
+				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
+				var oModel = this.getView().getModel();
+				var docId = oEvent.getParameter("documentId");
+				var oPath = "/AttachmentSet(Tentid='IBS',Dmno='" + artistContractDetailInfo.Dmno + "',Dmver='" + artistContractDetailInfo.Dmver +
+					"',Instanceid='" + docId + "')";
+				oModel.remove(oPath, {
+					success: function(oData) {
+						MessageToast.show(oSourceBundle.getText("msgFileDelSucc"));
+						this.loadAttachments();
+					}.bind(this),
+					error: function(oError) {
+						var oErrorResponse = JSON.parse(oError.responseText);
+						var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
+						MessageBox.error(oMsg);
+					}
+				})
+			},
+
+			loadAttachments: function() {
+				var artistContractModel = this.getView().getModel("artistContractModel");
+				var artistContractDetailInfo = artistContractModel.getData();
+				var oModel = this.getView().getModel();
+				var aFilters = [
+					new Filter("Tentid", "EQ", "IBS"),
+					new Filter("Dmno", "EQ", artistContractDetailInfo.Dmno),
+					new Filter("Dmver", "EQ", artistContractDetailInfo.Dmver),
+					new Filter("Instanceid", "EQ", ''),
+				];
+				sap.ui.core.BusyIndicator.show(0);
+				oModel.read("/AttachmentSet", {
+					filters: aFilters,
+					success: function(oData) {
+						sap.ui.core.BusyIndicator.hide();
+						artistContractDetailInfo.AttachmentDetails = oData.results;
+						if(oData.results.length > 0) {
+							artistContractDetailInfo.attachmentTabColor = "Positive";
+						} else {
+							artistContractDetailInfo.attachmentTabColor = "Critical";
+						}
+						artistContractModel.refresh(true);
+					},
+					error: function(oError) {
+						var oErrorResponse = JSON.parse(oError.responseText);
+						var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
+						MessageBox.error(oMsg);
+					}
+
+				});
+			},
+
+			//End of artist contract
 		});
 
 	});
