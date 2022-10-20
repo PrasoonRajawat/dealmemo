@@ -61,7 +61,7 @@
 							enabled="{artistContractModel>/acTabEnable}">
 							<content>
 								<!--<core:Fragment fragmentName="com.ui.dealmemolocal.fragments.artistPaymentDataTab" type="XML" /> -->
-								<IconTabBar id="idACPayTabBar2" expandable="false" select="onTabSelectionAC">
+								<IconTabBar id="idACPayTabBar2" expandable="false" selectedKey="acPaymentData1" select="onTabSelectionAC">
 									<items>
 										<IconTabFilter key="acPaymentData1"
 											text="{parts:[{value:'lblEpisodePayment'},{path:'artistContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}"
@@ -98,6 +98,50 @@
 								<core:Fragment fragmentName="com.ui.dealmemolocal.fragments.DealMemoTabs.ReleaseStatus.ReleaseStatusTabAC" type="XML"/>
 							</content>
 						</IconTabFilter>
+							<IconTabFilter id="idAttachmentTab" key="attachment" text="{i18n>lblAttach}" icon="sap-icon://attachment" class="sapMITBHead" visible="{= ${dealMemoDetailModel>/Contno} !==  'new' ? true : false }" iconColor="{dealMemoDetailModel>/attachmentTabColor}" design="Horizontal">
+										<content>
+										<UploadCollection
+											id="UploadCollection"
+											maximumFilenameLength="55"
+											maximumFileSize="1000"
+											multiple="true" 
+											showSeparators="All" 
+											mode="SingleSelectMaster" 
+											sameFilenameAllowed="true"
+											change="onChange"
+											uploadComplete="onUploadComplete"
+											beforeUploadStarts="onBeforeUploadStarts"
+											uploadEnabled="{path:'artistContractModel>/Contstat',formatter:'.Formatter.formatEditableStatus'}"
+											uploadButtonInvisible="false"
+											fileType="{artistContractModel>/fileTypeList}"
+											typeMissmatch="onTypeMissmatch"
+											fileSizeExceed="onFileSizeExceed"
+											filenameLengthExceed="onFilenameLengthExceed"
+											fileDeleted="onFileDeleted"
+											items="{artistContractModel>/AttachmentDetails}">
+												<items>
+													<UploadCollectionItem
+														documentId="{artistContractModel>Instanceid}"
+														fileName="{artistContractModel>Filename}"
+														mimeType="{artistContractModel>mimeType}"
+														url="{artistContractModel>Docurl}"
+														enableEdit="false"
+														enableDelete="{path:'artistContractModel>/Contstat',formatter:'.Formatter.formatEditableStatus'}"
+														visibleDelete="{path:'artistContractModel>/Contstat',formatter:'.Formatter.formatEditableStatus'}"
+														visibleEdit="false">
+														
+													</UploadCollectionItem>
+												</items>
+											
+											</UploadCollection>
+											<!-- <UploadCollection items="{/AttDetSet/results}" selectionChange="onChange" 	beforeUploadStarts="onBeforeUploadStarts" uploadComplete="onUploadComplete"
+											uploadUrl="{dealMemoDetailModel>/attachURL}"	maximumFilenameLength="55" maximumFileSize="10" multiple="true" showSeparators="All" mode="SingleSelectMaster" sameFilenameAllowed="true"
+										   	 fileType="['Doc','Docx','Xls','Xlsx','Pdf','Jpg']">     
+											<UploadCollectionItem contributor="{AttBy}" fileName="{Filename}" mimeType="{Mimetype}" uploadedDate="{Erfdt}"
+												enableEdit="false" enableDelete="{Enbdele}" visibleEdit="false" visibleDelete="{Visdel}" documentId="{Instanceid}" url="{DocUrl}"></UploadCollectionItem>
+											</UploadCollection> -->
+										</content>
+								</IconTabFilter>
 					</items>
 				</IconTabBar>
 			</content>
