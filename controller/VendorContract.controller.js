@@ -231,6 +231,7 @@ sap.ui.define([
 					"vcPaymentDataColor": "Critical",
 					"vcDeliveryDataColor": "Critical",
 					"vcEpiNonCostCdDataColor": "Critical",
+					"attachmentTabColor" : "Critical",
 					"saveVisible": true,
 					"submitVisible": vendorContractDetailInfo.Contno !== "new" ? true : false,
 					"releaseTabVisible": vendorContractDetailInfo.Contno !== "new" ? true : false,
@@ -299,7 +300,7 @@ sap.ui.define([
 						success: function (oData, response) {
 							sap.ui.core.BusyIndicator.hide();
 
-							// dealMemoDetailModel.setProperty("/costCodes", oData.results);
+							// vendorContractModel.setProperty("/costCodes", oData.results);
 							vendorContractModel.refresh(true);
 							// this.loadDealMemoList();
 							this.loadDealMemoDetails();
@@ -1053,6 +1054,11 @@ sap.ui.define([
 						}
 						oData.editDepartmentVisible = false; // added by dhiraj on 30/05/2022
 						oData.saveVisible = true;
+						oData.attachmentTabColor = "Critical";
+
+						oData.attachURL = oModel.sServiceUrl + "/AttachmentSet(Tentid='IBS',Dmno='" + oData.Dmno + "',Dmver='" + oData.Dmver +
+							"',Instanceid='')/AttachmentMedSet";
+						oData.fileTypeList = ["jpg", "doc", "xls", "pdf", "xlsx", "docx"];
 						if (this.displayContractFlag) {
 
 							this.displayContractFlag = false;
@@ -1065,6 +1071,7 @@ sap.ui.define([
 						Object.assign(vendorContractDetailInfo, oData);
 						vendorContractModel.refresh(true);
 						this.calculateEpisode();
+						this.loadAttachments();
 						this.selCostCodesPaths = [];
 						sap.ui.core.BusyIndicator.hide();
 					}.bind(this),
@@ -3738,7 +3745,7 @@ sap.ui.define([
 				var oRouter = this.getOwnerComponent().getRouter();
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
-				// var oContractItem = oEvent.getParameters()['listItem'].getBindingContext("dealMemoDetailModel").getObject();
+				// var oContractItem = oEvent.getParameters()['listItem'].getBindingContext("vendorContractModel").getObject();
 				var newVersionCv = parseInt(vendorContractDetailInfo.Contver) + parseInt("1");
 				vendorContractDetailInfo.Contver = "00" + newVersionCv;
 
@@ -3915,6 +3922,105 @@ sap.ui.define([
 
 				})
 			},
+
+				//Attachmment Tab
+
+				onChange: function(oEvent) {
+					var vendorContractModel = this.getView().getModel("vendorContractModel");
+					var vendorContractDetailInfo = vendorContractModel.getData();
+					var oUploadCollection = oEvent.getSource();
+					oUploadCollection.setUploadUrl(vendorContractDetailInfo.attachURL);
+					var oModel = this.getView().getModel();
+					// Header Token
+					var oCustomerHeaderToken = new sap.m.UploadCollectionParameter({
+						name: "x-csrf-token",
+						value: oModel.getHeaders()['x-csrf-token']
+					});
+					oUploadCollection.addHeaderParameter(oCustomerHeaderToken);
+	
+				},
+				onBeforeUploadStarts: function(oEvent) {
+					// Header Slug
+					var oCustomerHeaderSlug = new sap.m.UploadCollectionParameter({
+						name: "slug",
+						value: oEvent.getParameter("fileName")
+					});
+					oEvent.getParameters().addHeaderParameter(oCustomerHeaderSlug);
+	
+				},
+				onUploadComplete: function() {
+					var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
+					MessageToast.show(oSourceBundle.getText("msgUpldSucc"));
+					this.loadAttachments();
+				},
+				onTypeMissmatch: function(oEvent) {
+					var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
+					MessageBox.error(oSourceBundle.getText("msgFileTypeMismatch"));
+				},
+				onFileSizeExceed: function() {
+					var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
+					MessageBox.error(oSourceBundle.getText("msgFileSizeExceed"));
+				},
+				onFilenameLengthExceed: function() {
+					var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
+					MessageBox.error(oSourceBundle.getText("msgFileNameLenExceed"));
+				},
+				onFileDeleted: function(oEvent) {
+					var vendorContractModel = this.getView().getModel("vendorContractModel");
+					var vendorContractDetailInfo = vendorContractModel.getData();
+					var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
+					var oModel = this.getView().getModel();
+					var docId = oEvent.getParameter("documentId");
+					var oPath = "/AttachmentSet(Tentid='IBS',Dmno='" + vendorContractDetailInfo.Dmno + "',Dmver='" + vendorContractDetailInfo.Dmver +
+						"',Instanceid='" + docId + "')";
+					oModel.remove(oPath, {
+						success: function(oData) {
+							MessageToast.show(oSourceBundle.getText("msgFileDelSucc"));
+							this.loadAttachments();
+						}.bind(this),
+						error: function(oError) {
+							var oErrorResponse = JSON.parse(oError.responseText);
+							var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
+							MessageBox.error(oMsg);
+						}
+					})
+				},
+	
+				loadAttachments: function() {
+					var vendorContractModel = this.getView().getModel("vendorContractModel");
+					var vendorContractDetailInfo = vendorContractModel.getData();
+					var oModel = this.getView().getModel();
+					var aFilters = [
+						new Filter("Tentid", "EQ", "IBS"),
+						new Filter("Dmno", "EQ", vendorContractDetailInfo.Dmno),
+						new Filter("Dmver", "EQ", vendorContractDetailInfo.Dmver),
+						new Filter("Instanceid", "EQ", ''),
+					];
+					sap.ui.core.BusyIndicator.show(0);
+					oModel.read("/AttachmentSet", {
+						filters: aFilters,
+						success: function(oData) {
+							sap.ui.core.BusyIndicator.hide();
+							vendorContractDetailInfo.AttachmentDetails = oData.results;
+							if(oData.results.length > 0) {
+								vendorContractDetailInfo.attachmentTabColor = "Positive";
+							} else {
+								vendorContractDetailInfo.attachmentTabColor = "Critical";
+							}
+							vendorContractModel.refresh(true);
+						},
+						error: function(oError) {
+							var oErrorResponse = JSON.parse(oError.responseText);
+							var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
+							MessageBox.error(oMsg);
+						}
+	
+					});
+				},
+
+
+
+				// End oF Vendor contract
 		});
 
 	});

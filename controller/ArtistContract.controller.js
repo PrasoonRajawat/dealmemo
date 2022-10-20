@@ -1445,6 +1445,11 @@ sap.ui.define([
 						}
 						artistContractModel.setProperty("/DmCoSet", oData);
 						Object.assign(artistContractDetailInfo, oData);
+						artistContractDetailInfo.attachmentTabColor = "Critical";
+
+						artistContractDetailInfo.attachURL = oModel.sServiceUrl + "/AttachmentSet(Tentid='IBS',Dmno='" + artistContractDetailInfo.Dmno + "',Dmver='" + artistContractDetailInfo.Dmver +
+							"',Instanceid='')/AttachmentMedSet";
+							artistContractDetailInfo.fileTypeList = ["jpg", "doc", "xls", "pdf", "xlsx", "docx"];
 
 						if (this.displayContractFlag) {
 
