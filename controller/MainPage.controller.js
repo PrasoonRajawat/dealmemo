@@ -5947,7 +5947,7 @@ sap.ui.define([
 				var oModel = this.getView().getModel();
 				var docId = oEvent.getParameter("documentId");
 				var oPath = "/AttachmentSet(Tentid='IBS',Dmno='" + dealMemoDetailInfo.Dmno + "',Dmver='" + dealMemoDetailInfo.Dmver +
-					"',Instanceid='" + docId + "')";
+					"',Contno='',Contver='',Instanceid='" + docId + "')";
 				oModel.remove(oPath, {
 					success: function(oData) {
 						MessageToast.show(oSourceBundle.getText("msgFileDelSucc"));
