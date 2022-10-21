@@ -5969,6 +5969,8 @@ sap.ui.define([
 					new Filter("Tentid", "EQ", "IBS"),
 					new Filter("Dmno", "EQ", dealMemoDetailInfo.Dmno),
 					new Filter("Dmver", "EQ", dealMemoDetailInfo.Dmver),
+					new Filter("Contno", "EQ", ""),
+					new Filter("Contver", "EQ", ""),
 					new Filter("Instanceid", "EQ", ''),
 				];
 				sap.ui.core.BusyIndicator.show(0);
