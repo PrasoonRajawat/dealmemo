@@ -1100,7 +1100,7 @@ sap.ui.define([
 						oData.attachmentTabColor = "Critical";
 
 						oData.attachURL = oModel.sServiceUrl + "/AttachmentSet(Tentid='IBS',Dmno='" + oData.Dmno + "',Dmver='" + oData.Dmver +
-							"',Instanceid='')/AttachmentMedSet";
+							"',Contno='',Contver='',Instanceid='')/AttachmentMedSet";
 						oData.fileTypeList = ["jpg", "doc", "xls", "pdf", "xlsx", "docx"];
 
 						dealMemoDetailModel.setData(oData);
