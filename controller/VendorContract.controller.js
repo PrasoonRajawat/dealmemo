@@ -1057,7 +1057,7 @@ sap.ui.define([
 						oData.attachmentTabColor = "Critical";
 
 						oData.attachURL = oModel.sServiceUrl + "/AttachmentSet(Tentid='IBS',Dmno='',Dmver='',Contno='" + oData.Contno + "',Contver='" + oData.Contver +
-							"',Instanceid='')/AttachmentMedSet";
+							"',Instanceid='')/AttachmentMedSet"; 
 						oData.fileTypeList = ["jpg", "doc", "xls", "pdf", "xlsx", "docx"];
 						if (this.displayContractFlag) {
 
