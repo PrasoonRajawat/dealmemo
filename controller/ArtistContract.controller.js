@@ -1447,8 +1447,8 @@ sap.ui.define([
 						Object.assign(artistContractDetailInfo, oData);
 						artistContractDetailInfo.attachmentTabColor = "Critical";
 
-						artistContractDetailInfo.attachURL = oModel.sServiceUrl + "/AttachmentSet(Tentid='IBS',Dmno='',Dmver'',Contno='" + artistContractDetailInfo.Contno + "',Contver='" + artistContractDetailInfo.Contver +
-							"',Instanceid='')/AttachmentMedSet";
+						artistContractDetailInfo.attachURL = oModel.sServiceUrl + "/AttachmentSet(Tentid='IBS',Dmno='',Dmver='',Contno='" + artistContractDetailInfo.Contno + "',Contver='" + artistContractDetailInfo.Contver +
+							"',Instanceid='')/AttachmentMedSet"; 
 							artistContractDetailInfo.fileTypeList = ["jpg", "doc", "xls", "pdf", "xlsx", "docx"];
 
 						if (this.displayContractFlag) {
