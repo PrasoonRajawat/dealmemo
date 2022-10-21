@@ -3971,7 +3971,7 @@ sap.ui.define([
 					var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
 					var oModel = this.getView().getModel();
 					var docId = oEvent.getParameter("documentId");
-					var oPath = "/AttachmentSet(Tentid='IBS',Contno='" + vendorContractDetailInfo.Contno + "',Contver='" + vendorContractDetailInfo.Contver +
+					var oPath = "/AttachmentSet(Tentid='IBS',Dmno='',Dmver='',Contno='" + vendorContractDetailInfo.Contno + "',Contver='" + vendorContractDetailInfo.Contver +
 						"',Instanceid='" + docId + "')";
 					oModel.remove(oPath, {
 						success: function(oData) {
@@ -3992,6 +3992,8 @@ sap.ui.define([
 					var oModel = this.getView().getModel();
 					var aFilters = [
 						new Filter("Tentid", "EQ", "IBS"),
+						new Filter("Dmno", "EQ", ""),
+						new Filter("Dmver", "EQ", ""),
 						new Filter("Contno", "EQ", vendorContractDetailInfo.Contno),
 						new Filter("Contver", "EQ", vendorContractDetailInfo.Contver),
 						new Filter("Instanceid", "EQ", ''),
