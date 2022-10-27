@@ -73,9 +73,9 @@
             </VBox>
             <VBox width="50%" class="sapUiTinyMarginBegin">
                 <Label text="Skip RFP Reason" design="Bold" class="sapUiTinyMarginTop" visible="false" />
-                <ComboBox id="skiprfpreas" width="100%" visible="false">
+                <ComboBox id="" width="100%" visible="false">
                     <items>
-                        <c:Item text="International Vendor Content" key="01" />
+                        <c:Item text="International Vendor Content" key="01" />  
                         <c:Item text="Talent" key="02" />
                         <c:Item text="Cost on actuals" key="03" />
                     </items>
