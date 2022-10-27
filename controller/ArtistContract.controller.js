@@ -1578,6 +1578,8 @@ sap.ui.define([
 						this._oSelectPaymentDialogAC = oFragment; //sap.ui.xmlfragment("com.ui.dealmemolocal.fragments.SelectPaymentDialog", this);
 						this.getView().addDependent(this._oSelectPaymentDialogAC);
 						this.byId(sap.ui.core.Fragment.createId("acPaymentDialog", "list_mlListAC")).removeSelections();
+						this.byId(sap.ui.core.Fragment.createId("acPaymentDialog", "list_mlListAC")).getBinding("items").filter([]);
+						this.byId(sap.ui.core.Fragment.createId("acPaymentDialog", "searchFieldMaster")).setValue("")
 						this.byId(sap.ui.core.Fragment.createId("acPaymentDialog", "rbAmntTypeAC")).setSelectedIndex(1);
 						this.byId(sap.ui.core.Fragment.createId("acPaymentDialog", "rbAmtPerc")).setEditable(artistContractDetailInfo.Contver == 1);
 						this._oSelectPaymentDialogAC.open();
@@ -1585,6 +1587,8 @@ sap.ui.define([
 
 				} else {
 					this.byId(sap.ui.core.Fragment.createId("acPaymentDialog", "list_mlListAC")).removeSelections();
+					this.byId(sap.ui.core.Fragment.createId("acPaymentDialog", "list_mlListAC")).getBinding("items").filter([]);
+					this.byId(sap.ui.core.Fragment.createId("acPaymentDialog", "searchFieldMaster")).setValue("")
 					this.byId(sap.ui.core.Fragment.createId("acPaymentDialog", "rbAmntTypeAC")).setSelectedIndex(1);
 					this.byId(sap.ui.core.Fragment.createId("acPaymentDialog", "rbAmtPerc")).setEditable(artistContractDetailInfo.Contver == 1);
 					this._oSelectPaymentDialogAC.open();
