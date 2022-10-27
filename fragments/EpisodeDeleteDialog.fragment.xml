@@ -17,13 +17,13 @@
              <HBox visible="{dealMemoDetailModel>/episodeRangeVisibleDelivery}"> 
                  <items> 
                     <VBox>
-                        <Label text="{parts:[{value:'lblSelectEpiFrom'},{path:'dealMemoDetailModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" required="true" width="100%" />
+                        <Label text="{parts:[{value:'lblSelectEpiDFrom'},{path:'dealMemoDetailModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" required="true" width="100%" />
                         <ComboBox width="95%" items="{dealMemoDetailModel>/dmedSetDataEpi}" selectedKey="{dealMemoDetailModel>/epiDelFromId}">
                             <c:Item text="{dealMemoDetailModel>Epinm}" key="{dealMemoDetailModel>Epiid}" />
                         </ComboBox>
                     </VBox>
                     <VBox>
-                        <Label text="{parts:[{value:'lblSelectEpiTo'},{path:'dealMemoDetailModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" required="true" width="100%" />
+                        <Label text="{parts:[{value:'lblSelectEpiDTo'},{path:'dealMemoDetailModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" required="true" width="100%" />
                         <ComboBox width="95%" items="{dealMemoDetailModel>/dmedSetDataEpi}" selectedKey="{dealMemoDetailModel>/epiDelToId}">
                             <c:Item text="{dealMemoDetailModel>Epinm}" key="{dealMemoDetailModel>Epiid}" />
                         </ComboBox>

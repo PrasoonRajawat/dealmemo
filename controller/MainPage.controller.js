@@ -4364,7 +4364,7 @@ sap.ui.define([
 						});
 					} else {
 
-						MessageBox.error("Select the Last No. of Episode");
+						MessageBox.error("Select the Episode from decending order.");
 					}
 				} else {
 					this._oEpiDeleteDialog.close();
