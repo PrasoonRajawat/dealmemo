@@ -1,7 +1,8 @@
 <c:FragmentDefinition xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:c="sap.ui.core">
-    <Dialog title="{i18n>lbl_createParam}" type="Message" contentWidth="40%" class="sapUiContentPadding">
-
-		
+    <Dialog title="Attributes" type="Message" contentWidth="40%" class="sapUiContentPadding">
+        <Toolbar>
+            <Title level="H3" text="RFP Attributes" />
+        </Toolbar>
         <HBox>
             <VBox width="50%">
                 <Label text="Supplier Name:" design="Bold" class="sapUiTinyMarginTop" required="true" />
@@ -40,8 +41,11 @@
                 </ComboBox>
             </VBox>
         </HBox>
-		
-	
+
+        <Toolbar>
+            <Title level="H3" text="VIM Attributes" />
+        </Toolbar>
+        
         <HBox>
             <VBox width="50%">
                 <Label text="Department" design="Bold" class="sapUiTinyMarginTop" required="true" />
@@ -75,14 +79,14 @@
                 <Label text="Skip RFP Reason" design="Bold" class="sapUiTinyMarginTop" visible="false" />
                 <ComboBox id="" width="100%" visible="false">
                     <items>
-                        <c:Item text="International Vendor Content" key="01" />  
+                        <c:Item text="International Vendor Content" key="01" />
                         <c:Item text="Talent" key="02" />
                         <c:Item text="Cost on actuals" key="03" />
                     </items>
                 </ComboBox>
             </VBox>
         </HBox>
-		
+
         <beginButton>
             <Button text="{i18n>lblOk}" press="onCreateParamOk" />
         </beginButton>
