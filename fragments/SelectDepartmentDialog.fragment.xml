@@ -1,12 +1,7 @@
 <c:FragmentDefinition xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:c="sap.ui.core">
     <Dialog title="{i18n>lbl_createParam}" type="Message" contentWidth="40%" class="sapUiContentPadding">
 
-		<SimpleForm 
-			editable="false">
-			<title>
-				<Title text="Skip 'RFP' Details" />
-			</title>
-			<content>
+		
         <HBox>
             <VBox width="50%">
                 <Label text="Supplier Name:" design="Bold" class="sapUiTinyMarginTop" required="true" />
@@ -45,15 +40,8 @@
                 </ComboBox>
             </VBox>
         </HBox>
-		</content>
-		</SimpleForm>
-
-		<SimpleForm 
-			editable="false">
-			<title>
-				<Title text="VIM Details" />
-			</title>
-			<content>
+		
+	
         <HBox>
             <VBox width="50%">
                 <Label text="Department" design="Bold" class="sapUiTinyMarginTop" required="true" />
@@ -94,8 +82,7 @@
                 </ComboBox>
             </VBox>
         </HBox>
-		</content>
-			</SimpleForm>
+		
         <beginButton>
             <Button text="{i18n>lblOk}" press="onCreateParamOk" />
         </beginButton>
