@@ -82,7 +82,7 @@
 					<l:GridData span="XL12 L12 M12 S12"/>
 				</layoutData> -->
 				</Label>
-			<ComboBox id="skiprfpreas"  width="100%" change="" selectedKey="01" >
+			<ComboBox id="skiprfpreas"  width="100%">
                             <items>
                                 <c:Item text="International Vendor Content" key="01" />
                                 <c:Item text="Talent" key="02" />
