@@ -2,7 +2,7 @@
 	xmlns="sap.m" xmlns:l="sap.ui.layout"
 	xmlns:c="sap.ui.core">
 
-<Dialog title="{i18n>lbl_createParam}" type="Message" contentWidth="25%" class="sapUiContentPadding">
+<Dialog title="{i18n>lbl_createParam}" type="Message" contentWidth="40%" class="sapUiContentPadding">
 
 		<!-- <l:Grid hSpacing="0" vSpacing="0.5" position="Center"> -->
 		<HBox>
