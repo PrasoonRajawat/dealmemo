@@ -1631,7 +1631,7 @@ sap.ui.define([
 			},
 			handleSearch: function(oEvent) {
 				var srchValue = oEvent.getSource().getValue();
-				var modelBind = this.getView().byId("vendorContractModel");
+				var modelBind = this.getView().byId("list_mlList");
 				var multipleFilter =
 					new sap.ui.model.Filter([
 							new sap.ui.model.Filter("Mstcd", sap.ui.model.FilterOperator.Contains, srchValue),
