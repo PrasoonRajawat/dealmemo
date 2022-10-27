@@ -62,6 +62,10 @@
 				<layoutData>
 					<l:GridData span="XL3 L3 M3 S12"/>
 				</layoutData>
+				<Toolbar>
+						<SearchField id="searchFieldMaster" showRefreshButton="{device>/isNoTouch}" placeholder="{i18n>phSearch}" liveChange="handleSearch" search="handleSearch"
+							tooltip="{i18n>phSearch}" width="100%"></SearchField>
+				</Toolbar>
 				<List id="list_mlListAC" items="{artistContractModel>/mileStoneList}" mode="MultiSelect">
 					<StandardListItem title="{artistContractModel>Mstcdnm}" description="{artistContractModel>Mstcd}"/>
 				</List>

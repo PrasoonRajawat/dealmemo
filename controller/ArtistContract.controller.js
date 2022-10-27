@@ -1590,6 +1590,18 @@ sap.ui.define([
 					this._oSelectPaymentDialogAC.open();
 				}
 			},
+			handleSearch: function(oEvent) {
+				var srchValue = oEvent.getSource().getValue();
+				var modelBind = this.byId(sap.ui.core.Fragment.createId("acPaymentDialog", "list_mlListAC"));
+				var multipleFilter =
+					new sap.ui.model.Filter([
+							new sap.ui.model.Filter("Mstcd", sap.ui.model.FilterOperator.Contains, srchValue),
+							new sap.ui.model.Filter("Mstcdnm", sap.ui.model.FilterOperator.Contains, srchValue)
+						],
+						false);
+				var binding = modelBind.getBinding("items");
+				binding.filter([multipleFilter]);
+			},
 			onSelectAmntType: function (oEvent) {
 				var artistContractModel = this.getView().getModel("artistContractModel");
 				var artistContractDetailInfo = artistContractModel.getData();
