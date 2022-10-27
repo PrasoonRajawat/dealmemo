@@ -72,7 +72,7 @@
 											</content>
 										</IconTabFilter>
 										<IconTabFilter key="mileMpml2"
-										text="{parts:[{value:'lblEpiMpmSumm'},{path:'vendorContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}"
+										text="{parts:[{value:'lblEpiMpmSumm'},{path:'artistContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}"
 										design="Horizontal" icon="sap-icon://money-bills" iconColor="{artistContractModel>/paymentDataColor}" class="sapMITBHead"
 										enabled="{artistContractModel>/vcTabEnable}">
 										<content>
