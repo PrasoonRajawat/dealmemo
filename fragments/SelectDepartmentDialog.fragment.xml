@@ -4,64 +4,93 @@
 
 <Dialog title="{i18n>lbl_createParam}" type="Message" contentWidth="25%" class="sapUiContentPadding">
 
-		<l:Grid hSpacing="0" vSpacing="0.5" position="Center">
+		<!-- <l:Grid hSpacing="0" vSpacing="0.5" position="Center"> -->
+		<HBox>
 		
+		<VBox width="50%">
 			<Label text="Department" design="Bold" class="sapUiTinyMarginTop" required="true">
-				<layoutData>
+				<!-- <layoutData>
 					<l:GridData span="XL12 L12 M12 S12"/>
-				</layoutData>
+				</layoutData> -->
 			</Label>
 			<Input width="100%" id="Dept" value="{vendorContractModel>/createParams/Zltext}" showValueHelp="true" valueHelpRequest="onValueHelpDept">
-				<layoutData>
+				<!-- <layoutData>
 					<l:GridData span="XL12 L12 M12 S12"/>
-				</layoutData>
+				</layoutData> -->
 			</Input>
-			
+			</VBox>
+		<VBox width="50%" class="sapUiTinyMarginBegin">
 			<Label text="PR Requestor " design="Bold" class="sapUiTinyMarginTop" required="true">
-				<layoutData>
+				<!-- <layoutData>
 					<l:GridData span="XL12 L12 M12 S12"/>
-				</layoutData>
+				</layoutData> -->
 			</Label>
 			<Input width="100%" id="Prreq" value="{vendorContractModel>/createParams/Prreq}" showValueHelp="true" valueHelpRequest="onValueHelpPrRequestor">
-				<layoutData>
+				<!-- <layoutData>
 					<l:GridData span="XL12 L12 M12 S12"/>
-				</layoutData>
+				</layoutData> -->
 			</Input>
-			
+			</VBox>
+		</HBox>
+		<HBox>
+		
+		<VBox width="50%">
 			<Label text="Department Head" design="Bold" class="sapUiTinyMarginTop" required="true">
 				<layoutData>
 					<l:GridData span="XL12 L12 M12 S12"/>
 				</layoutData>
 			</Label>
 			<Input width="100%" id="Depthd" value="{vendorContractModel>/createParams/Depthd}" showValueHelp="true" valueHelpRequest="onValueHelpDeptHead">
-				<layoutData>
+				<!-- <layoutData>
 					<l:GridData span="XL12 L12 M12 S12"/>
-				</layoutData>
+				</layoutData> -->
 			</Input>
-			
+			</VBox>
+		<VBox width="50%" class="sapUiTinyMarginBegin">
 			<Label text="GR SES Creator" design="Bold" class="sapUiTinyMarginTop" required="true">
-				<layoutData>
+				<!-- <layoutData>
 					<l:GridData span="XL12 L12 M12 S12"/>
-				</layoutData>
+				</layoutData> -->
 			</Label>
 			<Input width="100%" id="Grsescr" value="{vendorContractModel>/createParams/Grsescr}" showValueHelp="true" valueHelpRequest="onValueHelpGrCreater">
-				<layoutData>
+				<!-- <layoutData>
 					<l:GridData span="XL12 L12 M12 S12"/>
-				</layoutData>
+				</layoutData> -->
 			</Input>
+				</VBox>
+		</HBox>
+
+		<HBox>
+		
+		<VBox width="50%">
 				<Hbox>
 				<Label text="Replacement Content" design="Bold" class="sapUiTinyMarginTop">
-				<layoutData>
+				<!-- <layoutData>
 					<l:GridData span="XL12 L12 M12 S12"/>
-				</layoutData>
+				</layoutData> -->
 			</Label>
 				<CheckBox id="recont" select="" selected="{= ${vendorContractModel>/Cntsc} === 'Z0' ? true : false}" editable="false">
-				<layoutData>
+				<!-- <layoutData>
 					<l:GridData span="L1 M1 S1"/>
-				</layoutData>
+				</layoutData> -->
 			</CheckBox>
 			</Hbox>
-		
+			</VBox>
+		<VBox width="50%" class="sapUiTinyMarginBegin">
+			<Label text="Skip RFP Reason" design="Bold" class="sapUiTinyMarginTop">
+				<!-- <layoutData>
+					<l:GridData span="XL12 L12 M12 S12"/>
+				</layoutData> -->
+				</Label>
+			<ComboBox id="skiprfpreas" change="" selectedKey="01" class="sapUiSizeCompact">
+                            <items>
+                                <c:Item text="International Vendor Content" key="01" />
+                                <c:Item text="Talent" key="02" />
+								<c:Item text="Cost on actuals" key="03" />
+                            </items>
+                        </ComboBox>
+		</VBox>
+		</HBox>
 			
 		
 			 
@@ -71,7 +100,7 @@
 			<!--	</layoutData>-->
 			<!--</Input>-->
 			
-			</l:Grid>
+			<!-- </l:Grid> -->
 			<beginButton>
 				<Button text="{i18n>lblOk}" press="onCreateParamOk"></Button>
 			</beginButton>
