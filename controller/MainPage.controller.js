@@ -1140,6 +1140,7 @@ sap.ui.define([
 						}
 					}.bind(this),
 					error: function(oError) {
+						sap.ui.core.BusyIndicator.hide();
 						var oErrorResponse = JSON.parse(oError.responseText);
 						var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
 						MessageBox.error(oMsg);
