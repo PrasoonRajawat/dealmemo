@@ -1628,6 +1628,7 @@ sap.ui.define([
 
 				artistContractDetailInfo.mileStonesForEpi = [];
 				var oMLList = this.byId(sap.ui.core.Fragment.createId("acPaymentDialog", "list_mlListAC"));
+				oMLList.getBinding("items").filter([]);
 				var selectedMLCntxts = oMLList.getSelectedContexts();
 				selectedMLCntxts.map(function (oCntext) {
 
