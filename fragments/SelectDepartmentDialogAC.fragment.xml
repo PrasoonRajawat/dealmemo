@@ -1,9 +1,10 @@
 <c:FragmentDefinition xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:c="sap.ui.core">
     <Dialog title="Attributes" type="Message" contentWidth="40%" class="sapUiContentPadding">
-        <VBox class="classBoxBorder" width="100%">
+       
             <Toolbar>
                 <Title level="H3" text="RFP Attributes" />
             </Toolbar>
+             <VBox class="classBoxBorder" width="100%">
             <HBox class="sapUiTinyMarginBeginEnd">
                 <VBox width="50%">
                     <Label text="Initial Quotation Amount:" design="Bold" class="sapUiTinyMarginTop" required="true" />
@@ -38,11 +39,12 @@
                 <VBox width="50%" class="sapUiTinyMarginBegin" />
             </HBox>
         </VBox>
-        <Toolbar />
-        <VBox class="classBoxBorder" width="100%">
+        <!-- <Toolbar /> -->
+      
             <Toolbar>
                 <Title level="H3" text="VIM Attributes" />
             </Toolbar>
+            <VBox class="classBoxBorder" width="100%">
             <HBox class="sapUiTinyMarginBeginEnd">
                 <VBox width="50%">
                     <Label text="Department" design="Bold" class="sapUiTinyMarginTop" required="true" />
