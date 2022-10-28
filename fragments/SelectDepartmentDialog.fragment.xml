@@ -87,6 +87,23 @@
             </VBox>
         </HBox>
 
+          <Toolbar/>
+          <HBox>
+            <VBox width="50%">
+                <Hbox>
+                    <Label text="Retention applicability:" design="Bold" class="sapUiTinyMarginTop" />
+                      <ComboBox id="" width="100%" visible="false">
+                    <items>
+                        <c:Item text="Episode level" key="01" />
+                        <c:Item text="Milestone level" key="02" />
+                        <c:Item text="Not applicable" key="03" />
+                    </items>
+                </ComboBox>
+                </Hbox>
+            </VBox>
+        </HBox>
+
+
         <beginButton>
             <Button text="{i18n>lblOk}" press="onCreateParamOk" />
         </beginButton>
