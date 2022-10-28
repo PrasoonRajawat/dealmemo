@@ -51,6 +51,27 @@
 			</List>
 			
 		</VBox>
+
+		<!-- <VBox class = "classBoxBorder"> -->
+		
+		<HBox class = "classBoxBorder">
+			<items>
+				<VBox class = "sapUiTinyMarginBeginEnd">
+					<Label required="true" text="{parts:[{value:'lblSelectRetEpiFrom'},{path:'vendorContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" width="100%"/>
+					<ComboBox width="95%" items="{vendorContractModel>/episodeDataList}" >
+						<c:Item text="{vendorContractModel>Epinm}" key="{vendorContractModel>Epiid}"/>
+					</ComboBox>
+				</VBox>
+				<VBox class = "sapUiTinyMarginBeginEnd">
+					<Label required="true" text="{parts:[{value:'lblSelectRetEpiTo'},{path:'vendorContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" width="100%"/>
+					<ComboBox width="95%" items="{vendorContractModel>/episodeDataList}">
+						<c:Item text="{vendorContractModel>Epinm}" key="{vendorContractModel>Epiid}"/>
+					</ComboBox>
+				</VBox>
+			</items>
+		
+		</HBox>
+		<!-- </VBox> -->
 	</content>
 	<beginButton>
 		<Button text="{i18n>btnOk}" press="onLoadEpiDataTab"/>
