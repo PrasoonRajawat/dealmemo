@@ -4,8 +4,7 @@
             <Toolbar>
                 <Title level="H3" text="RFP Attributes" />
             </Toolbar>
-
-            <HBox>
+            <HBox class="sapUiTinyMarginBeginEnd">
                 <VBox width="50%">
                     <Label text="Initial Quotation Amount:" design="Bold" class="sapUiTinyMarginTop" required="true" />
                     <Input width="100%" />
@@ -15,8 +14,7 @@
                     <Input width="100%" />
                 </VBox>
             </HBox>
-
-            <HBox>
+            <HBox class="sapUiTinyMarginBeginEnd">
                 <VBox width="50%">
                     <Label text="R2 Quotation Amount:" design="Bold" class="sapUiTinyMarginTop" required="true" />
                     <Input width="100%" />
@@ -26,8 +24,7 @@
                     <Input width="100%" />
                 </VBox>
             </HBox>
-
-            <HBox>
+            <HBox class="sapUiTinyMarginBeginEnd">
                 <VBox width="50%">
                     <Label text="Skip RFP Reason" design="Bold" class="sapUiTinyMarginTop" />
                     <ComboBox id="skiprfpreas" width="100%">
@@ -41,12 +38,12 @@
                 <VBox width="50%" class="sapUiTinyMarginBegin" />
             </HBox>
         </VBox>
+        <Toolbar />
         <VBox class="classBoxBorder" width="100%">
             <Toolbar>
                 <Title level="H3" text="VIM Attributes" />
             </Toolbar>
-
-            <HBox>
+            <HBox class="sapUiTinyMarginBeginEnd">
                 <VBox width="50%">
                     <Label text="Department" design="Bold" class="sapUiTinyMarginTop" required="true" />
                     <Input width="100%" id="Dept" value="{vendorContractModel>/createParams/Zltext}" showValueHelp="true" valueHelpRequest="onValueHelpDept" />
@@ -56,8 +53,7 @@
                     <Input width="100%" id="Prreq" value="{vendorContractModel>/createParams/Prreq}" showValueHelp="true" valueHelpRequest="onValueHelpPrRequestor" />
                 </VBox>
             </HBox>
-
-            <HBox>
+            <HBox class="sapUiTinyMarginBeginEnd">
                 <VBox width="50%">
                     <Label text="Department Head" design="Bold" class="sapUiTinyMarginTop" required="true" />
                     <Input width="100%" id="Depthd" value="{vendorContractModel>/createParams/Depthd}" showValueHelp="true" valueHelpRequest="onValueHelpDeptHead" />
@@ -67,8 +63,7 @@
                     <Input width="100%" id="Grsescr" value="{vendorContractModel>/createParams/Grsescr}" showValueHelp="true" valueHelpRequest="onValueHelpGrCreater" />
                 </VBox>
             </HBox>
-
-            <HBox>
+            <HBox class="sapUiTinyMarginBeginEnd">
                 <VBox width="50%">
                     <Hbox>
                         <Label text="Replacement Content" design="Bold" class="sapUiTinyMarginTop" />
@@ -88,21 +83,18 @@
             </HBox>
         </VBox>
         <Toolbar />
-        <HBox class="classBoxBorder">
+        <HBox class="sapUiTinyMarginBeginEnd">
             <VBox width="50%">
-                <Hbox>
-                    <Label text="Retention applicability:" design="Bold" class="sapUiTinyMarginTop" />
-                    <ComboBox id="" width="100%">
-                        <items>
-                            <c:Item text="Episode level" key="01" />
-                            <c:Item text="Milestone level" key="02" />
-                            <c:Item text="Not applicable" key="03" />
-                        </items>
-                    </ComboBox>
-                </Hbox>
+                <Label text="Retention applicability:" design="Bold" class="sapUiTinyMarginTop" />
+                <ComboBox id="" width="100%">
+                    <items>
+                        <c:Item text="Episode level" key="01" />
+                        <c:Item text="Milestone level" key="02" />
+                        <c:Item text="Not applicable" key="03" />
+                    </items>
+                </ComboBox>
             </VBox>
         </HBox>
-
         <beginButton>
             <Button text="{i18n>lblOk}" press="onCreateParamOk" />
         </beginButton>
