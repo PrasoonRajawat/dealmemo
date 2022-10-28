@@ -1,108 +1,107 @@
 <c:FragmentDefinition xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:c="sap.ui.core">
     <Dialog title="Attributes" type="Message" contentWidth="40%" class="sapUiContentPadding">
-        <Toolbar>
-            <Title level="H3" text="RFP Attributes" />
-        </Toolbar>
-        <Flexbox class = "sapUiTinyMarginTop">
-        <HBox>
-            <VBox width="50%">
-                <Label text="Initial Quotation Amount:" design="Bold" class="sapUiTinyMarginTop" required="true" />
-                <Input width="100%" />
-            </VBox>
-            <VBox width="50%" class="sapUiTinyMarginBegin">
-               <Label text="R1 Quotation Amount:" design="Bold" class="sapUiTinyMarginTop" required="true" />
-                <Input width="100%" />
-            </VBox>
-        </HBox>
+        <VBox class="classBoxBorder" width="100%">
+            <Toolbar>
+                <Title level="H3" text="RFP Attributes" />
+            </Toolbar>
 
-        <HBox>
-            <VBox width="50%">
-                  <Label text="R2 Quotation Amount:" design="Bold" class="sapUiTinyMarginTop" required="true" />
-                <Input width="100%" />
-            </VBox>
-            <VBox width="50%" class="sapUiTinyMarginBegin">
-              <Label text="Final Quotation Amount:" design="Bold" class="sapUiTinyMarginTop" required="true" />
-                <Input width="100%" />
-            </VBox>
-        </HBox>
+            <HBox>
+                <VBox width="50%">
+                    <Label text="Initial Quotation Amount:" design="Bold" class="sapUiTinyMarginTop" required="true" />
+                    <Input width="100%" />
+                </VBox>
+                <VBox width="50%" class="sapUiTinyMarginBegin">
+                    <Label text="R1 Quotation Amount:" design="Bold" class="sapUiTinyMarginTop" required="true" />
+                    <Input width="100%" />
+                </VBox>
+            </HBox>
 
-        <HBox>
-            <VBox width="50%">
-                  <Label text="Skip RFP Reason" design="Bold" class="sapUiTinyMarginTop" />
-                <ComboBox id="skiprfpreas" width="100%">
-                    <items>
-                        <c:Item text="International Vendor Content" key="01" />
-                        <c:Item text="Talent" key="02" />
-                        <c:Item text="Cost on actuals" key="03" />
-                    </items>
-                </ComboBox>
-            </VBox>
-            <VBox width="50%" class="sapUiTinyMarginBegin">
-              
-            </VBox>
-        </HBox>
-        </Flexbox>
-        <Toolbar>
-            <Title level="H3" text="VIM Attributes" />
-        </Toolbar>
-        
-        <HBox>
-            <VBox width="50%">
-                <Label text="Department" design="Bold" class="sapUiTinyMarginTop" required="true" />
-                <Input width="100%" id="Dept" value="{vendorContractModel>/createParams/Zltext}" showValueHelp="true" valueHelpRequest="onValueHelpDept" />
-            </VBox>
-            <VBox width="50%" class="sapUiTinyMarginBegin">
-                <Label text="PR Requestor " design="Bold" class="sapUiTinyMarginTop" required="true" />
-                <Input width="100%" id="Prreq" value="{vendorContractModel>/createParams/Prreq}" showValueHelp="true" valueHelpRequest="onValueHelpPrRequestor" />
-            </VBox>
-        </HBox>
+            <HBox>
+                <VBox width="50%">
+                    <Label text="R2 Quotation Amount:" design="Bold" class="sapUiTinyMarginTop" required="true" />
+                    <Input width="100%" />
+                </VBox>
+                <VBox width="50%" class="sapUiTinyMarginBegin">
+                    <Label text="Final Quotation Amount:" design="Bold" class="sapUiTinyMarginTop" required="true" />
+                    <Input width="100%" />
+                </VBox>
+            </HBox>
 
-        <HBox>
-            <VBox width="50%">
-                <Label text="Department Head" design="Bold" class="sapUiTinyMarginTop" required="true" />
-                <Input width="100%" id="Depthd" value="{vendorContractModel>/createParams/Depthd}" showValueHelp="true" valueHelpRequest="onValueHelpDeptHead" />
-            </VBox>
-            <VBox width="50%" class="sapUiTinyMarginBegin">
-                <Label text="GR SES Creator" design="Bold" class="sapUiTinyMarginTop" required="true" />
-                <Input width="100%" id="Grsescr" value="{vendorContractModel>/createParams/Grsescr}" showValueHelp="true" valueHelpRequest="onValueHelpGrCreater" />
-            </VBox>
-        </HBox>
+            <HBox>
+                <VBox width="50%">
+                    <Label text="Skip RFP Reason" design="Bold" class="sapUiTinyMarginTop" />
+                    <ComboBox id="skiprfpreas" width="100%">
+                        <items>
+                            <c:Item text="International Vendor Content" key="01" />
+                            <c:Item text="Talent" key="02" />
+                            <c:Item text="Cost on actuals" key="03" />
+                        </items>
+                    </ComboBox>
+                </VBox>
+                <VBox width="50%" class="sapUiTinyMarginBegin" />
+            </HBox>
+        </VBox>
+        <VBox class="classBoxBorder" width="100%">
+            <Toolbar>
+                <Title level="H3" text="VIM Attributes" />
+            </Toolbar>
 
-        <HBox>
-            <VBox width="50%">
-                <Hbox>
-                    <Label text="Replacement Content" design="Bold" class="sapUiTinyMarginTop" />
-                    <CheckBox id="recont" select="" selected="{= ${vendorContractModel>/Cntsc} === 'Z0' ? true : false}" editable="false" />
-                </Hbox>
-            </VBox>
-            <VBox width="50%" class="sapUiTinyMarginBegin">
-                <Label text="Skip RFP Reason" design="Bold" class="sapUiTinyMarginTop" visible="false" />
-                <ComboBox id="" width="100%" visible="false">
-                    <items>
-                        <c:Item text="International Vendor Content" key="01" />
-                        <c:Item text="Talent" key="02" />
-                        <c:Item text="Cost on actuals" key="03" />
-                    </items>
-                </ComboBox>
-            </VBox>
-        </HBox>
+            <HBox>
+                <VBox width="50%">
+                    <Label text="Department" design="Bold" class="sapUiTinyMarginTop" required="true" />
+                    <Input width="100%" id="Dept" value="{vendorContractModel>/createParams/Zltext}" showValueHelp="true" valueHelpRequest="onValueHelpDept" />
+                </VBox>
+                <VBox width="50%" class="sapUiTinyMarginBegin">
+                    <Label text="PR Requestor " design="Bold" class="sapUiTinyMarginTop" required="true" />
+                    <Input width="100%" id="Prreq" value="{vendorContractModel>/createParams/Prreq}" showValueHelp="true" valueHelpRequest="onValueHelpPrRequestor" />
+                </VBox>
+            </HBox>
 
-          <Toolbar/>
-          <HBox>
+            <HBox>
+                <VBox width="50%">
+                    <Label text="Department Head" design="Bold" class="sapUiTinyMarginTop" required="true" />
+                    <Input width="100%" id="Depthd" value="{vendorContractModel>/createParams/Depthd}" showValueHelp="true" valueHelpRequest="onValueHelpDeptHead" />
+                </VBox>
+                <VBox width="50%" class="sapUiTinyMarginBegin">
+                    <Label text="GR SES Creator" design="Bold" class="sapUiTinyMarginTop" required="true" />
+                    <Input width="100%" id="Grsescr" value="{vendorContractModel>/createParams/Grsescr}" showValueHelp="true" valueHelpRequest="onValueHelpGrCreater" />
+                </VBox>
+            </HBox>
+
+            <HBox>
+                <VBox width="50%">
+                    <Hbox>
+                        <Label text="Replacement Content" design="Bold" class="sapUiTinyMarginTop" />
+                        <CheckBox id="recont" select="" selected="{= ${vendorContractModel>/Cntsc} === 'Z0' ? true : false}" editable="false" />
+                    </Hbox>
+                </VBox>
+                <VBox width="50%" class="sapUiTinyMarginBegin">
+                    <Label text="Skip RFP Reason" design="Bold" class="sapUiTinyMarginTop" visible="false" />
+                    <ComboBox id="" width="100%" visible="false">
+                        <items>
+                            <c:Item text="International Vendor Content" key="01" />
+                            <c:Item text="Talent" key="02" />
+                            <c:Item text="Cost on actuals" key="03" />
+                        </items>
+                    </ComboBox>
+                </VBox>
+            </HBox>
+        </VBox>
+        <Toolbar />
+        <HBox class="classBoxBorder">
             <VBox width="50%">
                 <Hbox>
                     <Label text="Retention applicability:" design="Bold" class="sapUiTinyMarginTop" />
-                      <ComboBox id="" width="100%" visible="false">
-                    <items>
-                        <c:Item text="Episode level" key="01" />
-                        <c:Item text="Milestone level" key="02" />
-                        <c:Item text="Not applicable" key="03" />
-                    </items>
-                </ComboBox>
+                    <ComboBox id="" width="100%">
+                        <items>
+                            <c:Item text="Episode level" key="01" />
+                            <c:Item text="Milestone level" key="02" />
+                            <c:Item text="Not applicable" key="03" />
+                        </items>
+                    </ComboBox>
                 </Hbox>
             </VBox>
         </HBox>
-
 
         <beginButton>
             <Button text="{i18n>lblOk}" press="onCreateParamOk" />
