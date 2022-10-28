@@ -38,7 +38,7 @@
 			</items>
 		
 		</HBox>
-		<VBox class="sapUiTinyMarginTop">
+		<VBox class="sapUiTinyMarginTopBottom">
 			<Label required="true" text="{i18n>lblSelectTaxCode}" width="100%"/>
 			<Input width="95%" showValueHelp="true" value="{vendorContractModel>/taxCodeName}" valueHelpRequest="onvaluHelpTaxcode"/>
 		</VBox>
@@ -53,17 +53,17 @@
 		</VBox>
 
 		<!-- <VBox class = "classBoxBorder"> -->
-		
+		<Label text="Select Retention Applicability:" width="100%"/>
 		<HBox class = "classBoxBorder">
 			<items>
 				<VBox class = "sapUiTinyMarginBeginEnd">
-					<Label required="true" text="{parts:[{value:'lblSelectRetEpiFrom'},{path:'vendorContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" width="100%"/>
+					<Label  text="{parts:[{value:'lblSelectRetEpiFrom'},{path:'vendorContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" width="100%"/>
 					<ComboBox width="95%" items="{vendorContractModel>/episodeDataList}" >
 						<c:Item text="{vendorContractModel>Epinm}" key="{vendorContractModel>Epiid}"/>
 					</ComboBox>
 				</VBox>
 				<VBox class = "sapUiTinyMarginBeginEnd">
-					<Label required="true" text="{parts:[{value:'lblSelectRetEpiTo'},{path:'vendorContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" width="100%"/>
+					<Label  text="{parts:[{value:'lblSelectRetEpiTo'},{path:'vendorContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" width="100%"/>
 					<ComboBox width="95%" items="{vendorContractModel>/episodeDataList}">
 						<c:Item text="{vendorContractModel>Epinm}" key="{vendorContractModel>Epiid}"/>
 					</ComboBox>
