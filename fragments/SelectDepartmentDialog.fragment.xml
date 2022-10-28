@@ -3,35 +3,32 @@
         <Toolbar>
             <Title level="H3" text="RFP Attributes" />
         </Toolbar>
+        <Flexbox class = "sapUiTinyMarginTop">
         <HBox>
             <VBox width="50%">
-                <Label text="Supplier Name:" design="Bold" class="sapUiTinyMarginTop" required="true" />
-                <Input width="100%" />
-            </VBox>
-            <VBox width="50%" class="sapUiTinyMarginBegin">
                 <Label text="Initial Quotation Amount:" design="Bold" class="sapUiTinyMarginTop" required="true" />
                 <Input width="100%" />
             </VBox>
-        </HBox>
-
-        <HBox>
-            <VBox width="50%">
-                <Label text="R1 Quotation Amount:" design="Bold" class="sapUiTinyMarginTop" required="true" />
-                <Input width="100%" />
-            </VBox>
             <VBox width="50%" class="sapUiTinyMarginBegin">
-                <Label text="R2 Quotation Amount:" design="Bold" class="sapUiTinyMarginTop" required="true" />
+               <Label text="R1 Quotation Amount:" design="Bold" class="sapUiTinyMarginTop" required="true" />
                 <Input width="100%" />
             </VBox>
         </HBox>
 
         <HBox>
             <VBox width="50%">
-                <Label text="Final Quotation Amount:" design="Bold" class="sapUiTinyMarginTop" required="true" />
+                  <Label text="R2 Quotation Amount:" design="Bold" class="sapUiTinyMarginTop" required="true" />
                 <Input width="100%" />
             </VBox>
             <VBox width="50%" class="sapUiTinyMarginBegin">
-                <Label text="Skip RFP Reason" design="Bold" class="sapUiTinyMarginTop" />
+              <Label text="Final Quotation Amount:" design="Bold" class="sapUiTinyMarginTop" required="true" />
+                <Input width="100%" />
+            </VBox>
+        </HBox>
+
+        <HBox>
+            <VBox width="50%">
+                  <Label text="Skip RFP Reason" design="Bold" class="sapUiTinyMarginTop" />
                 <ComboBox id="skiprfpreas" width="100%">
                     <items>
                         <c:Item text="International Vendor Content" key="01" />
@@ -40,8 +37,11 @@
                     </items>
                 </ComboBox>
             </VBox>
+            <VBox width="50%" class="sapUiTinyMarginBegin">
+              
+            </VBox>
         </HBox>
-
+        </Flexbox>
         <Toolbar>
             <Title level="H3" text="VIM Attributes" />
         </Toolbar>
