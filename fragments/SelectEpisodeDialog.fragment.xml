@@ -52,8 +52,9 @@
 			
 		</VBox>
 
-		<!-- <VBox class = "classBoxBorder"> -->
+		<VBox class="sapUiTinyMarginTopBottom">
 		<Label text="Select Retention Applicability:" width="100%"/>
+		</VBox>
 		<HBox class = "classBoxBorder">
 			<items>
 				<VBox class = "sapUiTinyMarginBeginEnd">
