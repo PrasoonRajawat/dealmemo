@@ -530,7 +530,10 @@ sap.ui.define([
 				var oVaildFlag = this.validateBeforeCreate();
 				if (oVaildFlag) {
 					var vendorContractModel = this.getView().getModel("vendorContractModel");
-
+					var vendorContractDetailInfo = vendorContractModel.getData();
+					if(vendorContractDetailInfo.Skiprfpreason != "") {
+						vendorContractDetailInfo.Skiprfpresnm = sap.ui.getCore().byId(vendorContractDetailInfo.skipRfpDropDownId).getText();
+					}
 					vendorContractModel.refresh(true);
 					this._oCreateParamDialog.destroy();
 				}
@@ -546,13 +549,13 @@ sap.ui.define([
 					"Depthd": vendorContractModel.oData.Depthd != "" ? vendorContractModel.oData.Depthd : "",
 					"Dept":  vendorContractModel.oData.Abtnr != "" ? vendorContractModel.oData.Abtnr : "",
 					"Grsescr": vendorContractModel.oData.Grsescr != "" ? vendorContractModel.oData.Grsescr : "",
-					"Recont": vendorContractDetailInfo.Cntsc === "Z0" ? true : false,
-					"Iniquoamt": "0.00",
-					"R1quoamt": "0.00",
-					"R2quoamt": "0.00",
-					"Finalquoamt": "0.00",
-					"Skiprfpreason": "",
-					"Skiprfpresnm": ""
+					"Recont": vendorContractDetailInfo.Cntsc === "Z0" ? true : false
+					// "Iniquoamt": "0.00",
+					// "R1quoamt": "0.00",
+					// "R2quoamt": "0.00",
+					// "Finalquoamt": "0.00",
+					// "Skiprfpreason": "",
+					// "Skiprfpresnm": ""
 				});
 				if (vendorContractModel.oData.contractMode === "Ch") {
 					vendorContractModel.oData.createParams.Zstext = vendorContractModel.oData.DmCoSet.results.find(d => d.Contno ===
@@ -1476,6 +1479,12 @@ sap.ui.define([
 					"Depthd": vendorContractDetailInfo.createParams.Depthd,
 					"Grsescr": vendorContractDetailInfo.createParams.Grsescr,
 					"Recont": vendorContractDetailInfo.createParams.Recont,
+					"Iniquoamt": vendorContractDetailInfo.Iniquoamt,
+					"R1quoamt": vendorContractDetailInfo.R1quoamt,
+					"R2quoamt": vendorContractDetailInfo.R2quoamt,
+					"Finalquoamt":vendorContractDetailInfo.Finalquoamt,
+					"Skiprfpreason": vendorContractDetailInfo.Skiprfpreason
+
 
 				};
 				return oPayload;
