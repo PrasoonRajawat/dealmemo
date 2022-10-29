@@ -430,12 +430,19 @@ sap.ui.define([
 				}
 				return statusFlag;
 			},
+			onChangeRFPatt: function(oEvent) {
+				var artistContractModel = this.getView().getModel("artistContractModel");
+				artistContractModel.refresh(true);
+			},
 
 			onCreateParamOk: function () {
 				var oVaildFlag = this.validateBeforeCreate();
 				if (oVaildFlag) {
 					var artistContractModel = this.getView().getModel("artistContractModel");
-
+					var artistContractDetailInfo = artistContractModel.getData();
+					if(artistContractDetailInfo.Skiprfpreason != "") {
+						artistContractDetailInfo.Skiprfpresnm = sap.ui.getCore().byId(artistContractDetailInfo.skipRfpDropDownId).getText();
+					}
 					artistContractModel.refresh(true);
 					this._oCreateParamDialog.destroy();
 				}
@@ -1192,8 +1199,12 @@ sap.ui.define([
 					"Dept": artistContractDetailInfo.createParams.Dept,
 					"Prreq": artistContractDetailInfo.createParams.Prreq,
 					"Depthd": artistContractDetailInfo.createParams.Depthd,
-					"Grsescr": artistContractDetailInfo.createParams.Grsescr
-
+					"Grsescr": artistContractDetailInfo.createParams.Grsescr,
+					"Iniquoamt": artistContractDetailInfo.Iniquoamt.toString(),
+					"R1quoamt": artistContractDetailInfo.R1quoamt.toString(),
+					"R2quoamt": artistContractDetailInfo.R2quoamt.toString(),
+					"Finalquoamt":artistContractDetailInfo.Finalquoamt.toString(),
+					"Skiprfpreason": artistContractDetailInfo.Skiprfpreason
 				};
 				return oPayload;
 
