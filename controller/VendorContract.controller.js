@@ -1479,10 +1479,10 @@ sap.ui.define([
 					"Depthd": vendorContractDetailInfo.createParams.Depthd,
 					"Grsescr": vendorContractDetailInfo.createParams.Grsescr,
 					"Recont": vendorContractDetailInfo.createParams.Recont,
-					"Iniquoamt": vendorContractDetailInfo.Iniquoamt,
-					"R1quoamt": vendorContractDetailInfo.R1quoamt,
-					"R2quoamt": vendorContractDetailInfo.R2quoamt,
-					"Finalquoamt":vendorContractDetailInfo.Finalquoamt,
+					"Iniquoamt": vendorContractDetailInfo.Iniquoamt.toString(),
+					"R1quoamt": vendorContractDetailInfo.R1quoamt.toString(),
+					"R2quoamt": vendorContractDetailInfo.R2quoamt.toString(),
+					"Finalquoamt":vendorContractDetailInfo.Finalquoamt.toString(),
 					"Skiprfpreason": vendorContractDetailInfo.Skiprfpreason
 
 
