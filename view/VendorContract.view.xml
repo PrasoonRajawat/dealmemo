@@ -33,6 +33,11 @@
 							<ObjectStatus id="zprrequest" title="PR Request" text="{vendorContractModel>/createParams/Prreq}"/>
 							<ObjectStatus id="DeparmentHead" title="Deparment Head" text="{vendorContractModel>/createParams/Depthd}"/>
 							<ObjectStatus id="grsescreate" title="GR SES Creator" text="{vendorContractModel>/createParams/Grsescr}"/>
+							<ObjectStatus id="intamt" title="Inital Amount" text="{vendorContractModel>/Iniquoamt}"/>
+							<ObjectStatus id="r1amt" title="R1 Amount" text="{vendorContractModel>/R1quoamt}"/>
+							<ObjectStatus id="r2amt" title="R2 Amount" text="{vendorContractModel>/R2quoamt}"/>
+							<ObjectStatus id="finalamt" title="Final Amount" text="{vendorContractModel>/Finalquoamt}"/>
+							<ObjectStatus id="rfpres" title="Skip RFP Reason" text="{vendorContractModel>/Skiprfpresnm}"/>
 						</statuses>
 						<statuses>
 							<ObjectStatus id="bEdit" icon="sap-icon://edit" press="editDepartment" active="true" visible="false"/>
