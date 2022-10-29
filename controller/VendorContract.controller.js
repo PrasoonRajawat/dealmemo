@@ -366,6 +366,10 @@ sap.ui.define([
 				vendorContractModel.setProperty("/nonAmmortPatternList", oData.results.filter(function (item) {
 					return item.Mstpcd === "13";
 				}));
+
+				vendorContractModel.setProperty("/skipRfpDropDown", oData.results.filter(function (item) {
+					return item.Mstpcd === "26";
+				}));
 			},
 			loadInitialDataFromMaster: function () {
 
@@ -539,7 +543,13 @@ sap.ui.define([
 					"Depthd": vendorContractModel.oData.Depthd != "" ? vendorContractModel.oData.Depthd : "",
 					"Dept":  vendorContractModel.oData.Abtnr != "" ? vendorContractModel.oData.Abtnr : "",
 					"Grsescr": vendorContractModel.oData.Grsescr != "" ? vendorContractModel.oData.Grsescr : "",
-					"Recont": vendorContractDetailInfo.Cntsc === "Z0" ? true : false
+					"Recont": vendorContractDetailInfo.Cntsc === "Z0" ? true : false,
+					"Iniquoamt": "0.00",
+					"R1quoamt": "0.00",
+					"R2quoamt": "0.00",
+					"Finalquoamt": "0.00",
+					"Skiprfpreason": "",
+					"Skiprfpresnm": ""
 				});
 				if (vendorContractModel.oData.contractMode === "Ch") {
 					vendorContractModel.oData.createParams.Zstext = vendorContractModel.oData.DmCoSet.results.find(d => d.Contno ===
@@ -550,6 +560,19 @@ sap.ui.define([
 						vendorContractModel.oData.Contno && d.Contver === vendorContractModel.oData.Contver).Depthd
 					vendorContractModel.oData.createParams.Grsescr = vendorContractModel.oData.DmCoSet.results.find(d => d.Contno ===
 						vendorContractModel.oData.Contno && d.Contver === vendorContractModel.oData.Contver).Grsescr
+
+					// // RFP attributes 
+					// vendorContractModel.oData.createParams.Iniquoamt = vendorContractModel.oData.DmCoSet.results.find(d => d.Contno ===
+					// 	vendorContractModel.oData.Contno && d.Contver === vendorContractModel.oData.Contver).Iniquoamt
+					// vendorContractModel.oData.createParams.R1quoamt = vendorContractModel.oData.DmCoSet.results.find(d => d.Contno ===
+					// 	vendorContractModel.oData.Contno && d.Contver === vendorContractModel.oData.Contver).R1quoamt
+					// vendorContractModel.oData.createParams.R2quoamt = vendorContractModel.oData.DmCoSet.results.find(d => d.Contno ===
+					// 	vendorContractModel.oData.Contno && d.Contver === vendorContractModel.oData.Contver).R2quoamt
+					// vendorContractModel.oData.createParams.Finalquoamt = vendorContractModel.oData.DmCoSet.results.find(d => d.Contno ===
+					// 	vendorContractModel.oData.Contno && d.Contver === vendorContractModel.oData.Contver).Finalquoamt	
+					// vendorContractModel.oData.createParams.Skiprfpresnm = vendorContractModel.oData.DmCoSet.results.find(d => d.Contno ===
+					// 	vendorContractModel.oData.Contno && d.Contver === vendorContractModel.oData.Contver).Skiprfpresnm		
+
 				}
 				//added by dhiraj on 52/05/2022
 				this.loadDepartmentValue();
@@ -558,6 +581,10 @@ sap.ui.define([
 				this.loadGrCreaterValue();
 				this.loadPrRequestorValue();
 				//----------------------------
+			},
+			onChangeRFPatt: function(oEvent) {
+				var vendorContractModel = this.getView().getModel("vendorContractModel");
+				vendorContractModel.refresh(true);
 			},
 
 			loadDepartmentValue: function () { // added by dhiraj on 24/05/2022

@@ -8,32 +8,28 @@
             <HBox class="sapUiTinyMarginBeginEnd">
                 <VBox width="50%">
                     <Label text="Initial Quotation Amount:" design="Bold" class="sapUiTinyMarginTop" required="true" />
-                    <Input width="100%" />
+                    <Input width="100%"  value="{ parts: [ {path: 'vendorContractModel>/createParams/Iniquoamt'}, {path: 'vendorContractModel>Waers'} ], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false,minFractionDigits: 2, maxFractionDigits: 2 } }" change="onChangeRFPatt"/>
                 </VBox>
                 <VBox width="50%" class="sapUiTinyMarginBegin">
                     <Label text="R1 Quotation Amount:" design="Bold" class="sapUiTinyMarginTop" required="true" />
-                    <Input width="100%" />
+                    <Input width="100%"  value="{ parts: [ {path: 'vendorContractModel>/createParams/R1quoamt'}, {path: 'vendorContractModel>Waers'} ], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false,minFractionDigits: 2, maxFractionDigits: 2 } }" change="onChangeRFPatt" />
                 </VBox>
             </HBox>
             <HBox class="sapUiTinyMarginBeginEnd">
                 <VBox width="50%">
-                    <Label text="R2 Quotation Amount:" design="Bold" class="sapUiTinyMarginTop" required="true" />
-                    <Input width="100%" />
+                    <Label text="R2 Quotation Amount:"  design="Bold" class="sapUiTinyMarginTop" required="true" />
+                    <Input width="100%" value="{ parts: [ {path: 'vendorContractModel>/createParams/R2quoamt'}, {path: 'vendorContractModel>Waers'} ], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false,minFractionDigits: 2, maxFractionDigits: 2 } }" change="onChangeRFPatt" />
                 </VBox>
                 <VBox width="50%" class="sapUiTinyMarginBegin">
-                    <Label text="Final Quotation Amount:" design="Bold" class="sapUiTinyMarginTop" required="true" />
-                    <Input width="100%" />
+                    <Label text="Final Quotation Amount:"  design="Bold" class="sapUiTinyMarginTop" required="true" />
+                    <Input width="100%" value="{ parts: [ {path: 'vendorContractModel>/createParams/Finalquoamt'}, {path: 'vendorContractModel>Waers'} ], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false,minFractionDigits: 2, maxFractionDigits: 2 } }" change="onChangeRFPatt" />
                 </VBox>
             </HBox>
             <HBox class="sapUiTinyMarginBeginEnd">
                 <VBox width="50%">
                     <Label text="Skip RFP Reason" design="Bold" class="sapUiTinyMarginTop" />
-                    <ComboBox id="skiprfpreas" width="100%">
-                        <items>
-                            <c:Item text="International Vendor Content" key="01" />
-                            <c:Item text="Talent" key="02" />
-                            <c:Item text="Cost on actuals" key="03" />
-                        </items>
+                    <ComboBox id="skiprfpreas" width="100%" items="{vendorContractModel>/skipRfpDropDown}"  selectedKey="{vendorContractModel>/Skiprfpreason}">
+					<c:Item text="{vendorContractModel>Mstcdnm}" key="{vendorContractModel>Mstcd}"/>
                     </ComboBox>
                 </VBox>
                 <VBox width="50%" class="sapUiTinyMarginBegin" />
