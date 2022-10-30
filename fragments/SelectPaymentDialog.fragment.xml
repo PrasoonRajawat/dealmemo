@@ -91,6 +91,9 @@
 										<Column  demandPopin="true" popinDisplay="Inline">
 											<ObjectIdentifier title="{i18n>lblPayee}"></ObjectIdentifier>
 										</Column>
+										<Column  demandPopin="true" popinDisplay="Inline">
+											<ObjectIdentifier title="{i18n>lblAltPayee}"></ObjectIdentifier>
+										</Column>
 										<Column hAlign="Right" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
 											<ObjectIdentifier title="{i18n>lblPaymentTerm}"></ObjectIdentifier>
 										</Column>
@@ -108,6 +111,7 @@
 											<cells>
 												<ObjectIdentifier title="{vendorContractModel>Mstcdnm}"/>
 												<Text text="{vendorContractModel>payee}"/>
+												<Input value="{vendorContractModel>Altpayee}" showValueHelp="true" valueHelpRequest="onValueHelpAlternatePayee"/>
 												<Input value="{vendorContractModel>Zterm}" showValueHelp="true" valueHelpRequest="onValueHelpPayterm"/>
 												<Input value="{vendorContractModel>Dueamt}" showValueHelp="false"/>
 												<DatePicker dateValue="{vendorContractModel>estDate}" displayFormat="dd-MM-yyyy" valueFormat="yyyy-MM-dd"/>
