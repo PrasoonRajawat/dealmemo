@@ -1721,7 +1721,10 @@ sap.ui.define([
 						"payeeKey": vendorContractDetailInfo.vendorKey,
 						"Zterm": vendorContractDetailInfo.Zterm !== "" ? vendorContractDetailInfo.Zterm : "",
 						"Dueamt": "0",
-						"estDate": null
+						"estDate": null,
+						"Altpayeenm": vendorContractDetailInfo.vendorName,
+						"Altpayee": vendorContractDetailInfo.vendorKey
+						
 					});
 
 				});
@@ -1751,6 +1754,23 @@ sap.ui.define([
 				};
 				this.openSelectionDialog();
 			},
+			onValueHelpAlternatePayee: function (oEvent) {
+				var oPath = oEvent.getSource().getBindingContext("vendorContractModel").sPath;
+
+				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
+				this.oValueHelpSelectionParams = {
+					"bindPathName": "vendorContractModel>/vendorsList",
+					"bindPropName": "vendorContractModel>Mcod1",
+					"bindPropDescName": "vendorContractModel>Lifnr",
+					"propName": "Mcod1",
+					"keyName": "Lifnr",
+					"valuePath": oPath + "/Altpayeenm",
+					"keyPath": oPath + "/Altpayee",
+					"valueModel": "vendorContractModel",
+					"dialogTitle": oSourceBundle.getText("lblAltPayee")
+				};
+				this.openSelectionDialog();
+			},
 			preparePaymentpayload: function () {
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
@@ -1769,7 +1789,10 @@ sap.ui.define([
 
 						});
 				}
-
+				// var epiList = [];
+				// selectedEpisodeList.map(function(epiObj) {
+				// 	epiList.push(epiObj.Epiid);
+				// })
 
 				selectedEpisodeList.map(function (selEpObj) {
 					paymentPayloadArr.push({
