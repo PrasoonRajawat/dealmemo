@@ -445,7 +445,9 @@ sap.ui.define([
 						vendorContractModel.setProperty("/vendorsList", sortedList);
 						vendorContractModel.refresh(true);
 						sap.ui.core.BusyIndicator.hide();
+						if (vendorContractDetailInfo.contractMode != "Ch") {
 						this.onVendorSelection();
+						}
 
 					}.bind(this),
 					error: function () {
@@ -586,6 +588,7 @@ sap.ui.define([
 				this.loadDeptHeadValue();
 				this.loadGrCreaterValue();
 				this.loadPrRequestorValue();
+				this.loadVendors();
 				//----------------------------
 			},
 			onChangeRFPatt: function(oEvent) {
