@@ -525,6 +525,9 @@ sap.ui.define([
 			},
 
 			loadDepartment: function () { // added by dhiraj on 24/05/2022
+				var vendorContractModel = this.getView().getModel("vendorContractModel");
+				vendorContractModel.setProperty("/Skiprfpreason", "");
+				vendorContractModel.refresh(true);
 				Fragment.load({
 					name: "com.ui.dealmemolocal.fragments.SelectDepartmentDialog",
 					controller: this
