@@ -31,6 +31,7 @@
 							<ObjectStatus id="r2amt" title="R2 Amount" text="{path:'artistContractModel>/R2quoamt', type:'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 2 }}"/>
 							<ObjectStatus id="finalamt" title="Final Amount" text="{path:'artistContractModel>/Finalquoamt', type:'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 2 }}"/>
 							<ObjectStatus id="rfpres" title="Skip RFP Reason" text="{artistContractModel>/Skiprfpresnm}"/>
+							<ObjectStatus id="retenapp" title="Retention Applicability" text="{artistContractModel>/Retappnm}"/>
 						</statuses>
 					</ObjectHeader>
 				</Panel>

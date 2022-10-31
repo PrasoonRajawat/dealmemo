@@ -370,6 +370,10 @@ sap.ui.define([
 				vendorContractModel.setProperty("/skipRfpDropDown", oData.results.filter(function (item) {
 					return item.Mstpcd === "26";
 				}));
+
+				vendorContractModel.setProperty("/retentionDropDown", oData.results.filter(function (item) {
+					return item.Mstpcd === "27";
+				}));
 			},
 			loadInitialDataFromMaster: function () {
 
@@ -411,6 +415,9 @@ sap.ui.define([
 					}, {
 						"key": "Mstpcd",
 						"val": "26"
+					}, {
+						"key": "Mstpcd",
+						"val": "27"
 					}
 
 				];
@@ -570,6 +577,9 @@ sap.ui.define([
 					var vendorContractDetailInfo = vendorContractModel.getData();
 					if (vendorContractDetailInfo.Skiprfpreason != "") {
 						vendorContractDetailInfo.Skiprfpresnm = sap.ui.getCore().byId(vendorContractDetailInfo.skipRfpDropDownId).getText();
+					}
+					if (vendorContractDetailInfo.Retnaplty != "") {
+						vendorContractDetailInfo.Retappnm = sap.ui.getCore().byId(vendorContractDetailInfo.retentionDropId).getText();
 					}
 					vendorContractModel.refresh(true);
 					this._oCreateParamDialog.destroy();
@@ -1825,10 +1835,10 @@ sap.ui.define([
 
 						});
 				}
-				var epiList = [];
-				selectedEpisodeList.map(function (epiObj) {
-					epiList.push(epiObj.Epiid);
-				})
+				// var epiList = [];
+				// selectedEpisodeList.map(function (epiObj) {
+				// 	epiList.push(epiObj.Epiid);
+				// })
 
 				selectedEpisodeList.map(function (selEpObj) {
 					paymentPayloadArr.push({
@@ -1853,8 +1863,7 @@ sap.ui.define([
 				}.bind(this));
 				if (vendorContractDetailInfo.vcPaymentData.length > 0) {
 					vendorContractDetailInfo.vcPaymentData.map(function (selEpObj) {
-						epiList.map(function (epiObj) {
-							if (epiObj == selEpObj.Epiid) {
+						
 								paymentPayloadArr.push({
 									Amtper: selEpObj.Amtper,
 									Tentid: selEpObj.Tentid,
@@ -1881,8 +1890,7 @@ sap.ui.define([
 									Updkz: "U",
 									Seqnr: selEpObj.Seqnr
 								});
-							}
-						});
+							
 					}.bind(this));
 				}
 
@@ -1906,7 +1914,7 @@ sap.ui.define([
 						Dmno: vendorContractDetailInfo.Dmno,
 						Dmver: vendorContractDetailInfo.Dmver,
 						Dueamt: oAmtType === 1 ? mlObj.Dueamt : "0.00",
-						Empfk: mlObj.vendorKey,
+						Empfk: mlObj.payeeKey,
 						Mestdt: mlObj.estDate != null ? Formatter.formatDateValForBackend(mlObj.estDate) : null,
 						Msid: mlObj.Mstcd,
 						Msidnm: mlObj.Mstcdnm,

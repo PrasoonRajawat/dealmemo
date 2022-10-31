@@ -302,6 +302,13 @@ sap.ui.define([
 				artistContractModel.setProperty("/mileStoneList", oData.results.filter(function (item) {
 					return item.Mstpcd === "08";
 				}));
+				artistContractModel.setProperty("/skipRfpDropDown", oData.results.filter(function (item) {
+					return item.Mstpcd === "26";
+				}));
+
+				artistContractModel.setProperty("/retentionDropDown", oData.results.filter(function (item) {
+					return item.Mstpcd === "27";
+				}));
 			},
 			loadInitialDataFromMaster: function () {
 
@@ -319,6 +326,12 @@ sap.ui.define([
 					}, {
 						"key": "Mstpcd",
 						"val": "08"
+					}, {
+						"key": "Mstpcd",
+						"val": "26"
+					}, {
+						"key": "Mstpcd",
+						"val": "27"
 					}
 
 				];
@@ -479,6 +492,9 @@ sap.ui.define([
 					var artistContractDetailInfo = artistContractModel.getData();
 					if(artistContractDetailInfo.Skiprfpreason != "") {
 						artistContractDetailInfo.Skiprfpresnm = sap.ui.getCore().byId(artistContractDetailInfo.skipRfpDropDownId).getText();
+					}
+					if (vendorContractDetailInfo.Retnaplty != "") {
+						vendorContractDetailInfo.Retappnm = sap.ui.getCore().byId(vendorContractDetailInfo.retentionDropId).getText();
 					}
 					artistContractModel.refresh(true);
 					this._oCreateParamDialog.destroy();
@@ -1832,7 +1848,7 @@ sap.ui.define([
 						Dmno: artistContractDetailInfo.Dmno,
 						Dmver: artistContractDetailInfo.Dmver,
 						Dueamt: oAmtType === 1 ? mlObj.Dueamt : "0.00",
-						Empfk: mlObj.vendorKey,
+						Empfk: mlObj.payeeKey,
 						Mestdt: Formatter.formatDateValForBackend(mlObj.estDate),
 						Msid: mlObj.Mstcd,
 						Msidnm: mlObj.Mstcdnm,
