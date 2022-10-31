@@ -430,6 +430,9 @@ sap.ui.define([
 			},
 
 			loadDepartment: function () { // added by dhiraj on 24/05/2022
+				var artistContractModel = this.getView().getModel("artistContractModel");
+				artistContractModel.setProperty("/Skiprfpreason", "");
+				artistContractModel.refresh(true);
 				Fragment.load({
 					name: "com.ui.dealmemolocal.fragments.SelectDepartmentDialogAC",
 					controller: this
