@@ -88,9 +88,9 @@
 										<Column >
 											<ObjectIdentifier title="{i18n>lblMilestone}"></ObjectIdentifier>
 										</Column>
-										<Column  demandPopin="true" popinDisplay="Inline">
+										<!-- <Column  demandPopin="true" popinDisplay="Inline">
 											<ObjectIdentifier title="{i18n>lblPayee}"></ObjectIdentifier>
-										</Column>
+										</Column> -->
 										<Column  demandPopin="true" popinDisplay="Inline">
 											<ObjectIdentifier title="{i18n>lblAltPayee}"></ObjectIdentifier>
 										</Column>
@@ -104,17 +104,21 @@
 										<Column hAlign="Right" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
 											<ObjectIdentifier title="{i18n>lblEstimatedDate}"></ObjectIdentifier>
 										</Column>
+										<Column hAlign="Right" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
+											<ObjectIdentifier title="{i18n>lblHsnCd}"></ObjectIdentifier>
+										</Column>
 						
 									</columns>
 									<items>
 										<ColumnListItem>
 											<cells>
 												<ObjectIdentifier title="{vendorContractModel>Mstcdnm}"/>
-												<Text text="{vendorContractModel>payee}"/>
-												<Input value="{vendorContractModel>Altpayee}" showValueHelp="true" valueHelpRequest="onValueHelpAlternatePayee"/>
+												<!-- <Text text="{vendorContractModel>payee}"/> -->
+												<Input value="{vendorContractModel>payeeKey}" showValueHelp="true" valueHelpRequest="onValueHelpAlternatePayee"/>
 												<Input value="{vendorContractModel>Zterm}" showValueHelp="true" valueHelpRequest="onValueHelpPayterm"/>
 												<Input value="{vendorContractModel>Dueamt}" showValueHelp="false"/>
 												<DatePicker dateValue="{vendorContractModel>estDate}" displayFormat="dd-MM-yyyy" valueFormat="yyyy-MM-dd"/>
+												<Input value="" showValueHelp="true" valueHelpRequest=""/>
 											</cells>
 										</ColumnListItem>
 									</items>

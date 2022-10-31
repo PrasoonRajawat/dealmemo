@@ -1687,8 +1687,7 @@ sap.ui.define([
 						"Zterm": artistContractDetailInfo.Zterm !== "" ? artistContractDetailInfo.Zterm : "",
 						"Dueamt": "0",
 						"estDate": null,
-						"Altpayeenm": artistContractDetailInfo.vendorName,
-						"Altpayee": artistContractDetailInfo.vendorKey
+					
 					});
 
 				});
@@ -1729,8 +1728,8 @@ sap.ui.define([
 					"bindPropDescName": "artistContractModel>Lifnr",
 					"propName": "Mcod1",
 					"keyName": "Lifnr",
-					"valuePath": oPath + "/Altpayeenm",
-					"keyPath": oPath + "/Altpayee",
+					"valuePath": oPath + "/payee",
+					"keyPath": oPath + "/payeeKey",
 					"valueModel": "artistContractModel",
 					"dialogTitle": oSourceBundle.getText("lblAltPayee")
 				};
