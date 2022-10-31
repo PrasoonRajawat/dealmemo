@@ -1832,7 +1832,7 @@ sap.ui.define([
 						Dmno: artistContractDetailInfo.Dmno,
 						Dmver: artistContractDetailInfo.Dmver,
 						Dueamt: oAmtType === 1 ? mlObj.Dueamt : "0.00",
-						Empfk: mlObj.vendorKey,
+						Empfk: mlObj.payeeKey,
 						Mestdt: Formatter.formatDateValForBackend(mlObj.estDate),
 						Msid: mlObj.Mstcd,
 						Msidnm: mlObj.Mstcdnm,

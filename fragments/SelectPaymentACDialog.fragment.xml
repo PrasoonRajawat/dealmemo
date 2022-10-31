@@ -85,6 +85,9 @@
                                 <ObjectIdentifier title="{i18n>lblAltPayee}" />
                             </Column>
                             <Column hAlign="Right" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
+                                <ObjectIdentifier title="{i18n>lblHsnCd}" />
+                            </Column>
+                            <Column hAlign="Right" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
                                 <ObjectIdentifier title="{i18n>lblPaymentTerm}" />
                             </Column>
 
@@ -94,9 +97,7 @@
                             <Column hAlign="Right" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
                                 <ObjectIdentifier title="{i18n>lblEstimatedDate}" />
                             </Column>
-                            <Column hAlign="Right" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
-                                <ObjectIdentifier title="{i18n>lblHsnCd}" />
-                            </Column>
+                            
                         </columns>
                         <items>
                             <ColumnListItem>
@@ -104,10 +105,10 @@
                                     <ObjectIdentifier title="{artistContractModel>Mstcdnm}" />
                                     <!-- <Text text="{artistContractModel>payee}"/> -->
                                     <Input value="{artistContractModel>payeeKey}" showValueHelp="true" valueHelpRequest="onValueHelpAlternatePayee" />
+                                     <Input value="" showValueHelp="true" valueHelpRequest="" />
                                     <Input value="{artistContractModel>Zterm}" showValueHelp="true" valueHelpRequest="onValueHelpPayterm" />
                                     <Input value="{artistContractModel>Dueamt}" showValueHelp="false" />
                                     <DatePicker dateValue="{artistContractModel>estDate}" displayFormat="dd-MM-yyyy" valueFormat="yyyy-MM-dd" />
-                                    <Input value="" showValueHelp="true" valueHelpRequest="" />
                                 </cells>
                             </ColumnListItem>
                         </items>

@@ -1825,10 +1825,10 @@ sap.ui.define([
 
 						});
 				}
-				var epiList = [];
-				selectedEpisodeList.map(function (epiObj) {
-					epiList.push(epiObj.Epiid);
-				})
+				// var epiList = [];
+				// selectedEpisodeList.map(function (epiObj) {
+				// 	epiList.push(epiObj.Epiid);
+				// })
 
 				selectedEpisodeList.map(function (selEpObj) {
 					paymentPayloadArr.push({
@@ -1853,8 +1853,7 @@ sap.ui.define([
 				}.bind(this));
 				if (vendorContractDetailInfo.vcPaymentData.length > 0) {
 					vendorContractDetailInfo.vcPaymentData.map(function (selEpObj) {
-						epiList.map(function (epiObj) {
-							if (epiObj == selEpObj.Epiid) {
+						
 								paymentPayloadArr.push({
 									Amtper: selEpObj.Amtper,
 									Tentid: selEpObj.Tentid,
@@ -1881,8 +1880,7 @@ sap.ui.define([
 									Updkz: "U",
 									Seqnr: selEpObj.Seqnr
 								});
-							}
-						});
+							
 					}.bind(this));
 				}
 
@@ -1906,7 +1904,7 @@ sap.ui.define([
 						Dmno: vendorContractDetailInfo.Dmno,
 						Dmver: vendorContractDetailInfo.Dmver,
 						Dueamt: oAmtType === 1 ? mlObj.Dueamt : "0.00",
-						Empfk: mlObj.vendorKey,
+						Empfk: mlObj.payeeKey,
 						Mestdt: mlObj.estDate != null ? Formatter.formatDateValForBackend(mlObj.estDate) : null,
 						Msid: mlObj.Mstcd,
 						Msidnm: mlObj.Mstcdnm,
