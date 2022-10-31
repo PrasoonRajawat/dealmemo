@@ -1752,9 +1752,7 @@ sap.ui.define([
 						"payeeKey": vendorContractDetailInfo.vendorKey,
 						"Zterm": vendorContractDetailInfo.Zterm !== "" ? vendorContractDetailInfo.Zterm : "",
 						"Dueamt": "0",
-						"estDate": null,
-						"Altpayeenm": vendorContractDetailInfo.vendorName,
-						"Altpayee": vendorContractDetailInfo.vendorKey
+						"estDate": null
 
 					});
 
@@ -1795,8 +1793,8 @@ sap.ui.define([
 					"bindPropDescName": "vendorContractModel>Lifnr",
 					"propName": "Mcod1",
 					"keyName": "Lifnr",
-					"valuePath": oPath + "/Altpayeenm",
-					"keyPath": oPath + "/Altpayee",
+					"valuePath": oPath + "/payee",
+					"keyPath": oPath + "/payeeKey",
 					"valueModel": "vendorContractModel",
 					"dialogTitle": oSourceBundle.getText("lblAltPayee")
 				};
