@@ -1853,7 +1853,7 @@ sap.ui.define([
 				}.bind(this));
 				if (vendorContractDetailInfo.vcPaymentData.length > 0) {
 					vendorContractDetailInfo.vcPaymentData.map(function (selEpObj) {
-						epilist.map(function (epiObj) {
+						epiList.map(function (epiObj) {
 							if (epiobj == selEpObj.Epiid) {
 								paymentPayloadArr.push({
 									Amtper: selEpObj.Amtper,
