@@ -231,7 +231,7 @@ sap.ui.define([
 					"vcPaymentDataColor": "Critical",
 					"vcDeliveryDataColor": "Critical",
 					"vcEpiNonCostCdDataColor": "Critical",
-					"attachmentTabColor" : "Critical",
+					"attachmentTabColor": "Critical",
 					"saveVisible": true,
 					"submitVisible": vendorContractDetailInfo.Contno !== "new" ? true : false,
 					"releaseTabVisible": vendorContractDetailInfo.Contno !== "new" ? true : false,
@@ -446,8 +446,36 @@ sap.ui.define([
 						vendorContractModel.refresh(true);
 						sap.ui.core.BusyIndicator.hide();
 						if (vendorContractDetailInfo.contractMode != "Ch") {
-						this.onVendorSelection();
+							this.onVendorSelection();
 						}
+
+					}.bind(this),
+					error: function () {
+
+					}
+				});
+			},
+			loadVendorsondeal: function () {
+				var oModel = this.getView().getModel();
+				sap.ui.core.BusyIndicator.show();
+				var vendorContractModel = this.getView().getModel("vendorContractModel");
+				var vendorContractDetailInfo = vendorContractModel.getData();
+				sap.ui.core.BusyIndicator.show(0);
+				var oPath = "/F4LFB1Set?$filter=Bukrs eq '" + vendorContractDetailInfo.Bukrs + "'";
+				oModel.read(oPath, {
+					success: function (oData) {
+						//                   	var sortedList = oData.results.sort(function(a,b){
+						//                   	    return a.Lifnr - b.Lifnr;
+						//                   	    }
+						//                   	);
+						var sortedList = oData.results.sort((a, b) => (a.Lifnr > b.Lifnr) ? 1 : ((b.Lifnr > a.Lifnr) ? -1 : 0));
+						//   	var filterNonBlank = sortedList.filter(function(obj){return obj.Mcod1 !== ""});
+						vendorContractModel.setProperty("/vendorsList", sortedList);
+						vendorContractModel.refresh(true);
+						sap.ui.core.BusyIndicator.hide();
+						// if (vendorContractDetailInfo.contractMode != "Ch") {
+						// 	this.onVendorSelection();
+						// }
 
 					}.bind(this),
 					error: function () {
@@ -533,7 +561,7 @@ sap.ui.define([
 				if (oVaildFlag) {
 					var vendorContractModel = this.getView().getModel("vendorContractModel");
 					var vendorContractDetailInfo = vendorContractModel.getData();
-					if(vendorContractDetailInfo.Skiprfpreason != "") {
+					if (vendorContractDetailInfo.Skiprfpreason != "") {
 						vendorContractDetailInfo.Skiprfpresnm = sap.ui.getCore().byId(vendorContractDetailInfo.skipRfpDropDownId).getText();
 					}
 					vendorContractModel.refresh(true);
@@ -549,7 +577,7 @@ sap.ui.define([
 					"Zltext": vendorContractModel.oData.Zltext != "" ? vendorContractModel.oData.Zltext : "",
 					"Prreq": vendorContractModel.oData.Prreq != "" ? vendorContractModel.oData.Prreq : "",
 					"Depthd": vendorContractModel.oData.Depthd != "" ? vendorContractModel.oData.Depthd : "",
-					"Dept":  vendorContractModel.oData.Abtnr != "" ? vendorContractModel.oData.Abtnr : "",
+					"Dept": vendorContractModel.oData.Abtnr != "" ? vendorContractModel.oData.Abtnr : "",
 					"Grsescr": vendorContractModel.oData.Grsescr != "" ? vendorContractModel.oData.Grsescr : "",
 					"Recont": vendorContractDetailInfo.Cntsc === "Z0" ? true : false
 					// "Iniquoamt": "0.00",
@@ -588,10 +616,10 @@ sap.ui.define([
 				this.loadDeptHeadValue();
 				this.loadGrCreaterValue();
 				this.loadPrRequestorValue();
-				this.loadVendors();
+				this.loadVendorsondeal();
 				//----------------------------
 			},
-			onChangeRFPatt: function(oEvent) {
+			onChangeRFPatt: function (oEvent) {
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				vendorContractModel.refresh(true);
 			},
@@ -1093,7 +1121,7 @@ sap.ui.define([
 						oData.attachmentTabColor = "Critical";
 
 						oData.attachURL = oModel.sServiceUrl + "/AttachmentSet(Tentid='IBS',Dmno='',Dmver='',Contno='" + oData.Contno + "',Contver='" + oData.Contver +
-							"',Instanceid='')/AttachmentMedSet"; 
+							"',Instanceid='')/AttachmentMedSet";
 						oData.fileTypeList = ["jpg", "doc", "xls", "pdf", "xlsx", "docx"];
 						if (this.displayContractFlag) {
 
@@ -1485,7 +1513,7 @@ sap.ui.define([
 					"Iniquoamt": vendorContractDetailInfo.Iniquoamt.toString(),
 					"R1quoamt": vendorContractDetailInfo.R1quoamt.toString(),
 					"R2quoamt": vendorContractDetailInfo.R2quoamt.toString(),
-					"Finalquoamt":vendorContractDetailInfo.Finalquoamt.toString(),
+					"Finalquoamt": vendorContractDetailInfo.Finalquoamt.toString(),
 					"Skiprfpreason": vendorContractDetailInfo.Skiprfpreason
 
 
@@ -1675,14 +1703,14 @@ sap.ui.define([
 					this._oSelectPaymentDialog.open();
 				}
 			},
-			handleSearch: function(oEvent) {
+			handleSearch: function (oEvent) {
 				var srchValue = oEvent.getSource().getValue();
 				var modelBind = this.byId(sap.ui.core.Fragment.createId("vcPaymentDialog", "list_mlList"));
 				var multipleFilter =
 					new sap.ui.model.Filter([
-							new sap.ui.model.Filter("Mstcd", sap.ui.model.FilterOperator.Contains, srchValue),
-							new sap.ui.model.Filter("Mstcdnm", sap.ui.model.FilterOperator.Contains, srchValue)
-						],
+						new sap.ui.model.Filter("Mstcd", sap.ui.model.FilterOperator.Contains, srchValue),
+						new sap.ui.model.Filter("Mstcdnm", sap.ui.model.FilterOperator.Contains, srchValue)
+					],
 						false);
 				var binding = modelBind.getBinding("items");
 				binding.filter([multipleFilter]);
@@ -1727,7 +1755,7 @@ sap.ui.define([
 						"estDate": null,
 						"Altpayeenm": vendorContractDetailInfo.vendorName,
 						"Altpayee": vendorContractDetailInfo.vendorKey
-						
+
 					});
 
 				});
@@ -1792,17 +1820,17 @@ sap.ui.define([
 
 						});
 				}
-				// var epiList = [];
-				// selectedEpisodeList.map(function(epiObj) {
-				// 	epiList.push(epiObj.Epiid);
-				// })
+				var epiList = [];
+				selectedEpisodeList.map(function (epiObj) {
+					epiList.push(epiObj.Epiid);
+				})
 
 				selectedEpisodeList.map(function (selEpObj) {
 					paymentPayloadArr.push({
 						Contno: vendorContractDetailInfo.Contno,
 						Conttp: "01",
 						Contver: vendorContractDetailInfo.Contver,
-						Dmno: vendorContractDetailInfo.Dmno,
+						Dmno: vendorContractDetailInfo.Dmxno,
 						Dmver: vendorContractDetailInfo.Dmver,
 						Dueamt: "00.0",
 						Empfk: "",
@@ -1820,31 +1848,35 @@ sap.ui.define([
 				}.bind(this));
 				if (vendorContractDetailInfo.vcPaymentData.length > 0) {
 					vendorContractDetailInfo.vcPaymentData.map(function (selEpObj) {
-						paymentPayloadArr.push({
-							Amtper: selEpObj.Amtper,
-							Tentid: selEpObj.Tentid,
-							Dmno: selEpObj.Dmno,
-							Dmver: selEpObj.Dmver,
-							Contno: selEpObj.Contno,
-							Conttp: selEpObj.Conttp,
-							Contver: selEpObj.Contver,
-							Costperamt: selEpObj.Costperamt,
-							Dueamt: selEpObj.Dueamt,
-							Epiid: selEpObj.Epiid, //Episode ID
-							Epinm: selEpObj.Epinm,
-							Msid: selEpObj.Msid,
-							Empfk: selEpObj.Empfk,
-							Zterm: selEpObj.Zterm,
-							Ztermt: selEpObj.Ztermt,
-							Mestdt: selEpObj.Mestdt,
-							Msidnm: selEpObj.Msidnm,
-							Mscompdt: selEpObj.Mscompdt !== null ? Formatter.formatDateValForBackend(new Date(selEpObj.Mscompdt)) : null,
-							Prodocno: selEpObj.Prodocno,
-							Provdocyr: selEpObj.Provdocyr,
-							Invdocno: selEpObj.Invdocno,
-							Invdocyr: selEpObj.Invdocyr,
-							Updkz: "U",
-							Seqnr: selEpObj.Seqnr
+						epilist.map(function (epiObj) {
+							if (epiobj == selEpObj.Epiid) {
+								paymentPayloadArr.push({
+									Amtper: selEpObj.Amtper,
+									Tentid: selEpObj.Tentid,
+									Dmno: selEpObj.Dmno,
+									Dmver: selEpObj.Dmver,
+									Contno: selEpObj.Contno,
+									Conttp: selEpObj.Conttp,
+									Contver: selEpObj.Contver,
+									Costperamt: selEpObj.Costperamt,
+									Dueamt: selEpObj.Dueamt,
+									Epiid: selEpObj.Epiid, //Episode ID
+									Epinm: selEpObj.Epinm,
+									Msid: selEpObj.Msid,
+									Empfk: selEpObj.Empfk,
+									Zterm: selEpObj.Zterm,
+									Ztermt: selEpObj.Ztermt,
+									Mestdt: selEpObj.Mestdt,
+									Msidnm: selEpObj.Msidnm,
+									Mscompdt: selEpObj.Mscompdt !== null ? Formatter.formatDateValForBackend(new Date(selEpObj.Mscompdt)) : null,
+									Prodocno: selEpObj.Prodocno,
+									Provdocyr: selEpObj.Provdocyr,
+									Invdocno: selEpObj.Invdocno,
+									Invdocyr: selEpObj.Invdocyr,
+									Updkz: "U",
+									Seqnr: selEpObj.Seqnr
+								});
+							}
 						});
 					}.bind(this));
 				}
@@ -2162,7 +2194,7 @@ sap.ui.define([
 
 			},
 
-			
+
 			//Delivery Tab
 			onSelectEpisodeModeDelivery: function (oEvent) {
 				var oselIndex = oEvent.getSource().getSelectedIndex();
@@ -2692,15 +2724,15 @@ sap.ui.define([
 				var vendorContractDetailInfo = vendorContractModel.getData();
 				var oPath = oEvent.getSource().getBindingContext("vendorContractModel").sPath;
 				if (vendorContractDetailInfo.DmVrSet.results.length) {
-					if(oEvent.getSource().mProperties.value == ""){
+					if (oEvent.getSource().mProperties.value == "") {
 						oEvent.getSource().getBindingContext("vendorContractModel").getObject().flag = "Ch";
 						oEvent.getSource().getBindingContext("vendorContractModel").getObject().Territory = "";
 						oEvent.getSource().getBindingContext("vendorContractModel").getObject().Tertnm = "";
 					}
 				} else {
-					if(oEvent.getSource().mProperties.value == ""){
-					oEvent.getSource().getBindingContext("vendorContractModel").getObject().Territory = "";
-					oEvent.getSource().getBindingContext("vendorContractModel").getObject().Tertnm = "";
+					if (oEvent.getSource().mProperties.value == "") {
+						oEvent.getSource().getBindingContext("vendorContractModel").getObject().Territory = "";
+						oEvent.getSource().getBindingContext("vendorContractModel").getObject().Tertnm = "";
 					}
 				}
 				this.getView().getModel("vendorContractModel").refresh(true);
@@ -4005,106 +4037,106 @@ sap.ui.define([
 				})
 			},
 
-				//Attachmment Tab
+			//Attachmment Tab
 
-				onChange: function(oEvent) {
-					var vendorContractModel = this.getView().getModel("vendorContractModel");
-					var vendorContractDetailInfo = vendorContractModel.getData();
-					var oUploadCollection = oEvent.getSource();
-					oUploadCollection.setUploadUrl(vendorContractDetailInfo.attachURL);
-					var oModel = this.getView().getModel();
-					// Header Token
-					var oCustomerHeaderToken = new sap.m.UploadCollectionParameter({
-						name: "x-csrf-token",
-						value: oModel.getHeaders()['x-csrf-token']
-					});
-					oUploadCollection.addHeaderParameter(oCustomerHeaderToken);
-	
-				},
-				onBeforeUploadStarts: function(oEvent) {
-					// Header Slug
-					var oCustomerHeaderSlug = new sap.m.UploadCollectionParameter({
-						name: "slug",
-						value: oEvent.getParameter("fileName")
-					});
-					oEvent.getParameters().addHeaderParameter(oCustomerHeaderSlug);
-	
-				},
-				onUploadComplete: function() {
-					var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
-					MessageToast.show(oSourceBundle.getText("msgUpldSucc"));
-					this.loadAttachments();
-				},
-				onTypeMissmatch: function(oEvent) {
-					var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
-					MessageBox.error(oSourceBundle.getText("msgFileTypeMismatch"));
-				},
-				onFileSizeExceed: function() {
-					var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
-					MessageBox.error(oSourceBundle.getText("msgFileSizeExceed"));
-				},
-				onFilenameLengthExceed: function() {
-					var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
-					MessageBox.error(oSourceBundle.getText("msgFileNameLenExceed"));
-				},
-				onFileDeleted: function(oEvent) {
-					var vendorContractModel = this.getView().getModel("vendorContractModel");
-					var vendorContractDetailInfo = vendorContractModel.getData();
-					var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
-					var oModel = this.getView().getModel();
-					var docId = oEvent.getParameter("documentId");
-					var oPath = "/AttachmentSet(Tentid='IBS',Dmno='',Dmver='',Contno='" + vendorContractDetailInfo.Contno + "',Contver='" + vendorContractDetailInfo.Contver +
-						"',Instanceid='" + docId + "')";
-					oModel.remove(oPath, {
-						success: function(oData) {
-							MessageToast.show(oSourceBundle.getText("msgFileDelSucc"));
-							this.loadAttachments();
-						}.bind(this),
-						error: function(oError) {
-							var oErrorResponse = JSON.parse(oError.responseText);
-							var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
-							MessageBox.error(oMsg);
+			onChange: function (oEvent) {
+				var vendorContractModel = this.getView().getModel("vendorContractModel");
+				var vendorContractDetailInfo = vendorContractModel.getData();
+				var oUploadCollection = oEvent.getSource();
+				oUploadCollection.setUploadUrl(vendorContractDetailInfo.attachURL);
+				var oModel = this.getView().getModel();
+				// Header Token
+				var oCustomerHeaderToken = new sap.m.UploadCollectionParameter({
+					name: "x-csrf-token",
+					value: oModel.getHeaders()['x-csrf-token']
+				});
+				oUploadCollection.addHeaderParameter(oCustomerHeaderToken);
+
+			},
+			onBeforeUploadStarts: function (oEvent) {
+				// Header Slug
+				var oCustomerHeaderSlug = new sap.m.UploadCollectionParameter({
+					name: "slug",
+					value: oEvent.getParameter("fileName")
+				});
+				oEvent.getParameters().addHeaderParameter(oCustomerHeaderSlug);
+
+			},
+			onUploadComplete: function () {
+				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
+				MessageToast.show(oSourceBundle.getText("msgUpldSucc"));
+				this.loadAttachments();
+			},
+			onTypeMissmatch: function (oEvent) {
+				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
+				MessageBox.error(oSourceBundle.getText("msgFileTypeMismatch"));
+			},
+			onFileSizeExceed: function () {
+				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
+				MessageBox.error(oSourceBundle.getText("msgFileSizeExceed"));
+			},
+			onFilenameLengthExceed: function () {
+				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
+				MessageBox.error(oSourceBundle.getText("msgFileNameLenExceed"));
+			},
+			onFileDeleted: function (oEvent) {
+				var vendorContractModel = this.getView().getModel("vendorContractModel");
+				var vendorContractDetailInfo = vendorContractModel.getData();
+				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
+				var oModel = this.getView().getModel();
+				var docId = oEvent.getParameter("documentId");
+				var oPath = "/AttachmentSet(Tentid='IBS',Dmno='',Dmver='',Contno='" + vendorContractDetailInfo.Contno + "',Contver='" + vendorContractDetailInfo.Contver +
+					"',Instanceid='" + docId + "')";
+				oModel.remove(oPath, {
+					success: function (oData) {
+						MessageToast.show(oSourceBundle.getText("msgFileDelSucc"));
+						this.loadAttachments();
+					}.bind(this),
+					error: function (oError) {
+						var oErrorResponse = JSON.parse(oError.responseText);
+						var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
+						MessageBox.error(oMsg);
+					}
+				})
+			},
+
+			loadAttachments: function () {
+				var vendorContractModel = this.getView().getModel("vendorContractModel");
+				var vendorContractDetailInfo = vendorContractModel.getData();
+				var oModel = this.getView().getModel();
+				var aFilters = [
+					new Filter("Tentid", "EQ", "IBS"),
+					new Filter("Dmno", "EQ", ""),
+					new Filter("Dmver", "EQ", ""),
+					new Filter("Contno", "EQ", vendorContractDetailInfo.Contno),
+					new Filter("Contver", "EQ", vendorContractDetailInfo.Contver),
+					new Filter("Instanceid", "EQ", ''),
+				];
+				sap.ui.core.BusyIndicator.show(0);
+				oModel.read("/AttachmentSet", {
+					filters: aFilters,
+					success: function (oData) {
+						sap.ui.core.BusyIndicator.hide();
+						vendorContractDetailInfo.AttachmentDetails = oData.results;
+						if (oData.results.length > 0) {
+							vendorContractDetailInfo.attachmentTabColor = "Positive";
+						} else {
+							vendorContractDetailInfo.attachmentTabColor = "Critical";
 						}
-					})
-				},
-	
-				loadAttachments: function() {
-					var vendorContractModel = this.getView().getModel("vendorContractModel");
-					var vendorContractDetailInfo = vendorContractModel.getData();
-					var oModel = this.getView().getModel();
-					var aFilters = [
-						new Filter("Tentid", "EQ", "IBS"),
-						new Filter("Dmno", "EQ", ""),
-						new Filter("Dmver", "EQ", ""),
-						new Filter("Contno", "EQ", vendorContractDetailInfo.Contno),
-						new Filter("Contver", "EQ", vendorContractDetailInfo.Contver),
-						new Filter("Instanceid", "EQ", ''),
-					];
-					sap.ui.core.BusyIndicator.show(0);
-					oModel.read("/AttachmentSet", {
-						filters: aFilters,
-						success: function(oData) {
-							sap.ui.core.BusyIndicator.hide();
-							vendorContractDetailInfo.AttachmentDetails = oData.results;
-							if(oData.results.length > 0) {
-								vendorContractDetailInfo.attachmentTabColor = "Positive";
-							} else {
-								vendorContractDetailInfo.attachmentTabColor = "Critical";
-							}
-							vendorContractModel.refresh(true);
-						},
-						error: function(oError) {
-							var oErrorResponse = JSON.parse(oError.responseText);
-							var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
-							MessageBox.error(oMsg);
-						}
-	
-					});
-				},
+						vendorContractModel.refresh(true);
+					},
+					error: function (oError) {
+						var oErrorResponse = JSON.parse(oError.responseText);
+						var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
+						MessageBox.error(oMsg);
+					}
+
+				});
+			},
 
 
 
-				// End oF Vendor contract
+			// End oF Vendor contract
 		});
 
 	});
