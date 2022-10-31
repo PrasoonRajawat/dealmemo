@@ -363,6 +363,34 @@ sap.ui.define([
 					}
 				});
 			},
+			loadVendorsondeal: function () {
+				var oModel = this.getView().getModel();
+				sap.ui.core.BusyIndicator.show();
+				var artistContractModel = this.getView().getModel("artistContractModel");
+				var artistContractDetailInfo = artistContractModel.getData();
+				sap.ui.core.BusyIndicator.show(0);
+				var oPath = "/F4LFB1Set?$filter=Bukrs eq '" + artistContractDetailInfo.Bukrs + "'";
+				oModel.read(oPath, {
+					success: function (oData) {
+						//                    	var sortedList = oData.results.sort(function(a,b){
+						//                    	    return a.Lifnr - b.Lifnr;
+						//                    	    }
+						//                    	);
+						var sortedList = oData.results.sort((a, b) => (a.Lifnr > b.Lifnr) ? 1 : ((b.Lifnr > a.Lifnr) ? -1 : 0));
+						//var filterNonBlank = sortedList.filter(function(obj){return obj.Mcod1 !== ""});
+						artistContractModel.setProperty("/vendorsList", sortedList);
+						artistContractModel.refresh(true);
+						sap.ui.core.BusyIndicator.hide();
+						if (artistContractModel.oData.contractMode != "Ch") {
+						this.onVendorSelection();
+						}
+
+					}.bind(this),
+					error: function () {
+
+					}
+				});
+			},
 			onVendorSelection: function () {
 				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
 				this.oValueHelpSelectionParams = {
@@ -483,7 +511,7 @@ sap.ui.define([
 				this.loadDeptHeadValue();
 				this.loadGrCreaterValue();
 				this.loadPrRequestorValue();
-				this.loadVendors();
+				this.loadVendorsondeal();
 				//----------------------------
 			},
 
