@@ -1854,7 +1854,7 @@ sap.ui.define([
 				if (vendorContractDetailInfo.vcPaymentData.length > 0) {
 					vendorContractDetailInfo.vcPaymentData.map(function (selEpObj) {
 						epiList.map(function (epiObj) {
-							if (epiobj == selEpObj.Epiid) {
+							if (epiObj == selEpObj.Epiid) {
 								paymentPayloadArr.push({
 									Amtper: selEpObj.Amtper,
 									Tentid: selEpObj.Tentid,
