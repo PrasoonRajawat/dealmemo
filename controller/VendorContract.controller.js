@@ -1835,7 +1835,7 @@ sap.ui.define([
 						Contno: vendorContractDetailInfo.Contno,
 						Conttp: "01",
 						Contver: vendorContractDetailInfo.Contver,
-						Dmno: vendorContractDetailInfo.Dmxno,
+						Dmno: vendorContractDetailInfo.Dmno,
 						Dmver: vendorContractDetailInfo.Dmver,
 						Dueamt: "00.0",
 						Empfk: "",

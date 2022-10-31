@@ -3403,6 +3403,10 @@ sap.ui.define([
 									var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
 									if (oMsg.includes("present in another Deal Memo")) {
 										MessageBox.error(oMsg);
+										this.getView().byId("idIconTabBar").setSelectedKey("cost");
+										this.getView().byId("idIconTabBar2").setSelectedKey("epiDet");
+										this.changedCostCodes = [];
+										this.loadDealMemoList();
 									}
 								}
 							} else {
