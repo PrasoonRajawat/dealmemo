@@ -526,6 +526,10 @@ sap.ui.define([
 
 			loadDepartment: function () { // added by dhiraj on 24/05/2022
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
+				vendorContractModel.setProperty("/Iniquoamt", "0.00");
+				vendorContractModel.setProperty("/R1quoamt", "0.00");
+				vendorContractModel.setProperty("/R2quoamt", "0.00");
+				vendorContractModel.setProperty("/Finalquoamt", "0.00");
 				vendorContractModel.setProperty("/Skiprfpreason", "");
 				vendorContractModel.refresh(true);
 				Fragment.load({
