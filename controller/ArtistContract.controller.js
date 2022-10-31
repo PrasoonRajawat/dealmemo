@@ -1659,8 +1659,8 @@ sap.ui.define([
 						"Zterm": artistContractDetailInfo.Zterm !== "" ? artistContractDetailInfo.Zterm : "",
 						"Dueamt": "0",
 						"estDate": null,
-						"Altpayeenm": vendorContractDetailInfo.vendorName,
-						"Altpayee": vendorContractDetailInfo.vendorKey
+						"Altpayeenm": artistContractDetailInfo.vendorName,
+						"Altpayee": artistContractDetailInfo.vendorKey
 					});
 
 				});
