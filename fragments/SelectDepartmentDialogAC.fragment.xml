@@ -82,13 +82,9 @@
         <Toolbar />
         <HBox class="sapUiTinyMarginBeginEnd">
             <VBox width="50%">
-                <Label text="Retention applicability:" design="Bold" class="sapUiTinyMarginTop" />
-                <ComboBox id="" width="100%">
-                    <items>
-                        <c:Item text="Episode level" key="01" />
-                        <c:Item text="Milestone level" key="02" />
-                        <c:Item text="Not applicable" key="03" />
-                    </items>
+                <Label text="Retention applicability:" design="Bold" class="sapUiTinyMarginTop"/>
+                <ComboBox  width="100%" items="{artistContractModel>/retentionDropDown}" selectedItemId ="{artistContractModel>/retentionDropId}" selectedKey="{artistContractModel>/Retnaplty}" >
+                       <c:Item text="{artistContractModel>Mstcdnm}" key="{artistContractModel>Mstcd}"/>
                 </ComboBox>
             </VBox>
         </HBox>

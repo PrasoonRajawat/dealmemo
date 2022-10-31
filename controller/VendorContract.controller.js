@@ -370,6 +370,10 @@ sap.ui.define([
 				vendorContractModel.setProperty("/skipRfpDropDown", oData.results.filter(function (item) {
 					return item.Mstpcd === "26";
 				}));
+
+				vendorContractModel.setProperty("/retentionDropDown", oData.results.filter(function (item) {
+					return item.Mstpcd === "27";
+				}));
 			},
 			loadInitialDataFromMaster: function () {
 
@@ -411,6 +415,9 @@ sap.ui.define([
 					}, {
 						"key": "Mstpcd",
 						"val": "26"
+					}, {
+						"key": "Mstpcd",
+						"val": "27"
 					}
 
 				];
@@ -570,6 +577,9 @@ sap.ui.define([
 					var vendorContractDetailInfo = vendorContractModel.getData();
 					if (vendorContractDetailInfo.Skiprfpreason != "") {
 						vendorContractDetailInfo.Skiprfpresnm = sap.ui.getCore().byId(vendorContractDetailInfo.skipRfpDropDownId).getText();
+					}
+					if (vendorContractDetailInfo.Retnaplty != "") {
+						vendorContractDetailInfo.Retappnm = sap.ui.getCore().byId(vendorContractDetailInfo.retentionDropId).getText();
 					}
 					vendorContractModel.refresh(true);
 					this._oCreateParamDialog.destroy();
