@@ -353,7 +353,9 @@ sap.ui.define([
 						artistContractModel.setProperty("/vendorsList", sortedList);
 						artistContractModel.refresh(true);
 						sap.ui.core.BusyIndicator.hide();
+						if (artistContractModel.oData.contractMode != "Ch") {
 						this.onVendorSelection();
+						}
 
 					}.bind(this),
 					error: function () {
@@ -481,6 +483,7 @@ sap.ui.define([
 				this.loadDeptHeadValue();
 				this.loadGrCreaterValue();
 				this.loadPrRequestorValue();
+				this.loadVendors();
 				//----------------------------
 			},
 
@@ -1655,7 +1658,9 @@ sap.ui.define([
 						"payeeKey": artistContractDetailInfo.vendorKey,
 						"Zterm": artistContractDetailInfo.Zterm !== "" ? artistContractDetailInfo.Zterm : "",
 						"Dueamt": "0",
-						"estDate": null
+						"estDate": null,
+						"Altpayeenm": vendorContractDetailInfo.vendorName,
+						"Altpayee": vendorContractDetailInfo.vendorKey
 					});
 
 				});
@@ -1682,6 +1687,24 @@ sap.ui.define([
 					"keyPath": oPath + "/Zterm",
 					"valueModel": "artistContractModel",
 					"dialogTitle": oSourceBundle.getText("titlePayTerm")
+				};
+				this.openSelectionDialog();
+			},
+
+			onValueHelpAlternatePayee: function (oEvent) {
+				var oPath = oEvent.getSource().getBindingContext("artistContractModel").sPath;
+
+				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
+				this.oValueHelpSelectionParams = {
+					"bindPathName": "artistContractModel>/vendorsList",
+					"bindPropName": "artistContractModel>Mcod1",
+					"bindPropDescName": "artistContractModel>Lifnr",
+					"propName": "Mcod1",
+					"keyName": "Lifnr",
+					"valuePath": oPath + "/Altpayeenm",
+					"keyPath": oPath + "/Altpayee",
+					"valueModel": "artistContractModel",
+					"dialogTitle": oSourceBundle.getText("lblAltPayee")
 				};
 				this.openSelectionDialog();
 			},
