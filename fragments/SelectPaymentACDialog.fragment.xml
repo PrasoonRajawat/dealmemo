@@ -112,7 +112,7 @@
                                     <Input value="{artistContractModel>Zterm}" showValueHelp="true" valueHelpRequest="onValueHelpPayterm" />
                                     <Input value="{artistContractModel>Dueamt}" showValueHelp="false" />
                                     <DatePicker dateValue="{artistContractModel>estDate}" displayFormat="dd-MM-yyyy" valueFormat="yyyy-MM-dd" />
-                                    <CheckBox selected="{artistContractModel>Retepi}" width="60%" editable="true" visible = "{= ${artistContractModel>/Retenapp} !== '02' ? true : false }" />
+                                    <CheckBox selected="{artistContractModel>Retepi}" width="60%" editable="true" visible = "{= ${artistContractModel>/Retenapp} !== '03' ? true : false }" />
                                 </cells>
                             </ColumnListItem>
                         </items>

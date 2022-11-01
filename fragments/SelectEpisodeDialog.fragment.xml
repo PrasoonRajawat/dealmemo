@@ -52,20 +52,20 @@
 			
 		</VBox>
 
-		<VBox class="sapUiTinyMarginTopBottom" visible = "{= ${vendorContractModel>/Retenapp} !== '01' ? true : false }">
+		<VBox class="sapUiTinyMarginTopBottom" visible = "{= ${vendorContractModel>/Retenapp} !== '02' ? true : false }">
 		<Label text="Select Retention Applicability:" width="100%"/>
 		</VBox>
 		<HBox class = "classBoxBorder">
 			<items>
 				<VBox class = "sapUiTinyMarginBeginEnd">
 					<Label  text="{parts:[{value:'lblSelectEpiFrom'},{path:'vendorContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" width="100%"/>
-					<ComboBox width="95%" items="{vendorContractModel>/episodeDataList}" >
+					<ComboBox width="95%" items="{vendorContractModel>/episodeDataList}"  selectedKey="{vendorContractModel>/retepiFromId}" >
 						<c:Item text="{vendorContractModel>Epinm}" key="{vendorContractModel>Epiid}"/>
 					</ComboBox>
 				</VBox>
 				<VBox class = "sapUiTinyMarginBeginEnd">
 					<Label  text="{parts:[{value:'lblSelectEpiTo'},{path:'vendorContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" width="100%"/>
-					<ComboBox width="95%" items="{vendorContractModel>/episodeDataList}">
+					<ComboBox width="95%" items="{vendorContractModel>/episodeDataList}" selectedKey="{vendorContractModel>/retepiToId}">
 						<c:Item text="{vendorContractModel>Epinm}" key="{vendorContractModel>Epiid}"/>
 					</ComboBox>
 				</VBox>

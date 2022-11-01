@@ -1178,6 +1178,8 @@ sap.ui.define([
 				vendorContractDetailInfo.episode2List = vendorContractDetailInfo.episodeList; //episodeVCList
 				vendorContractDetailInfo.vcEpiDataMsgVisible = false;
 				vendorContractDetailInfo.vcEpiDataErrorMsg = "";
+				vendorContractDetailInfo.retepiFromId = "";
+				vendorContractDetailInfo.retepiToId = "";
 				vendorContractModel.refresh(true);
 				if (!this._oSelectEpisodeDialog) {
 					Fragment.load({
@@ -1283,6 +1285,13 @@ sap.ui.define([
 						});
 					}
 
+					selectedEpisodeList.map(function (retEpi) {
+						if (retEpi.Epiid >= vendorContractDetailInfo.retepiFromId && retEpi.Epiid <= vendorContractDetailInfo.retepiToId) {
+							retEpi.Retepi = "X";
+						}
+					});
+					
+
 					var episodeDealMemoInfo = vendorContractDetailInfo.DmCostSet.results;
 					var vcEpiTabData = [];
 					selectedEpisodeList.map(function (epObj) {
@@ -1319,14 +1328,17 @@ sap.ui.define([
 										Mwskz: vendorContractDetailInfo.taxCodeKey,
 										Coepiamt: epiSodeCostodeData[0].Totcostamt.toString(),
 										Costcd: oCostCodeObj.Costcode,
-										Costdesc: oCostCodeObj.Costdesc
+										Costdesc: oCostCodeObj.Costdesc,
+										Retepi: ""
 
 									};
 									if (vendorContractDetailInfo.contractMode === "Ch") {
 										oEpiDataObj.Contno = vendorContractDetailInfo.Contno;
 										oEpiDataObj.Contver = vendorContractDetailInfo.Contver;
 									}
-
+									if (oEpiDataObj.Epiid >= vendorContractDetailInfo.retepiFromId && oEpiDataObj.Epiid <= vendorContractDetailInfo.retepiToId) {
+										oEpiDataObj.Retepi = "X";
+									}
 									vcEpiTabData.push(oEpiDataObj)
 								}
 							} else if (epiSodeCostodeData.length && vendorContractDetailInfo.Cntsc === "Z0") { //Added by dhiraj on 23/06/2022	
@@ -1346,12 +1358,16 @@ sap.ui.define([
 										Mwskz: vendorContractDetailInfo.taxCodeKey,
 										Coepiamt: epiSodeCostodeData[0].Totcostamt.toString(),
 										Costcd: oCostCodeObj.Costcode,
-										Costdesc: oCostCodeObj.Costdesc
+										Costdesc: oCostCodeObj.Costdesc,
+										Retepi: ""
 
 									};
 									if (vendorContractDetailInfo.contractMode === "Ch") {
 										oEpiDataObj.Contno = vendorContractDetailInfo.Contno;
 										oEpiDataObj.Contver = vendorContractDetailInfo.Contver;
+									}
+									if (oEpiDataObj.Epiid >= vendorContractDetailInfo.retepiFromId && oEpiDataObj.Epiid <= vendorContractDetailInfo.retepiToId) {
+										oEpiDataObj.Retepi = "X";
 									}
 
 									vcEpiTabData.push(oEpiDataObj)
@@ -1769,7 +1785,8 @@ sap.ui.define([
 						"payeeKey": vendorContractDetailInfo.vendorKey,
 						"Zterm": vendorContractDetailInfo.Zterm !== "" ? vendorContractDetailInfo.Zterm : "",
 						"Dueamt": "0",
-						"estDate": null
+						"estDate": null,
+						"Retepi": false
 
 					});
 
@@ -1858,7 +1875,8 @@ sap.ui.define([
 						Provdocyr: "",
 						Tentid: "IBS",
 						Updkz: "I",
-						Zterm: ""
+						Zterm: "",
+						Retepi: ""
 					});
 				}.bind(this));
 				if (vendorContractDetailInfo.vcPaymentData.length > 0) {
@@ -1888,7 +1906,8 @@ sap.ui.define([
 									Invdocno: selEpObj.Invdocno,
 									Invdocyr: selEpObj.Invdocyr,
 									Updkz: "U",
-									Seqnr: selEpObj.Seqnr
+									Seqnr: selEpObj.Seqnr,
+									Retepi: selEpObj.Retepi
 								});
 							
 					}.bind(this));
@@ -1921,7 +1940,8 @@ sap.ui.define([
 						Tentid: "IBS",
 						Zterm: mlObj.Zterm,
 						Ztermt: mlObj.ZtermT === undefined ? vendorContractDetailInfo.payTermList.find(tt => tt.Zterm === mlObj.Zterm).ZtermT : mlObj
-							.ZtermT
+							.ZtermT,
+						Retepi: mlObj.Retepi == true ? "X" : ""
 					}); // Ztermt: Added By dhiraj on 23/05/2022 for getting payment term if Code is entered manually with out F4 help. 
 				}.bind(this));
 				return mileStonePayload;
