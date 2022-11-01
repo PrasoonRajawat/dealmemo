@@ -538,6 +538,7 @@ sap.ui.define([
 				vendorContractModel.setProperty("/R2quoamt", "0.00");
 				vendorContractModel.setProperty("/Finalquoamt", "0.00");
 				vendorContractModel.setProperty("/Skiprfpreason", "");
+				vendorContractModel.setProperty("/Retnaplty", "");
 				vendorContractModel.refresh(true);
 				Fragment.load({
 					name: "com.ui.dealmemolocal.fragments.SelectDepartmentDialog",
@@ -1586,7 +1587,8 @@ sap.ui.define([
 					"R1quoamt": vendorContractDetailInfo.R1quoamt.toString(),
 					"R2quoamt": vendorContractDetailInfo.R2quoamt.toString(),
 					"Finalquoamt": vendorContractDetailInfo.Finalquoamt.toString(),
-					"Skiprfpreason": vendorContractDetailInfo.Skiprfpreason
+					"Skiprfpreason": vendorContractDetailInfo.Skiprfpreason,
+					"Retnaplty": vendorContractDetailInfo.Retnaplty
 
 
 				};
