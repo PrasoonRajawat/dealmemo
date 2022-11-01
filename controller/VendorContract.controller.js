@@ -1302,7 +1302,7 @@ sap.ui.define([
 									epCostObj.Scostcd = epCostObj.Costcd;
 								}
 								episodeDealMemoDetails.push(epCostObj)
-							}
+							} 
 						});
 						var selectedCostCodeContexts = this.byId(sap.ui.core.Fragment.createId("vcSelEpiDialog", "list_costcodeVC")).getSelectedContexts();
 
