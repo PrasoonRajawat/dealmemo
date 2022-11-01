@@ -449,6 +449,8 @@ sap.ui.define([
 				artistContractModel.setProperty("/R2quoamt", "0.00");
 				artistContractModel.setProperty("/Finalquoamt", "0.00");
 				artistContractModel.setProperty("/Skiprfpreason", "");
+				artistContractModel.setProperty("/Retnaplty", "");
+				
 				artistContractModel.refresh(true);
 				Fragment.load({
 					name: "com.ui.dealmemolocal.fragments.SelectDepartmentDialogAC",
@@ -1306,7 +1308,8 @@ sap.ui.define([
 					"R1quoamt": artistContractDetailInfo.R1quoamt.toString(),
 					"R2quoamt": artistContractDetailInfo.R2quoamt.toString(),
 					"Finalquoamt":artistContractDetailInfo.Finalquoamt.toString(),
-					"Skiprfpreason": artistContractDetailInfo.Skiprfpreason
+					"Skiprfpreason": artistContractDetailInfo.Skiprfpreason,
+					"Retnaplty":artistContractDetailInfo.Retnaplty
 				};
 				return oPayload;
 
