@@ -542,9 +542,9 @@ sap.ui.define([
 			loadHsnCode: function () {
 				var artistContractModel = this.getView().getModel("artistContractModel");
 				var artistContractDetailInfo = artistContractModel.getData();
-				var srvUrl = "/sap/opu/odata/IBSCMS/MASTERDATA_SRV";
+				var srvUrl = "/sap/opu/odata/IBSCMS/DEALMEMO_SRV";
 				var oModelSav = new sap.ui.model.odata.ODataModel(srvUrl, true, "", "");
-				var oPath = "/F4HsnCode?$filter=Spras eq 'EN'";
+				var oPath = "/F4HsnCodeSet?$filter=Spras eq 'EN'";
 				var oModel = this.getView().getModel();
 				oModelSav.read(oPath, null, null, true, function (oData) {
 					var oModel = new sap.ui.model.json.JSONModel(oData);
