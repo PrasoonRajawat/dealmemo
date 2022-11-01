@@ -108,7 +108,7 @@
                                     <ObjectIdentifier title="{artistContractModel>Mstcdnm}" />
                                     <!-- <Text text="{artistContractModel>payee}"/> -->
                                     <Input value="{artistContractModel>payeeKey}" showValueHelp="true" valueHelpRequest="onValueHelpAlternatePayee" />
-                                     <Input value="" showValueHelp="true" valueHelpRequest="" />
+                                     <Input value="{artistContractModel>Hsncd}" showValueHelp="true" valueHelpRequest="onValueHelpHsnCode" />
                                     <Input value="{artistContractModel>Zterm}" showValueHelp="true" valueHelpRequest="onValueHelpPayterm" />
                                     <Input value="{artistContractModel>Dueamt}" showValueHelp="false" />
                                     <DatePicker dateValue="{artistContractModel>estDate}" displayFormat="dd-MM-yyyy" valueFormat="yyyy-MM-dd" />

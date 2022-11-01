@@ -535,8 +535,48 @@ sap.ui.define([
 				this.loadGrCreaterValue();
 				this.loadPrRequestorValue();
 				this.loadVendorsondeal();
+				this.loadHsnCode();
 				//----------------------------
 			},
+
+			loadHsnCode: function () {
+				var artistContractModel = this.getView().getModel("artistContractModel");
+				var artistContractDetailInfo = artistContractModel.getData();
+				var srvUrl = "/sap/opu/odata/IBSCMS/MASTERDATA_SRV";
+				var oModelSav = new sap.ui.model.odata.ODataModel(srvUrl, true, "", "");
+				var oPath = "/F4HsnCode?$filter=Spras eq 'EN'";
+				var oModel = this.getView().getModel();
+				oModelSav.read(oPath, null, null, true, function (oData) {
+					var oModel = new sap.ui.model.json.JSONModel(oData);
+					oModel.setSizeLimit("999999");
+
+					artistContractModel.setProperty("/hsnCodeList", oData.results);
+					artistContractModel.refresh(true);
+				}, function (value) {
+					sap.ui.core.BusyIndicator.hide();
+					console.log(value);
+					//alert("fail");
+				});
+			},
+			
+			onValueHelpHsnCode: function (oEvent) {
+				var oPath = oEvent.getSource().getBindingContext("artistContractModel").sPath;
+
+				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
+				this.oValueHelpSelectionParams = {
+					"bindPathName": "artistContractModel>/hsnCodeList",
+					"bindPropName": "artistContractModel>Text1",
+					"bindPropDescName": "artistContractModel>Steuc",
+					"propName": "Text1",
+					"keyName": "Steuc",
+					"valuePath": oPath + "/Hsncdnm",
+					"keyPath": oPath + "/Hsncd",
+					"valueModel": "artistContractModel",
+					"dialogTitle": oSourceBundle.getText("lblHsnCd")
+				};
+				this.openSelectionDialog();
+			},
+
 
 			loadDepartmentValue: function () { // added by dhiraj on 24/05/2022
 				var oModel = this.getView().getModel();
@@ -1113,12 +1153,16 @@ sap.ui.define([
 									Mwskz: artistContractDetailInfo.taxCodeKey,
 									Coepiamt: lastEpiCost.toString(),
 									Costcd: selectedCostCodeObj.Costcode,
-									Costdesc: selectedCostCodeObj.Costdesc
+									Costdesc: selectedCostCodeObj.Costdesc,
+									Retepi: ""
 
 								};
 								if (artistContractDetailInfo.contractMode === "Ch") {
 									oEpiDataObj.Contno = artistContractDetailInfo.Contno;
 									oEpiDataObj.Contver = artistContractDetailInfo.Contver;
+								}
+								if (oEpiDataObj.Epiid >= artistContractDetailInfo.retepiFromId && oEpiDataObj.Epiid <= artistContractDetailInfo.retepiToId) {
+									oEpiDataObj.Retepi = "X";
 								}
 
 								EpiTabData.push(oEpiDataObj)
@@ -1147,12 +1191,16 @@ sap.ui.define([
 									Mwskz: artistContractDetailInfo.taxCodeKey,
 									Coepiamt: perEpiValue.toString(),
 									Costcd: selectedCostCodeObj.Costcode,
-									Costdesc: selectedCostCodeObj.Costdesc
+									Costdesc: selectedCostCodeObj.Costdesc,
+									Retepi: ""
 
 								};
 								if (artistContractDetailInfo.contractMode === "Ch") {
 									oEpiDataObj.Contno = artistContractDetailInfo.Contno;
 									oEpiDataObj.Contver = artistContractDetailInfo.Contver;
+								}
+								if (oEpiDataObj.Epiid >= artistContractDetailInfo.retepiFromId && oEpiDataObj.Epiid <= artistContractDetailInfo.retepiToId) {
+									oEpiDataObj.Retepi = "X";
 								}
 
 								EpiTabData.push(oEpiDataObj)
@@ -1710,6 +1758,8 @@ sap.ui.define([
 						"Zterm": artistContractDetailInfo.Zterm !== "" ? artistContractDetailInfo.Zterm : "",
 						"Dueamt": "0",
 						"estDate": null,
+						"Retepi": false,
+						"Hsncd" : ""
 					
 					});
 
@@ -1795,7 +1845,8 @@ sap.ui.define([
 						Provdocyr: "",
 						Tentid: "IBS",
 						Updkz: "I",
-						Zterm: ""
+						Zterm: "",
+						Retepi:""
 					});
 				}.bind(this));
 				if (artistContractDetailInfo.acPaymentData.length > 0) {
@@ -1824,7 +1875,8 @@ sap.ui.define([
 							Invdocno: selEpObj.Invdocno,
 							Invdocyr: selEpObj.Invdocyr,
 							Updkz: "U",
-							Seqnr: selEpObj.Seqnr
+							Seqnr: selEpObj.Seqnr,
+							Retepi: selEpObj.Retepi
 						});
 					}.bind(this));
 				}
@@ -1854,7 +1906,9 @@ sap.ui.define([
 						Msidnm: mlObj.Mstcdnm,
 						Tentid: "IBS",
 						Zterm: mlObj.Zterm,
-						Ztermt: mlObj.ZtermT
+						Ztermt: mlObj.ZtermT,
+						Retepi: mlObj.Retepi == true ? "X" : "",
+						Hsncd: mlObj.Hsncd 
 					});
 				}.bind(this));
 				return mileStonePayload;
