@@ -1797,6 +1797,11 @@ sap.ui.define([
 				//oMLList.removeSelections();
 				vendorContractModel.refresh(true);
 			},
+
+			chckBoxTik: function (oEvent) {
+				var vendorContractModel = this.getView().getModel("vendorContractModel");
+				var vendorContractDetailInfo = vendorContractModel.getData();
+			},
 			onCancelPayment: function () {
 				this._oSelectPaymentDialog.close();
 			},
