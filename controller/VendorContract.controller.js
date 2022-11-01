@@ -634,11 +634,50 @@ sap.ui.define([
 				this.loadGrCreaterValue();
 				this.loadPrRequestorValue();
 				this.loadVendorsondeal();
+				this.loadHsnCode();
 				//----------------------------
 			},
 			onChangeRFPatt: function (oEvent) {
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				vendorContractModel.refresh(true);
+			},
+
+			loadHsnCode: function () {
+				var vendorContractModel = this.getView().getModel("vendorContractModel");
+				var vendorContractDetailInfo = vendorContractModel.getData();
+				var srvUrl = "/sap/opu/odata/IBSCMS/MASTERDATA_SRV";
+				var oModelSav = new sap.ui.model.odata.ODataModel(srvUrl, true, "", "");
+				var oPath = "/F4HsnCode?$filter=Spras eq 'EN'";
+				var oModel = this.getView().getModel();
+				oModelSav.read(oPath, null, null, true, function (oData) {
+					var oModel = new sap.ui.model.json.JSONModel(oData);
+					oModel.setSizeLimit("999999");
+
+					vendorContractModel.setProperty("/hsnCodeList", oData.results);
+					vendorContractModel.refresh(true);
+				}, function (value) {
+					sap.ui.core.BusyIndicator.hide();
+					console.log(value);
+					//alert("fail");
+				});
+			},
+
+			onValueHelpHsnCode: function (oEvent) {
+				var oPath = oEvent.getSource().getBindingContext("vendorContractModel").sPath;
+
+				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
+				this.oValueHelpSelectionParams = {
+					"bindPathName": "vendorContractModel>/hsnCodeList",
+					"bindPropName": "vendorContractModel>Text1",
+					"bindPropDescName": "vendorContractModel>Steuc",
+					"propName": "Text1",
+					"keyName": "Steuc",
+					"valuePath": oPath + "/Hsncdnm",
+					"keyPath": oPath + "/Hsncd",
+					"valueModel": "vendorContractModel",
+					"dialogTitle": oSourceBundle.getText("lblHsnCd")
+				};
+				this.openSelectionDialog();
 			},
 
 			loadDepartmentValue: function () { // added by dhiraj on 24/05/2022
@@ -1786,7 +1825,8 @@ sap.ui.define([
 						"Zterm": vendorContractDetailInfo.Zterm !== "" ? vendorContractDetailInfo.Zterm : "",
 						"Dueamt": "0",
 						"estDate": null,
-						"Retepi": false
+						"Retepi": false,
+						"Hsncd" : ""
 
 					});
 
@@ -1946,7 +1986,8 @@ sap.ui.define([
 						Zterm: mlObj.Zterm,
 						Ztermt: mlObj.ZtermT === undefined ? vendorContractDetailInfo.payTermList.find(tt => tt.Zterm === mlObj.Zterm).ZtermT : mlObj
 							.ZtermT,
-						Retepi: mlObj.Retepi == true ? "X" : ""
+						Retepi: mlObj.Retepi == true ? "X" : "",
+						Hsncd: mlObj.Hsncd 
 					}); // Ztermt: Added By dhiraj on 23/05/2022 for getting payment term if Code is entered manually with out F4 help. 
 				}.bind(this));
 				return mileStonePayload;

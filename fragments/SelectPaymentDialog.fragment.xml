@@ -106,7 +106,7 @@
                                     <ObjectIdentifier title="{vendorContractModel>Mstcdnm}" />
                                     <!-- <Text text="{vendorContractModel>payee}"/> -->
                                     <Input value="{vendorContractModel>payeeKey}" showValueHelp="true" valueHelpRequest="onValueHelpAlternatePayee" />
-                                    <Input value="" showValueHelp="true" valueHelpRequest="" />
+                                    <Input value="{vendorContractModel>Hsncd}" showValueHelp="true" valueHelpRequest="onValueHelpHsnCode" />
                                     <Input value="{vendorContractModel>Zterm}" showValueHelp="true" valueHelpRequest="onValueHelpPayterm" />
                                     <Input value="{vendorContractModel>Dueamt}" showValueHelp="false" />
                                     <DatePicker dateValue="{vendorContractModel>estDate}" displayFormat="dd-MM-yyyy" valueFormat="yyyy-MM-dd" />
