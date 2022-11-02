@@ -449,7 +449,7 @@ sap.ui.define([
 				artistContractModel.setProperty("/R2quoamt", "0.00");
 				artistContractModel.setProperty("/Finalquoamt", "0.00");
 				artistContractModel.setProperty("/Skiprfpreason", "");
-				artistContractModel.setProperty("/Retnaplty", "");
+				artistContractModel.setProperty("/Retenaplty", "");
 				
 				artistContractModel.refresh(true);
 				Fragment.load({
@@ -495,7 +495,7 @@ sap.ui.define([
 					if(artistContractDetailInfo.Skiprfpreason != "") {
 						artistContractDetailInfo.Skiprfpresnm = sap.ui.getCore().byId(artistContractDetailInfo.skipRfpDropDownId).getText();
 					}
-					if (vendorContractDetailInfo.Retnaplty != "") {
+					if (vendorContractDetailInfo.Retenaplty != "") {
 						vendorContractDetailInfo.Retappnm = sap.ui.getCore().byId(vendorContractDetailInfo.retentionDropId).getText();
 					}
 					artistContractModel.refresh(true);
@@ -1309,7 +1309,7 @@ sap.ui.define([
 					"R2quoamt": artistContractDetailInfo.R2quoamt.toString(),
 					"Finalquoamt":artistContractDetailInfo.Finalquoamt.toString(),
 					"Skiprfpreason": artistContractDetailInfo.Skiprfpreason,
-					"Retnaplty":artistContractDetailInfo.Retnaplty
+					"Retenaplty":artistContractDetailInfo.Retenaplty
 				};
 				return oPayload;
 

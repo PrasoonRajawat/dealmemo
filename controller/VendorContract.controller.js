@@ -538,7 +538,7 @@ sap.ui.define([
 				vendorContractModel.setProperty("/R2quoamt", "0.00");
 				vendorContractModel.setProperty("/Finalquoamt", "0.00");
 				vendorContractModel.setProperty("/Skiprfpreason", "");
-				vendorContractModel.setProperty("/Retnaplty", "");
+				vendorContractModel.setProperty("/Retenaplty", "");
 				vendorContractModel.refresh(true);
 				Fragment.load({
 					name: "com.ui.dealmemolocal.fragments.SelectDepartmentDialog",
@@ -579,7 +579,7 @@ sap.ui.define([
 					if (vendorContractDetailInfo.Skiprfpreason != "") {
 						vendorContractDetailInfo.Skiprfpresnm = sap.ui.getCore().byId(vendorContractDetailInfo.skipRfpDropDownId).getText();
 					}
-					if (vendorContractDetailInfo.Retnaplty != "") {
+					if (vendorContractDetailInfo.Retenaplty != "") {
 						vendorContractDetailInfo.Retappnm = sap.ui.getCore().byId(vendorContractDetailInfo.retentionDropId).getText();
 					}
 					vendorContractModel.refresh(true);
@@ -1590,7 +1590,7 @@ sap.ui.define([
 					"R2quoamt": vendorContractDetailInfo.R2quoamt.toString(),
 					"Finalquoamt": vendorContractDetailInfo.Finalquoamt.toString(),
 					"Skiprfpreason": vendorContractDetailInfo.Skiprfpreason,
-					"Retnaplty": vendorContractDetailInfo.Retnaplty
+					"Retenaplty": vendorContractDetailInfo.Retenaplty
 
 
 				};
