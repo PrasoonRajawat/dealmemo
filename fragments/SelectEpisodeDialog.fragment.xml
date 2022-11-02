@@ -40,7 +40,7 @@
 		</HBox>
 		<VBox class="sapUiTinyMarginTopBottom">
 			<Label required="true" text="{i18n>lblSelectTaxCode}" width="100%"/>
-			<Input width="95%" showValueHelp="true" value="{vendorContractModel>/taxCodeName}" selectedKey = "{vendorContractModel>/taxCodeKey}"  valueHelpRequest="onvaluHelpTaxcode"/>
+			<Input width="95%" showValueHelp="true" value="{vendorContractModel>/taxCodeName}"  valueHelpRequest="onvaluHelpTaxcode"/>
 		</VBox>
 		<VBox class="sapUiTinyMarginTopBottom">
 			<Label required="true" text="{parts:[{value:'lblvcSelectCostCode'},{path:'vendorContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" width="100%"/>
