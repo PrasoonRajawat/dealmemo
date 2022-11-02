@@ -1213,8 +1213,8 @@ sap.ui.define([
 				vendorContractDetailInfo.episodeMode = 0;
 				vendorContractDetailInfo.epiFromId = "";
 				vendorContractDetailInfo.epiToId = "";
-				// vendorContractDetailInfo.taxCodeName = vendorContractDetailInfo.taxCodeList.find(a => a.Mwskz == vendorContractDetailInfo.Mwskz).Mwstx == "" ? "" : vendorContractDetailInfo.taxCodeList.find(a => a.Mwskz == vendorContractDetailInfo.Mwskz).Mwstx
-				vendorContractDetailInfo.taxCodeName = "";
+				vendorContractDetailInfo.taxCodeName = vendorContractDetailInfo.taxCodeList.find(a => a.Mwskz == vendorContractDetailInfo.Mwskz).Mwstx == "" ? "" : vendorContractDetailInfo.taxCodeList.find(a => a.Mwskz == vendorContractDetailInfo.Mwskz).Mwstx
+				// vendorContractDetailInfo.taxCodeName = "";
 				vendorContractDetailInfo.taxCodeKey = vendorContractDetailInfo.Mwskz == "" ? "" : vendorContractDetailInfo.Mwskz;
 				vendorContractDetailInfo.episodeRangeVisible = false;
 				vendorContractDetailInfo.episode2List = vendorContractDetailInfo.episodeList; //episodeVCList
