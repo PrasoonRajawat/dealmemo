@@ -83,7 +83,7 @@
         <HBox class="sapUiTinyMarginBeginEnd">
             <VBox width="50%">
                 <Label text="Retention applicability:" design="Bold" class="sapUiTinyMarginTop"/>
-                <ComboBox  width="100%" items="{vendorContractModel>/retentionDropDown}" selectedItemId ="{vendorContractModel>/retentionDropId}" selectedKey="{vendorContractModel>/Retnaplty}" >
+                <ComboBox  width="100%" items="{vendorContractModel>/retentionDropDown}" selectedItemId ="{vendorContractModel>/retentionDropId}" selectedKey="{vendorContractModel>/Retenaplty}" >
                        <c:Item text="{vendorContractModel>Mstcdnm}" key="{vendorContractModel>Mstcd}"/>
                 </ComboBox>
             </VBox>
