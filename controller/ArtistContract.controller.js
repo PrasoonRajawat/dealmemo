@@ -1939,6 +1939,7 @@ sap.ui.define([
 
 					for (var oIndex = 0; oIndex < milestones.length; oIndex++) {
 						var mlObj = milestones[oIndex];
+						var ZtermKey = milestones[0].Zterm ;
 						if (mlObj.Zterm === "") {
 							statusFlag = false;
 							oMsg = "msgEnterPayee";
@@ -1963,6 +1964,12 @@ sap.ui.define([
 						if (totPerc !== 100 && oAmtType === 0) {
 							statusFlag = false;
 							oMsg = "msgtotPerc100";
+						}
+					}
+					if (statusFlag) {
+						if( mlObj.Zterm != ZtermKey ) {
+							statusFlag = false;
+							oMsg = "msgTermNotSame";
 						}
 					}
 				}
