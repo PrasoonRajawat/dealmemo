@@ -7,21 +7,21 @@
               <VBox class="classBoxBorder" width="100%">
             <HBox class="sapUiTinyMarginBeginEnd">
                 <VBox width="50%">
-                    <Label text="Initial Quotation Amount:" design="Bold" class="sapUiTinyMarginTop" required="true" />
+                    <Label text="Initial Quotation Amount:" design="Bold" class="sapUiTinyMarginTop" />
                     <Input width="100%"  value="{ parts: [ {path: 'vendorContractModel>/Iniquoamt'}, {path: 'vendorContractModel>Waers'} ], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false,minFractionDigits: 2, maxFractionDigits: 2 } }" change="onChangeRFPatt"/>
                 </VBox>
                 <VBox width="50%" class="sapUiTinyMarginBegin">
-                    <Label text="R1 Quotation Amount:" design="Bold" class="sapUiTinyMarginTop" required="true" />
+                    <Label text="R1 Quotation Amount:" design="Bold" class="sapUiTinyMarginTop"  />
                     <Input width="100%"  value="{ parts: [ {path: 'vendorContractModel>/R1quoamt'}, {path: 'vendorContractModel>Waers'} ], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false,minFractionDigits: 2, maxFractionDigits: 2 } }" change="onChangeRFPatt" />
                 </VBox>
             </HBox>
             <HBox class="sapUiTinyMarginBeginEnd">
                 <VBox width="50%">
-                    <Label text="R2 Quotation Amount:"  design="Bold" class="sapUiTinyMarginTop" required="true" />
+                    <Label text="R2 Quotation Amount:"  design="Bold" class="sapUiTinyMarginTop"  />
                     <Input width="100%" value="{ parts: [ {path: 'vendorContractModel>/R2quoamt'}, {path: 'vendorContractModel>Waers'} ], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false,minFractionDigits: 2, maxFractionDigits: 2 } }" change="onChangeRFPatt" />
                 </VBox>
                 <VBox width="50%" class="sapUiTinyMarginBegin">
-                    <Label text="Final Quotation Amount:"  design="Bold" class="sapUiTinyMarginTop" required="true" />
+                    <Label text="Final Quotation Amount:"  design="Bold" class="sapUiTinyMarginTop"  />
                     <Input width="100%" value="{ parts: [ {path: 'vendorContractModel>/Finalquoamt'}, {path: 'vendorContractModel>Waers'} ], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false,minFractionDigits: 2, maxFractionDigits: 2 } }" change="onChangeRFPatt" />
                 </VBox>
             </HBox>

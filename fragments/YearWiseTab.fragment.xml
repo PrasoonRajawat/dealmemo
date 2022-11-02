@@ -68,7 +68,7 @@
             </infoToolbar>
             <columns>
 			<Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline">
-                    <Label text="Episodes" design="Bold" />
+                    <Label text="{parts:[{value:'lblTblColEpisodesYearWise'},{path:'dealMemoDetailModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" design="Bold" />
                 </Column>
                 <!-- <Column minScreenWidth="Desktop" hAlign="Right" demandPopin="true" popinDisplay="Inline">
                     <Label text="Acquisition Budget" design="Bold" />
