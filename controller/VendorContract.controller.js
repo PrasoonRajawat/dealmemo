@@ -1113,6 +1113,10 @@ sap.ui.define([
 							obj.episodeSaveFlag = true;
 							//	obj.Diff = ((parseFloat(obj.Coepiamt) + parseFloat(obj.Wmwst)) - (obj.Baseamt)).toFixed(2);
 						});
+						oData.retEpi = false;
+						if (oData.Retenaplty == "01")  {
+							oData.retEpi = true;
+						};
 						oData.vcEpiNonCostCdDataColor = "Critical";
 						oData.enablevcEpiNonCostCdTab = false;
 						if (oData.DmCeBalAmtSet.results.length) {
@@ -1830,10 +1834,12 @@ sap.ui.define([
 						"Dueamt": "0",
 						"estDate": null,
 						"Retepi": false,
-						"Hsncd" : ""
-
+						"Hsncd" : "",
+						"retMileEnable": false
 					});
-
+					if(vendorContractDetailInfo.Retenaplty	== "02") {
+					vendorContractDetailInfo.mileStonesForEpi.retMileEnable = true ;
+					}
 				});
 				if (selectedMLCntxts.length) {
 					vendorContractDetailInfo.pushBtnEnable = true;

@@ -52,7 +52,7 @@
 			
 		</VBox>
 
-		<VBox class="sapUiTinyMarginTopBottom" visible = "{= ${vendorContractModel>/Retenapp} !== '02' ? true : false }">
+		<VBox class="sapUiTinyMarginTopBottom" visible = "{vendorContractModel>/retEpi}">
 		<Label text="Select Retention Applicability:" width="100%"/>
 		</VBox>
 		<HBox class = "classBoxBorder">
