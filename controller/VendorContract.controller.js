@@ -1876,7 +1876,7 @@ sap.ui.define([
 			},
 			
 			onValueHelpAlternatePayee: function (oEvent) {
-				var oPath = oEvent.getSource().getBindingContext("vendorContractModel").sPath;
+				// var oPath = oEvent.getSource().getBindingContext("vendorContractModel").sPath;
 
 				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
 				this.oValueHelpSelectionParams = {
