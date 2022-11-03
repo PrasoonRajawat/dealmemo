@@ -1740,6 +1740,8 @@ sap.ui.define([
 				vendorContractDetailInfo.colPercAmntLabel = "Amount";
 				vendorContractDetailInfo.vcPaymentDataMsgVisible = false;
 				vendorContractDetailInfo.vcPaymentDataErrorMsg = "";
+				vendorContractDetailInfo.payee = vendorContractDetailInfo.vendorName;
+				vendorContractDetailInfo.payeeKey = vendorContractDetailInfo.vendorKey;
 				var DmCmSetData = vendorContractDetailInfo.DmCmSet.results;
 
 				var DmCmSetEpIds = DmCmSetData.map(function (dmcmobj) {
@@ -1828,8 +1830,8 @@ sap.ui.define([
 					vendorContractDetailInfo.mileStonesForEpi.push({
 						"Mstcd": oMLObj.Mstcd,
 						"Mstcdnm": oMLObj.Mstcdnm,
-						"payee": vendorContractDetailInfo.vendorName,
-						"payeeKey": vendorContractDetailInfo.vendorKey,
+						"payee": vendorContractDetailInfo.payee,
+						"payeeKey": vendorContractDetailInfo.payeeKey,
 						"Zterm": vendorContractDetailInfo.Zterm !== "" ? vendorContractDetailInfo.Zterm : "",
 						"Dueamt": "0",
 						"estDate": null,
@@ -1872,6 +1874,7 @@ sap.ui.define([
 				};
 				this.openSelectionDialog();
 			},
+			
 			onValueHelpAlternatePayee: function (oEvent) {
 				var oPath = oEvent.getSource().getBindingContext("vendorContractModel").sPath;
 
@@ -1882,13 +1885,14 @@ sap.ui.define([
 					"bindPropDescName": "vendorContractModel>Lifnr",
 					"propName": "Mcod1",
 					"keyName": "Lifnr",
-					"valuePath": oPath + "/payee",
-					"keyPath": oPath + "/payeeKey",
+					"valuePath": "/payee",
+					"keyPath": "/payeeKey",
 					"valueModel": "vendorContractModel",
 					"dialogTitle": oSourceBundle.getText("lblAltPayee")
 				};
 				this.openSelectionDialog();
 			},
+
 			preparePaymentpayload: function () {
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
@@ -1988,7 +1992,7 @@ sap.ui.define([
 						Dmno: vendorContractDetailInfo.Dmno,
 						Dmver: vendorContractDetailInfo.Dmver,
 						Dueamt: oAmtType === 1 ? mlObj.Dueamt : "0.00",
-						Empfk: mlObj.payeeKey,
+						Empfk: vendorContractDetailInfo.payeeKey,
 						Mestdt: mlObj.estDate != null ? Formatter.formatDateValForBackend(mlObj.estDate) : null,
 						Msid: mlObj.Mstcd,
 						Msidnm: mlObj.Mstcdnm,
