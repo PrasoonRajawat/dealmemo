@@ -19,6 +19,7 @@
                         <l:GridData span="XL4 L4 M4 S12" />
                     </layoutData>
                 </RadioButtonGroup>
+                <VBox>
                 <HBox visible="{vendorContractModel>/episodeRangeVisiblePayment}">
                     <layoutData>
                         <l:GridData span="XL6 L6 M6 S12" />
@@ -38,6 +39,16 @@
                         </VBox>
                     </items>
                 </HBox>
+                 <HBox>
+                 <layoutData>
+                        <l:GridData span="XL7 L7 M6 S12" />
+                    </layoutData>
+                    <items>
+                 <Label text="{i18n>lblAltPayee}" />
+                <Input value="{vendorContractModel>payeeKey}" showValueHelp="true" valueHelpRequest="onValueHelpAlternatePayee" />
+                </items>
+                 </HBox>
+                </VBox>
                 <ObjectIdentifier title="{i18n>lblSelectMilestoneForPayment}">
                     <layoutData>
                         <l:GridData span="XL9 L9 M6 S12" />
@@ -104,8 +115,8 @@
                             <ColumnListItem>
                                 <cells>
                                     <ObjectIdentifier title="{vendorContractModel>Mstcdnm}" />
-                                    <!-- <Text text="{vendorContractModel>payee}"/> -->
-                                    <Input value="{vendorContractModel>payeeKey}" showValueHelp="true" valueHelpRequest="onValueHelpAlternatePayee" />
+                                    <Text text="{vendorContractModel>payee}"/>
+                                    <!-- <Input value="{vendorContractModel>payeeKey}" showValueHelp="true" valueHelpRequest="onValueHelpAlternatePayee" /> -->
                                     <Input value="{vendorContractModel>Hsncd}" showValueHelp="true" valueHelpRequest="onValueHelpHsnCode" />
                                     <Input value="{vendorContractModel>Zterm}" showValueHelp="true" valueHelpRequest="onValueHelpPayterm" />
                                     <Input value="{vendorContractModel>Dueamt}" showValueHelp="false" />
