@@ -55,7 +55,7 @@
 		<VBox class="sapUiTinyMarginTopBottom" visible = "{vendorContractModel>/retEpi}">
 		<Label text="Select Retention Applicability:" width="100%"/>
 		</VBox>
-		<HBox class = "classBoxBorder">
+		<HBox class = "classBoxBorder" visible = "{vendorContractModel>/retEpi}">
 			<items>
 				<VBox class = "sapUiTinyMarginBeginEnd">
 					<Label  text="{parts:[{value:'lblSelectEpiFrom'},{path:'vendorContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" width="100%"/>
