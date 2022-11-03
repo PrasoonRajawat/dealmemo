@@ -44,8 +44,10 @@
                         <l:GridData span="XL7 L7 M6 S12" />
                     </layoutData>
                     <items>
-                 <Label text="{i18n>lblAltPayee}" />
-                <Input value="{vendorContractModel>payeeKey}" showValueHelp="true" valueHelpRequest="onValueHelpAlternatePayee" />
+                     <VBox>
+                 <Label text="{i18n>lblAltPayee}" width="100%"/>
+                <Input value="{vendorContractModel>/payee}" showValueHelp="true" valueHelpRequest="onValueHelpAlternatePayee" />
+                </VBox>
                 </items>
                  </HBox>
                 </VBox>
@@ -92,9 +94,9 @@
                             <!-- <Column  demandPopin="true" popinDisplay="Inline">
 											<ObjectIdentifier title="{i18n>lblPayee}"></ObjectIdentifier>
 										</Column> -->
-                            <Column demandPopin="true" popinDisplay="Inline">
+                            <!-- <Column demandPopin="true" popinDisplay="Inline">
                                 <ObjectIdentifier title="{i18n>lblAltPayee}" />
-                            </Column>
+                            </Column> -->
                             <Column hAlign="Right" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
                                 <ObjectIdentifier title="{i18n>lblHsnCd}" />
                             </Column>
@@ -115,7 +117,7 @@
                             <ColumnListItem>
                                 <cells>
                                     <ObjectIdentifier title="{vendorContractModel>Mstcdnm}" />
-                                    <Text text="{vendorContractModel>payee}"/>
+                                    <!-- <Text text="{vendorContractModel>payee}"/> -->
                                     <!-- <Input value="{vendorContractModel>payeeKey}" showValueHelp="true" valueHelpRequest="onValueHelpAlternatePayee" /> -->
                                     <Input value="{vendorContractModel>Hsncd}" showValueHelp="true" valueHelpRequest="onValueHelpHsnCode" />
                                     <Input value="{vendorContractModel>Zterm}" showValueHelp="true" valueHelpRequest="onValueHelpPayterm" />

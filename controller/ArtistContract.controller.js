@@ -1669,6 +1669,8 @@ sap.ui.define([
 				artistContractDetailInfo.acPaymentDataErrorMsg = "";
 				artistContractDetailInfo.pushBtnEnable = false;
 				artistContractDetailInfo.colPercAmntLabel = "Amount";
+				artistContractDetailInfo.payee = artistContractDetailInfo.vendorName;
+				artistContractDetailInfo.payeeKey = artistContractDetailInfo.vendorKey;
 				var DmCmSetData = artistContractDetailInfo.DmCoSet.DmCmSet.results;
 				var DmCmSetEpIds = DmCmSetData.map(function (dmcmobj) {
 					return dmcmobj.Epiid;
@@ -1757,8 +1759,8 @@ sap.ui.define([
 					artistContractDetailInfo.mileStonesForEpi.push({
 						"Mstcd": oMLObj.Mstcd,
 						"Mstcdnm": oMLObj.Mstcdnm,
-						"payee": artistContractDetailInfo.vendorName,
-						"payeeKey": artistContractDetailInfo.vendorKey,
+						"payee": artistContractDetailInfo.payee,
+						"payeeKey": artistContractDetailInfo.payeeKey,
 						"Zterm": artistContractDetailInfo.Zterm !== "" ? artistContractDetailInfo.Zterm : "",
 						"Dueamt": "0",
 						"estDate": null,
@@ -1800,7 +1802,7 @@ sap.ui.define([
 			},
 
 			onValueHelpAlternatePayee: function (oEvent) {
-				var oPath = oEvent.getSource().getBindingContext("artistContractModel").sPath;
+				// var oPath = oEvent.getSource().getBindingContext("artistContractModel").sPath;
 
 				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
 				this.oValueHelpSelectionParams = {
@@ -1809,8 +1811,8 @@ sap.ui.define([
 					"bindPropDescName": "artistContractModel>Lifnr",
 					"propName": "Mcod1",
 					"keyName": "Lifnr",
-					"valuePath": oPath + "/payee",
-					"keyPath": oPath + "/payeeKey",
+					"valuePath":  "/payee",
+					"keyPath": "/payeeKey",
 					"valueModel": "artistContractModel",
 					"dialogTitle": oSourceBundle.getText("lblAltPayee")
 				};
@@ -1908,7 +1910,7 @@ sap.ui.define([
 						Dmno: artistContractDetailInfo.Dmno,
 						Dmver: artistContractDetailInfo.Dmver,
 						Dueamt: oAmtType === 1 ? mlObj.Dueamt : "0.00",
-						Empfk: mlObj.payeeKey,
+						Empfk: artistContractDetailInfo.payeeKey,
 						Mestdt: Formatter.formatDateValForBackend(mlObj.estDate),
 						Msid: mlObj.Mstcd,
 						Msidnm: mlObj.Mstcdnm,
