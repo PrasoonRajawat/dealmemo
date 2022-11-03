@@ -97,7 +97,7 @@
                             <Column hAlign="Right" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
                                 <ObjectIdentifier title="{i18n>lblEstimatedDate}" />
                             </Column>
-                            <Column hAlign="Right" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
+                            <Column hAlign="Right" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" >
                                 <ObjectIdentifier title="Rentention Milestone" />
                             </Column>
                             
@@ -112,7 +112,7 @@
                                     <Input value="{artistContractModel>Zterm}" showValueHelp="true" valueHelpRequest="onValueHelpPayterm" />
                                     <Input value="{artistContractModel>Dueamt}" showValueHelp="false" />
                                     <DatePicker dateValue="{artistContractModel>estDate}" displayFormat="dd-MM-yyyy" valueFormat="yyyy-MM-dd" />
-                                    <CheckBox selected="{artistContractModel>Retepi}" width="60%" editable="true" visible = "{= ${artistContractModel>/Retenapp} !== '03' ? true : false }" />
+                                    <CheckBox selected="{artistContractModel>Retepi}" width="60%" editable="true" visible = "{artistContractModel>retMileEnable}" />
                                 </cells>
                             </ColumnListItem>
                         </items>
