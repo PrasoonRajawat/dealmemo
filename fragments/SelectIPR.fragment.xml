@@ -49,7 +49,8 @@
 		</VBox>
 		<VBox width="50%" class="sapUiTinyMarginBegin">
 			<Label text="{i18n>lblPlatform}" required="true"/>
-			<ComboBox width="100%" items="{vendorContractModel>/platformList}"  selectedItemId ="{vendorContractModel>/PlatformItem}" selectedKey="{vendorContractModel>/PlatformKey}">
+			<ComboBox width="100%" items="{vendorContractModel>/platformList}"  selectedItemId ="{vendorContractModel>/PlatformItem}" selectedKey="{vendorContractModel>/PlatformKey}" 
+			enabled="{vendorContractModel>/platformEnable}" value="{vendorContractModel>/platformValue}">
 				<c:Item text="{vendorContractModel>Mstcdnm}" key="{vendorContractModel>Mstcd}"/>
 			</ComboBox>
 		</VBox>
