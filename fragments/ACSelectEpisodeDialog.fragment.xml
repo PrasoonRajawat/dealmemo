@@ -37,7 +37,7 @@
 		</HBox>
 		<VBox class="sapUiTinyMarginTopBottom">
 			<Label text="{i18n>lblSelectTaxCode}" width="100%" required="true"/>
-			<Input width="99%" showValueHelp="true" value="{artistContractModel>/taxCodeName}"  valueHelpRequest="onvaluHelpTaxcode"/>
+			<Input width="99%" showValueHelp="true" value="{artistContractModel>/taxCodeName}" valueHelpRequest="onvaluHelpTaxcode"/>
 		</VBox>
 		<VBox class="sapUiTinyMarginTopBottom">
 			<Label text="{parts:[{value:'lblSelectCostCode'},{path:'artistContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" width="100%" required="true"/>
@@ -63,10 +63,10 @@
 			
 		</VBox>
 
-		<VBox class="sapUiTinyMarginTopBottom" visible = "{= ${artistContractModel>/Retenapp} !== '02' ? true : false }" >
+		<VBox class="sapUiTinyMarginTopBottom" visible = "{artistContractModel>/retEpi}" >
 		<Label text="Select Retention Applicability:" width="100%"/>
 		</VBox>
-		<HBox class = "classBoxBorder">
+		<HBox class = "classBoxBorder" visible = "{artistContractModel>/retEpi}">
 			<items>
 				<VBox class = "sapUiTinyMarginBeginEnd">
 					<Label  text="{parts:[{value:'lblSelectEpiFrom'},{path:'artistContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" width="100%"/>

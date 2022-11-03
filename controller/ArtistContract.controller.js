@@ -1509,7 +1509,10 @@ sap.ui.define([
 						if (oData.DmCeSet.results.length) {
 							artistContractDetailInfo.EpiDataColor = "Positive";
 						}
-
+						oData.retEpi = false;
+						if(oData.Retenaplty == "01") {
+							oData.retEpi = true;
+						}
 						oData.DmCeBalAmtSet.results.map(function (obj) {
 							obj.episodeSaveFlag = true;
 							//	obj.Diff = ((parseFloat(obj.Coepiamt) + parseFloat(obj.Wmwst)) - (obj.Baseamt)).toFixed(2);
@@ -1760,9 +1763,13 @@ sap.ui.define([
 						"Dueamt": "0",
 						"estDate": null,
 						"Retepi": false,
-						"Hsncd" : ""
+						"Hsncd" : "",
+						"retMileEnable" : false
 					
 					});
+					if(artistContractDetailInfo.Retenaplty	== "02") {
+						artistContractDetailInfo.mileStonesForEpi.retMileEnable = true ;
+						}
 
 				});
 				if (selectedMLCntxts.length) {
