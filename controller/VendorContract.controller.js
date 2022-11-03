@@ -2779,6 +2779,9 @@ sap.ui.define([
 					vendorContractModel.setProperty("/totRunsEnable", false);
 					vendorContractModel.setProperty("/rightendDtEnable", false);
 					vendorContractModel.setProperty("/rightendDate", new Date("9999-12-31"));
+					vendorContractModel.setProperty("/platformValue", "Linear/Non-linear")
+					vendorContractModel.setProperty("/platformEnable", false)
+					vendorContractModel.setProperty("/PlatformKey", "03")
 				}
 			},
 			onIPRRightChange: function (oEvent) {
