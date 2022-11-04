@@ -48,6 +48,10 @@
                  <Label text="{i18n>lblAltPayee}" width="100%"/>
                 <Input value="{vendorContractModel>/payee}" showValueHelp="true" valueHelpRequest="onValueHelpAlternatePayee" />
                 </VBox>
+                <VBox>
+                <Label text="{i18n>lblPaymentTerm}" width="100%" />
+                <Input value="{vendorContractModel>/ZtermT}" showValueHelp="true" valueHelpRequest="onValueHelpPayterm" />
+                </VBox>
                 </items>
                  </HBox>
                 </VBox>
@@ -100,9 +104,9 @@
                             <Column hAlign="Right" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
                                 <ObjectIdentifier title="{i18n>lblHsnCd}" />
                             </Column>
-                            <Column hAlign="Right" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
+                            <!-- <Column hAlign="Right" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
                                 <ObjectIdentifier title="{i18n>lblPaymentTerm}" />
-                            </Column>
+                            </Column> -->
                             <Column hAlign="Right" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
                                 <ObjectIdentifier title="{vendorContractModel>/colPercAmntLabel}" />
                             </Column>
@@ -120,7 +124,7 @@
                                     <!-- <Text text="{vendorContractModel>payee}"/> -->
                                     <!-- <Input value="{vendorContractModel>payeeKey}" showValueHelp="true" valueHelpRequest="onValueHelpAlternatePayee" /> -->
                                     <Input value="{vendorContractModel>Hsncd}" showValueHelp="true" valueHelpRequest="onValueHelpHsnCode" />
-                                    <Input value="{vendorContractModel>Zterm}" showValueHelp="true" valueHelpRequest="onValueHelpPayterm" />
+                                    <!-- <Input value="{vendorContractModel>Zterm}" showValueHelp="true" valueHelpRequest="onValueHelpPayterm" /> -->
                                     <Input value="{vendorContractModel>Dueamt}" showValueHelp="false" />
                                     <DatePicker dateValue="{vendorContractModel>estDate}" displayFormat="dd-MM-yyyy" valueFormat="yyyy-MM-dd" />
 									<CheckBox selected="{vendorContractModel>Retepi}" select = "chckBoxTik"  editable="true" visible = "{vendorContractModel>retMileEnable}" />

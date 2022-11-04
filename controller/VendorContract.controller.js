@@ -1114,7 +1114,7 @@ sap.ui.define([
 							//	obj.Diff = ((parseFloat(obj.Coepiamt) + parseFloat(obj.Wmwst)) - (obj.Baseamt)).toFixed(2);
 						});
 						oData.retEpi = false;
-						if (oData.Retenaplty == "01")  {
+						if (oData.Retenaplty == "01") {
 							oData.retEpi = true;
 						};
 						oData.vcEpiNonCostCdDataColor = "Critical";
@@ -1336,7 +1336,7 @@ sap.ui.define([
 							retEpi.Retepi = "X";
 						}
 					});
-					
+
 
 					var episodeDealMemoInfo = vendorContractDetailInfo.DmCostSet.results;
 					var vcEpiTabData = [];
@@ -1348,7 +1348,7 @@ sap.ui.define([
 									epCostObj.Scostcd = epCostObj.Costcd;
 								}
 								episodeDealMemoDetails.push(epCostObj)
-							} 
+							}
 						});
 						var selectedCostCodeContexts = this.byId(sap.ui.core.Fragment.createId("vcSelEpiDialog", "list_costcodeVC")).getSelectedContexts();
 
@@ -1742,7 +1742,17 @@ sap.ui.define([
 				vendorContractDetailInfo.vcPaymentDataErrorMsg = "";
 				vendorContractDetailInfo.payee = vendorContractDetailInfo.vendorName;
 				vendorContractDetailInfo.payeeKey = vendorContractDetailInfo.vendorKey;
+				vendorContractDetailInfo.ZtermKey = vendorContractDetailInfo.Zterm;
+				vendorContractDetailInfo.ZtermT = vendorContractDetailInfo.Zterm == "" ? vendorContractDetailInfo.payTermList.find(tt => tt.Zterm === vendorContractDetailInfo.Zterm).ZtermT : "";
+
 				var DmCmSetData = vendorContractDetailInfo.DmCmSet.results;
+
+				if (DmCmSetData.length > 0) {
+					vendorContractDetailInfo.ZtermKey = DmCmSetData[0].Zterm;
+					vendorContractDetailInfo.ZtermT = DmCmSetData[0].ZtermT;
+					vendorContractDetailInfo.payee = DmCmSetData[0].vendorName;
+					vendorContractDetailInfo.payeeKey = DmCmSetData[0].vendorKey;
+				}
 
 				var DmCmSetEpIds = DmCmSetData.map(function (dmcmobj) {
 					return dmcmobj.Epiid;
@@ -1832,15 +1842,15 @@ sap.ui.define([
 						"Mstcdnm": oMLObj.Mstcdnm,
 						"payee": vendorContractDetailInfo.payee,
 						"payeeKey": vendorContractDetailInfo.payeeKey,
-						"Zterm": vendorContractDetailInfo.Zterm !== "" ? vendorContractDetailInfo.Zterm : "",
+						"Zterm": vendorContractDetailInfo.ZtermKey,
 						"Dueamt": "0",
 						"estDate": null,
 						"Retepi": false,
-						"Hsncd" : "",
+						"Hsncd": "",
 						"retMileEnable": false
 					});
-					if(vendorContractDetailInfo.Retenaplty	== "02") {
-					vendorContractDetailInfo.mileStonesForEpi.retMileEnable = true ;
+					if (vendorContractDetailInfo.Retenaplty == "02") {
+						vendorContractDetailInfo.mileStonesForEpi.retMileEnable = true;
 					}
 				});
 				if (selectedMLCntxts.length) {
@@ -1867,14 +1877,14 @@ sap.ui.define([
 					"bindPropDescName": "vendorContractModel>Zterm",
 					"propName": "ZtermT",
 					"keyName": "Zterm",
-					"valuePath": oPath + "/ZtermT",
-					"keyPath": oPath + "/Zterm",
+					"valuePath": "/ZtermT",
+					"keyPath": "/ZtermKey",
 					"valueModel": "vendorContractModel",
 					"dialogTitle": oSourceBundle.getText("titlePayTerm")
 				};
 				this.openSelectionDialog();
 			},
-			
+
 			onValueHelpAlternatePayee: function (oEvent) {
 				// var oPath = oEvent.getSource().getBindingContext("vendorContractModel").sPath;
 
@@ -1940,35 +1950,35 @@ sap.ui.define([
 				}.bind(this));
 				if (vendorContractDetailInfo.vcPaymentData.length > 0) {
 					vendorContractDetailInfo.vcPaymentData.map(function (selEpObj) {
-						
-								paymentPayloadArr.push({
-									Amtper: selEpObj.Amtper,
-									Tentid: selEpObj.Tentid,
-									Dmno: selEpObj.Dmno,
-									Dmver: selEpObj.Dmver,
-									Contno: selEpObj.Contno,
-									Conttp: selEpObj.Conttp,
-									Contver: selEpObj.Contver,
-									Costperamt: selEpObj.Costperamt,
-									Dueamt: selEpObj.Dueamt,
-									Epiid: selEpObj.Epiid, //Episode ID
-									Epinm: selEpObj.Epinm,
-									Msid: selEpObj.Msid,
-									Empfk: selEpObj.Empfk,
-									Zterm: selEpObj.Zterm,
-									Ztermt: selEpObj.Ztermt,
-									Mestdt: selEpObj.Mestdt,
-									Msidnm: selEpObj.Msidnm,
-									Mscompdt: selEpObj.Mscompdt !== null ? Formatter.formatDateValForBackend(new Date(selEpObj.Mscompdt)) : null,
-									Prodocno: selEpObj.Prodocno,
-									Provdocyr: selEpObj.Provdocyr,
-									Invdocno: selEpObj.Invdocno,
-									Invdocyr: selEpObj.Invdocyr,
-									Updkz: "U",
-									Seqnr: selEpObj.Seqnr,
-									Retepi: selEpObj.Retepi
-								});
-							
+
+						paymentPayloadArr.push({
+							Amtper: selEpObj.Amtper,
+							Tentid: selEpObj.Tentid,
+							Dmno: selEpObj.Dmno,
+							Dmver: selEpObj.Dmver,
+							Contno: selEpObj.Contno,
+							Conttp: selEpObj.Conttp,
+							Contver: selEpObj.Contver,
+							Costperamt: selEpObj.Costperamt,
+							Dueamt: selEpObj.Dueamt,
+							Epiid: selEpObj.Epiid, //Episode ID
+							Epinm: selEpObj.Epinm,
+							Msid: selEpObj.Msid,
+							Empfk: selEpObj.Empfk,
+							Zterm: selEpObj.Zterm,
+							Ztermt: selEpObj.Ztermt,
+							Mestdt: selEpObj.Mestdt,
+							Msidnm: selEpObj.Msidnm,
+							Mscompdt: selEpObj.Mscompdt !== null ? Formatter.formatDateValForBackend(new Date(selEpObj.Mscompdt)) : null,
+							Prodocno: selEpObj.Prodocno,
+							Provdocyr: selEpObj.Provdocyr,
+							Invdocno: selEpObj.Invdocno,
+							Invdocyr: selEpObj.Invdocyr,
+							Updkz: "U",
+							Seqnr: selEpObj.Seqnr,
+							Retepi: selEpObj.Retepi
+						});
+
 					}.bind(this));
 				}
 
@@ -1997,11 +2007,13 @@ sap.ui.define([
 						Msid: mlObj.Mstcd,
 						Msidnm: mlObj.Mstcdnm,
 						Tentid: "IBS",
-						Zterm: mlObj.Zterm,
-						Ztermt: mlObj.ZtermT === undefined ? vendorContractDetailInfo.payTermList.find(tt => tt.Zterm === mlObj.Zterm).ZtermT : mlObj
-							.ZtermT,
+						// Zterm: mlObj.Zterm,
+						// Ztermt: mlObj.ZtermT === undefined ? vendorContractDetailInfo.payTermList.find(tt => tt.Zterm === mlObj.Zterm).ZtermT : mlObj
+						// 	.ZtermT,
+						Zterm: vendorContractDetailInfo.ZtermKey,
+						Ztermt: vendorContractDetailInfo.ZtermT,
 						Retepi: mlObj.Retepi == true ? "X" : "",
-						Hsncd: mlObj.Hsncd 
+						Hsncd: mlObj.Hsncd
 					}); // Ztermt: Added By dhiraj on 23/05/2022 for getting payment term if Code is entered manually with out F4 help. 
 				}.bind(this));
 				return mileStonePayload;
@@ -2076,7 +2088,7 @@ sap.ui.define([
 				if (statusFlag) {
 					for (var oIndex = 0; oIndex < milestones.length; oIndex++) {
 						var mlObj = milestones[oIndex];
-						var ZtermKey = milestones[0].Zterm ;
+						var ZtermKey = milestones[0].Zterm;
 						if (mlObj.Zterm === "") {
 							statusFlag = false;
 							oMsg = "msgEnterPayee";
@@ -2100,7 +2112,7 @@ sap.ui.define([
 						}
 					}
 					if (statusFlag) {
-						if( mlObj.Zterm != ZtermKey ) {
+						if (mlObj.Zterm != ZtermKey) {
 							statusFlag = false;
 							oMsg = "msgTermNotSame";
 						}
