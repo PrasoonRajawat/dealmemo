@@ -46,11 +46,11 @@
                     <items>
                      <VBox>
                  <Label text="{i18n>lblAltPayee}" width="100%"/>
-                <Input value="{artistContractModel>/payee}" showValueHelp="true" valueHelpRequest="onValueHelpAlternatePayee" />
+                <Input value="{artistContractModel>/payee}" showValueHelp="true" editable = "{vendorContractModel>/payEnable}" valueHelpRequest="onValueHelpAlternatePayee" />
                 </VBox>
                  <VBox>
                 <Label text="{i18n>lblPaymentTerm}" width="100%" />
-                <Input value="{vendorContractModel>/ZtermT}" showValueHelp="true" valueHelpRequest="onValueHelpPayterm" />
+                <Input value="{vendorContractModel>/ZtermT}" showValueHelp="true" editable = "{vendorContractModel>/termEnable}" valueHelpRequest="onValueHelpPayterm" />
                 </VBox>
                 </items>
                  </HBox>
