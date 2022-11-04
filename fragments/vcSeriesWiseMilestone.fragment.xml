@@ -35,11 +35,6 @@
                     <ObjectIdentifier title="Amount Due" />
                 </header>
             </Column>
-            <Column minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
-                <header>
-                    <ObjectIdentifier title="Rentention Milestone" />
-                </header>
-            </Column>
         </columns>
         <ColumnListItem>
             <ObjectIdentifier title="{vendorContractModel>Mpml2}" text="{vendorContractModel>Epinm}" />
@@ -48,7 +43,7 @@
             <Text text="{vendorContractModel>Dmver}" />
             <Text text="{vendorContractModel>Epiid}" class="sapUiSizeCompact" />
             <Label text="{path:'vendorContractModel>Dueamt', type:'sap.ui.model.type.Float',formatOptions: { maxFractionDigits: 2 }}" />
-            <CheckBox selected="{= ${vendorContractModel>Retepi} === 'X' }" select="" editable="false" />
+           
         </ColumnListItem>
     </Table>
 </c:FragmentDefinition>
