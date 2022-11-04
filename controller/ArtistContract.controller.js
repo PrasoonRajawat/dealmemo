@@ -1671,7 +1671,17 @@ sap.ui.define([
 				artistContractDetailInfo.colPercAmntLabel = "Amount";
 				artistContractDetailInfo.payee = artistContractDetailInfo.vendorName;
 				artistContractDetailInfo.payeeKey = artistContractDetailInfo.vendorKey;
+				artistContractDetailInfo.ZtermKey = artistContractDetailInfo.Zterm;
+				artistContractDetailInfo.ZtermT = artistContractDetailInfo.Zterm == "" ? artistContractDetailInfo.payTermList.find(tt => tt.Zterm === artistContractDetailInfo.Zterm).ZtermT : "";
+
 				var DmCmSetData = artistContractDetailInfo.DmCoSet.DmCmSet.results;
+				if (DmCmSetData.length > 0) {
+					artistContractDetailInfo.ZtermKey = DmCmSetData[0].Zterm;
+					artistContractDetailInfo.ZtermT = DmCmSetData[0].ZtermT;
+					artistContractDetailInfo.payee = DmCmSetData[0].vendorName;
+					artistContractDetailInfo.payeeKey = DmCmSetData[0].vendorKey;
+				}
+
 				var DmCmSetEpIds = DmCmSetData.map(function (dmcmobj) {
 					return dmcmobj.Epiid;
 				});
@@ -1761,7 +1771,7 @@ sap.ui.define([
 						"Mstcdnm": oMLObj.Mstcdnm,
 						"payee": artistContractDetailInfo.payee,
 						"payeeKey": artistContractDetailInfo.payeeKey,
-						"Zterm": artistContractDetailInfo.Zterm !== "" ? artistContractDetailInfo.Zterm : "",
+						"Zterm": artistContractDetailInfo.ZtermKey,
 						"Dueamt": "0",
 						"estDate": null,
 						"Retepi": false,
@@ -1793,8 +1803,8 @@ sap.ui.define([
 					"bindPropDescName": "artistContractModel>Zterm",
 					"propName": "ZtermT",
 					"keyName": "Zterm",
-					"valuePath": oPath + "/ZtermT",
-					"keyPath": oPath + "/Zterm",
+					"valuePath": "/ZtermT",
+					"keyPath":  "/Zterm",
 					"valueModel": "artistContractModel",
 					"dialogTitle": oSourceBundle.getText("titlePayTerm")
 				};
@@ -1915,8 +1925,8 @@ sap.ui.define([
 						Msid: mlObj.Mstcd,
 						Msidnm: mlObj.Mstcdnm,
 						Tentid: "IBS",
-						Zterm: mlObj.Zterm,
-						Ztermt: mlObj.ZtermT,
+						Zterm: artistContractDetailInfo.Zterm,
+						Ztermt: artistContractDetailInfo.ZtermT,
 						Retepi: mlObj.Retepi == true ? "X" : "",
 						Hsncd: mlObj.Hsncd 
 					});

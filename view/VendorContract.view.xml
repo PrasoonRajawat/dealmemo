@@ -29,6 +29,8 @@
 							<ObjectStatus id="oSPurchaseOrder" title="{i18n>lblPurchaseOrder}" text="{vendorContractModel>/Ebeln}"/>
 							<ObjectStatus id="clmno" title="CLM Number" text="{vendorContractModel>/Clmno}"/>
 							<ObjectStatus id="clmst" title="CLM Status" text="{vendorContractModel>/Clmstdesc}"/>
+							<ObjectStatus id="rfpres" title="Skip RFP Reason" text="{vendorContractModel>/Skiprfpresnm}"/>
+							<ObjectStatus id="retenapp" title="Retention Applicability" text="{vendorContractModel>/Retappnm}"/>
 							<ObjectStatus id="department" title="Department" text="{vendorContractModel>/createParams/Zltext}"/>
 							<ObjectStatus id="zprrequest" title="PR Request" text="{vendorContractModel>/createParams/Prreq}"/>
 							<ObjectStatus id="DeparmentHead" title="Deparment Head" text="{vendorContractModel>/createParams/Depthd}"/>
@@ -37,8 +39,6 @@
 							<ObjectStatus id="r1amt" title="R1 Amount" text="{path:'vendorContractModel>/R1quoamt', type:'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 2 }}"/>
 							<ObjectStatus id="r2amt" title="R2 Amount" text="{path:'vendorContractModel>/R2quoamt', type:'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 2 }}"/>
 							<ObjectStatus id="finalamt" title="Final Amount" text="{path:'vendorContractModel>/Finalquoamt', type:'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 2 }}"/>
-							<ObjectStatus id="rfpres" title="Skip RFP Reason" text="{vendorContractModel>/Skiprfpresnm}"/>
-							<ObjectStatus id="retenapp" title="Retention Applicability" text="{vendorContractModel>/Retappnm}"/>
 						</statuses>
 						<statuses>
 							<ObjectStatus id="bEdit" icon="sap-icon://edit" press="editDepartment" active="true" visible="false"/>
