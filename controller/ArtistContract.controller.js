@@ -1800,7 +1800,7 @@ sap.ui.define([
 				this._oSelectPaymentDialogAC.close();
 			},
 			onValueHelpPayterm: function (oEvent) {
-				var oPath = oEvent.getSource().getBindingContext("artistContractModel").sPath;
+				// var oPath = oEvent.getSource().getBindingContext("artistContractModel").sPath;
 
 				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
 				this.oValueHelpSelectionParams = {
