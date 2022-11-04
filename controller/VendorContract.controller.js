@@ -2379,10 +2379,14 @@ sap.ui.define([
 			onSearchDeliverables: function (oEvent) {
 				var sValue = oEvent.getParameter("value");
 				var oFilter =
-					new Filter([
-						new Filter(this._oSelectDeliveryCodeDialog.propName, FilterOperator.Contains, sValue),
-						new Filter(this._oSelectDeliveryCodeDialog.keyName, FilterOperator.Contains, sValue)
-					], false);
+					// new Filter([
+					// 	new Filter(this._oSelectDeliveryCodeDialog.propName, FilterOperator.Contains, sValue),
+					// 	new Filter(this._oSelectDeliveryCodeDialog.keyName, FilterOperator.Contains, sValue)
+					// ], false);
+					new sap.ui.model.Filter([
+						new sap.ui.model.Filter("Mstcd", sap.ui.model.FilterOperator.Contains, sValue),
+						new sap.ui.model.Filter("Mstcdnm", sap.ui.model.FilterOperator.Contains, sValue)
+					], false)
 
 				// var oBinding = oEvent.getParameter("itemsBinding");
 				var oBinding = oEvent.getSource().getBinding("items");
