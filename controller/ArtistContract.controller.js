@@ -1672,14 +1672,20 @@ sap.ui.define([
 				artistContractDetailInfo.payee = artistContractDetailInfo.vendorName;
 				artistContractDetailInfo.payeeKey = artistContractDetailInfo.vendorKey;
 				artistContractDetailInfo.ZtermKey = artistContractDetailInfo.Zterm;
-				artistContractDetailInfo.ZtermT = artistContractDetailInfo.Zterm == "" ? artistContractDetailInfo.payTermList.find(tt => tt.Zterm === artistContractDetailInfo.Zterm).ZtermT : "";
+				artistContractDetailInfo.ZtermT = artistContractDetailInfo.Zterm != "" ? artistContractDetailInfo.payTermList.find(tt => tt.Zterm === artistContractDetailInfo.Zterm).ZtermT : "";
+				vendorContractDetailInfo.payEnable = true;
+				vendorContractDetailInfo.termEnable = true;
 
 				var DmCmSetData = artistContractDetailInfo.DmCoSet.DmCmSet.results;
 				if (DmCmSetData.length > 0) {
 					artistContractDetailInfo.ZtermKey = DmCmSetData[0].Zterm;
-					artistContractDetailInfo.ZtermT = DmCmSetData[0].ZtermT;
-					artistContractDetailInfo.payee = DmCmSetData[0].vendorName;
+					artistContractDetailInfo.ZtermT = DmCmSetData[0].Ztermt;
+					artistContractDetailInfo.payee = DmCmSetData[0].vendorKey != "" ? vendorContractDetailInfo.vendorsList.find(t=>t.payee == DmCmSetData[0].vendorKey).Mcod1 : "";
 					artistContractDetailInfo.payeeKey = DmCmSetData[0].vendorKey;
+					if (parseInt(vendorContractDetailInfo.Contver) > 1 ) {
+						vendorContractDetailInfo.payEnable = false;
+						vendorContractDetailInfo.termEnable = false;
+					}
 				}
 
 				var DmCmSetEpIds = DmCmSetData.map(function (dmcmobj) {
