@@ -35,6 +35,9 @@
 			<Column hAlign="Right" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
 				<ObjectIdentifier title="{i18n>lblAmountDue}"></ObjectIdentifier>
 			</Column>
+			<Column hAlign="Right" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
+                    <ObjectIdentifier title="Rentention Milestone" />
+            </Column>
 		</columns>
 		<items>
 			<ColumnListItem mergeDuplicates="true">
@@ -46,6 +49,7 @@
 					<!--<ObjectIdentifier text="{artistContractModel>Ztermt}"></ObjectIdentifier>-->
 					<!--<Label text="{artistContractModel>Amtper}"></Label>-->
 					<Label text="{path:'artistContractModel>Dueamt', type:'sap.ui.model.type.Float',formatOptions: { maxFractionDigits: 2 }}"></Label>
+					<CheckBox selected="{= ${artistContractModel>Retepi} === 'X' }" select="" editable="false" />
 				</cells>
 			</ColumnListItem>
 		</items>
