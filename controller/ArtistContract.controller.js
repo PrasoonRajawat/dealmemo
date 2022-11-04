@@ -492,8 +492,8 @@ sap.ui.define([
 					if(artistContractDetailInfo.Skiprfpreason != "") {
 						artistContractDetailInfo.Skiprfpresnm = sap.ui.getCore().byId(artistContractDetailInfo.skipRfpDropDownId).getText();
 					}
-					if (vendorContractDetailInfo.Retenaplty != "") {
-						vendorContractDetailInfo.Retappnm = sap.ui.getCore().byId(vendorContractDetailInfo.retentionDropId).getText();
+					if (artistContractDetailInfo.Retenaplty != "") {
+						artistContractDetailInfo.Retappnm = sap.ui.getCore().byId(artistContractDetailInfo.retentionDropId).getText();
 					}
 					artistContractModel.refresh(true);
 					this._oCreateParamDialog.destroy();
