@@ -1874,7 +1874,7 @@ sap.ui.define([
 				this._oSelectPaymentDialog.close();
 			},
 			onValueHelpPayterm: function (oEvent) {
-				var oPath = oEvent.getSource().getBindingContext("vendorContractModel").sPath;
+				// var oPath = oEvent.getSource().getBindingContext("vendorContractModel").sPath;
 
 				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
 				this.oValueHelpSelectionParams = {
