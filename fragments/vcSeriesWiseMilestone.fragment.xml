@@ -1,49 +1,54 @@
 <c:FragmentDefinition xmlns="sap.m" xmlns:u="sap.ui.unified" xmlns:l="sap.ui.layout" xmlns:c="sap.ui.core">
-		<Table
-		items="{vendorContractModel>/mileMpml2List}" >
-		<infoToolbar>
-			<Toolbar>
-				<Label text="{parts:[{value:'lblEpiMpmData'},{path:'vendorContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}"/>
-				<ToolbarSpacer></ToolbarSpacer>
-			</Toolbar>
-		</infoToolbar>
-		<columns>
-			<Column mergeDuplicates="true" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
-				<header>
-					<ObjectIdentifier title="{parts:[{value:'lblVCContent'},{path:'vendorContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" />
-				</header>
-			</Column>
-			<!-- <Column  mergeDuplicates="true" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
+    <Table items="{vendorContractModel>/mileMpml2List}">
+        <infoToolbar>
+            <Toolbar>
+                <Label text="{parts:[{value:'lblEpiMpmData'},{path:'vendorContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" />
+                <ToolbarSpacer />
+            </Toolbar>
+        </infoToolbar>
+        <columns>
+            <Column mergeDuplicates="true" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
+                <header>
+                    <ObjectIdentifier title="{parts:[{value:'lblVCContent'},{path:'vendorContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" />
+                </header>
+            </Column>
+            <!-- <Column  mergeDuplicates="true" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
 					<ObjectIdentifier title="{parts:[{value:'lblEpisodeDesc'},{path:'vendorContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}"></ObjectIdentifier>
 			</Column> -->
-			<Column mergeDuplicates="false" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
-				<header>
-					<ObjectIdentifier title="Milestone" />
-				</header>
-			</Column>
-			<Column minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
-				<header>
-					<ObjectIdentifier title="Version" />
-				</header>
-			</Column>
-			<Column minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
-				<header>
-					<ObjectIdentifier title="{parts:[{value:'lblTblColEpisodesYearWise'},{path:'vendorContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" />
-				</header>
-			</Column>
-			<Column minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
-				<header>
-					<ObjectIdentifier title="Amount Due" />
-				</header>
-			</Column>
-		</columns>
-		<ColumnListItem >
-			<ObjectIdentifier title="{vendorContractModel>Mpml2}" text = "{vendorContractModel>Epinm}"></ObjectIdentifier>
-			<!-- <ObjectIdentifier title="{vendorContractModel>Epinm}"></ObjectIdentifier> -->
-			<Text text="{vendorContractModel>Msidnm}" />
-			<Text text="{vendorContractModel>Dmver}" />
-			<Text text="{vendorContractModel>Epiid}" class="sapUiSizeCompact"/>
-			<Label text="{path:'vendorContractModel>Dueamt', type:'sap.ui.model.type.Float',formatOptions: { maxFractionDigits: 2 }}"></Label>
-		</ColumnListItem>
-	</Table>
+            <Column mergeDuplicates="false" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
+                <header>
+                    <ObjectIdentifier title="Milestone" />
+                </header>
+            </Column>
+            <Column minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
+                <header>
+                    <ObjectIdentifier title="Version" />
+                </header>
+            </Column>
+            <Column minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
+                <header>
+                    <ObjectIdentifier title="{parts:[{value:'lblTblColEpisodesYearWise'},{path:'vendorContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" />
+                </header>
+            </Column>
+            <Column minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
+                <header>
+                    <ObjectIdentifier title="Amount Due" />
+                </header>
+            </Column>
+            <Column minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
+                <header>
+                    <ObjectIdentifier title="Rentention Milestone" />
+                </header>
+            </Column>
+        </columns>
+        <ColumnListItem>
+            <ObjectIdentifier title="{vendorContractModel>Mpml2}" text="{vendorContractModel>Epinm}" />
+            <!-- <ObjectIdentifier title="{vendorContractModel>Epinm}"></ObjectIdentifier> -->
+            <Text text="{vendorContractModel>Msidnm}" />
+            <Text text="{vendorContractModel>Dmver}" />
+            <Text text="{vendorContractModel>Epiid}" class="sapUiSizeCompact" />
+            <Label text="{path:'vendorContractModel>Dueamt', type:'sap.ui.model.type.Float',formatOptions: { maxFractionDigits: 2 }}" />
+            <CheckBox selected="{= ${vendorContractModel>Retepi} === 'X' }" select="" editable="false" />
+        </ColumnListItem>
+    </Table>
 </c:FragmentDefinition>
