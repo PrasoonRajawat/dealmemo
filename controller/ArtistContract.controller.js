@@ -1789,6 +1789,8 @@ sap.ui.define([
 				return statusFlag;
 			},
 			onMileStoneSelectionToDetail: function () {
+				var validFlag =  this.termPayeeCheck()
+				if(validFlag) {
 				var artistContractModel = this.getView().getModel("artistContractModel");
 				var artistContractDetailInfo = artistContractModel.getData();
 
@@ -1822,6 +1824,7 @@ sap.ui.define([
 				}
 				//oMLList.removeSelections();
 				artistContractModel.refresh(true);
+			}
 			},
 			onCancelPayment: function () {
 				this._oSelectPaymentDialogAC.close();
