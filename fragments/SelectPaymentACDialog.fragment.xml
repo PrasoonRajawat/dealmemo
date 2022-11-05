@@ -50,7 +50,7 @@
                 </VBox>
                  <VBox>
                 <Label text="{i18n>lblPaymentTerm}" width="100%" />
-                <Input value="{vendorContractModel>/ZtermT}" showValueHelp="true" editable = "{vendorContractModel>/termEnable}" valueHelpRequest="onValueHelpPayterm" />
+                <Input value="{artistContractModel>/ZtermT}" showValueHelp="true" editable = "{artistContractModel>/termEnable}" valueHelpRequest="onValueHelpPayterm" />
                 </VBox>
                 </items>
                  </HBox>

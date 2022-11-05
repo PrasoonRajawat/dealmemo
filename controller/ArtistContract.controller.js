@@ -1817,6 +1817,10 @@ sap.ui.define([
 					if(artistContractDetailInfo.Retenaplty	== "02") {
 						artistContractDetailInfo.mileStonesForEpi.retMileEnable = true ;
 						}
+				if(artistContractDetailInfo.epPaymentList.length > 0) {
+							var payList = artistContractDetailInfo.epPaymentList;
+							artistContractDetailInfo.mileStonesForEpi.Hsncd = payList.find(t=> t.Msid == oMLObj.Mstcd).Hsncd;
+				}
 
 				});
 				if (selectedMLCntxts.length) {
@@ -1840,7 +1844,7 @@ sap.ui.define([
 					"propName": "ZtermT",
 					"keyName": "Zterm",
 					"valuePath": "/ZtermT",
-					"keyPath":  "/Zterm",
+					"keyPath":  "/ZtermKey",
 					"valueModel": "artistContractModel",
 					"dialogTitle": oSourceBundle.getText("titlePayTerm")
 				};
