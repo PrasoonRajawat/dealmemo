@@ -1981,7 +1981,8 @@ sap.ui.define([
 						Tentid: "IBS",
 						Updkz: "I",
 						Zterm: "",
-						Retepi: ""
+						Retepi: "",
+						Hsncd: "",
 					});
 				}.bind(this));
 				if (vendorContractDetailInfo.vcPaymentData.length > 0) {
@@ -2012,7 +2013,9 @@ sap.ui.define([
 							Invdocyr: selEpObj.Invdocyr,
 							Updkz: "U",
 							Seqnr: selEpObj.Seqnr,
-							Retepi: selEpObj.Retepi
+							Retepi: selEpObj.Retepi,
+							Hsncd: selEpObj.Hsncd
+
 						});
 
 					}.bind(this));
