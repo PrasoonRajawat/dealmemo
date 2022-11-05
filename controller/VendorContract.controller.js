@@ -1854,7 +1854,7 @@ sap.ui.define([
 						"Dueamt": "0",
 						"estDate": null,
 						"Retepi": false,
-						"Hsncd": "",
+						"Hsncd": vendorContractDetailInfo.Hsncode,
 						"retMileEnable": false
 					});
 					if (vendorContractDetailInfo.Retenaplty == "02") {
