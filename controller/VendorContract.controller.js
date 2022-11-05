@@ -1753,7 +1753,7 @@ sap.ui.define([
 				if (DmCmSetData.length > 0) {
 					vendorContractDetailInfo.ZtermKey = DmCmSetData[0].Zterm;
 					vendorContractDetailInfo.ZtermT = DmCmSetData[0].Ztermt;
-					vendorContractDetailInfo.payee = DmCmSetData[0].Empfk != "" ? vendorContractDetailInfo.vendorsList.find(t=>t.payee == DmCmSetData[0].Empfk).Mcod1 : "";
+					vendorContractDetailInfo.payee = DmCmSetData[0].Empfk != "" ? vendorContractDetailInfo.vendorsList.find(t=>t.Lifnr == DmCmSetData[0].Empfk).Mcod1 : "";
 					vendorContractDetailInfo.payeeKey = DmCmSetData[0].Empfk;
 					vendorContractDetailInfo.Hsncode = DmCmSetData[0].Hsncd
 					if (parseInt(vendorContractDetailInfo.Contver) > 1 ) {
@@ -1840,10 +1840,10 @@ sap.ui.define([
 				var vendorContractDetailInfo = vendorContractModel.getData();
 				var statusFlag = true;
 				var oMsg = "";
-				if(vendorContractDetailInfo.ZtermKey == "" || vendorContractDetailInfo.ZtermKey == undefined) {
+				if(vendorContractDetailInfo.ZtermKey == "" || vendorContractDetailInfo.ZtermKey == undefined || vendorContractDetailInfo.ZtermT == "" || vendorContractDetailInfo.ZtermT == undefined ) {
 					statusFlag = false;
 					oMsg = "msgEnterPayee";
-				} else if (vendorContractDetailInfo.payeeKey == "" || vendorContractDetailInfo.payeeKey == undefined) {
+				} else if (vendorContractDetailInfo.payeeKey == "" || vendorContractDetailInfo.payeeKey == undefined || vendorContractDetailInfo.payee == "" || vendorContractDetailInfo.payee == undefined ) {
 					statusFlag = false;
 					oMsg = "msgEnterAltPayee";
 				}
