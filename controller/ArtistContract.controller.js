@@ -1673,6 +1673,7 @@ sap.ui.define([
 				artistContractDetailInfo.payeeKey = artistContractDetailInfo.vendorKey;
 				artistContractDetailInfo.ZtermKey = artistContractDetailInfo.Zterm;
 				artistContractDetailInfo.ZtermT = artistContractDetailInfo.Zterm != "" ? artistContractDetailInfo.payTermList.find(tt => tt.Zterm === artistContractDetailInfo.Zterm).ZtermT : "";
+				artistContractDetailInfo.Hsncode = ""
 				artistContractDetailInfo.payEnable = true;
 				artistContractDetailInfo.termEnable = true;
 
@@ -1682,6 +1683,7 @@ sap.ui.define([
 					artistContractDetailInfo.ZtermT = DmCmSetData[0].Ztermt;
 					artistContractDetailInfo.payee = DmCmSetData[0].vendorKey != "" ? artistContractDetailInfo.vendorsList.find(t=>t.payee == DmCmSetData[0].vendorKey).Mcod1 : "";
 					artistContractDetailInfo.payeeKey = DmCmSetData[0].vendorKey;
+					artistContractDetailInfo.Hsncode = DmCmSetData[0].Hsncd
 					if (parseInt(artistContractDetailInfo.Contver) > 1 ) {
 						artistContractDetailInfo.payEnable = false;
 						artistContractDetailInfo.termEnable = false;
@@ -1781,7 +1783,7 @@ sap.ui.define([
 						"Dueamt": "0",
 						"estDate": null,
 						"Retepi": false,
-						"Hsncd" : "",
+						"Hsncd" : artistContractDetailInfo.Hsncode,
 						"retMileEnable" : false
 					
 					});

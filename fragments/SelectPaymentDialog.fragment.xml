@@ -41,7 +41,7 @@
                 </HBox>
                  <HBox>
                  <layoutData>
-                        <l:GridData span="XL7 L7 M6 S12" />
+                        <l:GridData span="XL7 L7 M7 S12" />
                     </layoutData>
                     <items>
                      <VBox>
