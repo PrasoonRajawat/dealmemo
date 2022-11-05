@@ -1835,7 +1835,34 @@ sap.ui.define([
 				}
 				vendorContractModel.refresh(true);
 			},
+			termPayeeCheck: function () {
+				var vendorContractModel = this.getView().getModel("vendorContractModel");
+				var vendorContractDetailInfo = vendorContractModel.getData();
+				var statusFlag = true;
+				var oMsg = "";
+				if(vendorContractDetailInfo.ZtermKey == "" || vendorContractDetailInfo.ZtermKey == undefined) {
+					statusFlag = false;
+					oMsg = "msgEnterPayee";
+				} else if (vendorContractDetailInfo.payeeKey == "" || vendorContractDetailInfo.payeeKey == undefined) {
+					statusFlag = false;
+					oMsg = "msgEnterAltPayee";
+				}
+				if (oMsg !== "") {
+					var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
+					//				MessageBox.error(oSourceBundle.getText(oMsg));
+					vendorContractDetailInfo.vcPaymentDataMsgVisible = true;
+					vendorContractDetailInfo.vcPaymentDataErrorMsg = oSourceBundle.getText(oMsg);
+					vendorContractModel.refresh(true);
+				} else {
+					vendorContractDetailInfo.vcPaymentDataMsgVisible = false;
+					vendorContractDetailInfo.vcPaymentDataErrorMsg = "";
+					vendorContractModel.refresh(true);
+				}
+				return statusFlag;
+			},
 			onMileStoneSelectionToDetail: function () {
+				var validFlag =  this.termPayeeCheck()
+				if(validFlag) {
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
 				vendorContractDetailInfo.mileStonesForEpi = [];
@@ -1866,6 +1893,7 @@ sap.ui.define([
 				}
 				//oMLList.removeSelections();
 				vendorContractModel.refresh(true);
+				}
 			},
 
 			chckBoxTik: function (oEvent) {
