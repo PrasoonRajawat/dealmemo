@@ -1763,6 +1763,31 @@ sap.ui.define([
 				}
 				artistContractModel.refresh(true);
 			},
+			termPayeeCheck: function () {
+				var artistContractModel = this.getView().getModel("artistContractModel");
+				var artistContractDetailInfo = artistContractModel.getData();
+				var statusFlag = true;
+				var oMsg = "";
+				if(artistContractDetailInfo.ZtermKey == "" || artistContractDetailInfo.ZtermKey == undefined) {
+					statusFlag = false;
+					oMsg = "msgEnterPayee";
+				} else if (artistContractDetailInfo.payeeKey == "" || artistContractDetailInfo.payeeKey == undefined) {
+					statusFlag = false;
+					oMsg = "msgEnterAltPayee";
+				}
+				if (oMsg !== "") {
+					var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
+					//				MessageBox.error(oSourceBundle.getText(oMsg));
+					artistContractDetailInfo.vcPaymentDataMsgVisible = true;
+					artistContractDetailInfo.vcPaymentDataErrorMsg = oSourceBundle.getText(oMsg);
+					artistContractModel.refresh(true);
+				} else {
+					artistContractDetailInfo.vcPaymentDataMsgVisible = false;
+					artistContractDetailInfo.vcPaymentDataErrorMsg = "";
+					artistContractModel.refresh(true);
+				}
+				return statusFlag;
+			},
 			onMileStoneSelectionToDetail: function () {
 				var artistContractModel = this.getView().getModel("artistContractModel");
 				var artistContractDetailInfo = artistContractModel.getData();
