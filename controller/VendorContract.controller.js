@@ -1840,10 +1840,10 @@ sap.ui.define([
 				var vendorContractDetailInfo = vendorContractModel.getData();
 				var statusFlag = true;
 				var oMsg = "";
-				if(vendorContractDetailInfo.ZtermKey == "" || vendorContractDetailInfo.ZtermKey == undefined) {
+				if(vendorContractDetailInfo.ZtermKey == "" || vendorContractDetailInfo.ZtermKey == undefined || vendorContractDetailInfo.ZtermT == "" || vendorContractDetailInfo.ZtermT == undefined ) {
 					statusFlag = false;
 					oMsg = "msgEnterPayee";
-				} else if (vendorContractDetailInfo.payeeKey == "" || vendorContractDetailInfo.payeeKey == undefined) {
+				} else if (vendorContractDetailInfo.payeeKey == "" || vendorContractDetailInfo.payeeKey == undefined || vendorContractDetailInfo.payee == "" || vendorContractDetailInfo.payee == undefined ) {
 					statusFlag = false;
 					oMsg = "msgEnterAltPayee";
 				}

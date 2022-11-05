@@ -1768,10 +1768,10 @@ sap.ui.define([
 				var artistContractDetailInfo = artistContractModel.getData();
 				var statusFlag = true;
 				var oMsg = "";
-				if(artistContractDetailInfo.ZtermKey == "" || artistContractDetailInfo.ZtermKey == undefined) {
+				if(artistContractDetailInfo.ZtermKey == "" || artistContractDetailInfo.ZtermKey == undefined || artistContractDetailInfo.ZtermT == "" || artistContractDetailInfo.ZtermT == undefined ) {
 					statusFlag = false;
 					oMsg = "msgEnterPayee";
-				} else if (artistContractDetailInfo.payeeKey == "" || artistContractDetailInfo.payeeKey == undefined) {
+				} else if (artistContractDetailInfo.payeeKey == "" || artistContractDetailInfo.payeeKey == undefined || artistContractDetailInfo.payee == "" || artistContractDetailInfo.payee == undefined) {
 					statusFlag = false;
 					oMsg = "msgEnterAltPayee";
 				}
