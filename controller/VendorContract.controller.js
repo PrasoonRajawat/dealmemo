@@ -1753,7 +1753,7 @@ sap.ui.define([
 				if (DmCmSetData.length > 0) {
 					vendorContractDetailInfo.ZtermKey = DmCmSetData[0].Zterm;
 					vendorContractDetailInfo.ZtermT = DmCmSetData[0].Ztermt;
-					vendorContractDetailInfo.payee = DmCmSetData[0].Empfk != "" ? vendorContractDetailInfo.vendorsList.find(t=>t.payee == DmCmSetData[0].Empfk).Mcod1 : "";
+					vendorContractDetailInfo.payee = DmCmSetData[0].Empfk != "" ? vendorContractDetailInfo.vendorsList.find(t=>t.Lifnr == DmCmSetData[0].Empfk).Mcod1 : "";
 					vendorContractDetailInfo.payeeKey = DmCmSetData[0].Empfk;
 					vendorContractDetailInfo.Hsncode = DmCmSetData[0].Hsncd
 					if (parseInt(vendorContractDetailInfo.Contver) > 1 ) {
