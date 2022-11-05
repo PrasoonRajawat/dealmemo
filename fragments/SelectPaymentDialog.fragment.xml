@@ -45,7 +45,7 @@
                     </layoutData>
                     <items>
                      <VBox>
-                 <Label text="{i18n>lblAltPayee}" width="100%"class = "sapUiTinyMarginEnd" />
+                 <Label text="{i18n>lblAltPayee}" width="100%" class = "sapUiTinyMarginEnd" />
                 <Input value="{vendorContractModel>/payee}" showValueHelp="true" editable = "{vendorContractModel>/payEnable}" valueHelpRequest="onValueHelpAlternatePayee" class = "sapUiTinyMarginEnd" />
                 </VBox>
                 <VBox>
