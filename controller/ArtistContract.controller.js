@@ -1681,8 +1681,8 @@ sap.ui.define([
 				if (DmCmSetData.length > 0) {
 					artistContractDetailInfo.ZtermKey = DmCmSetData[0].Zterm;
 					artistContractDetailInfo.ZtermT = DmCmSetData[0].Ztermt;
-					artistContractDetailInfo.payee = DmCmSetData[0].vendorKey != "" ? artistContractDetailInfo.vendorsList.find(t=>t.payee == DmCmSetData[0].vendorKey).Mcod1 : "";
-					artistContractDetailInfo.payeeKey = DmCmSetData[0].vendorKey;
+					artistContractDetailInfo.payee = DmCmSetData[0].Empfk != "" ? artistContractDetailInfo.vendorsList.find(t=>t.payee == DmCmSetData[0].Empfk).Mcod1 : "";
+					artistContractDetailInfo.payeeKey = DmCmSetData[0].Empfk;
 					artistContractDetailInfo.Hsncode = DmCmSetData[0].Hsncd
 					if (parseInt(artistContractDetailInfo.Contver) > 1 ) {
 						artistContractDetailInfo.payEnable = false;
