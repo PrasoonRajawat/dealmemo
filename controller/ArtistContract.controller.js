@@ -1798,7 +1798,7 @@ sap.ui.define([
 				var oMLList = this.byId(sap.ui.core.Fragment.createId("acPaymentDialog", "list_mlListAC"));
 				oMLList.getBinding("items").filter([]);
 				var selectedMLCntxts = oMLList.getSelectedContexts();
-				selectedMLCntxts.map(function (oCntext) {
+				selectedMLCntxts.map(function (oCntext, i) {
 
 					var oMLObj = oCntext.getObject();
 					artistContractDetailInfo.mileStonesForEpi.push({
@@ -1819,7 +1819,9 @@ sap.ui.define([
 						}
 				if(artistContractDetailInfo.DmCoSet.DmCmSet.results.length > 0) {
 							var payList = artistContractDetailInfo.DmCoSet.DmCmSet.results;
-							artistContractDetailInfo.mileStonesForEpi.Hsncd = payList.find(t=> t.Msid == oMLObj.Mstcd).Hsncd;
+							if( payList.find(t=> t.Msid == oMLObj.Mstcd) != undefined ) {
+							artistContractDetailInfo.mileStonesForEpi[i].Hsncd = payList.find(t=> t.Msid == oMLObj.Mstcd).Hsncd;
+							}
 				}
 
 				});
@@ -1967,7 +1969,7 @@ sap.ui.define([
 						Msid: mlObj.Mstcd,
 						Msidnm: mlObj.Mstcdnm,
 						Tentid: "IBS",
-						Zterm: artistContractDetailInfo.Zterm,
+						Zterm: artistContractDetailInfo.ZtermKey,
 						Ztermt: artistContractDetailInfo.ZtermT,
 						Retepi: mlObj.Retepi == true ? "X" : "",
 						Hsncd: mlObj.Hsncd 
@@ -2115,6 +2117,7 @@ sap.ui.define([
 				var artistContractDetailInfo = artistContractModel.getData();
 				var validateBeforePush = this.validateMileStoneData();
 				var validationResponse = this.validateMilestoneAchievementDate();
+				validationResponse.warningMessage = false; // As sugested by sourabh
 				if (validationResponse.warningMessage) {
 					if (validationResponse.allowedEpisodes.length == 0) {
 						MessageBox.error("Milestone has already been achieved, no changes can be made.");
