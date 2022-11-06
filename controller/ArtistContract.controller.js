@@ -1778,8 +1778,8 @@ sap.ui.define([
 				if (oMsg !== "") {
 					var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
 					//				MessageBox.error(oSourceBundle.getText(oMsg));
-					artistContractDetailInfo.vcPaymentDataMsgVisible = true;
-					artistContractDetailInfo.vcPaymentDataErrorMsg = oSourceBundle.getText(oMsg);
+					artistContractDetailInfo.acPaymentDataMsgVisible = true;
+					artistContractDetailInfo.acPaymentDataErrorMsg = oSourceBundle.getText(oMsg);
 					artistContractModel.refresh(true);
 				} else {
 					artistContractDetailInfo.vcPaymentDataMsgVisible = false;
