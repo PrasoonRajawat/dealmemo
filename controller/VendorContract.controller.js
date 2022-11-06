@@ -1869,7 +1869,7 @@ sap.ui.define([
 				var oMLList = this.byId(sap.ui.core.Fragment.createId("vcPaymentDialog", "list_mlList"));
 				oMLList.getBinding("items").filter([]);
 				var selectedMLCntxts = oMLList.getSelectedContexts();
-				selectedMLCntxts.map(function (oCntext) {
+				selectedMLCntxts.map(function (oCntext, i) {
 
 					var oMLObj = oCntext.getObject();
 					vendorContractDetailInfo.mileStonesForEpi.push({
@@ -1889,7 +1889,9 @@ sap.ui.define([
 					}
 					if(vendorContractDetailInfo.DmCmSet.results.length > 0) {
 						var payList = vendorContractDetailInfo.DmCmSet.results;
-						vendorContractDetailInfo.mileStonesForEpi.Hsncd = payList.find(t=> t.Mstcd == oMLObj.Mstcd).Hsncd;
+						if( payList.find(t=> t.Msid == oMLObj.Mstcd) != undefined ) {
+						vendorContractDetailInfo.mileStonesForEpi[i].Hsncd = payList.find(t=> t.Mstcd == oMLObj.Mstcd).Hsncd;
+						}
 					}
 				});
 				if (selectedMLCntxts.length) {
