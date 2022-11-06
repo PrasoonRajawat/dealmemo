@@ -1817,8 +1817,8 @@ sap.ui.define([
 					if(artistContractDetailInfo.Retenaplty	== "02") {
 						artistContractDetailInfo.mileStonesForEpi.retMileEnable = true ;
 						}
-				if(artistContractDetailInfo.epPaymentList.length > 0) {
-							var payList = artistContractDetailInfo.epPaymentList;
+				if(artistContractDetailInfo.DmCoSet.DmCmSet.results.length > 0) {
+							var payList = artistContractDetailInfo.DmCoSet.DmCmSet.results;
 							artistContractDetailInfo.mileStonesForEpi.Hsncd = payList.find(t=> t.Msid == oMLObj.Mstcd).Hsncd;
 				}
 
