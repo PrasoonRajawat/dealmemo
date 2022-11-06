@@ -1887,6 +1887,10 @@ sap.ui.define([
 					if (vendorContractDetailInfo.Retenaplty == "02") {
 						vendorContractDetailInfo.mileStonesForEpi.retMileEnable = true;
 					}
+					if(vendorContractDetailInfo.epPaymentList.length > 0) {
+						var payList = vendorContractDetailInfo.epPaymentList;
+						vendorContractDetailInfo.mileStonesForEpi.Hsncd = payList.find(t=> t.Mstcd == oMLObj.Mstcd).Hsncd;
+					}
 				});
 				if (selectedMLCntxts.length) {
 					vendorContractDetailInfo.pushBtnEnable = true;
