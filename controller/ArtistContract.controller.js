@@ -1127,7 +1127,7 @@ sap.ui.define([
 				}
 
 				selectedEpisodeList.map(function (retEpi) {
-					if (retEpi.Epiid >= vendorContractDetailInfo.retepiFromId && retEpi.Epiid <= vendorContractDetailInfo.retepiToId) {
+					if (retEpi.Epiid >= artistContractDetailInfo.retepiFromId && retEpi.Epiid <= artistContractDetailInfo.retepiToId) {
 						retEpi.Retepi = "X";
 					}
 				});
