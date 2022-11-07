@@ -1890,7 +1890,7 @@ sap.ui.define([
 					if(vendorContractDetailInfo.DmCmSet.results.length > 0) {
 						var payList = vendorContractDetailInfo.DmCmSet.results;
 						if( payList.find(t=> t.Msid == oMLObj.Mstcd) != undefined ) {
-						vendorContractDetailInfo.mileStonesForEpi[i].Hsncd = payList.find(t=> t.Mstcd == oMLObj.Mstcd).Hsncd;
+						vendorContractDetailInfo.mileStonesForEpi[i].Hsncd = payList.find(t=> t.Msid == oMLObj.Mstcd).Hsncd;
 						}
 					}
 				});
