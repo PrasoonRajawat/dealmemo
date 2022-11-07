@@ -41,7 +41,7 @@
 													<Label text="{path:'artistContractModel>Wmwst', type:'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 2 }}"></Label>
 													<Label text="{path:'artistContractModel>Baseamt', type:'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 2 }}"></Label>
 													<Label text="{path:'artistContractModel>Balamt', type:'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 2 }}"></Label>
-													<CheckBox selected="{= ${artistContractModel>Retepi} === 'X' }" select="" editable="false" />
+													<CheckBox selected="{= ${artistContractModel>Retepi} === 'X' }" select="" visible = "true" editable="false" />
 												</cells>
 											</ColumnListItem>
 										</items>

@@ -1826,7 +1826,7 @@ sap.ui.define([
 
 						});
 						if (artistContractDetailInfo.Retenaplty == "02") {
-							artistContractDetailInfo.mileStonesForEpi.retMileEnable = true;
+							artistContractDetailInfo.mileStonesForEpi[i].retMileEnable = true;
 						}
 						if (artistContractDetailInfo.DmCoSet.DmCmSet.results.length > 0) {
 							var payList = artistContractDetailInfo.DmCoSet.DmCmSet.results;
