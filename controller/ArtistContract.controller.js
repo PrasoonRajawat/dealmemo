@@ -1127,7 +1127,7 @@ sap.ui.define([
 				}
 
 				selectedEpisodeList.map(function (retEpi) {
-					if (retEpi.Epiid >= vendorContractDetailInfo.retepiFromId && retEpi.Epiid <= vendorContractDetailInfo.retepiToId) {
+					if (retEpi.Epiid >= artistContractDetailInfo.retepiFromId && retEpi.Epiid <= artistContractDetailInfo.retepiToId) {
 						retEpi.Retepi = "X";
 					}
 				});
@@ -1826,7 +1826,7 @@ sap.ui.define([
 
 						});
 						if (artistContractDetailInfo.Retenaplty == "02") {
-							artistContractDetailInfo.mileStonesForEpi.retMileEnable = true;
+							artistContractDetailInfo.mileStonesForEpi[i].retMileEnable = true;
 						}
 						if (artistContractDetailInfo.DmCoSet.DmCmSet.results.length > 0) {
 							var payList = artistContractDetailInfo.DmCoSet.DmCmSet.results;

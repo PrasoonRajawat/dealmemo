@@ -1226,6 +1226,7 @@ sap.ui.define([
 				vendorContractDetailInfo.vcEpiDataErrorMsg = "";
 				vendorContractDetailInfo.retepiFromId = "";
 				vendorContractDetailInfo.retepiToId = "";
+				vendorContractDetailInfo.retEpi = false;
 				if (vendorContractDetailInfo.Retenaplty == "01") {
 					vendorContractDetailInfo.retEpi = true;
 				}
@@ -1888,7 +1889,7 @@ sap.ui.define([
 						"retMileEnable": false
 					});
 					if (vendorContractDetailInfo.Retenaplty == "02") {
-						vendorContractDetailInfo.mileStonesForEpi.retMileEnable = true;
+						vendorContractDetailInfo.mileStonesForEpi[i].retMileEnable = true;
 					}
 					if(vendorContractDetailInfo.DmCmSet.results.length > 0) {
 						var payList = vendorContractDetailInfo.DmCmSet.results;
