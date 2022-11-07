@@ -2216,7 +2216,7 @@ sap.ui.define([
 								obj.flag = "Cr";
 								for (var oInd = 0; oInd < vendorContractDetailInfo.vcPaymentData.length; oInd++) {
 									var vcEpiObj = vendorContractDetailInfo.vcPaymentData[oInd];
-									if (vcEpiObj.Epiid === obj.Epiid && vcEpiObj.Msid === obj.Msid && vcEpiObj.Contver === obj.Contver && vcEpiObj.Mscompdt == obj.Mscompdt ) {  //vcEpiObj.Dueamt === obj.Dueamt  
+									if (vcEpiObj.Epiid === obj.Epiid && vcEpiObj.Msid === obj.Msid && vcEpiObj.Contver === obj.Contver  ) {  //vcEpiObj.Dueamt === obj.Dueamt  
 										if (obj.Updkz == "I" && obj.Mscompdt == null) {
 											obj.flag = "Ch";
 											obj.Updkz = "U";
