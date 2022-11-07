@@ -2083,7 +2083,7 @@ sap.ui.define([
 								for (var oInd = 0; oInd < artistContractDetailInfo.acPaymentData.length; oInd++) {
 									var vcEpiObj = artistContractDetailInfo.acPaymentData[oInd];
 									if (vcEpiObj.Epiid === obj.Epiid && vcEpiObj.Msid === obj.Msid && vcEpiObj.Contver === obj.Contver && vcEpiObj.Mscompdt == obj.Mscompdt) {
-										if (obj.Updkz == "I" ) {
+										if (obj.Updkz == "I"  && obj.Mscompdt == null ) {
 											obj.flag = "Ch";
 											obj.Updkz = "U";
 											break;
