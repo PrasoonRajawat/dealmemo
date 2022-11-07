@@ -28,6 +28,9 @@
 										<Column minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" visible="false">
 											<ObjectIdentifier title="{i18n>TDSGrossUp}"></ObjectIdentifier>
 										</Column>
+										<Column hAlign="Right" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
+                   							 <ObjectIdentifier title="Rentention {parts:[{value:'lblEpisodeDesc'},{path:'vendorContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" />
+           								 </Column>
 									</columns>
 									<items>
 										<ColumnListItem>
@@ -37,7 +40,8 @@
 												<Label textAlign="Right" text="{path:'vendorContractModel>Wmwst', type:'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 2 }}"></Label>
 												<Label textAlign="Right" text="{path:'vendorContractModel>Baseamt', type:'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 2 }}"></Label>
 												<Label textAlign="Right" text="{path:'vendorContractModel>Balamt', type:'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 2 }}"></Label>
-												<Label textAlign="Right" text="{vendorContractModel>TDSgrp}"></Label>
+												<!-- <Label textAlign="Right" text="{vendorContractModel>TDSgrp}"></Label> -->
+												<CheckBox selected="{= ${vendorContractModel>Retepi} === 'X' }" select="" editable="false" />
 											</cells>
 										</ColumnListItem>
 									</items>
