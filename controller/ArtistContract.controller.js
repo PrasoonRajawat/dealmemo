@@ -1002,6 +1002,10 @@ sap.ui.define([
 				artistContractDetailInfo.costValueEditable = false;
 				artistContractDetailInfo.acEpiDataMsgVisible = false;
 				artistContractDetailInfo.acEpiDataErrorMsg = "";
+				artistContractDetailInfo.retEpi = false;
+				if (artistContractDetailInfo.Retenaplty == "01") {
+					artistContractDetailInfo.retEpi = true;
+					}
 
 				artistContractModel.refresh(true);
 				if (!this._oSelectEpisodeDialog) {
@@ -1121,6 +1125,13 @@ sap.ui.define([
 
 					});
 				}
+
+				selectedEpisodeList.map(function (retEpi) {
+					if (retEpi.Epiid >= vendorContractDetailInfo.retepiFromId && retEpi.Epiid <= vendorContractDetailInfo.retepiToId) {
+						retEpi.Retepi = "X";
+					}
+				});
+
 				var Noofepi = selectedEpisodeList.length;
 				var EpiTabData = [];
 				var selectedCostCodeContexts = this.byId(sap.ui.core.Fragment.createId("acEpisodeDialog", "list_costCodes")).getSelectedContexts()

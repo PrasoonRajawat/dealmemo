@@ -1226,6 +1226,9 @@ sap.ui.define([
 				vendorContractDetailInfo.vcEpiDataErrorMsg = "";
 				vendorContractDetailInfo.retepiFromId = "";
 				vendorContractDetailInfo.retepiToId = "";
+				if (vendorContractDetailInfo.Retenaplty == "01") {
+					vendorContractDetailInfo.retEpi = true;
+				}
 				vendorContractModel.refresh(true);
 				if (!this._oSelectEpisodeDialog) {
 					Fragment.load({
