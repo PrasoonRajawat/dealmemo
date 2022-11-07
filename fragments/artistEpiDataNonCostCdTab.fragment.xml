@@ -29,8 +29,8 @@
 												<ObjectIdentifier title="{i18n>lblGrossAmount}"></ObjectIdentifier>
 											</Column>
 											<Column hAlign="Right" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
-												<ObjectIdentifier title="{i18n>lblDifferences}"></ObjectIdentifier>
-											</Column>
+                   							 <ObjectIdentifier title="Rentention {parts:[{value:'lblEpisodeDesc'},{path:'artistContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" />
+           								 </Column>
 										</columns>
 										<items>
 											<ColumnListItem>
@@ -41,6 +41,7 @@
 													<Label text="{path:'artistContractModel>Wmwst', type:'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 2 }}"></Label>
 													<Label text="{path:'artistContractModel>Baseamt', type:'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 2 }}"></Label>
 													<Label text="{path:'artistContractModel>Balamt', type:'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 2 }}"></Label>
+													<CheckBox selected="{= ${artistContractModel>Retepi} === 'X' }" select="" editable="false" />
 												</cells>
 											</ColumnListItem>
 										</items>
