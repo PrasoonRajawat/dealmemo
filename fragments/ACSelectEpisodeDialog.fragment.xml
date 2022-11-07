@@ -70,13 +70,13 @@
 			<items>
 				<VBox class = "sapUiTinyMarginBeginEnd">
 					<Label  text="{parts:[{value:'lblSelectEpiFrom'},{path:'artistContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" width="100%"/>
-					<ComboBox width="95%" items="{artistContractModel>/episodeDataList}" >
+					<ComboBox width="95%" items="{artistContractModel>/episodeList}" >
 						<c:Item text="{artistContractModel>Epinm}" key="{artistContractModel>Epiid}"/>
 					</ComboBox>
 				</VBox>
 				<VBox class = "sapUiTinyMarginBeginEnd">
 					<Label  text="{parts:[{value:'lblSelectEpiTo'},{path:'artistContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" width="100%"/>
-					<ComboBox width="95%" items="{artistContractModel>/episodeDataList}">
+					<ComboBox width="95%" items="{artistContractModel>/episodeList}">
 						<c:Item text="{artistContractModel>Epinm}" key="{artistContractModel>Epiid}"/>
 					</ComboBox>
 				</VBox>
