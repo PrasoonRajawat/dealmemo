@@ -28,9 +28,9 @@
 											<Column  hAlign="Right" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
 												<ObjectIdentifier title="{i18n>lblGrossAmount}"></ObjectIdentifier>
 											</Column>
-											<!-- <Column hAlign="Right" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
-                   							 <ObjectIdentifier title="Rentention {parts:[{value:'lblEpisodeDesc'},{path:'artistContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" />
-           								 </Column> -->
+											<Column hAlign="Right" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
+                   							 <ObjectIdentifier title="Rentention {parts:[{value:'lblTblColEpisodesYearWise'},{path:'artistContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" />
+           								 </Column>
 										</columns>
 										<items>
 											<ColumnListItem>
