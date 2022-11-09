@@ -48,7 +48,7 @@
 				</layoutData>
 			</Input>
 			
-			<Label text="{i18n>lbl_content}" design="Bold" class="sapUiTinyMarginTop" required="true">
+			<!-- <Label text="{i18n>lbl_content}" design="Bold" class="sapUiTinyMarginTop" required="true">
 				<layoutData>
 					<l:GridData span="XL12 L12 M12 S12"/>
 				</layoutData>
@@ -57,7 +57,7 @@
 				<layoutData>
 					<l:GridData span="XL12 L12 M12 S12"/>
 				</layoutData>
-			</Input>
+			</Input> -->
 			
 			<Label text="{i18n>lbl_ContNature}" design="Bold" class="sapUiTinyMarginTop" required="true">
 				<layoutData>
@@ -65,6 +65,17 @@
 				</layoutData>
 			</Label>
 			<Input width="100%" value="{dealMemoModel>/createParams/ContentNature}" showValueHelp="true" valueHelpRequest="onValueHelpContentNature">
+				<layoutData>
+					<l:GridData span="XL12 L12 M12 S12"/>
+				</layoutData>
+			</Input>
+
+			<Label text="{i18n>lbl_content}" design="Bold" class="sapUiTinyMarginTop" required="true">
+				<layoutData>
+					<l:GridData span="XL12 L12 M12 S12"/>
+				</layoutData>
+			</Label>
+			<Input width="100%" value="{dealMemoModel>/createParams/Content}" showValueHelp="true" valueHelpRequest="onValueHelpContent">
 				<layoutData>
 					<l:GridData span="XL12 L12 M12 S12"/>
 				</layoutData>

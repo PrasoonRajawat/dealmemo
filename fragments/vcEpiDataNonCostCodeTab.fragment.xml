@@ -29,7 +29,7 @@
 											<ObjectIdentifier title="{i18n>TDSGrossUp}"></ObjectIdentifier>
 										</Column> -->
 										<Column hAlign="Right" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
-                   							 <ObjectIdentifier title="Rentention {parts:[{value:'lblEpisodeDesc'},{path:'vendorContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" />
+                   							 <ObjectIdentifier title="Rentention {parts:[{value:'lblTblColEpisodesYearWise'},{path:'vendorContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" />
            								 </Column>
 									</columns>
 									<items>

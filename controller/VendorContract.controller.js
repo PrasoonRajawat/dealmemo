@@ -2459,11 +2459,14 @@ sap.ui.define([
 					}).then(function name(oFragment) {
 						this._oSelectDeliveryCodeDialog = oFragment; //sap.ui.xmlfragment("com.ui.dealmemolocal.fragments.SelectPaymentDialog", this);
 						this.getView().addDependent(this._oSelectDeliveryCodeDialog);
-						var oItem = new sap.m.StandardListItem({
-							title: "{vendorContractModel>Mstcdnm}",
-							description: "{vendorContractModel>Mstcd}"
-						});
-						this._oSelectDeliveryCodeDialog.bindAggregation("items", "vendorContractModel>/deliveryCodeList", oItem);
+					// 	var oItem = [new sap.m.StandardListItem({
+					// 		title: "{vendorContractModel>Mstcdnm}",
+					// 		description: "{vendorContractModel>Mstcd}"
+					// 	}) , 
+					// new sap.m.CheckBox({
+					// 	text:"Link To Payment"
+					// })];
+						// this._oSelectDeliveryCodeDialog.bindAggregation("items", "vendorContractModel>/deliveryCodeList", oItem);
 						this._oSelectDeliveryCodeDialog.open();
 
 					}.bind(this));
