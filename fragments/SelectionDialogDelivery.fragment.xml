@@ -1,33 +1,40 @@
 <c:FragmentDefinition
 	xmlns="sap.m" xmlns:l="sap.ui.layout"
 	xmlns:c="sap.ui.core">
-	<SelectDialog
+	<!-- <SelectDialog
 		noDataText="{i18n>msgNoData}"
 		title="Select Delivery Code"
 		search="onSearchDeliverables"
 		confirm="onConfirmDeliverySelection"
 		cancel="onSelectionDialogDeliveryClose"
 		multiSelect="true">
-	</SelectDialog>
+	</SelectDialog> -->
 	<!--Added MultiSelect on 19/05/2022 by Dhiraj Sarang-->
-<!-- <SelectDialog
-		noDataText="{i18n>msgNoData}"
-		title="Select Delivery Code"
-		search="onSearchDeliverables"
-		confirm="onConfirmDeliverySelection"
-		cancel="onSelectionDialogDeliveryClose"
-		multiSelect="true">
-	<List  mode="MultiSelect" items="{vendorContractModel>/deliveryCodeList}" >
+
+
+ <Dialog title="Select Delivery Code" type="Message" contentWidth="40%" class="sapUiContentPadding">
+
+<List mode="MultiSelect" items="{vendorContractModel>/deliveryCodeList}" >
 		<CustomListItem>
 			<HBox>
-			<Label title = "{vendorContractModel>Mstcdnm}" text = "{vendorContractModel>Mstcd}"/>
 				<VBox class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom" >
-					<CheckBox text= "Link To Payment"  />
+					<ObjectIdentifier title="{vendorContractModel>Mstcdnm}" text = "{vendorContractModel>Mstcd}"/>
 				</VBox>
+				<ToolbarSpacer/>
+				<HBox class="sapUiLargeMarginBegin" >
+				<CheckBox text="Linked To Payment"/>
+				</HBox>
 			</HBox>
 		</CustomListItem>
 	</List>
-</SelectDialog> -->
+
+  <beginButton>
+            <Button text="{i18n>lblOk}" press="onCreateParamOk" />
+        </beginButton>
+        <endButton>
+            <Button text="{i18n>lblCancel}" press="onCreateParamCancel" />
+        </endButton>
+ </Dialog>
 
 
 
