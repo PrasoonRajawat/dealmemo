@@ -16,7 +16,7 @@
             </Toolbar>
         </subHeader>
 
-        <List mode="MultiSelect" items="{vendorContractModel>/deliveryCodeList}">
+        <List mode="MultiSelect" items="{vendorContractModel>/deliveryPayList}" select = "selectDeliveryCode">
             <CustomListItem>
                 <HBox alignContent="SpaceBetween">
                     <VBox class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom" alignItems="Start" width="100%">
