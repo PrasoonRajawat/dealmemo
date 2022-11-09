@@ -1,7 +1,5 @@
-<c:FragmentDefinition
-	xmlns="sap.m" xmlns:l="sap.ui.layout"
-	xmlns:c="sap.ui.core">
-	<!-- <SelectDialog
+<c:FragmentDefinition xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:c="sap.ui.core">
+    <!-- <SelectDialog
 		noDataText="{i18n>msgNoData}"
 		title="Select Delivery Code"
 		search="onSearchDeliverables"
@@ -9,33 +7,36 @@
 		cancel="onSelectionDialogDeliveryClose"
 		multiSelect="true">
 	</SelectDialog> -->
-	<!--Added MultiSelect on 19/05/2022 by Dhiraj Sarang-->
+    <!--Added MultiSelect on 19/05/2022 by Dhiraj Sarang-->
 
+    <Dialog title="Select Delivery Code" contentWidth="40%" class="sapUiContentPadding">
+        <subHeader>
+            <Toolbar>
+                <SearchField showRefreshButton="{device>/isNoTouch}" placeholder="{i18n>phSearch}" liveChange="onSearchDeliverables" search="onSearchDeliverables" tooltip="{i18n>phSearch}" width="100%" />
+            </Toolbar>
+        </subHeader>
 
- <Dialog title="Select Delivery Code" type="Message" contentWidth="40%" class="sapUiContentPadding">
+        <List mode="MultiSelect" items="{vendorContractModel>/deliveryCodeList}">
+            <CustomListItem>
+                <HBox alignContent="SpaceBetween">
+                    <VBox class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom" alignItems="Start" width="100%">
+                        <ObjectIdentifier title="{vendorContractModel>Mstcdnm}" text="{vendorContractModel>Mstcd}" />
+                    </VBox>
+                    <ToolbarSpacer />
+                    <HBox class="sapUiLargeMarginBegin" alignItems="End" width="50%" visible = "{vendorContractModel>/delPayEnable}">
+                        <CheckBox text="Linked To Payment" selected="{vendorContractModel>Delvpay}"/>
+                    </HBox>
+                </HBox>
+            </CustomListItem>
+        </List>
 
-<List mode="MultiSelect" items="{vendorContractModel>/deliveryCodeList}" >
-		<CustomListItem>
-			<HBox>
-				<VBox class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom" >
-					<ObjectIdentifier title="{vendorContractModel>Mstcdnm}" text = "{vendorContractModel>Mstcd}"/>
-				</VBox>
-				<ToolbarSpacer/>
-				<HBox class="sapUiLargeMarginBegin" >
-				<CheckBox text="Linked To Payment"/>
-				</HBox>
-			</HBox>
-		</CustomListItem>
-	</List>
-
-  <beginButton>
-            <Button text="{i18n>lblOk}" press="onCreateParamOk" />
+        <beginButton>
+            <Button text="{i18n>lblOk}" press="onConfirmDeliverySelection" />
         </beginButton>
         <endButton>
-            <Button text="{i18n>lblCancel}" press="onCreateParamCancel" />
+            <Button text="{i18n>lblCancel}" press="onSelectionDialogDeliveryClose" />
         </endButton>
- </Dialog>
-
+    </Dialog>
 
 
 

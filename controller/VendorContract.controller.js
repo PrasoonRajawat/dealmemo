@@ -2452,6 +2452,16 @@ sap.ui.define([
 				var validateDelEp = this.validateEpisodeSelection();
 				if (validateDelEp) {
 					this._oSelectEpDeliveryDialog.close();
+					var vendorContractModel = this.getView().getModel("vendorContractModel");
+				var vendorContractDetailInfo = vendorContractModel.getData();
+					var oContentReceiptPayObjs = vendorContractDetailInfo.vcPaymentData.filter(function (epPayObj) {
+						return epPayObj.Msid === "02"
+					});
+					if (oContentReceiptPayObjs.length) {
+						vendorContractDetailInfo.delPayEnable = true;
+					} else {
+						vendorContractDetailInfo.delPayEnable = false;
+					}
 					Fragment.load({
 						id: this.createId("vcDeliveryCodeDialog"),
 						name: "com.ui.dealmemolocal.fragments.SelectionDialogDelivery",
