@@ -1,16 +1,16 @@
 <c:FragmentDefinition
 	xmlns="sap.m" xmlns:l="sap.ui.layout"
 	xmlns:c="sap.ui.core">
-	<!-- <SelectDialog
+	<SelectDialog
 		noDataText="{i18n>msgNoData}"
 		title="Select Delivery Code"
 		search="onSearchDeliverables"
 		confirm="onConfirmDeliverySelection"
 		cancel="onSelectionDialogDeliveryClose"
 		multiSelect="true">
-	</SelectDialog> -->
+	</SelectDialog>
 	<!--Added MultiSelect on 19/05/2022 by Dhiraj Sarang-->
-<SelectDialog
+<!-- <SelectDialog
 		noDataText="{i18n>msgNoData}"
 		title="Select Delivery Code"
 		search="onSearchDeliverables"
@@ -27,7 +27,7 @@
 			</HBox>
 		</CustomListItem>
 	</List>
-</SelectDialog>
+</SelectDialog> -->
 
 
 
