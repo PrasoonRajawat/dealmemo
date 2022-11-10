@@ -279,8 +279,8 @@ sap.ui.define([
 			},
 			onSubmitVC: function () { // Adde by dhiraj on 19/05/2022
 
-				var validKey = this.validateSubmit();
-				if (validKey) {
+				// var validKey = this.validateSubmit();
+				// if (validKey) {
 					sap.ui.core.BusyIndicator.show(0);
 					var oModel = this.getView().getModel();
 					var vendorContractModel = this.getView().getModel("vendorContractModel");
@@ -313,7 +313,7 @@ sap.ui.define([
 							MessageBox.error(oMsg);
 						}
 					});
-				}
+				// }
 			},
 			displayContract: function () {
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
