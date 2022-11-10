@@ -20,7 +20,7 @@
      	
      	         <CustomListItem>
                 <HBox alignContent="SpaceBetween">
-                    <VBox class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom" alignItems="Start" width="100%">
+                    <VBox class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom" alignItems="Start" width="70%">
                         <ObjectIdentifier title="{vendorContractModel>Mstcdnm}" text="{vendorContractModel>Mstcd}" />
                     </VBox>
                     <ToolbarSpacer />
