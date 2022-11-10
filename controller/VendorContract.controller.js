@@ -2436,11 +2436,11 @@ sap.ui.define([
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
                 var oIndex = oEvent.getSource()._oItemNavigation.iFocusedIndex;
-				var selValue = oEvent.getSource()._aSelectedPaths.includes("/deliveryPayList/" + selectedInd );
+				var selValue = oEvent.getSource()._aSelectedPaths.includes("/deliveryPayList/" + oIndex );
 				if (selValue == true) {
-					vendorContractDetailInfo.deliveryPayList[selectedInd].Delslct = true;
+					vendorContractDetailInfo.deliveryPayList[oIndex].Delslct = true;
 				} else {
-					vendorContractDetailInfo.deliveryPayList[selectedInd].Delslct = false;
+					vendorContractDetailInfo.deliveryPayList[oIndex].Delslct = false;
 				}
 			},
 			onSearchDeliverables: function (oEvent) {
