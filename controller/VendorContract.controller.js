@@ -2435,6 +2435,7 @@ sap.ui.define([
 			selectDeliveryCode: function (oEvent) {
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
+				
 
 			},
 			onSearchDeliverables: function (oEvent) {
@@ -2470,8 +2471,15 @@ sap.ui.define([
 					}
 					var listDelvcd = [];
 					vendorContractDetailInfo.deliveryCodeList.map(function (delcdObj){
-						listDelvcd.push
+						listDelvcd.push({
+							Mstcd : delcdObj.Mstcd,
+							Mstcdnm: delcdObj.Mstcdnm,
+							Delvpay: false,
+							Delslct: false
+						})
 					});
+					vendorContractDetailInfo.deliveryPayList = listDelvcd;
+					vendorContractModel.refresh(true);
 					Fragment.load({
 						id: this.createId("vcDeliveryCodeDialog"),
 						name: "com.ui.dealmemolocal.fragments.SelectionDialogDelivery",
@@ -2578,8 +2586,8 @@ sap.ui.define([
 					var oContentReceiptPayObjs = vendorContractDetailInfo.vcPaymentData.filter(function (epPayObj) {
 						return epPayObj.Epiid === selEpObj.Epiid && epPayObj.Msid === "02"
 					});
-					if (oContentReceiptPayObjs.length) {
-						showLinkPaymentMsg = true;
+					if (oContentReceiptPayObjs.length && oSelDelvCodeObj.Delvpay) {
+						// showLinkPaymentMsg = true;
 						selEpObj.Delvpay = true;
 					} else {
 						selEpObj.Delvpay = false;
