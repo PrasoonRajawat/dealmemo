@@ -251,8 +251,8 @@ sap.ui.define([
 			},
 			onSubmitAC: function () {
 
-				var validKey = this.validateSubmit();
-				if (validKey) {
+				// var validKey = this.validateSubmit();
+				// if (validKey) {
 					sap.ui.core.BusyIndicator.show(0);
 					var oModel = this.getView().getModel();
 					var artistContractModel = this.getView().getModel("artistContractModel");
@@ -283,7 +283,7 @@ sap.ui.define([
 							MessageBox.error(oMsg);
 						}
 					});
-				}
+				// }
 			},
 			displayContract: function () {
 				var artistContractModel = this.getView().getModel("artistContractModel");
