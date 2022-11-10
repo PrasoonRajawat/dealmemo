@@ -2435,7 +2435,7 @@ sap.ui.define([
 			selectDeliveryCode: function (oEvent) {
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
-				
+
 
 			},
 			onSearchDeliverables: function (oEvent) {
@@ -2715,6 +2715,12 @@ sap.ui.define([
 			},
 
 			onConfirmDeliverySelection: function (oEvent) {
+				var vendorContractModel = this.getView().getModel("vendorContractModel");
+				var vendorContractDetailInfo = vendorContractModel.getData();
+				vendorContractDetailInfo.mileStonesForEpi = [];
+				var oDLList = this.getView().byId("list_delv");
+				oDLList.getBinding("items").filter([]);
+				var selectedMLCntxts = oDLList.getSelectedContexts();
 				// for (var sel = 0; sel < oEvent.getParameters()['selectedItems'].length; sel++) { //added by Dhiraj On 19/05/2022 for selecting multiple deliverables
 				for (var sel = oEvent.getParameters()['selectedItems'].length - 1; sel >= 0; sel--) {	//added by Mandar On 20/09/2022 for selecting multiple deliverables
 					var oSelDelvCodeObj = oEvent.getParameters()['selectedItems'][sel].getBindingContext("vendorContractModel").getObject();
