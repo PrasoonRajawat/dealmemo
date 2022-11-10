@@ -687,7 +687,7 @@ sap.ui.define([
 				var filteredContentList = [];
 				if(dealMemoInfo.createParams.ContentNatureKey  == "06" || dealMemoInfo.createParams.ContentNatureKey  == "07") {
 					filteredContentList = contentList.filter(function(obj) {
-						return obj.Mstcd === dealMemoInfo.createParams.ConttypKey && obj.Snxtp == "X";
+						return obj.Mstcd === dealMemoInfo.createParams.ConttypKey && obj.Snxtp == true;
 					});
 				} else {
 				filteredContentList = contentList.filter(function(obj) {
