@@ -9,15 +9,16 @@
 	</SelectDialog> -->
     <!--Added MultiSelect on 19/05/2022 by Dhiraj Sarang-->
 
-    <Dialog title="Select Delivery Code" contentWidth="40%" class="sapUiContentPadding">
-        <subHeader>
-            <Toolbar>
-                <SearchField showRefreshButton="{device>/isNoTouch}" placeholder="{i18n>phSearch}" liveChange="onSearchDeliverables" search="onSearchDeliverables" tooltip="{i18n>phSearch}" width="100%" />
-            </Toolbar>
-        </subHeader>
-
-        <List mode="MultiSelect" items="{vendorContractModel>/deliveryPayList}" select = "selectDeliveryCode">
-            <CustomListItem>
+       <SelectDialog
+		noDataText="{i18n>msgNoData}"
+		title="Select Delivery Code"
+		search="onSearchDeliverables"
+		confirm="onConfirmDeliverySelection"
+		cancel="onSelectionDialogDeliveryClose"
+		multiSelect="true"
+		items="{vendorContractModel>/deliveryPayList}" contentWidth="40%">
+     	
+     	         <CustomListItem>
                 <HBox alignContent="SpaceBetween">
                     <VBox class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom" alignItems="Start" width="100%">
                         <ObjectIdentifier title="{vendorContractModel>Mstcdnm}" text="{vendorContractModel>Mstcd}" />
@@ -28,16 +29,7 @@
                     </HBox>
                 </HBox>
             </CustomListItem>
-        </List>
-
-        <beginButton>
-            <Button text="{i18n>lblOk}" press="onConfirmDeliverySelection" />
-        </beginButton>
-        <endButton>
-            <Button text="{i18n>lblCancel}" press="onSelectionDialogDeliveryClose" />
-        </endButton>
-    </Dialog>
-
+	</SelectDialog> 
 
 
 

@@ -2720,21 +2720,21 @@ sap.ui.define([
 			},
 
 			onConfirmDeliverySelection: function (oEvent) {
-				var vendorContractModel = this.getView().getModel("vendorContractModel");
-				var vendorContractDetailInfo = vendorContractModel.getData();
-				var selectedList = vendorContractDetailInfo.deliveryPayList;
+				// var vendorContractModel = this.getView().getModel("vendorContractModel");
+				// var vendorContractDetailInfo = vendorContractModel.getData();
+				// var selectedList = vendorContractDetailInfo.deliveryPayList;
 
-				for (var sel = 0 ; sel < selectedList.length ; sel++ ) {
-					var oSelDelvCodeObj = selectedList[sel] ;
-					if (oSelDelvCodeObj.Delslct) {
-						this.prepareDeliverypayload(oSelDelvCodeObj);
-					}
-				}
-				// for (var sel = 0; sel < oEvent.getParameters()['selectedItems'].length; sel++) { //added by Dhiraj On 19/05/2022 for selecting multiple deliverables
-				// for (var sel = oEvent.getParameters()['selectedItems'].length - 1; sel >= 0; sel--) {	//added by Mandar On 20/09/2022 for selecting multiple deliverables
-				// 	var oSelDelvCodeObj = oEvent.getParameters()['selectedItems'][sel].getBindingContext("vendorContractModel").getObject();
-				// 	this.prepareDeliverypayload(oSelDelvCodeObj);
+				// for (var sel = 0 ; sel < selectedList.length ; sel++ ) {
+				// 	var oSelDelvCodeObj = selectedList[sel] ;
+				// 	if (oSelDelvCodeObj.Delslct) {
+				// 		this.prepareDeliverypayload(oSelDelvCodeObj);
+				// 	}
 				// }
+				// for (var sel = 0; sel < oEvent.getParameters()['selectedItems'].length; sel++) { //added by Dhiraj On 19/05/2022 for selecting multiple deliverables
+				for (var sel = oEvent.getParameters()['selectedItems'].length - 1; sel >= 0; sel--) {	//added by Mandar On 20/09/2022 for selecting multiple deliverables
+					var oSelDelvCodeObj = oEvent.getParameters()['selectedItems'][sel].getBindingContext("vendorContractModel").getObject();
+					this.prepareDeliverypayload(oSelDelvCodeObj);
+				}
 
 				// var oSelDelvCodeObj = oEvent.getParameters()['selectedItem'].getBindingContext("vendorContractModel").getObject();   			
 				// 	this.prepareDeliverypayload(oSelDelvCodeObj);  //ComMented by Dhiraj On 19/05/2022 for selecting multiple deliverables
