@@ -685,9 +685,15 @@ sap.ui.define([
 				var dealMemoInfo = dealMemoModel.getData();
 				var contentList = $.extend(true, [], dealMemoInfo.contentList);
 				var filteredContentList = [];
+				if(dealMemoInfo.createParams.ContentNatureKey  == "06" || dealMemoInfo.createParams.ContentNatureKey  == "07") {
+					filteredContentList = contentList.filter(function(obj) {
+						return obj.Mstcd === dealMemoInfo.createParams.ConttypKey && obj.Snxtp == "X";
+					});
+				} else {
 				filteredContentList = contentList.filter(function(obj) {
 					return obj.Mstcd === dealMemoInfo.createParams.ConttypKey;
 				});
+				}
 				dealMemoInfo.filteredContentList = filteredContentList;
 				dealMemoModel.refresh(true);
 				this.oValueHelpSelectionParams = {
