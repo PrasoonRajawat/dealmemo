@@ -1696,8 +1696,12 @@ sap.ui.define([
 					artistContractDetailInfo.payeeKey = DmCmSetData[0].Empfk;
 					artistContractDetailInfo.Hsncode = DmCmSetData[0].Hsncd
 					if (parseInt(artistContractDetailInfo.Contver) > 1) {
-						artistContractDetailInfo.payEnable = false;
-						artistContractDetailInfo.termEnable = false;
+						if(vendorContractDetailInfo.payeeKey !=  "") {
+							vendorContractDetailInfo.payEnable = false;
+							}
+							if(vendorContractDetailInfo.ZtermKey !=  "") {
+							vendorContractDetailInfo.termEnable = false;
+							}
 					}
 				}
 
