@@ -1584,7 +1584,7 @@ sap.ui.define([
 							this.displayContractFlag = false;
 							if (!this.newContractCreated) {
 								artistContractDetailInfo.saveVisible = false;
-								this.getView().byId("btnEditAC").setVisible(Formatter.formatEditableStatus(artistContractDetailInfo.Contstat));
+								this.getView().byId("btnEditAC").setVisible(Formatter.formatEditableContStatus(artistContractDetailInfo.Contstat));
 							}
 						}
 						artistContractModel.refresh(true);

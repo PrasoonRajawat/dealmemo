@@ -1189,7 +1189,7 @@ sap.ui.define([
 							this.displayContractFlag = false;
 							if (!this.newContractCreated) {
 								oData.saveVisible = false;
-								this.getView().byId("btnEditVC").setVisible(Formatter.formatEditableStatus(vendorContractDetailInfo.Contstat));
+								this.getView().byId("btnEditVC").setVisible(Formatter.formatEditableContStatus(oData.Contstat));
 							}
 						}
 						this.getView().byId("idIconSubTabBar2").setSelectedKey("vcSubEpiDataNoCostCd");
