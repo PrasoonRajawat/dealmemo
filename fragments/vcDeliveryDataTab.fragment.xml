@@ -8,7 +8,8 @@
 										<Toolbar>
 											<Label text="{i18n>lbldeliverabledata}"/>
 											<ToolbarSpacer></ToolbarSpacer>
-											<Button  press="deleteDelvData" text="{i18n>lblDelete}" icon="sap-icon://delete/" enabled="{vendorContractModel>/epiDelDeleteEnable}"  visible="{vendorContractModel>/saveVisible}"/>
+											<Button  press="deleteDelvData" text="{i18n>lblDelete}" icon="sap-icon://delete/"   visible="{vendorContractModel>/saveVisible}"/>
+											<!-- enabled="{vendorContractModel>/epiDelDeleteEnable}" -->
 										</Toolbar>
 									</infoToolbar>
 									<!-- <headerToolbar> <Toolbar> <ToolbarSpacer /> </Toolbar> </headerToolbar> -->
