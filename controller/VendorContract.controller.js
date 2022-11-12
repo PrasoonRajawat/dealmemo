@@ -2597,6 +2597,8 @@ sap.ui.define([
 				if(selectedContexts.length){
 					this.onDeleteDeliveryData();
 				}else {
+					var epIds = [];
+				var distEpisodes = [];
 					vendorContractDetailInfo.epiVCTabData.map(function (obj) {
 						if (epIds.indexOf(obj.Epiid) === -1) {
 							epIds.push(obj.Epiid);
