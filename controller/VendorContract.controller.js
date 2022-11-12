@@ -2517,6 +2517,146 @@ sap.ui.define([
 				}
 				vendorContractModel.refresh(true);
 			},
+			//--------delete--episode--from--contracts------//
+			onDeleteEpisodeDialog: function(episodeData,paramList) {
+				var vendorContractModel = this.getView().getModel("vendorContractModel");
+				var vendorContractDetailInfo = vendorContractModel.getData();
+				vendorContractModel.setProperty("/episodeRangeVisibleDelivery", false);
+				vendorContractModel.setProperty("/episodeModeDelivery", 0);
+				vendorContractModel.setProperty("/epiDelFromId", "");
+				vendorContractModel.setProperty("/epiDelToId", "");
+				vendorContractModel.setProperty("/paramKey", "");
+				// var dmedSetData = episodeData;
+				
+				vendorContractDetailInfo.SetDataEpi = $.extend(true, [], episodeData);
+				vendorContractDetailInfo.paramList = paramList;
+				vendorContractModel.refresh(true);
+				if (!this._oEpiDeleteDialog) {
+					Fragment.load({
+						id: this.createId("deleteEpiDialog"),
+						name: "com.ui.dealmemolocal.fragments.VcEpisodeDeleteDialog",
+						controller: this
+					}).then(function name(oFragment) {
+						this._oEpiDeleteDialog = oFragment; //sap.ui.xmlfragment("com.ui.dealmemolocal.fragments.SelectPaymentDialog", this);
+						this.getView().addDependent(this._oEpiDeleteDialog);
+						this._oEpiDeleteDialog.open();
+					}.bind(this));
+
+				} else {
+					this._oEpiDeleteDialog.open();
+				}
+			},
+			confirmToDelete: function() {
+				var vendorContractModel = this.getView().getModel("vendorContractModel");
+				var vendorContractDetailInfo = vendorContractModel.getData();
+				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
+				var oselIndex = vendorContractDetailInfo.episodeModeDelivery;
+				var selectedEpisodeList = [];
+				if (oselIndex == 0) {
+					selectedEpisodeList = vendorContractDetailInfo.SetDataEpi;
+				} else {
+					selectedEpisodeList = [];
+					vendorContractDetailInfo.SetDataEpi.map(function(epVCObj) {
+						if (epVCObj.Epiid >= vendorContractDetailInfo.epiDeliveryFromId && epVCObj.Epiid <= vendorContractDetailInfo.epiDeliveryToId) {
+							selectedEpisodeList.push(epVCObj);
+						}
+					});
+				}
+				if (selectedEpisodeList.length > 0) {
+					
+						this._oEpiDeleteDialog.close();
+						MessageBox.confirm(oSourceBundle.getText("msgdeleteEpiConfirm" + vendorContractDetailInfo.Cnttp), {
+							actions: [oSourceBundle.getText("lblYes"), oSourceBundle.getText("lblNo")],
+							emphasizedAction: "Yes",
+							onClose: function(sAction) {
+								if (sAction === oSourceBundle.getText("lblYes")) {
+									this.onDeleteDelvViaDialog(selectedEpisodeList);
+								} else if (sAction === oSourceBundle.getText("lblNo")) {
+
+								}
+							}.bind(this)
+						});
+						
+				} else {
+					this._oEpiDeleteDialog.close();
+					MessageBox.error(oSourceBundle.getText("msgSelectAtleastOneEpi" + vendorContractDetailInfo.Cnttp));
+				}
+			},
+
+			checkDlete: function(selectedEpisodeList) {
+				
+				var check = true;
+			
+				return check;
+			},
+			deleteDelvData: function () {
+				var vendorContractModel = this.getView().getModel("vendorContractModel");
+				var vendorContractDetailInfo = vendorContractModel.getData();
+				var oTable = this.getView().byId("oTbl_vcdelData");
+				var selectedContexts = oTable.getSelectedContexts();
+				if(selectedContexts.length){
+					this.onDeleteDeliveryData();
+				}else {
+					vendorContractDetailInfo.epiVCTabData.map(function (obj) {
+						if (epIds.indexOf(obj.Epiid) === -1) {
+							epIds.push(obj.Epiid);
+							distEpisodes.push(obj);
+						}
+					});
+					this.onDeleteEpisodeDialog(distEpisodes,vendorContractDetailInfo.deliveryCodeList);
+				}
+			},
+			onDeleteDelvViaDialog: function (selectedEpisodeList) {
+				sap.ui.core.BusyIndicator.show(0);
+				var vendorContractModel = this.getView().getModel("vendorContractModel");
+				var vendorContractDetailInfo = vendorContractModel.getData();
+				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
+				var oModel = this.getView().getModel();
+				oModel.setUseBatch(true);
+				oModel.setDeferredGroups(oModel.getDeferredGroups().concat(["epiDelVCDeleteChanges"]));
+				var mParameters = {
+					groupId: "epiDelVCDeleteChanges",
+					success: function (data, resp) {
+						if (data.__batchResponses.length > 0) {
+							sap.ui.core.BusyIndicator.hide();
+							if (data.__batchResponses[0].response != undefined) {
+								if (data.__batchResponses[0].response.statusCode == "400") {
+									var oErrorResponse = JSON.parse(data.__batchResponses[0].response.body);
+									var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
+									if (oMsg.includes("Content Receipt has been done for")) {
+										MessageBox.error(oMsg);
+										this.reloadVendorContractTabs();
+									}
+								}
+							} else {
+								sap.ui.core.BusyIndicator.hide();
+								MessageToast.show(oSourceBundle.getText("msgSuccEpiDeleteSave" + vendorContractDetailInfo.Cnttp));
+								this.reloadVendorContractTabs();
+							}
+						}
+					}.bind(this),
+					error: function (oError) {
+						sap.ui.core.BusyIndicator.hide();
+						var oErrorResponse = JSON.parse(oError.responseText);
+						var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
+						MessageBox.error(oMsg);
+					}
+				};
+
+				selectedEpisodeList.map(function (oCntxt) {
+					var oDelObj = oCntxt.getObject();
+					var oPath = "/DmVdSet(Tentid='IBS',Dmno='" + vendorContractDetailInfo.Dmno + "',Dmver='" + vendorContractDetailInfo.Dmver +
+						"',Conttp='01',Contno='" + vendorContractDetailInfo.Contno + "',Contver='" + vendorContractDetailInfo.Contver +
+						"',Epiid='" + oDelObj.Epiid + "',Delvcd='" + vendorContractDetailInfo.paramKey + "')";
+					oModel.remove(oPath, {
+						groupId: "epiDelVCDeleteChanges"
+					});
+				}.bind(this));
+
+				oModel.submitChanges(mParameters);
+				sap.ui.core.BusyIndicator.hide();
+			},
+			//--------delete--episode--from--contracts------//
 			onDeleteDeliveryData: function () {
 				sap.ui.core.BusyIndicator.show(0);
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
