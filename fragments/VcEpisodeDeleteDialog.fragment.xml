@@ -1,0 +1,51 @@
+<c:FragmentDefinition xmlns="sap.m" xmlns:u="sap.ui.unified" xmlns:l="sap.ui.layout" xmlns:c="sap.ui.core">
+    <Dialog type="Message" title="{parts:[{value:'lblSelEpisode'},{path:'vendorContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}">
+        <content>
+            <!-- <MessageStrip type="Error" text="{vendorContractModel>/vcDeliveryDataErrorMsg}" showCloseButton="true" visible="{vendorContractModel>/vcDeliveryDataMsgVisible}" class="sapUiSmallMarginBottom">
+                <layoutData>
+                    <l:GridData span="XL12 L12 M12 S12" />
+                </layoutData>
+            </MessageStrip> -->
+            <HBox>
+                <items>
+                    <RadioButtonGroup columns="2" selectedIndex="{vendorContractModel>/episodeModeDelivery}" select="onSelectEpisodeModeDelivery">
+                        <RadioButton text="{parts:[{value:'lblAllEpisode'},{path:'vendorContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" />
+                        <RadioButton text="{i18n>lblSelectFromRange}" />
+                    </RadioButtonGroup>
+                </items>
+            </HBox>
+            <HBox visible="{vendorContractModel>/episodeRangeVisibleDelivery}">
+                <items>
+                    <VBox>
+                        <Label text="{parts:[{value:'lblSelectEpiDFrom'},{path:'vendorContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" required="true" width="100%" />
+                        <ComboBox width="95%" items="{vendorContractModel>/SetDataEpi}" selectedKey="{vendorContractModel>/epiDelFromId}">
+                            <c:Item text="{vendorContractModel>Epinm}" key="{vendorContractModel>Epiid}" />
+                        </ComboBox>
+                    </VBox>
+                    <VBox>
+                        <Label text="{parts:[{value:'lblSelectEpiDTo'},{path:'vendorContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" required="true" width="100%" />
+                        <ComboBox width="95%" items="{vendorContractModel>/SetDataEpi}" selectedKey="{vendorContractModel>/epiDelToId}">
+                            <c:Item text="{vendorContractModel>Epinm}" key="{vendorContractModel>Epiid}" />
+                        </ComboBox>
+                    </VBox>
+                </items>
+            </HBox>
+            <HBox>
+                <items>
+                    <VBox>
+                        <Label id = "paramNm" text="" required="true" width="100%" />
+                        <ComboBox width="95%" items="{vendorContractModel>/paramList}" selectedKey="{vendorContractModel>/paramKey}">
+                            <c:Item text="{vendorContractModel>Mstcdnm}" key="{vendorContractModel>Mstcd}" />
+                        </ComboBox>
+                    </VBox>
+                </items>
+            </HBox>
+        </content>
+        <beginButton>
+            <Button text="{i18n>lblBtnNext}" press="confirmToDelete" />
+        </beginButton>
+        <endButton>
+            <Button text="{i18n>btnCancel}" press="onCancelEpisodeSelectionDelete" />
+        </endButton>
+    </Dialog>
+</c:FragmentDefinition>
