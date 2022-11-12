@@ -2570,7 +2570,15 @@ sap.ui.define([
 							emphasizedAction: "Yes",
 							onClose: function(sAction) {
 								if (sAction === oSourceBundle.getText("lblYes")) {
-									this.onDeleteDelvViaDialog(selectedEpisodeList);
+									var oTab = this.getView().byId("idVCTabBar").getSelectedKey();
+									if (oTab === "vcPaymentData") {
+										this.onDeleteMileViaDialog(selectedEpisodeList);
+									} else if (oTab === "vcDeliveryData") {
+										this.onDeleteDelvViaDialog(selectedEpisodeList);
+									} else if (oTab === "vcIPRData") {
+										this.onDeleteIPRViaDialog(selectedEpisodeList);
+									};
+									
 								} else if (sAction === oSourceBundle.getText("lblNo")) {
 
 								}
@@ -2589,7 +2597,7 @@ sap.ui.define([
 			
 				return check;
 			},
-			deleteDelvData: function () {
+			deleteEpisodeData: function () {
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
 				var oTable = this.getView().byId("oTbl_vcdelData");
@@ -2597,7 +2605,7 @@ sap.ui.define([
 				if(selectedContexts.length){
 					this.onDeleteDeliveryData();
 				}else {
-					var epIds = [];
+				var epIds = [];
 				var distEpisodes = [];
 					vendorContractDetailInfo.epiVCTabData.map(function (obj) {
 						if (epIds.indexOf(obj.Epiid) === -1) {
@@ -2605,7 +2613,18 @@ sap.ui.define([
 							distEpisodes.push(obj);
 						}
 					});
+					var oTab = this.getView().byId("idVCTabBar").getSelectedKey();
+				if (oTab === "vcPaymentData") {
+					vendorContractDetailInfo.paramName = "Select Milestone"
+					this.onDeleteEpisodeDialog(distEpisodes,vendorContractDetailInfo.mileStoneList);
+				} else if (oTab === "vcDeliveryData") {
+					vendorContractDetailInfo.paramName = "Select Deliverables"
 					this.onDeleteEpisodeDialog(distEpisodes,vendorContractDetailInfo.deliveryCodeList);
+				} else if (oTab === "vcIPRData") {
+					vendorContractDetailInfo.paramName = "Select Platform"
+					this.onDeleteEpisodeDialog(distEpisodes,vendorContractDetailInfo.platformList);
+				};
+					
 				}
 			},
 			onDeleteDelvViaDialog: function (selectedEpisodeList) {
@@ -2652,6 +2671,106 @@ sap.ui.define([
 						"',Epiid='" + oCntxt.Epiid + "',Delvcd='" + vendorContractDetailInfo.paramKey + "')";
 					oModel.remove(oPath, {
 						groupId: "epiDelVCDeleteChanges"
+					});
+				}.bind(this));
+
+				oModel.submitChanges(mParameters);
+				sap.ui.core.BusyIndicator.hide();
+			},
+			onDeleteMileViaDialog: function (selectedEpisodeList) {
+				sap.ui.core.BusyIndicator.show(0);
+				var vendorContractModel = this.getView().getModel("vendorContractModel");
+				var vendorContractDetailInfo = vendorContractModel.getData();
+				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
+				var oModel = this.getView().getModel();
+				oModel.setUseBatch(true);
+				oModel.setDeferredGroups(oModel.getDeferredGroups().concat(["epiMileVCDeleteChanges"]));
+				var mParameters = {
+					groupId: "epiMileVCDeleteChanges",
+					success: function (data, resp) {
+						if (data.__batchResponses.length > 0) {
+							sap.ui.core.BusyIndicator.hide();
+							if (data.__batchResponses[0].response != undefined) {
+								if (data.__batchResponses[0].response.statusCode == "400") {
+									var oErrorResponse = JSON.parse(data.__batchResponses[0].response.body);
+									var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
+									if (oMsg.includes("")) {
+										MessageBox.error(oMsg);
+										this.reloadVendorContractTabs();
+									}
+								}
+							} else {
+								sap.ui.core.BusyIndicator.hide();
+								MessageToast.show(oSourceBundle.getText("msgSuccEpiDeleteSave" + vendorContractDetailInfo.Cnttp));
+								this.reloadVendorContractTabs();
+							}
+						}
+					}.bind(this),
+					error: function (oError) {
+						sap.ui.core.BusyIndicator.hide();
+						var oErrorResponse = JSON.parse(oError.responseText);
+						var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
+						MessageBox.error(oMsg);
+					}
+				};
+
+				selectedEpisodeList.map(function (oCntxt) {
+					
+					var oPath = "/DmCmSet(Tentid='IBS',Dmno='" + vendorContractDetailInfo.Dmno + "',Dmver='" + vendorContractDetailInfo.Dmver +
+						"',Conttp='01',Contno='" + vendorContractDetailInfo.Contno + "',Contver='" + vendorContractDetailInfo.Contver +
+						"',Epiid='" + oCntxt.Epiid + "',Delvcd='" + vendorContractDetailInfo.paramKey + "')";
+					oModel.remove(oPath, {
+						groupId: "epiMileVCDeleteChanges"
+					});
+				}.bind(this));
+
+				oModel.submitChanges(mParameters);
+				sap.ui.core.BusyIndicator.hide();
+			},
+			onDeleteIPRViaDialog: function (selectedEpisodeList) {
+				sap.ui.core.BusyIndicator.show(0);
+				var vendorContractModel = this.getView().getModel("vendorContractModel");
+				var vendorContractDetailInfo = vendorContractModel.getData();
+				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
+				var oModel = this.getView().getModel();
+				oModel.setUseBatch(true);
+				oModel.setDeferredGroups(oModel.getDeferredGroups().concat(["epiIPRVCDeleteChanges"]));
+				var mParameters = {
+					groupId: "epiIPRVCDeleteChanges",
+					success: function (data, resp) {
+						if (data.__batchResponses.length > 0) {
+							sap.ui.core.BusyIndicator.hide();
+							if (data.__batchResponses[0].response != undefined) {
+								if (data.__batchResponses[0].response.statusCode == "400") {
+									var oErrorResponse = JSON.parse(data.__batchResponses[0].response.body);
+									var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
+									if (oMsg.includes("")) {
+										MessageBox.error(oMsg);
+										this.reloadVendorContractTabs();
+									}
+								}
+							} else {
+								sap.ui.core.BusyIndicator.hide();
+								MessageToast.show(oSourceBundle.getText("msgSuccEpiDeleteSave" + vendorContractDetailInfo.Cnttp));
+								this.reloadVendorContractTabs();
+							}
+						}
+					}.bind(this),
+					error: function (oError) {
+						sap.ui.core.BusyIndicator.hide();
+						var oErrorResponse = JSON.parse(oError.responseText);
+						var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
+						MessageBox.error(oMsg);
+					}
+				};
+
+				selectedEpisodeList.map(function (oCntxt) {
+					
+					var oPath = "/DmVrSet(Tentid='IBS',Dmno='" + vendorContractDetailInfo.Dmno + "',Dmver='" + vendorContractDetailInfo.Dmver +
+						"',Conttp='01',Contno='" + vendorContractDetailInfo.Contno + "',Contver='" + vendorContractDetailInfo.Contver +
+						"',Epiid='" + oCntxt.Epiid + "',Delvcd='" + vendorContractDetailInfo.paramKey + "')";
+					oModel.remove(oPath, {
+						groupId: "epiIPRVCDeleteChanges"
 					});
 				}.bind(this));
 

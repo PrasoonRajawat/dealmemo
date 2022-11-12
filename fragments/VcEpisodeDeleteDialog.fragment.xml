@@ -33,7 +33,7 @@
             <HBox>
                 <items>
                     <VBox>
-                        <Label id = "paramNm" text="" required="true" width="100%" />
+                        <Label id = "paramNm" text="{vendorContractModel>/paramName}" required="true" width="100%" />
                         <ComboBox width="95%" items="{vendorContractModel>/paramList}" selectedKey="{vendorContractModel>/paramKey}">
                             <c:Item text="{vendorContractModel>Mstcdnm}" key="{vendorContractModel>Mstcd}" />
                         </ComboBox>
