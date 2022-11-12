@@ -2557,7 +2557,7 @@ sap.ui.define([
 				} else {
 					selectedEpisodeList = [];
 					vendorContractDetailInfo.SetDataEpi.map(function(epVCObj) {
-						if (epVCObj.Epiid >= vendorContractDetailInfo.epiDeliveryFromId && epVCObj.Epiid <= vendorContractDetailInfo.epiDeliveryToId) {
+						if (epVCObj.Epiid >= vendorContractDetailInfo.epiDelFromId && epVCObj.Epiid <= vendorContractDetailInfo.epiDelToId) {
 							selectedEpisodeList.push(epVCObj);
 						}
 					});
@@ -2646,10 +2646,10 @@ sap.ui.define([
 				};
 
 				selectedEpisodeList.map(function (oCntxt) {
-					var oDelObj = oCntxt.getObject();
+					
 					var oPath = "/DmVdSet(Tentid='IBS',Dmno='" + vendorContractDetailInfo.Dmno + "',Dmver='" + vendorContractDetailInfo.Dmver +
 						"',Conttp='01',Contno='" + vendorContractDetailInfo.Contno + "',Contver='" + vendorContractDetailInfo.Contver +
-						"',Epiid='" + oDelObj.Epiid + "',Delvcd='" + vendorContractDetailInfo.paramKey + "')";
+						"',Epiid='" + oCntxt.Epiid + "',Delvcd='" + vendorContractDetailInfo.paramKey + "')";
 					oModel.remove(oPath, {
 						groupId: "epiDelVCDeleteChanges"
 					});
