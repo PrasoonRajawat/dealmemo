@@ -2718,7 +2718,7 @@ sap.ui.define([
 					
 					var oPath = "/DmCmSet(Tentid='IBS',Dmno='" + vendorContractDetailInfo.Dmno + "',Dmver='" + vendorContractDetailInfo.Dmver +
 						"',Conttp='01',Contno='" + vendorContractDetailInfo.Contno + "',Contver='" + vendorContractDetailInfo.Contver +
-						"',Epiid='" + oCntxt.Epiid + "',Msid='" + vendorContractDetailInfo.paramKey + "')";
+						"',Epiid='" + oCntxt.Epiid + "',Msid='" + vendorContractDetailInfo.paramKey + "',Seqnr='000')";
 					oModel.remove(oPath, {
 						groupId: "epiMileVCDeleteChanges"
 					});
