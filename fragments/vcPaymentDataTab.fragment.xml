@@ -8,6 +8,7 @@
 										<Toolbar>
 											<Label text="{i18n>lblMilestonedata}"/>
 											<ToolbarSpacer></ToolbarSpacer>
+											<Button  press="deleteEpisodeData" text="{i18n>lblDelete}" icon="sap-icon://delete/"   visible="{vendorContractModel>/saveVisible}"/>
 										</Toolbar>
 									</infoToolbar>
 									<columns>

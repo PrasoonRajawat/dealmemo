@@ -11,7 +11,7 @@
 											<Button text="{i18n>lblExportIPRTemplate}" visible="{vendorContractModel>/saveVisible}" press="onExport" enabled="{path:'vendorContractModel>/Contstat',formatter:'.Formatter.formatEditableStatus'}"/>
 											<Button text="{i18n>lblExportIPRDetails}" visible="{vendorContractModel>/saveVisible}" press="onExportIPRDetails" enabled="{path:'vendorContractModel>/Contstat',formatter:'.Formatter.formatEditableStatus'}"/>
 											<Button icon="sap-icon://upload" visible="{vendorContractModel>/saveVisible}" press="onUploadIPR" enabled="{path:'vendorContractModel>/Contstat',formatter:'.Formatter.formatEditableStatus'}"/>
-																
+												<Button  press="deleteEpisodeData" text="{i18n>lblDelete}" icon="sap-icon://delete/"   visible="{vendorContractModel>/saveVisible}"/>					
 										</Toolbar>
 									</infoToolbar>
 									<columns>
