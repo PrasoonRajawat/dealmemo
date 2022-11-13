@@ -2718,7 +2718,7 @@ sap.ui.define([
 					
 					var oPath = "/DmCmSet(Tentid='IBS',Dmno='" + vendorContractDetailInfo.Dmno + "',Dmver='" + vendorContractDetailInfo.Dmver +
 						"',Conttp='01',Contno='" + vendorContractDetailInfo.Contno + "',Contver='" + vendorContractDetailInfo.Contver +
-						"',Epiid='" + oCntxt.Epiid + "',Delvcd='" + vendorContractDetailInfo.paramKey + "')";
+						"',Epiid='" + oCntxt.Epiid + "',Msid='" + vendorContractDetailInfo.paramKey + "')";
 					oModel.remove(oPath, {
 						groupId: "epiMileVCDeleteChanges"
 					});
@@ -2768,7 +2768,7 @@ sap.ui.define([
 					
 					var oPath = "/DmVrSet(Tentid='IBS',Dmno='" + vendorContractDetailInfo.Dmno + "',Dmver='" + vendorContractDetailInfo.Dmver +
 						"',Conttp='01',Contno='" + vendorContractDetailInfo.Contno + "',Contver='" + vendorContractDetailInfo.Contver +
-						"',Epiid='" + oCntxt.Epiid + "',Delvcd='" + vendorContractDetailInfo.paramKey + "')";
+						"',Epiid='" + oCntxt.Epiid + "',Platform='" + vendorContractDetailInfo.paramKey + "')";
 					oModel.remove(oPath, {
 						groupId: "epiIPRVCDeleteChanges"
 					});
