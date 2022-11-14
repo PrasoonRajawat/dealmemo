@@ -10,6 +10,7 @@
 												<Label text="{i18n>lblMilestonedata}"/>
 												<ToolbarSpacer></ToolbarSpacer>
 												<!--	<Button press="onEpisodes" text="Enter Payment Details"/>-->
+												<Button  press="deleteEpisodeData" text="{i18n>lblDelete}" icon="sap-icon://delete/"   visible="{artistContractModel>/saveVisible}"/>
 											</Toolbar>
 										</infoToolbar>
 										<columns>
