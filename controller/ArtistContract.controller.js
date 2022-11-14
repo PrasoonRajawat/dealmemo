@@ -2266,6 +2266,18 @@ sap.ui.define([
 				this._oEpiDeleteDialog.open();
 			}
 		},
+		onSelectEpisodeModeDelivery: function (oEvent) {
+			var oselIndex = oEvent.getSource().getSelectedIndex();
+			var artistContractModel = this.getView().getModel("artistContractModel");
+			var artistContractDetailInfo = artistContractModel.getData();
+			if (oselIndex == 0) {
+				artistContractDetailInfo.episodeRangeVisibleDelivery = false;
+			} else {
+				artistContractDetailInfo.episodeRangeVisibleDelivery = true;
+
+			}
+			artistContractModel.refresh(true);
+		},
 		confirmToDelete: function() {
 			var artistContractModel = this.getView().getModel("artistContractModel");
 			var artistContractDetailInfo = artistContractModel.getData();
