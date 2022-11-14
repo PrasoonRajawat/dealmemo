@@ -1696,11 +1696,11 @@ sap.ui.define([
 					artistContractDetailInfo.payeeKey = DmCmSetData[0].Empfk;
 					artistContractDetailInfo.Hsncode = DmCmSetData[0].Hsncd
 					if (parseInt(artistContractDetailInfo.Contver) > 1) {
-						if(vendorContractDetailInfo.payeeKey !=  "") {
-							vendorContractDetailInfo.payEnable = false;
+						if(artistContractDetailInfo.payeeKey !=  "") {
+							artistContractDetailInfo.payEnable = false;
 							}
-							if(vendorContractDetailInfo.ZtermKey !=  "") {
-							vendorContractDetailInfo.termEnable = false;
+							if(artistContractDetailInfo.ZtermKey !=  "") {
+							artistContractDetailInfo.termEnable = false;
 							}
 					}
 				}
@@ -2237,6 +2237,139 @@ sap.ui.define([
 			}
 			sap.ui.core.BusyIndicator.hide();
 		},
+		//--------delete--episode--from--contracts------//
+		onDeleteEpisodeDialog: function(episodeData,paramList) {
+			var artistContractModel = this.getView().getModel("artistContractModel");
+			var artistContractDetailInfo = artistContractModel.getData();
+			artistContractModel.setProperty("/episodeRangeVisibleDelivery", false);
+			artistContractModel.setProperty("/episodeModeDelivery", 0);
+			artistContractModel.setProperty("/epiDelFromId", "");
+			artistContractModel.setProperty("/epiDelToId", "");
+			artistContractModel.setProperty("/paramKey", "");
+			// var dmedSetData = episodeData;
+			
+			artistContractDetailInfo.SetDataEpi = $.extend(true, [], episodeData);
+			artistContractDetailInfo.paramList = paramList;
+			artistContractModel.refresh(true);
+			if (!this._oEpiDeleteDialog) {
+				Fragment.load({
+					id: this.createId("deleteEpiDialog"),
+					name: "com.ui.dealmemolocal.fragments.VcEpisodeDeleteDialog",
+					controller: this
+				}).then(function name(oFragment) {
+					this._oEpiDeleteDialog = oFragment; //sap.ui.xmlfragment("com.ui.dealmemolocal.fragments.SelectPaymentDialog", this);
+					this.getView().addDependent(this._oEpiDeleteDialog);
+					this._oEpiDeleteDialog.open();
+				}.bind(this));
+
+			} else {
+				this._oEpiDeleteDialog.open();
+			}
+		},
+		confirmToDelete: function() {
+			var artistContractModel = this.getView().getModel("artistContractModel");
+			var artistContractDetailInfo = artistContractModel.getData();
+			var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
+			var oselIndex = artistContractDetailInfo.episodeModeDelivery;
+			var selectedEpisodeList = [];
+			if (oselIndex == 0) {
+				selectedEpisodeList = artistContractDetailInfo.SetDataEpi;
+			} else {
+				selectedEpisodeList = [];
+				artistContractDetailInfo.SetDataEpi.map(function(epVCObj) {
+					if (epVCObj.Epiid >= artistContractDetailInfo.epiDelFromId && epVCObj.Epiid <= artistContractDetailInfo.epiDelToId) {
+						selectedEpisodeList.push(epVCObj);
+					}
+				});
+			}
+			if (selectedEpisodeList.length > 0) {
+				
+					this._oEpiDeleteDialog.close();
+					MessageBox.confirm(oSourceBundle.getText("msgdeleteEpiConfirm" + artistContractDetailInfo.Cnttp), {
+						actions: [oSourceBundle.getText("lblYes"), oSourceBundle.getText("lblNo")],
+						emphasizedAction: "Yes",
+						onClose: function(sAction) {
+							if (sAction === oSourceBundle.getText("lblYes")) {
+								
+									this.onDeleteMileViaDialog(selectedEpisodeList);
+								
+								
+							} else if (sAction === oSourceBundle.getText("lblNo")) {
+
+							}
+						}.bind(this)
+					});
+					
+			} else {
+				this._oEpiDeleteDialog.close();
+				MessageBox.error(oSourceBundle.getText("msgSelectAtleastOneEpi" + artistContractDetailInfo.Cnttp));
+			}
+		},
+		deleteEpisodeData: function () {
+			var artistContractModel = this.getView().getModel("artistContractModel");
+			var artistContractDetailInfo = artistContractModel.getData();
+			var epIds = [];
+				var distEpisodes = [];
+				artistContractDetailInfo.epiTabData.map(function (obj) {
+					if (epIds.indexOf(obj.Epiid) === -1) {
+						epIds.push(obj.Epiid);
+						distEpisodes.push(obj);
+					}
+				});
+				artistContractDetailInfo.paramName = "Select Deliverables"
+				this.onDeleteEpisodeDialog(distEpisodes,artistContractDetailInfo.deliveryCodeList);
+		},
+		onDeleteMileViaDialog: function (selectedEpisodeList) {
+			sap.ui.core.BusyIndicator.show(0);
+			var artistContractModel = this.getView().getModel("artistContractModel");
+			var artistContractDetailInfo = artistContractModel.getData();
+			var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
+			var oModel = this.getView().getModel();
+			oModel.setUseBatch(true);
+			oModel.setDeferredGroups(oModel.getDeferredGroups().concat(["epiMileVCDeleteChanges"]));
+			var mParameters = {
+				groupId: "epiMileVCDeleteChanges",
+				success: function (data, resp) {
+					if (data.__batchResponses.length > 0) {
+						sap.ui.core.BusyIndicator.hide();
+						if (data.__batchResponses[0].response != undefined) {
+							if (data.__batchResponses[0].response.statusCode == "400") {
+								var oErrorResponse = JSON.parse(data.__batchResponses[0].response.body);
+								var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
+								if (oMsg.includes("")) {
+									MessageBox.error(oMsg);
+									this.reloadArtistContractTabs();
+								}
+							}
+						} else {
+							sap.ui.core.BusyIndicator.hide();
+							MessageToast.show(oSourceBundle.getText("msgSuccEpiDeleteSave" + artistContractDetailInfo.Cnttp));
+							this.reloadArtistContractTabs();
+						}
+					}
+				}.bind(this),
+				error: function (oError) {
+					sap.ui.core.BusyIndicator.hide();
+					var oErrorResponse = JSON.parse(oError.responseText);
+					var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
+					MessageBox.error(oMsg);
+				}
+			};
+
+			selectedEpisodeList.map(function (oCntxt) {
+				
+				var oPath = "/DmCmSet(Tentid='IBS',Dmno='" + artistContractDetailInfo.Dmno + "',Dmver='" + artistContractDetailInfo.Dmver +
+					"',Conttp='01',Contno='" + artistContractDetailInfo.Contno + "',Contver='" + artistContractDetailInfo.Contver +
+					"',Epiid='" + oCntxt.Epiid + "',Msid='" + artistContractDetailInfo.paramKey + "',Seqnr='000')";
+				oModel.remove(oPath, {
+					groupId: "epiMileVCDeleteChanges"
+				});
+			}.bind(this));
+
+			oModel.submitChanges(mParameters);
+			sap.ui.core.BusyIndicator.hide();
+		},
+		//--------delete--episode--from--contracts------//
 		onEditArtistContract: function () {
 			var artistContractModel = this.getView().getModel("artistContractModel");
 			var artistContractDetailInfo = artistContractModel.getData();
