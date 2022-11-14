@@ -2254,7 +2254,7 @@ sap.ui.define([
 			if (!this._oEpiDeleteDialog) {
 				Fragment.load({
 					id: this.createId("deleteEpiDialog"),
-					name: "com.ui.dealmemolocal.fragments.VcEpisodeDeleteDialog",
+					name: "com.ui.dealmemolocal.fragments.AcEpisodeDeleteDialog",
 					controller: this
 				}).then(function name(oFragment) {
 					this._oEpiDeleteDialog = oFragment; //sap.ui.xmlfragment("com.ui.dealmemolocal.fragments.SelectPaymentDialog", this);
