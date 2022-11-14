@@ -2266,6 +2266,9 @@ sap.ui.define([
 				this._oEpiDeleteDialog.open();
 			}
 		},
+		onCancelEpisodeSelectionDelete: function() {
+			this._oEpiDeleteDialog.close();
+		},
 		onSelectEpisodeModeDelivery: function (oEvent) {
 			var oselIndex = oEvent.getSource().getSelectedIndex();
 			var artistContractModel = this.getView().getModel("artistContractModel");
