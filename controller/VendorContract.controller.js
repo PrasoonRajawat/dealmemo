@@ -2546,6 +2546,9 @@ sap.ui.define([
 					this._oEpiDeleteDialog.open();
 				}
 			},
+			onCancelEpisodeSelectionDelete: function() {
+				this._oEpiDeleteDialog.close();
+			},
 			confirmToDelete: function() {
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
