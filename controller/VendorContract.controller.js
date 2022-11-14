@@ -2566,7 +2566,7 @@ sap.ui.define([
 					});
 				}
 				if (selectedEpisodeList.length > 0) {
-					
+					if(checkDlete) {
 						this._oEpiDeleteDialog.close();
 						MessageBox.confirm(oSourceBundle.getText("msgdeleteEpiConfirm" + vendorContractDetailInfo.Cnttp), {
 							actions: [oSourceBundle.getText("lblYes"), oSourceBundle.getText("lblNo")],
@@ -2587,7 +2587,7 @@ sap.ui.define([
 								}
 							}.bind(this)
 						});
-						
+					}
 				} else {
 					this._oEpiDeleteDialog.close();
 					MessageBox.error(oSourceBundle.getText("msgSelectAtleastOneEpi" + vendorContractDetailInfo.Cnttp));
@@ -2597,7 +2597,28 @@ sap.ui.define([
 			checkDlete: function(selectedEpisodeList) {
 				
 				var check = true;
-			
+				var vendorContractModel = this.getView().getModel("vendorContractModel");
+				var vendorContractDetailInfo = vendorContractModel.getData();
+				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
+				if (vendorContractDetailInfo.episodeModeDelivery === 1) {
+					if (vendorContractDetailInfo.epiDelFromId === "" || vendorContractDetailInfo.epiDelToId === "") {
+						var Msg = oSourceBundle.getText("msgSelectEpisode" + vendorContractDetailInfo.Cnttp);
+						check = false
+					}
+				} else if (vendorContractDetailInfo.paramKey == "" ) {
+					var oTab = this.getView().byId("idVCTabBar").getSelectedKey();
+				if (oTab === "vcPaymentData") {
+					var Msg = "Select one  Milestone"
+				} else if (oTab === "vcDeliveryData") {
+					var Msg = "Select one Deliverables"
+				} else if (oTab === "vcIPRData") {
+					var Msg = "Select one Platform"
+				};
+					check = false
+				}
+				if (!check) {
+				MessageBox.error(Msg)
+				}
 				return check;
 			},
 			deleteEpisodeData: function () {
