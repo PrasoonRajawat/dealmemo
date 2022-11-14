@@ -2371,7 +2371,7 @@ sap.ui.define([
 			selectedEpisodeList.map(function (oCntxt) {
 				
 				var oPath = "/DmCmSet(Tentid='IBS',Dmno='" + artistContractDetailInfo.Dmno + "',Dmver='" + artistContractDetailInfo.Dmver +
-					"',Conttp='01',Contno='" + artistContractDetailInfo.Contno + "',Contver='" + artistContractDetailInfo.Contver +
+					"',Conttp='02',Contno='" + artistContractDetailInfo.Contno + "',Contver='" + artistContractDetailInfo.Contver +
 					"',Epiid='" + oCntxt.Epiid + "',Msid='" + artistContractDetailInfo.paramKey + "',Seqnr='000')";
 				oModel.remove(oPath, {
 					groupId: "epiMileVCDeleteChanges"
