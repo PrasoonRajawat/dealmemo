@@ -2328,8 +2328,8 @@ sap.ui.define([
 						distEpisodes.push(obj);
 					}
 				});
-				artistContractDetailInfo.paramName = "Select Deliverables"
-				this.onDeleteEpisodeDialog(distEpisodes,artistContractDetailInfo.deliveryCodeList);
+				vendorContractDetailInfo.paramName = "Select Milestone"
+					this.onDeleteEpisodeDialog(distEpisodes,vendorContractDetailInfo.mileStoneList);
 		},
 		onDeleteMileViaDialog: function (selectedEpisodeList) {
 			sap.ui.core.BusyIndicator.show(0);
