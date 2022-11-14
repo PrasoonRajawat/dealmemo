@@ -2281,6 +2281,29 @@ sap.ui.define([
 			}
 			artistContractModel.refresh(true);
 		},
+		
+		checkDlete: function(selectedEpisodeList) {
+				
+			var check = true;
+			var artistContractModel = this.getView().getModel("artistContractModel");
+			var artistContractDetailInfo = artistContractModel.getData();
+			var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
+			if (artistContractDetailInfo.episodeModeDelivery === 1) {
+				if (artistContractDetailInfo.epiDelFromId === "" || artistContractDetailInfo.epiDelToId === "") {
+					var Msg = oSourceBundle.getText("msgSelectEpisode" + artistContractDetailInfo.Cnttp);
+					check = false
+				}
+			} else if (artistContractDetailInfo.paramKey == "" ) {
+			
+				var Msg = "Select one  Milestone"
+			
+				check = false
+			}
+			if (!check) {
+			MessageBox.error(Msg)
+			}
+			return check;
+		},
 		confirmToDelete: function() {
 			var artistContractModel = this.getView().getModel("artistContractModel");
 			var artistContractDetailInfo = artistContractModel.getData();
@@ -2298,7 +2321,7 @@ sap.ui.define([
 				});
 			}
 			if (selectedEpisodeList.length > 0) {
-				
+				if(checkDlete) {
 					this._oEpiDeleteDialog.close();
 					MessageBox.confirm(oSourceBundle.getText("msgdeleteEpiConfirm" + artistContractDetailInfo.Cnttp), {
 						actions: [oSourceBundle.getText("lblYes"), oSourceBundle.getText("lblNo")],
@@ -2314,7 +2337,7 @@ sap.ui.define([
 							}
 						}.bind(this)
 					});
-					
+				}
 			} else {
 				this._oEpiDeleteDialog.close();
 				MessageBox.error(oSourceBundle.getText("msgSelectAtleastOneEpi" + artistContractDetailInfo.Cnttp));
