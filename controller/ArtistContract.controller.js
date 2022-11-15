@@ -2321,7 +2321,7 @@ sap.ui.define([
 				});
 			}
 			if (selectedEpisodeList.length > 0) {
-				if(checkDlete) {
+				if(this.checkDlete()) {
 					this._oEpiDeleteDialog.close();
 					MessageBox.confirm(oSourceBundle.getText("msgdeleteEpiConfirm" + artistContractDetailInfo.Cnttp), {
 						actions: [oSourceBundle.getText("lblYes"), oSourceBundle.getText("lblNo")],
