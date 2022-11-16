@@ -4283,7 +4283,7 @@ sap.ui.define([
 								var vendorContractModel = that.getView().getModel("vendorContractModel");
 								var vendorContractDetailInfo = vendorContractModel.getData();
 
-								for (var i = 0; i <= vendorContractDetailInfo.vcIPRData.length; i++) {
+								for (var i = 0; i < vendorContractDetailInfo.vcIPRData.length; i++) {
 									var Epiidchk = vendorContractDetailInfo.vcIPRData[i].Epiid;
 									if (vendorContractDetailInfo.vcIPRData.find(t => t.Epiid == Epiidchk).Leadamrtpt === "" && mapList.length > 0) {
 										vendorContractDetailInfo.vcIPRData.find(t => t.Epiid == Epiidchk).Leadamrtpt = mapList.find(t => t.Epiid == Epiidchk).Leadamrtpt;
@@ -4296,8 +4296,9 @@ sap.ui.define([
 										vendorContractDetailInfo.vcIPRData.find(t => t.Epiid == Epiidchk).Nonleadnm = mapList.find(g => g.Epiid == Epiidchk).Nonleadnm;
 									}
 
-									vendorContractModel.refresh(true);
+									
 								}
+								vendorContractModel.refresh(true);
 							}, function (value) {
 								sap.ui.core.BusyIndicator.hide();
 								console.log(value);
