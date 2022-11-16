@@ -802,7 +802,7 @@ sap.ui.define([
 					this._oSelectionDialog.setTitle(this.oValueHelpSelectionParams.dialogTitle);
 					if (this.oValueHelpSelectionParams.bindPropName2 != undefined) {
 						var oItem = new sap.m.StandardListItem({
-							title: "{" + this.oValueHelpSelectionParams.bindPropName + "( " + this.oValueHelpSelectionParams.bindPropName2 + " ) }",
+							title: "{" + this.oValueHelpSelectionParams.bindPropName + "} ({" + this.oValueHelpSelectionParams.bindPropName2 + "})",
 							info: "{dealMemoModel>Ltext}"
 						});
 					} else {
