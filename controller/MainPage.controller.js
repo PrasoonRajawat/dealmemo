@@ -4852,6 +4852,7 @@ sap.ui.define([
 				} else {
 					var oPayload = {
 						Cafrefno: dealMemoModel.getProperty("/CAFDmno"),
+						CafVer: dealMemoModel.getProperty("/CAFDmver"),
 						Tentid: "IBS"
 					}
 					oModel.create("/DmHeaderSet", oPayload, {
