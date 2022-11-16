@@ -2,11 +2,11 @@
 <Dialog type="Message" title="{i18n>titleCAFDetails}" contentWidth="30%">
 
 	<content>
-		<VBox>
+		<HBox>
 			<Label text="{i18n>lblCAFNo}"/>
 			<Input id="cafDmno" placeholder="Select CAF No." value="{dealMemoModel>/CAFDmno}" showValueHelp="true" valueHelpRequest="onSelectCAFNo"/>
-			<Input id="version" value="{dealMemoModel>/CAFDmver}" showValueHelp="false" enabled="false" width="80%"/>
-		</VBox>
+			<Input id="version" value="{dealMemoModel>/CAFDmver}" showValueHelp="false" enabled="false"/>
+		</HBox>
 		
 	</content>
 	<beginButton>
