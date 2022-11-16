@@ -4255,7 +4255,13 @@ sap.ui.define([
 				if (!statusFlag) {
 					MessageBox.error(oMsg);
 				} else {
-					var that = this;
+					
+					var oResp = oControllerRef.updateIPRData(IPRPayloadArr, $.extend(true, [], vendorContractDetailInfo.vcIPRData));
+					if (oResp.flag) {
+						vendorContractDetailInfo.vcIPRData = oResp.oResTable;
+						vendorContractModel.refresh(true);
+						
+						var that = this;
 						var mapList = [];
 						
 							sap.ui.core.BusyIndicator.show(0);
@@ -4265,7 +4271,7 @@ sap.ui.define([
 							var Dmver = vendorContractDetailInfo.Dmver;
 							var Contno = vendorContractDetailInfo.Contno;
 							var Contver = vendorContractDetailInfo.Contver;
-							for(var t = 0 ; t <= IPRPayloadArr.length ; t++) { 
+							for(var t = 0 ; t < IPRPayloadArr.length ; t++) { 
 							var Stdate = Formatter.formatDateValForBackend(IPRPayloadArr[t].Rhtfrdt);
 							var Enddate = Formatter.formatDateValForBackend(IPRPayloadArr[t].Rhttodt);
 							var srvUrl = "/sap/opu/odata/IBSCMS/DEALMEMO_SRV";
@@ -4298,10 +4304,6 @@ sap.ui.define([
 
 							});
 						}
-					var oResp = oControllerRef.updateIPRData(IPRPayloadArr, $.extend(true, [], vendorContractDetailInfo.vcIPRData));
-					if (oResp.flag) {
-						vendorContractDetailInfo.vcIPRData = oResp.oResTable;
-						vendorContractModel.refresh(true);
 						oControllerRef._oUploadIPRSheetDialog.close();
 					} else {
 
