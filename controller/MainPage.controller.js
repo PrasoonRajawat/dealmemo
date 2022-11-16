@@ -3,25 +3,25 @@ var TabFlg = 0;
 var lCtr = 0;
 var status = "";
 sap.ui.define([
-		"sap/ui/core/mvc/Controller",
-		"sap/ui/model/Filter",
-		"sap/ui/model/FilterOperator",
-		"com/ui/dealmemolocal/model/formatter",
-		"sap/m/MessageBox",
-		"sap/m/MessageToast",
-		"sap/ui/core/Fragment",
-		"sap/ui/export/Spreadsheet"
-	],
+	"sap/ui/core/mvc/Controller",
+	"sap/ui/model/Filter",
+	"sap/ui/model/FilterOperator",
+	"com/ui/dealmemolocal/model/formatter",
+	"sap/m/MessageBox",
+	"sap/m/MessageToast",
+	"sap/ui/core/Fragment",
+	"sap/ui/export/Spreadsheet"
+],
 	/**
 	 * @param {typeof sap.ui.core.mvc.Controller} Controller
 	 */
-	function(Controller, Filter, FilterOperator, Formatter, MessageBox, MessageToast, Fragment, Spreadsheet) {
+	function (Controller, Filter, FilterOperator, Formatter, MessageBox, MessageToast, Fragment, Spreadsheet) {
 		"use strict";
 		jQuery.sap.require("com.ui.dealmemolocal.model.jszip");
 		jQuery.sap.require("com.ui.dealmemolocal.model.xlsx");
 		return Controller.extend("com.ui.dealmemolocal.controller.MainPage", {
 			Formatter: Formatter,
-			onInit: function() {
+			onInit: function () {
 				that = this;
 				var oModel = new sap.ui.model.json.JSONModel();
 				this.getView().setModel(oModel, "dealMemoModel");
@@ -42,7 +42,7 @@ sap.ui.define([
 				this.showMaster = true;
 
 			},
-			onRouteMatched: function(oEvent) {
+			onRouteMatched: function (oEvent) {
 				var oName = oEvent.getParameter("name");
 				this.Tentid = "IBS";
 				if (oName === "VendorContract") {
@@ -80,8 +80,8 @@ sap.ui.define([
 
 				console.log();
 			},
-			onAfterRendering: function() {},
-			loadDefaultDealMemo: function(dmno, dmver) {
+			onAfterRendering: function () { },
+			loadDefaultDealMemo: function (dmno, dmver) {
 				if (dmno === undefined && dmver === undefined) { // edited by dhiraj for link function in dealmemo
 					this.loadDefaultDealMemo = true;
 				} else {
@@ -92,16 +92,16 @@ sap.ui.define([
 				this.loadDealMemoList(dmno, dmver);
 				this.loadCAFList();
 			},
-			getDefaultFilters: function() {
+			getDefaultFilters: function () {
 				return [
 					new Filter("Tentid", "EQ", "IBS"),
 					new Filter("Transtp", "EQ", "D")
 					//   new Filter("Spras","EQ","E")
 				]
 			},
-			getFilterArray: function(arr) {
+			getFilterArray: function (arr) {
 				var filterArr = [];
-				arr.map(function(obj) {
+				arr.map(function (obj) {
 					filterArr.push(
 						new Filter(obj.key, "EQ", obj.val)
 					);
@@ -111,7 +111,7 @@ sap.ui.define([
 			},
 
 			/************  Deal Memo List ************/
-			loadDealMemoList: function(dmno, dmver) {
+			loadDealMemoList: function (dmno, dmver) {
 				var basicFiilters = this.getDefaultFilters();
 				var additionalFilters = [{
 					"key": "Dmno",
@@ -123,7 +123,7 @@ sap.ui.define([
 				sap.ui.core.BusyIndicator.show(0);
 				oModel.read("/DmHeaderSet", {
 					filters: aFilters,
-					success: function(oData) {
+					success: function (oData) {
 						dealMemoModel.setProperty("/dealmemolist", oData.results);
 						dealMemoModel.refresh(true);
 						sap.ui.core.BusyIndicator.hide();
@@ -132,7 +132,7 @@ sap.ui.define([
 							this.loadDefaultDealMemo = false;
 						} else if (!this.loadDefaultDealMemo && this.linkMemo) { // Added by Dhiraj for link function in dealmemo
 							this.linkMemo = false;
-							var linkDM = oData.results.filter(function(obj) {
+							var linkDM = oData.results.filter(function (obj) {
 								return obj.Dmno === dmno && obj.Dmver === dmver
 							}.bind(this));
 							if (linkDM.length) {
@@ -145,7 +145,7 @@ sap.ui.define([
 						} else {
 							if (this.newVersionCreated) {
 								this.newVersionCreated = false;
-								var newVersionDM = oData.results.filter(function(obj) {
+								var newVersionDM = oData.results.filter(function (obj) {
 									return obj.Dmno === this.selectedDealMemoObj.Dmno && parseInt(obj.Dmver) === (parseInt(this.selectedDealMemoObj.Dmver) +
 										1);
 								}.bind(this));
@@ -155,7 +155,7 @@ sap.ui.define([
 								this.getView().byId("idIconTabBar").setSelectedKey("detail"); //Added by Dhiraj to load dealmemo in detail tab
 							} else if (this.rejectedDm) {
 								this.rejectedDm = false;
-								var rejectDM = oData.results.filter(function(obj) {
+								var rejectDM = oData.results.filter(function (obj) {
 									return obj.Dmno === this.selectedDealMemoObj.Dmno && this.selectedDealMemoObj.Dmver;
 								}.bind(this));
 								if (rejectDM.length) {
@@ -166,7 +166,7 @@ sap.ui.define([
 						}
 
 					}.bind(this),
-					error: function(oError) {
+					error: function (oError) {
 						var oErrorResponse = JSON.parse(oError.responseText);
 						var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
 						MessageBox.error(oMsg);
@@ -174,14 +174,14 @@ sap.ui.define([
 				});
 			},
 
-			handleSearch: function(oEvent) {
+			handleSearch: function (oEvent) {
 				var srchValue = oEvent.getSource().getValue();
 				var modelBind = this.getView().byId("list_dealmemo_master");
 				var multipleFilter =
 					new sap.ui.model.Filter([
-							new sap.ui.model.Filter("Dmno", sap.ui.model.FilterOperator.Contains, srchValue),
-							new sap.ui.model.Filter("Cntnm", sap.ui.model.FilterOperator.Contains, srchValue)
-						],
+						new sap.ui.model.Filter("Dmno", sap.ui.model.FilterOperator.Contains, srchValue),
+						new sap.ui.model.Filter("Cntnm", sap.ui.model.FilterOperator.Contains, srchValue)
+					],
 						false);
 				var binding = modelBind.getBinding("items");
 				binding.filter([multipleFilter]);
@@ -190,136 +190,136 @@ sap.ui.define([
 
 			/************ Master Data Load ************/
 
-			storeMasterCodeInfo: function(oData) {
+			storeMasterCodeInfo: function (oData) {
 				var dealMemoModel = this.getView().getModel("dealMemoModel");
 
-				dealMemoModel.setProperty("/contentTypeList", oData.results.filter(function(item) {
+				dealMemoModel.setProperty("/contentTypeList", oData.results.filter(function (item) {
 					return item.Mstpcd === "01" && item.Mstcd !== "05";
 				}));
 
-				dealMemoModel.setProperty("/contentNatureList", oData.results.filter(function(item) {
+				dealMemoModel.setProperty("/contentNatureList", oData.results.filter(function (item) {
 					return item.Mstpcd === "02";
 				}));
 
-				dealMemoModel.setProperty("/contentGenreList", oData.results.filter(function(item) {
+				dealMemoModel.setProperty("/contentGenreList", oData.results.filter(function (item) {
 					return item.Mstpcd === "03";
 				}));
 
-				dealMemoModel.setProperty("/contentObjectiveList", oData.results.filter(function(item) {
+				dealMemoModel.setProperty("/contentObjectiveList", oData.results.filter(function (item) {
 					return item.Mstpcd === "04";
 				}));
 
-				dealMemoModel.setProperty("/contentSubTypeList", oData.results.filter(function(item) {
+				dealMemoModel.setProperty("/contentSubTypeList", oData.results.filter(function (item) {
 					return item.Mstpcd === "05";
 				}));
 
-				dealMemoModel.setProperty("/contentSubGenreList", oData.results.filter(function(item) {
+				dealMemoModel.setProperty("/contentSubGenreList", oData.results.filter(function (item) {
 					return item.Mstpcd === "10";
 				}));
 
-				dealMemoModel.setProperty("/contentCategoryList", oData.results.filter(function(item) {
+				dealMemoModel.setProperty("/contentCategoryList", oData.results.filter(function (item) {
 					return item.Mstpcd === "11";
 				}));
 
-				dealMemoModel.setProperty("/vendorRoleList", oData.results.filter(function(item) {
+				dealMemoModel.setProperty("/vendorRoleList", oData.results.filter(function (item) {
 					return item.Mstpcd === "09";
 				}));
 
-				dealMemoModel.setProperty("/mileStoneList", oData.results.filter(function(item) {
+				dealMemoModel.setProperty("/mileStoneList", oData.results.filter(function (item) {
 					return item.Mstpcd === "08";
 				}));
 
-				dealMemoModel.setProperty("/deliveryCodeList", oData.results.filter(function(item) {
+				dealMemoModel.setProperty("/deliveryCodeList", oData.results.filter(function (item) {
 					return item.Mstpcd === "06";
 				}));
 
-				dealMemoModel.setProperty("/teritoryList", oData.results.filter(function(item) {
+				dealMemoModel.setProperty("/teritoryList", oData.results.filter(function (item) {
 					return item.Mstpcd === "07";
 				}));
 
-				dealMemoModel.setProperty("/IPRRightsList", oData.results.filter(function(item) {
+				dealMemoModel.setProperty("/IPRRightsList", oData.results.filter(function (item) {
 					return item.Mstpcd === "14";
 				}));
 
-				dealMemoModel.setProperty("/platformList", oData.results.filter(function(item) {
+				dealMemoModel.setProperty("/platformList", oData.results.filter(function (item) {
 					return item.Mstpcd === "19";
 				}));
 
-				dealMemoModel.setProperty("/amortPatternList", oData.results.filter(function(item) {
+				dealMemoModel.setProperty("/amortPatternList", oData.results.filter(function (item) {
 					return item.Mstpcd === "12";
 				}));
 
-				dealMemoModel.setProperty("/nonAmmortPatternList", oData.results.filter(function(item) {
+				dealMemoModel.setProperty("/nonAmmortPatternList", oData.results.filter(function (item) {
 					return item.Mstpcd === "13";
 				}));
-				dealMemoModel.setProperty("/daysList", oData.results.filter(function(item) {
+				dealMemoModel.setProperty("/daysList", oData.results.filter(function (item) {
 					return item.Mstpcd === "15";
 				}));
-				dealMemoModel.setProperty("/contentSubCategoryList", oData.results.filter(function(item) {
+				dealMemoModel.setProperty("/contentSubCategoryList", oData.results.filter(function (item) {
 					return item.Mstpcd === "23";
 				}));
-				dealMemoModel.setProperty("/contentLanguageList", oData.results.filter(function(item) {
+				dealMemoModel.setProperty("/contentLanguageList", oData.results.filter(function (item) {
 					return item.Mstpcd === "21";
 				}));
-				dealMemoModel.setProperty("/OrigLibraryList", oData.results.filter(function(item) {
+				dealMemoModel.setProperty("/OrigLibraryList", oData.results.filter(function (item) {
 					return item.Mstpcd === "25";
 				}));
 				dealMemoModel.refresh(true);
 			},
 
-			storeChannelInfo: function(oData) {
+			storeChannelInfo: function (oData) {
 				var dealMemoModel = this.getView().getModel("dealMemoModel");
 				dealMemoModel.setProperty("/channelList", oData.results);
 				dealMemoModel.refresh(true);
 			},
 
-			storeContentInfo: function(oData) {
+			storeContentInfo: function (oData) {
 				var dealMemoModel = this.getView().getModel("dealMemoModel");
 				dealMemoModel.setProperty("/contentList", oData.results);
 				dealMemoModel.refresh(true);
 			},
-			storeCurrencyInfo: function(oData) {
+			storeCurrencyInfo: function (oData) {
 				var dealMemoModel = this.getView().getModel("dealMemoModel");
 				dealMemoModel.setProperty("/currencyList", oData.results);
 				dealMemoModel.refresh(true);
 			},
-			storeMovieListInfo: function(oData) {
+			storeMovieListInfo: function (oData) {
 				var dealMemoModel = this.getView().getModel("dealMemoModel");
-				oData.results.map(function(mvObj) {
+				oData.results.map(function (mvObj) {
 					mvObj.Mvnm = mvObj.Mvid + "-" + mvObj.Mvidnm;
 				});
 
 				dealMemoModel.setProperty("/movieList", oData.results);
 				dealMemoModel.refresh(true);
 			},
-			storeMusicListInfo: function(oData) {
+			storeMusicListInfo: function (oData) {
 				var dealMemoModel = this.getView().getModel("dealMemoModel");
-				var musicList = oData.results.filter(function(obj) {
+				var musicList = oData.results.filter(function (obj) {
 					return obj.Mstcd == "04";
 				})
-				musicList.map(function(mvObj) {
+				musicList.map(function (mvObj) {
 					mvObj.Mvnm = mvObj.Mvid + "-" + mvObj.Mvidnm;
 				});
 
 				dealMemoModel.setProperty("/musicList", musicList);
 				dealMemoModel.refresh(true);
 			},
-			storeMatchMasterListInfo: function(oData) {
+			storeMatchMasterListInfo: function (oData) {
 				var dealMemoModel = this.getView().getModel("dealMemoModel");
 				// cnt.map(function(mvObj) {
 				// 	// oData.results.map(function(mvObj) {
 				// 	// mvObj.Matnm = mvObj.Matid + "-" + mvObj.Matds;
 				// 	mvObj.Matnm = mvObj.Cntid + "-" + mvObj.Cntdesc; // added by dhiraj on 23/05/2022
 				// });
-				oData.results.map(function(mvObj) {
+				oData.results.map(function (mvObj) {
 					mvObj.Matnm = mvObj.Matid + "-" + mvObj.Matds;
 				});
 				dealMemoModel.setProperty("/matchMasterList", oData.results);
 				dealMemoModel.refresh(true);
 			},
-			storeMatchListInfo: function(oData) {
+			storeMatchListInfo: function (oData) {
 				var dealMemoModel = this.getView().getModel("dealMemoModel");
-				oData.results.map(function(mvObj) {
+				oData.results.map(function (mvObj) {
 					mvObj.Matnm = mvObj.Matid + "-" + mvObj.Matds;
 				});
 
@@ -327,7 +327,7 @@ sap.ui.define([
 				dealMemoModel.refresh(true);
 			},
 
-			loadInitialDataFromMaster: function() {
+			loadInitialDataFromMaster: function () {
 				var basicFiilters = this.getDefaultFilters();
 				basicFiilters = [basicFiilters[0]];
 				basicFiilters.push(new Filter("Spras", "EQ", "EN-US"));
@@ -388,17 +388,17 @@ sap.ui.define([
 				}, {
 					"key": "Mstpcd",
 					"val": "25"
-				}, ];
+				},];
 
 				var aFilters = basicFiilters.concat(this.getFilterArray(additionalFilters));
 				var oModel = this.getView().getModel();
 
 				oModel.read("/DDMastCdSet", {
 					filters: aFilters,
-					success: function(oData) {
+					success: function (oData) {
 						this.storeMasterCodeInfo(oData);
 					}.bind(this),
-					error: function(oError) {
+					error: function (oError) {
 						var oErrorResponse = JSON.parse(oError.responseText);
 						var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
 						MessageBox.error(oMsg);
@@ -407,10 +407,10 @@ sap.ui.define([
 
 				oModel.read("/F4ChnlIdSet", {
 					filters: basicFiilters,
-					success: function(oData) {
+					success: function (oData) {
 						this.storeChannelInfo(oData);
 					}.bind(this),
-					error: function(oError) {
+					error: function (oError) {
 						var oErrorResponse = JSON.parse(oError.responseText);
 						var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
 						MessageBox.error(oMsg);
@@ -420,10 +420,10 @@ sap.ui.define([
 				var additionalFilters = [new Filter("Mkdm", "EQ", "X")];
 				oModel.read("/F4CntIDSet", {
 					filters: basicFiilters.concat(additionalFilters),
-					success: function(oData) {
+					success: function (oData) {
 						this.storeContentInfo(oData);
 					}.bind(this),
-					error: function(oError) {
+					error: function (oError) {
 						var oErrorResponse = JSON.parse(oError.responseText);
 						var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
 						MessageBox.error(oMsg);
@@ -431,10 +431,10 @@ sap.ui.define([
 				});
 
 				oModel.read("/F4WaersSet", {
-					success: function(oData) {
+					success: function (oData) {
 						this.storeCurrencyInfo(oData);
 					}.bind(this),
-					error: function(oError) {
+					error: function (oError) {
 						var oErrorResponse = JSON.parse(oError.responseText);
 						var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
 						MessageBox.error(oMsg);
@@ -445,11 +445,11 @@ sap.ui.define([
 				additionalFilters = [new Filter("Mvid", "EQ", "")];
 				oModel.read("/MvIDSet", {
 					filters: basicFiilters.concat(additionalFilters),
-					success: function(oData) {
+					success: function (oData) {
 						this.storeMovieListInfo(oData);
 						this.storeMusicListInfo(oData);
 					}.bind(this),
-					error: function(oError) {
+					error: function (oError) {
 						var oErrorResponse = JSON.parse(oError.responseText);
 						var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
 						MessageBox.error(oMsg);
@@ -489,11 +489,11 @@ sap.ui.define([
 				additionalFilters = [new Filter("Matid", "EQ", "")];
 				oModel.read("/MatIDSet", {
 					filters: basicFiilters.concat(additionalFilters),
-					success: function(oData) {
+					success: function (oData) {
 						this.storeMatchListInfo(oData);
 						this.storeMatchMasterListInfo(oData);
 					}.bind(this),
-					error: function(oError) {
+					error: function (oError) {
 						var oErrorResponse = JSON.parse(oError.responseText);
 						var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
 						MessageBox.error(oMsg);
@@ -506,12 +506,12 @@ sap.ui.define([
 
 			/************ Create Deal Memo ************/
 
-			onAddDealMemo: function() {
+			onAddDealMemo: function () {
 				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
 				MessageBox.confirm(oSourceBundle.getText("msgCreateDealMemoForCAF"), {
 					actions: [oSourceBundle.getText("lblYes"), oSourceBundle.getText("lblNo"), oSourceBundle.getText("lblCancel")],
 					emphasizedAction: "No",
-					onClose: function(sAction) {
+					onClose: function (sAction) {
 						if (sAction === oSourceBundle.getText("lblYes")) {
 							this.createCAFDealMemo();
 						} else if (sAction === oSourceBundle.getText("lblNo")) {
@@ -521,7 +521,7 @@ sap.ui.define([
 				});
 			},
 
-			createParamModel: function() {
+			createParamModel: function () {
 				var dealMemoModel = this.getView().getModel("dealMemoModel");
 				dealMemoModel.setProperty("/createParams", {
 					"Chnlnm": "",
@@ -532,11 +532,11 @@ sap.ui.define([
 				});
 
 			},
-			createDealMemo: function() {
+			createDealMemo: function () {
 				this.openCreateParameterDialog();
 			},
 
-			openCreateParameterDialog: function() {
+			openCreateParameterDialog: function () {
 				Fragment.load({
 					name: "com.ui.dealmemolocal.fragments.CreateParameterDialog",
 					controller: this
@@ -549,7 +549,7 @@ sap.ui.define([
 
 				}.bind(this));
 			},
-			validateBeforeCreate: function() {
+			validateBeforeCreate: function () {
 				var dealMemoModel = this.getView().getModel("dealMemoModel");
 				var createParamsData = dealMemoModel.getData().createParams;
 				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
@@ -561,7 +561,7 @@ sap.ui.define([
 				}
 				return statusFlag;
 			},
-			onCreateParamOk: function() {
+			onCreateParamOk: function () {
 				var oVaildFlag = this.validateBeforeCreate();
 				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
 				if (oVaildFlag) {
@@ -576,7 +576,7 @@ sap.ui.define([
 					var contentmasterModel = this.getView().getModel("CONTENT_MAST");
 					var oPath = "/es_content_list('" + dealMemoModel.getProperty("/createParams/ContentId") + "')";
 					contentmasterModel.read(oPath, {
-						success: function(oData) {
+						success: function (oData) {
 							if (enableMPMCheckForContType.indexOf(createParamsData.ConttypKey) >= 0 && (oData.Mpmid === "" || oData.Mpmid === null)) {
 								MessageBox.error(oSourceBundle.getText("msgNoMPM", createParamsData.Content));
 							} else {
@@ -591,7 +591,7 @@ sap.ui.define([
 							//	           			this.loadDetailTab({"Dmno":""});
 
 						}.bind(this),
-						error: function(oError) {
+						error: function (oError) {
 							var oErrorResponse = JSON.parse(oError.responseText);
 							var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
 							MessageBox.error(oMsg);
@@ -602,17 +602,17 @@ sap.ui.define([
 				}
 			},
 
-			onCreateParamCancel: function() {
+			onCreateParamCancel: function () {
 				this._oCreateParamDialog.close();
 			},
-			contentSubTypeList: function() {
+			contentSubTypeList: function () {
 				var contentsubTypeModel = this.getView().getModel("CONTENT_MAST");
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var ctype = dealMemoDetailModel.oData.Cnttp;
 				var cFilter = new Filter("Mstpcd", "EQ", ctype);
 				contentsubTypeModel.read("/es_content_subtype", {
 					filters: [cFilter],
-					success: function(oData1) {
+					success: function (oData1) {
 						var dealMemoModel = this.getView().getModel("dealMemoModel");
 						dealMemoModel.setProperty("/sortedContSubType", oData1.results);
 						dealMemoModel.refresh(true);
@@ -623,7 +623,7 @@ sap.ui.define([
 
 			/************ Value Helps ************/
 
-			onValueHelpChannel: function() {
+			onValueHelpChannel: function () {
 				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
 				this.oValueHelpSelectionParams = {
 					"bindPathName": "dealMemoModel>/channelList",
@@ -637,7 +637,7 @@ sap.ui.define([
 				};
 				this.openSelectionDialog();
 			},
-			onValueHelpContentSubCategory: function() {
+			onValueHelpContentSubCategory: function () {
 				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
 				this.oValueHelpSelectionParams = {
 					"bindPathName": "dealMemoModel>/contentSubCategoryList",
@@ -651,7 +651,7 @@ sap.ui.define([
 				};
 				this.openSelectionDialog();
 			},
-			onValueHelpContentCategory: function() {
+			onValueHelpContentCategory: function () {
 				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
 				this.oValueHelpSelectionParams = {
 					"bindPathName": "dealMemoModel>/contentCategoryList",
@@ -665,7 +665,7 @@ sap.ui.define([
 				};
 				this.openSelectionDialog();
 			},
-			onValueHelpContentType: function() {
+			onValueHelpContentType: function () {
 				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
 				this.oValueHelpSelectionParams = {
 					"bindPathName": "dealMemoModel>/contentTypeList",
@@ -679,20 +679,20 @@ sap.ui.define([
 				};
 				this.openSelectionDialog();
 			},
-			onValueHelpContent: function() {
+			onValueHelpContent: function () {
 				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
 				var dealMemoModel = this.getView().getModel("dealMemoModel");
 				var dealMemoInfo = dealMemoModel.getData();
 				var contentList = $.extend(true, [], dealMemoInfo.contentList);
 				var filteredContentList = [];
-				if(dealMemoInfo.createParams.ContentNatureKey  == "06" || dealMemoInfo.createParams.ContentNatureKey  == "07") {
-					filteredContentList = contentList.filter(function(obj) {
+				if (dealMemoInfo.createParams.ContentNatureKey == "06" || dealMemoInfo.createParams.ContentNatureKey == "07") {
+					filteredContentList = contentList.filter(function (obj) {
 						return obj.Mstcd === dealMemoInfo.createParams.ConttypKey && obj.Snxtp == true;
 					});
 				} else {
-				filteredContentList = contentList.filter(function(obj) {
-					return obj.Mstcd === dealMemoInfo.createParams.ConttypKey;
-				});
+					filteredContentList = contentList.filter(function (obj) {
+						return obj.Mstcd === dealMemoInfo.createParams.ConttypKey;
+					});
 				}
 				dealMemoInfo.filteredContentList = filteredContentList;
 				dealMemoModel.refresh(true);
@@ -708,7 +708,7 @@ sap.ui.define([
 				};
 				this.openSelectionDialog();
 			},
-			onValueHelpContentNature: function() {
+			onValueHelpContentNature: function () {
 				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
 				this.oValueHelpSelectionParams = {
 					"bindPathName": "dealMemoModel>/contentNatureList",
@@ -723,7 +723,7 @@ sap.ui.define([
 				this.openSelectionDialog();
 			},
 
-			onValuHelpCurrency: function() {
+			onValuHelpCurrency: function () {
 				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
 				this.oValueHelpSelectionParams = {
 					"bindPathName": "dealMemoModel>/currencyList",
@@ -738,7 +738,7 @@ sap.ui.define([
 				};
 				this.openSelectionDialog();
 			},
-			onValueHelpEpiDesc: function(oEvent) {
+			onValueHelpEpiDesc: function (oEvent) {
 				var oPath = oEvent.getSource().getBindingContext("dealMemoDetailModel").sPath;
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
@@ -791,7 +791,7 @@ sap.ui.define([
 				this.openSelectionDialog();
 			},
 
-			openSelectionDialog: function() {
+			openSelectionDialog: function () {
 				Fragment.load({
 					name: "com.ui.dealmemolocal.fragments.SelectionDialog",
 					controller: this
@@ -800,10 +800,18 @@ sap.ui.define([
 					this.getView().addDependent(this._oSelectionDialog);
 					this._oSelectionDialog.setModel(this.getView().getModel("dealMemoModel"));
 					this._oSelectionDialog.setTitle(this.oValueHelpSelectionParams.dialogTitle);
-					var oItem = new sap.m.StandardListItem({
-						title: "{" + this.oValueHelpSelectionParams.bindPropName + "}",
-						info: "{dealMemoModel>Ltext}"
-					});
+					if (this.oValueHelpSelectionParams.bindPropName2 != undefined) {
+						var oItem = new sap.m.StandardListItem({
+							title: "{" + this.oValueHelpSelectionParams.bindPropName + "( " + this.oValueHelpSelectionParams.bindPropName2 + " ) }",
+							info: "{dealMemoModel>Ltext}"
+						});
+					} else {
+						var oItem = new sap.m.StandardListItem({
+							title: "{" + this.oValueHelpSelectionParams.bindPropName + "}",
+							info: "{dealMemoModel>Ltext}"
+						});
+					}
+
 					if (this.oValueHelpSelectionParams.bindPropDescName) {
 						oItem.bindProperty("description", this.oValueHelpSelectionParams.bindPropDescName);
 					}
@@ -812,7 +820,7 @@ sap.ui.define([
 				}.bind(this));
 			},
 
-			onConfirmSelection: function(oEvent) {
+			onConfirmSelection: function (oEvent) {
 				var selectedItemObj = oEvent.getParameters()['selectedItem'].getBindingContext("dealMemoModel").getObject();
 				var oValuePath = this.oValueHelpSelectionParams.valuePath;
 				var oKeyPath = this.oValueHelpSelectionParams.keyPath;
@@ -822,12 +830,15 @@ sap.ui.define([
 				var dealMemoModel = this.getView().getModel(oValueModelAlias);
 				dealMemoModel.setProperty(oValuePath, selectedItemObj[oProp]);
 				dealMemoModel.setProperty(oKeyPath, selectedItemObj[oKey]);
+				if (this.oValueHelpSelectionParams.bindPropName2 !== undefined) {
+					dealMemoModel.setProperty("/CAFDmver", selectedItemObj["Dmver"]);
+				}
 				dealMemoModel.refresh(true);
 				if (this.oValueHelpSelectionParams.callBackFunction) {
 					this.oValueHelpSelectionParams.callBackFunction(this);
 				}
 			},
-			mapExchrt: function(oRef) {
+			mapExchrt: function (oRef) {
 				sap.ui.core.BusyIndicator.show(0);
 				var dealMemoDetailModel = oRef.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
@@ -836,11 +847,11 @@ sap.ui.define([
 				var srvUrl = "/sap/opu/odata/IBSCMS/DEALMEMO_SRV";
 				var oModelSav = new sap.ui.model.odata.ODataModel(srvUrl, true, "", "");
 				var pValue = "/DmExchrtSet?$filter=Chnlid  eq '" + Chnlid + "' and Waers eq '" + Waers + "'";
-				oModelSav.read(pValue, null, null, true, function(oData) {
+				oModelSav.read(pValue, null, null, true, function (oData) {
 					dealMemoDetailModel.setProperty("/Exchrt", oData.results[0].Exchrt);
 					dealMemoDetailModel.refresh(true);
 					sap.ui.core.BusyIndicator.hide();
-				}, function(value) {
+				}, function (value) {
 					sap.ui.core.BusyIndicator.hide();
 					console.log(value);
 					//alert("fail");
@@ -848,7 +859,7 @@ sap.ui.define([
 				});
 
 			},
-			onSearchSelection: function(oEvent) {
+			onSearchSelection: function (oEvent) {
 				var sValue = oEvent.getParameter("value");
 				var oFilter = new Filter(this.oValueHelpSelectionParams.propName, FilterOperator.Contains, sValue);
 				var oBinding = oEvent.getParameter("itemsBinding");
@@ -859,7 +870,7 @@ sap.ui.define([
 
 			/***** New Deal Memo Detail Load ******/
 
-			getDetailPageInfo: function() {
+			getDetailPageInfo: function () {
 				return {
 					"Dmno": "",
 					"Dmver": "",
@@ -907,7 +918,7 @@ sap.ui.define([
 					"errorMsgDetailTab": ""
 				};
 			},
-			loadNewDetailPage: function() {
+			loadNewDetailPage: function () {
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoModel = this.getView().getModel("dealMemoModel");
 				var dealmemoDetObj = {
@@ -980,7 +991,7 @@ sap.ui.define([
 
 			/****** Deal Memo Item Select *********/
 
-			resetTabsLoaded: function(Dmno) {
+			resetTabsLoaded: function (Dmno) {
 				var defaultTabsInfo = {
 					"DetailTab": false,
 					"BudgetTab": false,
@@ -991,7 +1002,7 @@ sap.ui.define([
 				this.tabsLoadedForDealMemo[Dmno] = defaultTabsInfo;
 
 			},
-			onDealMemoItemPress: function(oEvent) {
+			onDealMemoItemPress: function (oEvent) {
 				var selectedDealMemoObj = oEvent.getSource().getBindingContext("dealMemoModel").getObject();
 				this.resetTabsLoaded(selectedDealMemoObj.Dmno);
 				this.selectedDealMemoObj = selectedDealMemoObj;
@@ -1011,7 +1022,7 @@ sap.ui.define([
 				//    				});	
 			},
 
-			loadDetailDealMemo: function(selectedDealMemoObj) {
+			loadDetailDealMemo: function (selectedDealMemoObj) {
 
 				var odetailEntityPath = "/DmHeaderSet(Tentid='IBS',Dmno='" + selectedDealMemoObj.Dmno + "',Dmver='" + selectedDealMemoObj.Dmver +
 					"',Transtp='D')";
@@ -1023,7 +1034,7 @@ sap.ui.define([
 						"$expand": "DmEpisodeSet,DmCostSet,DmCoSet,DmYCSet,DmbsSet,Dmaf,DmtxtSet"
 					},
 
-					success: function(oData) {
+					success: function (oData) {
 						//	this.displayDealMemoDetailPageInfo(oData);
 
 						//Detail Tab
@@ -1040,21 +1051,21 @@ sap.ui.define([
 						oData.msgVisible = false;
 						oData.errorMsg = "";
 						oData.YearBudgetAllInfo = oData.DmYCSet.results;
-						oData.YearBudgetLin = oData.DmYCSet.results.filter(function(obj) {
+						oData.YearBudgetLin = oData.DmYCSet.results.filter(function (obj) {
 							return obj.Platform === "01"
 						});
 						oData.YearBudgetLinTot = this.handleTotalBudgetYear(oData.YearBudgetLin)
-						oData.YearBudgetNonLin = oData.DmYCSet.results.filter(function(obj) {
+						oData.YearBudgetNonLin = oData.DmYCSet.results.filter(function (obj) {
 							return obj.Platform === "02"
 						});
 						oData.YearBudgetNonLinTot = this.handleTotalBudgetYear(oData.YearBudgetNonLin)
 						oData.YearBudgetInfo = oData.DmYCSet.results;
 						oData.episodeData = oData.DmEpisodeSet.results;
 
-						oData.vendorContractData = oData.DmCoSet.results.filter(function(obj) {
+						oData.vendorContractData = oData.DmCoSet.results.filter(function (obj) {
 							return obj.Conttp === "01";
 						});
-						oData.artistContractData = oData.DmCoSet.results.filter(function(obj) {
+						oData.artistContractData = oData.DmCoSet.results.filter(function (obj) {
 							return obj.Conttp === "02";
 						});
 						oData.msgDetailTabVisible = false;
@@ -1085,7 +1096,7 @@ sap.ui.define([
 						var scheduleInfo = [];
 						if (oData.DmbsSet.results.length) {
 							oData.ScheduleDetVisibility = true;
-							oData.DmbsSet.results.map(function(DmbsObj) {
+							oData.DmbsSet.results.map(function (DmbsObj) {
 								var oDmbsObj = $.extend(true, {}, DmbsObj);
 								oDmbsObj.Timeslotfm = Formatter.formatTimeDuration(DmbsObj.Timeslotfm);
 								oDmbsObj.TimeslotfmDt = Formatter.formatTimeDurationDt(DmbsObj.Timeslotfm);
@@ -1145,7 +1156,7 @@ sap.ui.define([
 							that.getView().byId("commentInner").getItems()[i].setVisible(false);
 						}
 					}.bind(this),
-					error: function(oError) {
+					error: function (oError) {
 						sap.ui.core.BusyIndicator.hide();
 						var oErrorResponse = JSON.parse(oError.responseText);
 						var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
@@ -1154,11 +1165,11 @@ sap.ui.define([
 				});
 
 			},
-			getSecChannelList: function(ownerChnlId) {
+			getSecChannelList: function (ownerChnlId) {
 				var dealMemoModel = this.getView().getModel("dealMemoModel");
 				var secChannelList = [];
 				if (dealMemoModel.getData().channelList.length) {
-					secChannelList = dealMemoModel.getData().channelList.filter(function(obj) {
+					secChannelList = dealMemoModel.getData().channelList.filter(function (obj) {
 						return obj.Chnlid !== ownerChnlId
 					})
 
@@ -1167,14 +1178,14 @@ sap.ui.define([
 
 			},
 
-			displayDealMemoDetailPageInfo: function(oData) {
+			displayDealMemoDetailPageInfo: function (oData) {
 
 			},
 			/****** Deal Memo Item Select *********/
 
 			/***************** Load Detail Tab for Deal Memo ******************/
 
-			loadDetailTab: function(selectedDealMemoObj) {
+			loadDetailTab: function (selectedDealMemoObj) {
 				this.getView().byId("idIconTabBar").setSelectedKey("detail");
 				//    			if(selectedDealMemoObj.Dmno === "" && this.selectedDealMemoObj.Dmno !== ""){
 				//    				this._noOfEpiChanged = false;
@@ -1191,7 +1202,7 @@ sap.ui.define([
 
 			/***************** Load Detail Tab for Deal Memo ******************/
 
-			onMainTabSelect: function() {
+			onMainTabSelect: function () {
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
 				var mainSelectedKey = this.getView().byId("idIconTabBar").getSelectedKey();
@@ -1250,7 +1261,7 @@ sap.ui.define([
 				}
 			},
 
-			getYearEpisodes: function(FromYr, ToYr) {
+			getYearEpisodes: function (FromYr, ToYr) {
 				var yearRange = [];
 				for (var ind = FromYr; ind <= ToYr; ind++) {
 					yearRange.push({
@@ -1263,7 +1274,7 @@ sap.ui.define([
 				return yearRange;
 
 			},
-			handleDmStatus: function(oData) {
+			handleDmStatus: function (oData) {
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				this.getView().byId("btnChangeDM").setVisible(false);
 				this.getView().byId("btnSaveDM").setEnabled(true);
@@ -1282,7 +1293,7 @@ sap.ui.define([
 				}
 			},
 
-			handleIconTabColor: function(oData) {
+			handleIconTabColor: function (oData) {
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
 				dealMemoDetailModel.setProperty("/budgetTabColor", "Critical");
@@ -1352,10 +1363,10 @@ sap.ui.define([
 				var oContractData = oData.DmCoSet.results;
 
 				if (oContractData.length) {
-					var oVCData = oContractData.filter(function(obj) {
+					var oVCData = oContractData.filter(function (obj) {
 						return obj.Conttp === "01"
 					});
-					var oACData = oContractData.filter(function(obj) {
+					var oACData = oContractData.filter(function (obj) {
 						return obj.Conttp === "02"
 					});
 					if (oVCData.length > 0) {
@@ -1391,19 +1402,19 @@ sap.ui.define([
 				this.handleDmStatus(oData);
 			},
 
-			loadDetailPage: function() {
+			loadDetailPage: function () {
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
 				this.getView().byId("idIconTabBar").setSelectedKey("detail");
 
 			},
 
-			handleFiscalYrChange: function(oEvent) {
+			handleFiscalYrChange: function (oEvent) {
 				this._yearChanged = true;
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				//		 dealMemoDetailModel.setProperty("/FiscalYrFromTo");
 			},
-			validateBeforeSaveDetailTab: function() {
+			validateBeforeSaveDetailTab: function () {
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
 				var oMsg = "";
@@ -1463,7 +1474,7 @@ sap.ui.define([
 				}
 				return statusFlag;
 			},
-			handleSecChannelChange: function(oEvent) {
+			handleSecChannelChange: function (oEvent) {
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
 				if (dealMemoDetailInfo.SecondChnl === "") {
@@ -1479,7 +1490,7 @@ sap.ui.define([
 			},
 
 			// Detail Tab Save
-			prepareDetailPayload: function() {
+			prepareDetailPayload: function () {
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
 				var checkFiscalYr = dealMemoDetailInfo.FiscalYrFromTo.includes("-");
@@ -1537,7 +1548,7 @@ sap.ui.define([
 
 				return payload;
 			},
-			changeEstimatedDate: function() {
+			changeEstimatedDate: function () {
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
 				if (dealMemoDetailInfo.Estprgreldt === "") {
@@ -1545,7 +1556,7 @@ sap.ui.define([
 				}
 				dealMemoDetailModel.refresh(true);
 			},
-			saveDealMemoDetailData: function() {
+			saveDealMemoDetailData: function () {
 				var validationFlag = this.validateBeforeSaveDetailTab();
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
@@ -1562,24 +1573,24 @@ sap.ui.define([
 
 			},
 
-			createDealMemoHeaderSet: function() {
+			createDealMemoHeaderSet: function () {
 				var oDetPayload = this.prepareDetailPayload();
 				var oModel = this.getView().getModel();
 				oModel.create("/DmHeaderSet", oDetPayload, {
-					success: function(oData) {
+					success: function (oData) {
 						var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
 						MessageToast.show(oSourceBundle.getText("msgSuccDealMemoCreate"));
 						this.loadDealMemoList();
 						this.loadDefaultDealMemo = true;
 					}.bind(this),
-					error: function(oError) {
+					error: function (oError) {
 						var oErrorResponse = JSON.parse(oError.responseText);
 						var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
 						MessageBox.error(oMsg);
 					}
 				});
 			},
-			checkIfEpiOrYearChanged: function() {
+			checkIfEpiOrYearChanged: function () {
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
 				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
@@ -1611,7 +1622,7 @@ sap.ui.define([
 
 						actions: ["Continue", MessageBox.Action.CLOSE],
 						emphasizedAction: "Continue",
-						onClose: function(sAction) {
+						onClose: function (sAction) {
 							if (sAction === "Continue") {
 								this.updateDealMemoHeaderSet();
 							}
@@ -1622,7 +1633,7 @@ sap.ui.define([
 				}
 
 			},
-			updateDealMemoHeaderSet: function() {
+			updateDealMemoHeaderSet: function () {
 				var oDetPayload = this.prepareDetailPayload();
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
@@ -1632,13 +1643,13 @@ sap.ui.define([
 				var oPath = "/DmHeaderSet(Tentid='IBS',Dmno='" + dealMemoDetailInfo.Dmno + "',Dmver='" + dealMemoDetailInfo.Dmver +
 					"',Transtp='D')";
 				oModel.update(oPath, oDetPayload, {
-					success: function(oData) {
+					success: function (oData) {
 						var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
 						MessageToast.show(oSourceBundle.getText("msgSuccDealMemoUpdate", dealMemoDetailInfo.Dmno));
 						//	 this.loadDealMemoList();
 						this.loadDetailDealMemo(this.selectedDealMemoObj);
 					}.bind(this),
-					error: function(oError) {
+					error: function (oError) {
 						var oErrorResponse = JSON.parse(oError.responseText);
 						var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
 						MessageBox.error(oMsg);
@@ -1648,7 +1659,7 @@ sap.ui.define([
 
 			//Budget Tab
 
-			loadCostTemplate: function() {
+			loadCostTemplate: function () {
 				var oModel = this.getView().getModel();
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
@@ -1661,7 +1672,7 @@ sap.ui.define([
 				oModel.callFunction("/Getcosttemp", {
 					method: "GET",
 					urlParameters: paramObj,
-					success: function(oData, response) {
+					success: function (oData, response) {
 						var costSheetFormatted = this.prepareCostSheet(oData.results, true);
 						dealMemoDetailModel.setProperty("/budgetCostData", costSheetFormatted);
 						dealMemoDetailModel.refresh(true);
@@ -1669,7 +1680,7 @@ sap.ui.define([
 						oTableBinding.filter([new Filter("itemVisible", "EQ", true)]);
 
 					}.bind(this),
-					error: function(oError) {
+					error: function (oError) {
 						var oErrorResponse = JSON.parse(oError.responseText);
 						var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
 						MessageBox.error(oMsg);
@@ -1678,7 +1689,7 @@ sap.ui.define([
 
 			},
 
-			loadChangeCostTemplate: function() {
+			loadChangeCostTemplate: function () {
 				var oModel = this.getView().getModel();
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
@@ -1691,14 +1702,14 @@ sap.ui.define([
 				oModel.callFunction("/Getcosttemp", {
 					method: "GET",
 					urlParameters: paramObj,
-					success: function(oData, response) {
+					success: function (oData, response) {
 						var costSheetFormatted = this.prepareCostSheet(oData.results, true);
 						dealMemoDetailModel.setProperty("/changeCostDataTemplate", costSheetFormatted);
 						dealMemoDetailModel.setProperty("/createEpiCostDataTemplate", $.extend(true, [], costSheetFormatted));
 						dealMemoDetailModel.refresh(true);
 
 					}.bind(this),
-					error: function(oError) {
+					error: function (oError) {
 						var oErrorResponse = JSON.parse(oError.responseText);
 						var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
 						MessageBox.error(oMsg);
@@ -1706,7 +1717,7 @@ sap.ui.define([
 				})
 
 			},
-			loadMovieCostTemplate: function() {
+			loadMovieCostTemplate: function () {
 				var oModel = this.getView().getModel();
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
@@ -1719,14 +1730,14 @@ sap.ui.define([
 				oModel.callFunction("/Getcosttemp", {
 					method: "GET",
 					urlParameters: paramObj,
-					success: function(oData, response) {
+					success: function (oData, response) {
 						var costSheetFormatted = this.prepareCostSheet(oData.results, true);
 						dealMemoDetailModel.setProperty("/moviebudgetCostData", costSheetFormatted);
 						dealMemoDetailModel.setProperty("/budgetCostData", $.extend(true, [], costSheetFormatted));
 						dealMemoDetailModel.refresh(true);
 
 					}.bind(this),
-					error: function(oError) {
+					error: function (oError) {
 						var oErrorResponse = JSON.parse(oError.responseText);
 						var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
 						MessageBox.error(oMsg);
@@ -1734,13 +1745,13 @@ sap.ui.define([
 				})
 
 			},
-			prepareCostSheet: function(costSheetData, editModeFlag) {
+			prepareCostSheet: function (costSheetData, editModeFlag) {
 				var budgetSheetList = [];
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
 				if (costSheetData.length) {
 					var costHeads = [];
-					costSheetData.map(function(costSheetObj) {
+					costSheetData.map(function (costSheetObj) {
 
 						var ChildObj = {
 							"Costcd": costSheetObj.Scostcd,
@@ -1799,12 +1810,12 @@ sap.ui.define([
 							budgetSheetList.push(costHeadObj);
 							costHeads.push(costHeadObj.Costcd);
 						} else {
-							var existingCostHeadCodes = budgetSheetList.map(function(obj) {
+							var existingCostHeadCodes = budgetSheetList.map(function (obj) {
 								return obj.Costcd;
 							});
 							var costHeadObj = budgetSheetList[existingCostHeadCodes.indexOf(costSheetObj.Costcd)];
 							if (costHeadObj.childHeads) {
-								var existingchildCostHeades = costHeadObj.childHeads.map(function(obj) {
+								var existingchildCostHeades = costHeadObj.childHeads.map(function (obj) {
 									return obj.Costcd;
 								})
 								if (existingchildCostHeades.indexOf(ChildObj.Costcd) === -1) {
@@ -1821,7 +1832,7 @@ sap.ui.define([
 
 				}
 				var budgetData = [];
-				budgetSheetList.map(function(obj) {
+				budgetSheetList.map(function (obj) {
 					budgetData.push(obj);
 					if (obj.childHeads && obj.childHeads.length) {
 						budgetData = budgetData.concat(obj.childHeads);
@@ -1829,7 +1840,7 @@ sap.ui.define([
 				});
 				return budgetData;
 			},
-			onNodeExpand: function(oEvent) {
+			onNodeExpand: function (oEvent) {
 				var currentDetPageId = this.getView().byId("splitApp").getCurrentDetailPage().getId();
 				if (currentDetPageId.includes("episodeDetail")) {
 					var oModel = this.getView().getModel("dealMemoEpisodeModel");
@@ -1841,17 +1852,17 @@ sap.ui.define([
 					var selectedCostHeadObj = oEvent.getSource().getBindingContext("dealMemoDetailModel").getObject();
 				}
 
-				var childCostHeads = budgetCostData.filter(function(obj) {
+				var childCostHeads = budgetCostData.filter(function (obj) {
 					return obj.parenCostcd === selectedCostHeadObj.Costcd
 				});
 				selectedCostHeadObj.isExpanded = !selectedCostHeadObj.isExpanded;
-				childCostHeads.map(function(childObj) {
+				childCostHeads.map(function (childObj) {
 					childObj.itemVisible = selectedCostHeadObj.isExpanded
 				});
 				oModel.refresh(true);
 			},
 
-			onChangeAcquisitionAmount: function(oEvent) {
+			onChangeAcquisitionAmount: function (oEvent) {
 
 				var currentDetPageId = this.getView().byId("splitApp").getCurrentDetailPage().getId();
 				if (currentDetPageId.includes("episodeDetail")) {
@@ -1881,20 +1892,20 @@ sap.ui.define([
 
 				}
 
-				var costCodes = budgetCostData.map(function(obj) {
+				var costCodes = budgetCostData.map(function (obj) {
 					return obj.Costcd
 				});
 				if (changedCostHeadObj.parenCostcd !== "") {
 					changedCostHeadObj.flag = flag;
 					this.changedCostCodes.push(changedCostHeadObj.Scostcd);
-					var parentCostHeadObj = budgetCostData[budgetCostData.map(function(obj) {
+					var parentCostHeadObj = budgetCostData[budgetCostData.map(function (obj) {
 						return obj.Costcd
 					}).indexOf(changedCostHeadObj.parenCostcd)];
-					var allChildCostHeads = budgetCostData.filter(function(bcObj) {
+					var allChildCostHeads = budgetCostData.filter(function (bcObj) {
 						return bcObj.parenCostcd === changedCostHeadObj.parenCostcd
 					});
 					parentCostHeadObj.Prdhsamt = 0;
-					allChildCostHeads.map(function(childObj) {
+					allChildCostHeads.map(function (childObj) {
 						parentCostHeadObj.Prdhsamt += parseFloat(childObj.Prdhsamt);
 					})
 					parentCostHeadObj.Prdhsamt = parentCostHeadObj.Prdhsamt.toFixed(2);
@@ -1912,7 +1923,7 @@ sap.ui.define([
 				oModel.refresh(true);
 
 			},
-			onChangeExternalAmount: function(oEvent) {
+			onChangeExternalAmount: function (oEvent) {
 				//    			var changedCostHeadObj = oEvent.getSource().getBindingContext("dealMemoDetailModel").getObject();
 				//    			var detailModel = this.getView().getModel("dealMemoDetailModel");
 				//    			var budgetCostData = detailModel.getData().budgetCostData;
@@ -1943,20 +1954,20 @@ sap.ui.define([
 						flag = "Ch";
 					}
 				}
-				var costCodes = budgetCostData.map(function(obj) {
+				var costCodes = budgetCostData.map(function (obj) {
 					return obj.Costcd
 				});
 				if (changedCostHeadObj.parenCostcd !== "") {
 					changedCostHeadObj.flag = flag;
 					this.changedCostCodes.push(changedCostHeadObj.Scostcd);
-					var parentCostHeadObj = budgetCostData[budgetCostData.map(function(obj) {
+					var parentCostHeadObj = budgetCostData[budgetCostData.map(function (obj) {
 						return obj.Costcd
 					}).indexOf(changedCostHeadObj.parenCostcd)];
-					var allChildCostHeads = budgetCostData.filter(function(bcObj) {
+					var allChildCostHeads = budgetCostData.filter(function (bcObj) {
 						return bcObj.parenCostcd === changedCostHeadObj.parenCostcd
 					});
 					parentCostHeadObj.Inhsamt = 0;
-					allChildCostHeads.map(function(childObj) {
+					allChildCostHeads.map(function (childObj) {
 						parentCostHeadObj.Inhsamt += parseFloat(childObj.Inhsamt);
 					})
 					parentCostHeadObj.Inhsamt = parentCostHeadObj.Inhsamt.toFixed(2);
@@ -1973,7 +1984,7 @@ sap.ui.define([
 
 				oModel.refresh(true);
 			},
-			onChangeInHouseAmount: function(oEvent) {
+			onChangeInHouseAmount: function (oEvent) {
 				//    			var changedCostHeadObj = oEvent.getSource().getBindingContext("dealMemoDetailModel").getObject();
 				//    			var detailModel = this.getView().getModel("dealMemoDetailModel");
 				//    			var budgetCostData = detailModel.getData().budgetCostData;
@@ -2004,20 +2015,20 @@ sap.ui.define([
 						flag = "Ch";
 					}
 				}
-				var costCodes = budgetCostData.map(function(obj) {
+				var costCodes = budgetCostData.map(function (obj) {
 					return obj.Costcd
 				});
 				if (changedCostHeadObj.parenCostcd !== "") {
 					changedCostHeadObj.flag = flag;
 					this.changedCostCodes.push(changedCostHeadObj.Scostcd);
-					var parentCostHeadObj = budgetCostData[budgetCostData.map(function(obj) {
+					var parentCostHeadObj = budgetCostData[budgetCostData.map(function (obj) {
 						return obj.Costcd
 					}).indexOf(changedCostHeadObj.parenCostcd)];
-					var allChildCostHeads = budgetCostData.filter(function(bcObj) {
+					var allChildCostHeads = budgetCostData.filter(function (bcObj) {
 						return bcObj.parenCostcd === changedCostHeadObj.parenCostcd
 					});
 					parentCostHeadObj.Inhouseamt = 0;
-					allChildCostHeads.map(function(childObj) {
+					allChildCostHeads.map(function (childObj) {
 						parentCostHeadObj.Inhouseamt += parseFloat(childObj.Inhouseamt);
 					})
 					parentCostHeadObj.Inhouseamt = parentCostHeadObj.Inhouseamt.toFixed(2);
@@ -2035,7 +2046,7 @@ sap.ui.define([
 				oModel.refresh(true);
 			},
 
-			prepareCostPostPayload: function(parentCostHead, childCostHead) {
+			prepareCostPostPayload: function (parentCostHead, childCostHead) {
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
 				return {
@@ -2059,7 +2070,7 @@ sap.ui.define([
 				}
 
 			},
-			saveBudgetCostData: function() {
+			saveBudgetCostData: function () {
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
 				if (dealMemoDetailInfo.DmCostSet.results.length) {
@@ -2068,10 +2079,10 @@ sap.ui.define([
 					this.createBudgetCostData();
 				}
 			},
-			createBudgetCostData: function() {
+			createBudgetCostData: function () {
 				var detailModel = this.getView().getModel("dealMemoDetailModel");
 				var budgetCostData = detailModel.getData().budgetCostData;
-				var costCodes = budgetCostData.map(function(obj) {
+				var costCodes = budgetCostData.map(function (obj) {
 					return obj.Costcd
 				});
 				var postPayLoad = [];
@@ -2081,7 +2092,7 @@ sap.ui.define([
 				oModel.setDeferredGroups(["budgetChanges"]);
 				var mParameters = {
 					groupId: "budgetChanges",
-					success: function(odata, resp) {
+					success: function (odata, resp) {
 						var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
 						MessageToast.show(oSourceBundle.getText("msgSuccBudgetDetSave"));
 						this.loadDefaultDealMemo = false;
@@ -2093,14 +2104,14 @@ sap.ui.define([
 						//	this.getView().byId("idIconTabBar2").fireSelect();
 
 					}.bind(this),
-					error: function(oError) {
+					error: function (oError) {
 						var oErrorResponse = JSON.parse(oError.responseText);
 						var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
 						MessageBox.error(oMsg);
 					}
 				};
 
-				budgetCostData.map(function(budgetObj) {
+				budgetCostData.map(function (budgetObj) {
 					if (!budgetObj.hasChild) {
 						if (budgetObj.parenCostcd !== "") {
 							var parentCostHead = budgetCostData[costCodes.indexOf(budgetObj.parenCostcd)];
@@ -2120,11 +2131,11 @@ sap.ui.define([
 				oModel.submitChanges(mParameters);
 				console.log(postPayLoad);
 			},
-			updateBudgetCostData: function() {
+			updateBudgetCostData: function () {
 				var detailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = detailModel.getData();
 				var budgetCostData = detailModel.getData().budgetCostData;
-				var costCodes = budgetCostData.map(function(obj) {
+				var costCodes = budgetCostData.map(function (obj) {
 					return obj.Costcd
 				});
 				var postPayLoad = [];
@@ -2136,7 +2147,7 @@ sap.ui.define([
 				oModel.sDefaultUpdateMethod = "PUT";
 				var mParameters = {
 					groupId: "budgetChanges",
-					success: function(odata, resp) {
+					success: function (odata, resp) {
 						var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
 						MessageToast.show(oSourceBundle.getText("msgSuccBudgetDetUpdate"));
 						this.loadDefaultDealMemo = false;
@@ -2148,14 +2159,14 @@ sap.ui.define([
 						//	this.getView().byId("idIconTabBar2").fireSelect();
 
 					}.bind(this),
-					error: function(oError) {
+					error: function (oError) {
 						var oErrorResponse = JSON.parse(oError.responseText);
 						var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
 						MessageBox.error(oMsg);
 					}
 				};
 
-				budgetCostData.map(function(budgetObj) {
+				budgetCostData.map(function (budgetObj) {
 					if (!budgetObj.hasChild && budgetObj.flag === "Ch") {
 						alreadySaveFlag = false;
 						if (budgetObj.parenCostcd !== "") {
@@ -2182,7 +2193,7 @@ sap.ui.define([
 				}
 
 			},
-			prepareYearBudgetPayload: function(yearObj) {
+			prepareYearBudgetPayload: function (yearObj) {
 				return {
 					"Tentid": yearObj.Tentid,
 					"Dmno": yearObj.Dmno,
@@ -2199,7 +2210,7 @@ sap.ui.define([
 					"Recst": "I"
 				};
 			},
-			saveYearBudgetCostData: function() {
+			saveYearBudgetCostData: function () {
 				var detailModel = this.getView().getModel("dealMemoDetailModel");
 				var yearBudgetData = (detailModel.getProperty("/YearBudgetAllInfo"));
 				var oModel = this.getView().getModel();
@@ -2207,7 +2218,7 @@ sap.ui.define([
 				oModel.setDeferredGroups(["yearBudgetChanges"]);
 				var mParameters = {
 					groupId: "yearBudgetChanges",
-					success: function(odata, resp) {
+					success: function (odata, resp) {
 						var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
 						MessageToast.show(oSourceBundle.getText("msgSuccYearBudgetDetSave"));
 						detailModel.setProperty("/yearWiseTabColor", "Positive");
@@ -2215,14 +2226,14 @@ sap.ui.define([
 						detailModel.refresh(true);
 
 					}.bind(this),
-					error: function(oError) {
+					error: function (oError) {
 						var oErrorResponse = JSON.parse(oError.responseText);
 						var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
 						MessageBox.error(oMsg);
 					}
 				};
 				if (yearBudgetData.length) {
-					yearBudgetData.map(function(yearBudgetObj) {
+					yearBudgetData.map(function (yearBudgetObj) {
 						var payLoadData = this.prepareYearBudgetPayload(yearBudgetObj);
 						//postPayLoad.push(payLoadData);
 						oModel.create("/DmYCSet", payLoadData, {
@@ -2236,7 +2247,7 @@ sap.ui.define([
 					MessageBox.error(oSourceBundle.getText("msgNoDatatoSave"));
 				}
 			},
-			handlePlatformChange: function(oEvent) {
+			handlePlatformChange: function (oEvent) {
 				var selectedKey = this.getView().byId("cbplatformchnge").getSelectedKey();
 				var mapObj = {
 					"01": "/YearBudgetLin",
@@ -2251,13 +2262,13 @@ sap.ui.define([
 				this.getView().byId("lblYearplattotal").setText(oSourceBundle.getText("lblplatAmtText" + selectedKey))
 				var yearBudgetData = dealMemoDetailModel.getProperty(mapObj[selectedKey]);
 				var yearBudgetDataTot = dealMemoDetailModel.getProperty(mapObjTot[selectedKey]);
-				
+
 				dealMemoDetailModel.setProperty("/YearBudgetInfo", yearBudgetData);
 				dealMemoDetailModel.setProperty("/yearWiseTableTot", yearBudgetDataTot);
 				dealMemoDetailModel.refresh(true);
 
 			},
-			handleTotalBudgetYear : function(yearBudgetData){
+			handleTotalBudgetYear: function (yearBudgetData) {
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
 
@@ -2268,23 +2279,23 @@ sap.ui.define([
 				var Spikeamt = 0;
 				var Prdhsamt = 0;
 				var yearTot = [];
-				var Noofepi= 0 ;
-				if(yearBudgetData.length){
-					for ( let i = 0 ; i < yearBudgetData.length ; i ++) {
+				var Noofepi = 0;
+				if (yearBudgetData.length) {
+					for (let i = 0; i < yearBudgetData.length; i++) {
 						Totalamt = Totalamt + parseFloat(yearBudgetData[i].Totalamt);
 						Ficamt = Ficamt + parseFloat(yearBudgetData[i].Ficamt);
-						Inhouseamt = Inhouseamt +  parseFloat(yearBudgetData[i].Inhouseamt);
-						Inhsamt = Inhsamt +  parseFloat(yearBudgetData[i].Inhsamt);
-						Spikeamt = Spikeamt +  parseFloat(yearBudgetData[i].Spikeamt);
-						Prdhsamt = Prdhsamt +  parseFloat(yearBudgetData[i].Prdhsamt);
-						Noofepi = Noofepi +  parseFloat(yearBudgetData[i].Noofepi);
+						Inhouseamt = Inhouseamt + parseFloat(yearBudgetData[i].Inhouseamt);
+						Inhsamt = Inhsamt + parseFloat(yearBudgetData[i].Inhsamt);
+						Spikeamt = Spikeamt + parseFloat(yearBudgetData[i].Spikeamt);
+						Prdhsamt = Prdhsamt + parseFloat(yearBudgetData[i].Prdhsamt);
+						Noofepi = Noofepi + parseFloat(yearBudgetData[i].Noofepi);
 					}
-				var totalYearBud = 	{
+					var totalYearBud = {
 						"Tentid": dealMemoDetailModel.oData.Tentid,
 						"Dmno": dealMemoDetailModel.oData.Dmno,
 						"Dmver": dealMemoDetailModel.oData.Dmver,
 						"Platform": yearBudgetData[0].Platform,
-						"Noofepi":dealMemoDetailModel.oData.Noofepi,
+						"Noofepi": dealMemoDetailModel.oData.Noofepi,
 						"Gjahr": "Total",
 						"Noofepi": Noofepi,
 						"Prdhsamt": Prdhsamt,
@@ -2295,17 +2306,17 @@ sap.ui.define([
 						"Totalamt": Totalamt,
 						"Recst": "I"
 					};
-					
+
 					yearTot.push($.extend(true, {}, totalYearBud))
 				}
 				return yearTot;
 			},
-			onChangeEpisodeCost: function() {
+			onChangeEpisodeCost: function () {
 				this.calculateEpisodeHeadCost();
 				this.getView().byId("splitApp").toDetail(this.getView().byId("dealMemoDetail"));
 			},
 
-			onEpisodeCostChange: function() {
+			onEpisodeCostChange: function () {
 
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
@@ -2365,22 +2376,22 @@ sap.ui.define([
 				}
 
 			},
-			onNodeExpandChangeCost: function(oEvent) {
+			onNodeExpandChangeCost: function (oEvent) {
 
 				var oModel = this.getView().getModel("dealMemoDetailModel");
 				var budgetCostData = oModel.getData().changeCostData;
 				var selectedCostHeadObj = oEvent.getSource().getBindingContext("dealMemoDetailModel").getObject();
 
-				var childCostHeads = budgetCostData.filter(function(obj) {
+				var childCostHeads = budgetCostData.filter(function (obj) {
 					return obj.parenCostcd === selectedCostHeadObj.Costcd
 				});
 				selectedCostHeadObj.isExpanded = !selectedCostHeadObj.isExpanded;
-				childCostHeads.map(function(childObj) {
+				childCostHeads.map(function (childObj) {
 					childObj.itemVisible = selectedCostHeadObj.isExpanded
 				});
 				oModel.refresh(true);
 			},
-			validateChangeCost: function() {
+			validateChangeCost: function () {
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
 				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
@@ -2398,7 +2409,7 @@ sap.ui.define([
 
 				}
 				//--------------------------------------------------------------------------------------------
-				dealMemoDetailInfo.changeCostData.map(function(costObj) {
+				dealMemoDetailInfo.changeCostData.map(function (costObj) {
 					if (costObj.flag === "Ch") {
 						costHeadChangedFlag = true;
 					}
@@ -2414,14 +2425,14 @@ sap.ui.define([
 					return true;
 				}
 			},
-			getAddedCostSheet: function(episodeCostSheet, changedCostSheet) {
-				var changedCostSheetCostCodes = changedCostSheet.map(function(chngObj) {
+			getAddedCostSheet: function (episodeCostSheet, changedCostSheet) {
+				var changedCostSheetCostCodes = changedCostSheet.map(function (chngObj) {
 					return chngObj.Costcd
 				});
-				var episodeCostSheetCostCodes = episodeCostSheet.map(function(chngObj) {
+				var episodeCostSheetCostCodes = episodeCostSheet.map(function (chngObj) {
 					return chngObj.Costcd
 				});
-				episodeCostSheet.map(function(epCostObj) {
+				episodeCostSheet.map(function (epCostObj) {
 					if (!epCostObj.hasChild) {
 						var oIndex = changedCostSheetCostCodes.indexOf(epCostObj.Costcd);
 						if (oIndex >= 0) {
@@ -2464,7 +2475,7 @@ sap.ui.define([
 				return episodeCostSheet;
 
 			},
-			onApplyChangeCost: function() {
+			onApplyChangeCost: function () {
 				sap.ui.core.BusyIndicator.show(0);
 				var validFlag = this.validateChangeCost();
 				if (validFlag) {
@@ -2473,7 +2484,7 @@ sap.ui.define([
 					var changedCostSheet = dealMemoDetailInfo.changeCostData;
 					var selectedEpisodeList = [];
 					var yearValue = dealMemoDetailInfo.epiCostChangeYear; //---Added-By-Dhiraj-on-17/05/2022-for-Changing-year-on-budget-details--
-					dealMemoDetailInfo.episodeData.map(function(epObj) {
+					dealMemoDetailInfo.episodeData.map(function (epObj) {
 						if (epObj.Epiid >= dealMemoDetailInfo.epiCostChangeFromId && epObj.Epiid <= dealMemoDetailInfo.epiCostChangeToId) {
 							var oAddedCostSheet = this.getAddedCostSheet(epObj.epiSodeCostSheet, $.extend(true, [], changedCostSheet));
 							epObj.epiSodeCostSheet = oAddedCostSheet; // $.extend(true,[],changedCostSheet);
@@ -2489,27 +2500,27 @@ sap.ui.define([
 				}
 				sap.ui.core.BusyIndicator.hide();
 			},
-			onCancelChangeCost: function() {
+			onCancelChangeCost: function () {
 				this.changeEpiCostFlag = false;
 				this._oEpiCostChangeDialog.close();
 			},
 			//Create Additional Episode
-			onNodeExpandCreateEpiCost: function(oEvent) {
+			onNodeExpandCreateEpiCost: function (oEvent) {
 
 				var oModel = this.getView().getModel("dealMemoDetailModel");
 				var budgetCostData = oModel.getData().creteEpisodeCostData;
 				var selectedCostHeadObj = oEvent.getSource().getBindingContext("dealMemoDetailModel").getObject();
 
-				var childCostHeads = budgetCostData.filter(function(obj) {
+				var childCostHeads = budgetCostData.filter(function (obj) {
 					return obj.parenCostcd === selectedCostHeadObj.Costcd
 				});
 				selectedCostHeadObj.isExpanded = !selectedCostHeadObj.isExpanded;
-				childCostHeads.map(function(childObj) {
+				childCostHeads.map(function (childObj) {
 					childObj.itemVisible = selectedCostHeadObj.isExpanded
 				});
 				oModel.refresh(true);
 			},
-			onCreateAdditionalEpisode: function() {
+			onCreateAdditionalEpisode: function () {
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
 				dealMemoDetailInfo.additionalEpisodeObj = {
@@ -2545,7 +2556,7 @@ sap.ui.define([
 				}
 
 			},
-			onAddRow: function() {
+			onAddRow: function () {
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
 				var addedRows = dealMemoDetailInfo.additonalEpisodeData;
@@ -2563,7 +2574,7 @@ sap.ui.define([
 				}
 				dealMemoDetailModel.refresh(true);
 			},
-			onDeleteRow: function(oEvent) {
+			onDeleteRow: function (oEvent) {
 				var oContextPath = oEvent.getSource().getBindingContext("dealMemoDetailModel").getPath();
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var additionalEpisodeData = dealMemoDetailModel.getProperty("/additonalEpisodeData");
@@ -2577,7 +2588,7 @@ sap.ui.define([
 					dealMemoDetailModel.refresh(true);
 				}
 			},
-			onNextCreateEpisode: function() {
+			onNextCreateEpisode: function () {
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
 				var proceedFlag = true;
@@ -2607,7 +2618,7 @@ sap.ui.define([
 				}
 				dealMemoDetailModel.refresh(true);
 			},
-			onBackCreateEpisode: function() {
+			onBackCreateEpisode: function () {
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
 				dealMemoDetailInfo.createEpiLayoutVisible = true;
@@ -2615,14 +2626,14 @@ sap.ui.define([
 				this._oCreateEpisodeDialog.setContentWidth("40%");
 				dealMemoDetailModel.refresh(true);
 			},
-			generateAdditionalEpisodes: function() {
+			generateAdditionalEpisodes: function () {
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
 				var additionalEpiData = dealMemoDetailInfo.additonalEpisodeData;
 				var changedCostSheet = dealMemoDetailInfo.creteEpisodeCostData;
 				var additionalEpisodeInfo = [];
 				this.episodesGenerated = false;
-				additionalEpiData.map(function(epiObj) {
+				additionalEpiData.map(function (epiObj) {
 					var postData = {
 						"Tentid": "IBS",
 						"Dmno": dealMemoDetailInfo.Dmno,
@@ -2638,8 +2649,8 @@ sap.ui.define([
 				};
 				var oModel = this.getView().getModel();
 				oModel.create("/DmHeaderSet", postPayload, {
-					success: function(oData) {
-						oData.DmYearWiseEpiSet.results.map(function(epObj) {
+					success: function (oData) {
+						oData.DmYearWiseEpiSet.results.map(function (epObj) {
 							epObj.flag = "Cr";
 							epObj.epiDescEditable = false;
 							if (dealMemoDetailInfo.enableFlow === "M") {
@@ -2656,7 +2667,7 @@ sap.ui.define([
 						this.calculateEpisodeHeadCost();
 
 					}.bind(this),
-					error: function(oError) {
+					error: function (oError) {
 						var oErrorResponse = JSON.parse(oError.responseText);
 						var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
 						MessageBox.error(oMsg);
@@ -2666,11 +2677,11 @@ sap.ui.define([
 				this._oCreateEpisodeDialog.close();
 			},
 
-			onCancelAdditionalEpisode: function() {
+			onCancelAdditionalEpisode: function () {
 				this.changeEpiCostFlag = false;
 				this._oCreateEpisodeDialog.close()
 			},
-			calculateEpisodeHeadCost: function(episodeCostData) {
+			calculateEpisodeHeadCost: function (episodeCostData) {
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var episodeData = dealMemoDetailModel.getProperty("/episodeData");
 				var budgetTabData = dealMemoDetailModel.getProperty("/budgetCostData");
@@ -2681,9 +2692,9 @@ sap.ui.define([
 					"InhouseTot": 0,
 					"Tot": 0
 				};
-				episodeData.map(function(epiObj) {
+				episodeData.map(function (epiObj) {
 					var episodeTotCost = 0;
-					epiObj.epiSodeCostSheet.map(function(epiCostObj) {
+					epiObj.epiSodeCostSheet.map(function (epiCostObj) {
 						if (epiCostObj.Leadcostcd === "P") {
 							epiObj.Leadcost = epiCostObj.Prdhsamt;
 						} else if (epiCostObj.Leadcostcd === "I") {
@@ -2706,11 +2717,11 @@ sap.ui.define([
 				dealMemoDetailModel.refresh(true);
 
 			},
-			calculateEpisodeDetTabData: function(oData) {
+			calculateEpisodeDetTabData: function (oData) {
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var episodeData = oData.DmEpisodeSet.results;
 				var budgetCostData = JSON.parse(JSON.stringify(oData.DmCostSet.results));
-				budgetCostData = budgetCostData.filter(function(obj) {
+				budgetCostData = budgetCostData.filter(function (obj) {
 					return obj.Epiid !== "00000"
 				});
 				var totalEpiCostsPerEpisode = {
@@ -2719,10 +2730,10 @@ sap.ui.define([
 					"InhouseTot": 0,
 					"Tot": 0
 				};
-				episodeData.map(function(epObj) {
+				episodeData.map(function (epObj) {
 					epObj.Epidur = Formatter.formatTimeDuration(epObj.Epidur);
 					epObj.epiDescEditable = false;
-					var episodeCostData = budgetCostData.filter(function(obj) {
+					var episodeCostData = budgetCostData.filter(function (obj) {
 						return obj.Epiid === epObj.Epiid;
 					});
 					var episodeCostSheet = this.prepareCostSheet(episodeCostData, true);
@@ -2730,7 +2741,7 @@ sap.ui.define([
 					epObj.epiSodeCostSheet = episodeCostSheet;
 					epObj.epiSodeCostSheetDisplayMode = episodeCostSheetDisplay;
 					epObj.epiSodeCostSheetEditMode = $.extend(true, [], episodeCostSheet);
-					episodeCostSheet.map(function(epiObj) {
+					episodeCostSheet.map(function (epiObj) {
 
 						if (epiObj.parenCostcd === "") {
 							totalEpiCostsPerEpisode['AcquisitionTot'] += parseFloat(epiObj.Prdhsamt);
@@ -2749,11 +2760,11 @@ sap.ui.define([
 				dealMemoDetailModel.refresh(true);
 
 			},
-			calculateCostSheetPerMovie: function(oData) {
+			calculateCostSheetPerMovie: function (oData) {
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var moviebudgetCostData = $.extend(true, [], dealMemoDetailModel.getData().moviebudgetCostData);
 				var totalEpiCostsPerEpisode = {};
-				oData.results.map(function(obj) {
+				oData.results.map(function (obj) {
 					obj.epiSodeCostSheet = $.extend(true, [], moviebudgetCostData);
 					obj.epiSodeCostSheetEditMode = $.extend(true, [], moviebudgetCostData);
 					obj.Totepiamt = "0.00";
@@ -2772,7 +2783,7 @@ sap.ui.define([
 				dealMemoDetailModel.setProperty("/episodeTotalData", [totalEpiCostsPerEpisode]);
 				dealMemoDetailModel.refresh(true);
 			},
-			calculateCostSheetPerEpisode: function(oData) {
+			calculateCostSheetPerEpisode: function (oData) {
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var noOfEpi = dealMemoDetailModel.getProperty("/Noofepi");
 				var budgetCostData = $.extend(true, [], dealMemoDetailModel.getData().budgetCostDataEditMode);
@@ -2793,7 +2804,7 @@ sap.ui.define([
 					"InhouseTot": 0,
 					"Tot": 0
 				};
-				budgetCostData.map(function(budgetObj) {
+				budgetCostData.map(function (budgetObj) {
 					budgetObj.Prdhsamt = parseFloat(budgetObj.Prdhsamt) / noOfEpi;
 					budgetObj.Inhouseamt = parseFloat(budgetObj.Inhouseamt) / noOfEpi;
 					budgetObj.Inhsamt = parseFloat(budgetObj.Inhsamt) / noOfEpi;
@@ -2808,7 +2819,7 @@ sap.ui.define([
 					episodeCostSheet.push(budgetObj);
 				});
 
-				budgetCostDataLast.map(function(budgetObjLast) {
+				budgetCostDataLast.map(function (budgetObjLast) {
 					remainCost = 0;
 					if (parseFloat(budgetObjLast.Prdhsamt) !== 0) {
 						remainCost = parseFloat(budgetObjLast.Prdhsamt) - (parseFloat(budgetObjLast.Prdhsamt / noOfEpi).toFixed(2) * noOfEpi);
@@ -2840,7 +2851,7 @@ sap.ui.define([
 					episodeCostSheetLast.push(budgetObjLast);
 				});
 
-				oData.results.map(function(obj, i) {
+				oData.results.map(function (obj, i) {
 					if (oData.results.length === i + 1) {
 						obj.epiSodeCostSheet = $.extend(true, [], episodeCostSheetLast);
 						obj.epiSodeCostSheetEditMode = $.extend(true, [], episodeCostSheetLast);
@@ -2869,7 +2880,7 @@ sap.ui.define([
 				dealMemoDetailModel.setProperty("/episodeTotalData", [totalEpiCostsPerEpisode]);
 				dealMemoDetailModel.refresh(true);
 			},
-			generateMovies: function() {
+			generateMovies: function () {
 				var oModel = this.getView().getModel();
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
@@ -2884,26 +2895,26 @@ sap.ui.define([
 				oModel.callFunction("/GenerateEpi", {
 					method: "GET",
 					urlParameters: paramObj,
-					success: function(oData, response) {
+					success: function (oData, response) {
 						this.calculateCostSheetPerMovie(oData);
 						//      						dealMemoDetailModel.setProperty("/episodeData",oData.results);
 						//      						dealMemoDetailModel.refresh(true);
 
 					}.bind(this),
-					error: function(oError) {
+					error: function (oError) {
 						var oErrorResponse = JSON.parse(oError.responseText);
 						var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
 						MessageBox.error(oMsg);
 					}
 				})
 			},
-			onLeadingValueChange: function(oEvent) {
+			onLeadingValueChange: function (oEvent) {
 				var oRowObj = oEvent.getSource().getBindingContext("dealMemoDetailModel").getObject();
 				var leadingValue = Number(oEvent.getSource().getValue().replace(/[^0-9\.]+/g, ""));
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
-				oRowObj.epiSodeCostSheet.map(function(oRObj, oIndex) {
+				oRowObj.epiSodeCostSheet.map(function (oRObj, oIndex) {
 					if (!(oRObj.hasChild) && oRObj.Leadcostcd !== "" && oRObj.Leadcostcd !== undefined && oRObj.parenCostcd != "") {
-						var parentCostHeadObj = oRowObj.epiSodeCostSheet[oRowObj.epiSodeCostSheet.map(function(obj) {
+						var parentCostHeadObj = oRowObj.epiSodeCostSheet[oRowObj.epiSodeCostSheet.map(function (obj) {
 							return obj.Costcd
 						}).indexOf(oRObj.parenCostcd)];
 						oRObj.flag = "Ch";
@@ -2918,7 +2929,7 @@ sap.ui.define([
 						parentCostHeadObj.Totcostamt = parseFloat(parentCostHeadObj.Prdhsamt) + parseFloat(parentCostHeadObj.Inhsamt) + parseFloat(
 							parentCostHeadObj.Inhouseamt);
 					} else if (!(oRObj.hasChild) && oRObj.Leadcostcd !== "" && oRObj.Leadcostcd !== undefined && oRObj.parenCostcd == "") {
-						var parentCostHeadObj = oRowObj.epiSodeCostSheet[oRowObj.epiSodeCostSheet.map(function(obj) {
+						var parentCostHeadObj = oRowObj.epiSodeCostSheet[oRowObj.epiSodeCostSheet.map(function (obj) {
 							return obj.Costcd
 						}).indexOf(oRObj.Costcd)];
 						oRObj.flag = "Ch";
@@ -2942,7 +2953,7 @@ sap.ui.define([
 				dealMemoDetailModel.refresh(true);
 				this.calculateEpisodeHeadCost();
 			},
-			generateEpisodes: function() {
+			generateEpisodes: function () {
 				var oModel = this.getView().getModel();
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
@@ -2957,26 +2968,26 @@ sap.ui.define([
 				oModel.callFunction("/GenerateEpi", {
 					method: "GET",
 					urlParameters: paramObj,
-					success: function(oData, response) {
+					success: function (oData, response) {
 						this.calculateCostSheetPerEpisode(oData);
 						//   						dealMemoDetailModel.setProperty("/episodeData",oData.results);
 						//   						dealMemoDetailModel.refresh(true);
 
 					}.bind(this),
-					error: function(oError) {
+					error: function (oError) {
 						var oErrorResponse = JSON.parse(oError.responseText);
 						var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
 						MessageBox.error(oMsg);
 					}
 				})
 			},
-			loadBudgetCostTabAdditional: function() {
+			loadBudgetCostTabAdditional: function () {
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
 				dealMemoDetailInfo.budgetCostDataExists = false;
 				if (dealMemoDetailInfo.DmCostSet.results.length) {
 					dealMemoDetailInfo.budgetCostDataExists = true;
-					var budgetDetails = dealMemoDetailInfo.DmCostSet.results.filter(function(obj) {
+					var budgetDetails = dealMemoDetailInfo.DmCostSet.results.filter(function (obj) {
 						return obj.Epiid === "00000"
 					});
 					var costSheetFormatted = this.prepareCostSheet(budgetDetails, false);
@@ -2984,7 +2995,7 @@ sap.ui.define([
 					dealMemoDetailModel.refresh(true);
 				}
 			},
-			onSelectTabCostDetail: function() {
+			onSelectTabCostDetail: function () {
 				var selectedTab = this.getView().byId("idIconTabBar2").getSelectedKey();
 				var mainSelectedKey = this.getView().byId("idIconTabBar").getSelectedKey();
 
@@ -2998,7 +3009,7 @@ sap.ui.define([
 						detailModelData.budgetCostDataExists = false;
 						if (dealMemoDetailInfo.DmCostSet.results.length) {
 							detailModelData.budgetCostDataExists = true;
-							var budgetDetails = dealMemoDetailInfo.DmCostSet.results.filter(function(obj) {
+							var budgetDetails = dealMemoDetailInfo.DmCostSet.results.filter(function (obj) {
 								return obj.Epiid === "00000"
 							});
 							var costSheetDisplayFlag = true;
@@ -3095,7 +3106,7 @@ sap.ui.define([
 					}
 				}
 			},
-			showYearPopup: function() {
+			showYearPopup: function () {
 				Fragment.load({
 					name: "com.ui.dealmemolocal.fragments.YearEpisodeDialog",
 					controller: this
@@ -3107,7 +3118,7 @@ sap.ui.define([
 
 				}.bind(this));
 			},
-			_validateBeforPush: function() {
+			_validateBeforPush: function () {
 				var YearInfo = this._oYearEpisodeDialog.getModel().getData().YearEpisodes;
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
@@ -3149,10 +3160,10 @@ sap.ui.define([
 				return returnStatus;
 
 			},
-			onChangeNoOfEpi: function() {
+			onChangeNoOfEpi: function () {
 				this._noOfEpiChanged = true;
 			},
-			onPressPush: function() {
+			onPressPush: function () {
 				var validationStatus = this._validateBeforPush();
 				var detailModel = this.getView().getModel("dealMemoDetailModel");
 				var oModel = this.getView().getModel();
@@ -3161,7 +3172,7 @@ sap.ui.define([
 				if (validationStatus.status) {
 					var YearInfo = detailModel.getProperty("/YearEpisodes");
 					var yearArrInfo = [];
-					YearInfo.map(function(yearObj) {
+					YearInfo.map(function (yearObj) {
 						var postData = {
 							"Tentid": detailModel.getProperty("/Tentid"),
 							"Dmno": detailModel.getProperty("/Dmno"),
@@ -3177,17 +3188,17 @@ sap.ui.define([
 					};
 
 					oModel.create("/DmHeaderSet", postPayload, {
-						success: function(oData) {
+						success: function (oData) {
 							detailModel.setProperty("/YearBudgetAllInfo", oData.DmYCSet.results);
 
-							var yearBudgetLin = oData.DmYCSet.results.filter(function(obj) {
+							var yearBudgetLin = oData.DmYCSet.results.filter(function (obj) {
 								return obj.Platform === "01"
 							});
 							var yearBudgetLinTot = this.handleTotalBudgetYear(yearBudgetLin);
 							detailModel.setProperty("/YearBudgetLin", yearBudgetLin);
 							detailModel.setProperty("/YearBudgetLinTot", yearBudgetLinTot);
 
-							var yearBudgetNonLin = oData.DmYCSet.results.filter(function(obj) {
+							var yearBudgetNonLin = oData.DmYCSet.results.filter(function (obj) {
 								return obj.Platform === "02"
 							});
 							var yearBudgetNonLinTot = this.handleTotalBudgetYear(yearBudgetNonLin);
@@ -3195,10 +3206,10 @@ sap.ui.define([
 							detailModel.setProperty("/YearBudgetNonLin", yearBudgetNonLin);
 							detailModel.setProperty("/YearBudgetNonLinTot", yearBudgetNonLinTot);
 							detailModel.setProperty("/YearBudgetInfo", yearBudgetLin);
-							detailModel.setProperty("/yearWiseTableTot" , yearBudgetLinTot )
+							detailModel.setProperty("/yearWiseTableTot", yearBudgetLinTot)
 							detailModel.refresh(true);
 						}.bind(this),
-						error: function(oError) {
+						error: function (oError) {
 							var oErrorResponse = JSON.parse(oError.responseText);
 							var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
 							MessageBox.error(oMsg);
@@ -3212,16 +3223,16 @@ sap.ui.define([
 
 				}
 			},
-			onCloseYearEpiDialog: function(oEvent) {
+			onCloseYearEpiDialog: function (oEvent) {
 				this._oYearEpisodeDialog.close();
 			},
-			onYearBudgetPress: function(oEvent) {
+			onYearBudgetPress: function (oEvent) {
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
 				dealMemoDetailInfo.yearWiseMainTable = false;
 				var selectedYearItem = oEvent.getParameters()['listItem'].getBindingContext("dealMemoDetailModel").getObject();
 				var episodeDataOriginal = $.extend(true, [], dealMemoDetailInfo.episodeDataOriginal);
-				dealMemoDetailInfo.episodeData = episodeDataOriginal.filter(function(obj) {
+				dealMemoDetailInfo.episodeData = episodeDataOriginal.filter(function (obj) {
 					return obj.Gjahr === selectedYearItem.Gjahr
 				});
 				var episodeTotalData = [{
@@ -3234,12 +3245,12 @@ sap.ui.define([
 
 				dealMemoDetailModel.refresh(true);
 			},
-			onNavBackYearEpDetails: function() {
+			onNavBackYearEpDetails: function () {
 				var detailModel = this.getView().getModel("dealMemoDetailModel");
 				detailModel.setProperty("/yearWiseMainTable", true);
 				detailModel.refresh(true);
 			},
-			onPressEpisodeDetail: function(oEvent) {
+			onPressEpisodeDetail: function (oEvent) {
 				var detailModel = this.getView().getModel("dealMemoDetailModel");
 				var selectedEpisodeObject = oEvent.getParameters()["listItem"].getBindingContext("dealMemoDetailModel").getObject();
 				var episodeModel = this.getView().getModel("dealMemoEpisodeModel");
@@ -3262,10 +3273,10 @@ sap.ui.define([
 				var oTableBinding = this.getView().byId("oTable_Epibudgetdetail").getBinding("items");
 				oTableBinding.filter([new Filter("itemVisible", "EQ", true)]);
 			},
-			onNavBackFromEpisodeDetail: function() {
+			onNavBackFromEpisodeDetail: function () {
 				this.getView().byId("splitApp").toDetail(this.getView().byId("dealMemoDetail"));
 			},
-			onChangeTrpValue: function(oEvent) {
+			onChangeTrpValue: function (oEvent) {
 				var dealMemoEpisodeModel = this.getView().getModel("dealMemoEpisodeModel");
 				if (dealMemoEpisodeModel.getData().OldTrp !== dealMemoEpisodeModel.Trp) {
 					if (dealMemoEpisodeModel.getData().flag !== "Cr") {
@@ -3274,7 +3285,7 @@ sap.ui.define([
 				}
 				dealMemoEpisodeModel.refresh(true);
 			},
-			onChangeEpiDur: function(oEvent) {
+			onChangeEpiDur: function (oEvent) {
 				var dealMemoEpisodeModel = this.getView().getModel("dealMemoEpisodeModel");
 				if (dealMemoEpisodeModel.getData().OldEpidur !== dealMemoEpisodeModel.Epidur) {
 					if (dealMemoEpisodeModel.getData().flag !== "Cr") {
@@ -3283,7 +3294,7 @@ sap.ui.define([
 				}
 				dealMemoEpisodeModel.refresh(true);
 			},
-			onChangeTrpValue: function(oEvent) {
+			onChangeTrpValue: function (oEvent) {
 				var dealMemoEpisodeModel = this.getView().getModel("dealMemoEpisodeModel");
 				if (dealMemoEpisodeModel.getData().OldTrp !== dealMemoEpisodeModel.Trp) {
 					if (dealMemoEpisodeModel.getData().flag !== "Cr") {
@@ -3292,15 +3303,15 @@ sap.ui.define([
 				}
 				dealMemoEpisodeModel.refresh(true);
 			},
-			onShowMatser: function() {
+			onShowMatser: function () {
 				this.getView().byId("splitApp").setMode("ShowHideMode");
 				this.getView().byId("splitApp").toMaster(this.getView().byId("dealMemoMaster"));
 			},
-			onHideMaster: function() {
+			onHideMaster: function () {
 				this.getView().byId("splitApp").setMode("HideMode");
 				this.getView().byId("splitApp").hideMaster();
 			},
-			prepareEpisodePayload: function(epObj) {
+			prepareEpisodePayload: function (epObj) {
 				var detailModel = this.getView().getModel("dealMemoDetailModel");
 				return {
 					"Loekz": false,
@@ -3325,7 +3336,7 @@ sap.ui.define([
 					"Mvid": detailModel.oData.Cnttp === "02" || "03" ? epObj.Mvid : ""
 				};
 			},
-			prepareEpisodePayloadYear: function(epObj) { // Added by Dhiraj For fiscal year change
+			prepareEpisodePayloadYear: function (epObj) { // Added by Dhiraj For fiscal year change
 				var detailModel = this.getView().getModel("dealMemoDetailModel");
 				return {
 					"Anln1": epObj.Anln1,
@@ -3353,7 +3364,7 @@ sap.ui.define([
 
 				};
 			},
-			saveEpisodeCostData: function() {
+			saveEpisodeCostData: function () {
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
 				if (dealMemoDetailInfo.enableFlow === "M") {
@@ -3374,12 +3385,12 @@ sap.ui.define([
 				//   			 		this.createEpisodeCostData();
 				//   			 	}
 			},
-			getSaveParametersForEpisode: function() {
+			getSaveParametersForEpisode: function () {
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
 				return {
 					groupId: "eipsodeChanges",
-					success: function(odata, resp) {
+					success: function (odata, resp) {
 						this.byId(sap.ui.core.Fragment.createId("epiDetailTab", "oTable_epiDetail")).setBusy(false);
 						var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
 						MessageToast.show(oSourceBundle.getText("msgSuccEpiDetUpdate" + dealMemoDetailInfo.Cnttp));
@@ -3388,19 +3399,19 @@ sap.ui.define([
 						this.changedCostCodes = [];
 						this.loadDealMemoList();
 					}.bind(this),
-					error: function(oError) {
+					error: function (oError) {
 						var oErrorResponse = JSON.parse(oError.responseText);
 						var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
 						MessageBox.error(oMsg);
 					}
 				}
 			},
-			getSaveParametersForMovie: function() {
+			getSaveParametersForMovie: function () {
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
 				return {
 					groupId: "eipsodeMovieChanges",
-					success: function(odata, resp) {
+					success: function (odata, resp) {
 
 						if (odata.__batchResponses.length > 0) {
 							if (odata.__batchResponses[0].response != undefined) {
@@ -3431,7 +3442,7 @@ sap.ui.define([
 						// this.changedCostCodes = [];
 						// this.loadDealMemoList();
 					}.bind(this),
-					error: function(oError) {
+					error: function (oError) {
 						var oErrorResponse = JSON.parse(oError.responseText);
 						var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
 						MessageBox.error(oMsg);
@@ -3517,7 +3528,7 @@ sap.ui.define([
 			// 	}
 			// 	return statusFlag;
 			// },
-			validateMovieDetails: function() {
+			validateMovieDetails: function () {
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoModel = this.getView().getModel("dealMemoModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
@@ -3536,7 +3547,7 @@ sap.ui.define([
 						episodeData[i].Epiid = epiidSplit[0].trim();
 						episodeData[i].Mvid = epiidSplit[0].trim();
 					}
-					episodeIds = episodeList.map(function(obj) {
+					episodeIds = episodeList.map(function (obj) {
 						return obj.Matid
 					});
 				} else if (dealMemoDetailInfo.Cnttp === "02") {
@@ -3546,7 +3557,7 @@ sap.ui.define([
 						episodeData[i].Epiid = epiidSplit[0].trim();
 						episodeData[i].Mvid = epiidSplit[0].trim();
 					}
-					episodeIds = episodeList.map(function(obj) {
+					episodeIds = episodeList.map(function (obj) {
 						return obj.Mvid
 					});
 				} else if (dealMemoDetailInfo.Cnttp === "09") {
@@ -3556,7 +3567,7 @@ sap.ui.define([
 						episodeData[i].Epiid = epiidSplit[0].trim();
 						episodeData[i].Mvid = epiidSplit[0].trim();
 					}
-					episodeIds = episodeList.map(function(obj) {
+					episodeIds = episodeList.map(function (obj) {
 						return obj.Matid
 					});
 				} else if (dealMemoDetailInfo.Cnttp === "04") {
@@ -3566,7 +3577,7 @@ sap.ui.define([
 						episodeData[i].Epiid = epiidSplit[0].trim();
 						episodeData[i].Mvid = epiidSplit[0].trim();
 					}
-					episodeIds = episodeList.map(function(obj) {
+					episodeIds = episodeList.map(function (obj) {
 						return obj.Mvid
 					});
 				}
@@ -3603,7 +3614,7 @@ sap.ui.define([
 				}
 				//-----------------------------------------
 
-				var yearChk = episodeData.map(function(yObj) {
+				var yearChk = episodeData.map(function (yObj) {
 					return yObj.Gjahr
 				});
 				for (var year = dealMemoDetailInfo.FromYr; year <= dealMemoDetailInfo.ToYr; year++) {
@@ -3611,8 +3622,8 @@ sap.ui.define([
 
 					if (yearFind == "" || yearFind == undefined) {
 						statusFlag = false;
-						var yearRange = dealMemoDetailInfo.FromYr +  " - " + dealMemoDetailInfo.ToYr;
-						oMsg = oSourceBundle.getText("msgtotEpiYearChek" + dealMemoDetailInfo.Cnttp , yearRange);
+						var yearRange = dealMemoDetailInfo.FromYr + " - " + dealMemoDetailInfo.ToYr;
+						oMsg = oSourceBundle.getText("msgtotEpiYearChek" + dealMemoDetailInfo.Cnttp, yearRange);
 						// oMsg = "Enter atleast one movie for each individual year in range ''"
 					}
 				}
@@ -3630,7 +3641,7 @@ sap.ui.define([
 				}
 				return statusFlag;
 			},
-			saveMovieCostDetails: function() {
+			saveMovieCostDetails: function () {
 				var validationFlag = this.validateMovieDetails();
 				if (validationFlag) {
 					var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
@@ -3644,7 +3655,7 @@ sap.ui.define([
 					oModel.setDeferredGroups(["eipsodeMovieChanges"]);
 					oModel.sDefaultUpdateMethod = "PUT";
 					var budgetTabData = dealMemoDetailInfo.budgetCostData;
-					episodeData.map(function(epObj) {
+					episodeData.map(function (epObj) {
 						if (epObj.flag === "Cr") {
 							var payLoadData = this.prepareEpisodePayload(epObj);
 							oModel.create("/DmEpisodeSet", payLoadData, {
@@ -3669,11 +3680,11 @@ sap.ui.define([
 							alreadySaveFlag = false;
 						}
 						var budgetCostData = epObj.epiSodeCostSheet;
-						var costCodes = budgetCostData.map(function(obj) {
+						var costCodes = budgetCostData.map(function (obj) {
 							return obj.Costcd
 						});
 
-						budgetCostData.map(function(budgetObj) {
+						budgetCostData.map(function (budgetObj) {
 							if (!budgetObj.hasChild) {
 								if (budgetObj.parenCostcd !== "") {
 									var parentCostHead = budgetCostData[costCodes.indexOf(budgetObj.parenCostcd)];
@@ -3703,7 +3714,7 @@ sap.ui.define([
 								//	if(this.changedCostCodes.indexOf(budgetObj.Costcd) >= 0){
 								if (this.changedCostCodes.indexOf(Scostcd) >= 0) {
 									if (budgetTabUpdatedCost.length) {
-										var existingCostHead = budgetTabUpdatedCost.filter(function(budgetUpObj) {
+										var existingCostHead = budgetTabUpdatedCost.filter(function (budgetUpObj) {
 											return budgetUpObj.Scostcd === budgetObj.Scostcd && budgetUpObj.Costcd === budgetObj.Costcd
 										});
 										if (existingCostHead.length) {
@@ -3734,7 +3745,7 @@ sap.ui.define([
 
 							}
 							if (dealMemoDetailInfo.DmCostSet.results.length === 0) {
-								var oIndex = budgetTabData.map(function(obj) {
+								var oIndex = budgetTabData.map(function (obj) {
 									return obj.Costcd;
 								}).indexOf(budgetObj.Costcd);
 								if (oIndex >= 0) {
@@ -3763,10 +3774,10 @@ sap.ui.define([
 						MessageBox.information(oSourceBundle.getText("msgAlreadysave"));
 					} else {
 						if (dealMemoDetailInfo.DmCostSet.results.length === 0) {
-							var budgetTabcostCodes = budgetTabData.map(function(obj) {
+							var budgetTabcostCodes = budgetTabData.map(function (obj) {
 								return obj.Costcd
 							});
-							budgetTabData.map(function(budgetObj) {
+							budgetTabData.map(function (budgetObj) {
 								if (!budgetObj.hasChild) {
 									if (budgetObj.parenCostcd !== "") {
 										var parentCostHead = budgetTabData[budgetTabcostCodes.indexOf(budgetObj.parenCostcd)];
@@ -3780,10 +3791,10 @@ sap.ui.define([
 								}
 							}.bind(this));
 						} else {
-							var budgetTabcostCodes = budgetTabData.map(function(obj) {
+							var budgetTabcostCodes = budgetTabData.map(function (obj) {
 								return obj.Costcd
 							});
-							budgetTabUpdatedCost.map(function(budgetParentCstObj) {
+							budgetTabUpdatedCost.map(function (budgetParentCstObj) {
 								if (budgetParentCstObj.parenCostcd !== "") {
 									var parentCostHead = budgetTabData[budgetTabcostCodes.indexOf(budgetParentCstObj.parenCostcd)];
 								} else {
@@ -3805,7 +3816,7 @@ sap.ui.define([
 			},
 			//---Added-By-Dhiraj-on-17/05/2022-for-Changing-year-on-budget-details-----------------------
 
-			checkForYearChange: function(dealMemoDetailInfo) {
+			checkForYearChange: function (dealMemoDetailInfo) {
 				var isChanged = false;
 				dealMemoDetailInfo.episodeData.forEach(v => {
 					if (dealMemoDetailInfo.episodeDataOriginal.findIndex(og => parseInt(og.Epiid) === parseInt(v.Epiid) && og.Gjahr !== v.Gjahr) > -
@@ -3816,7 +3827,7 @@ sap.ui.define([
 				return isChanged;
 			},
 			//-----------------------------------------------------------------------------------------------
-			saveEpisodeCostDetails: function() {
+			saveEpisodeCostDetails: function () {
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
 				var episodeData = dealMemoDetailInfo.episodeData;
@@ -3828,7 +3839,7 @@ sap.ui.define([
 				oModel.sDefaultUpdateMethod = "PUT";
 				var budgetTabData = dealMemoDetailInfo.budgetCostData;
 				var alreadySaveFlag = true;
-				episodeData.map(function(epObj) {
+				episodeData.map(function (epObj) {
 					if (epObj.flag === "Cr") {
 						var payLoadData = this.prepareEpisodePayload(epObj);
 						oModel.create("/DmEpisodeSet", payLoadData, {
@@ -3854,11 +3865,11 @@ sap.ui.define([
 					}
 					var budgetCostData = epObj.epiSodeCostSheet;
 
-					var costCodes = budgetCostData.map(function(obj) {
+					var costCodes = budgetCostData.map(function (obj) {
 						return obj.Costcd
 					});
 
-					budgetCostData.map(function(budgetCostObj) {
+					budgetCostData.map(function (budgetCostObj) {
 						var budgetObj = $.extend(true, {}, budgetCostObj);
 						var updateBudgetCostHead = false;
 						if (!budgetObj.hasChild) {
@@ -3895,7 +3906,7 @@ sap.ui.define([
 							if (this.changedCostCodes.indexOf(Scostcd) >= 0) {
 								//	if(updateBudgetCostHead){
 								if (budgetTabUpdatedCost.length) {
-									var existingCostHead = budgetTabUpdatedCost.filter(function(budgetUpObj) {
+									var existingCostHead = budgetTabUpdatedCost.filter(function (budgetUpObj) {
 										return budgetUpObj.Costcd === Scostcd
 									});
 									if (existingCostHead.length) {
@@ -3942,10 +3953,10 @@ sap.ui.define([
 					var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
 					MessageBox.information(oSourceBundle.getText("msgAlreadysave"));
 				} else {
-					var budgetTabcostCodes = budgetTabData.map(function(obj) {
+					var budgetTabcostCodes = budgetTabData.map(function (obj) {
 						return obj.Costcd
 					});
-					budgetTabUpdatedCost.map(function(budgetParentCstObj) {
+					budgetTabUpdatedCost.map(function (budgetParentCstObj) {
 						if (budgetParentCstObj.parenCostcd !== "") {
 							var parentCostHead = budgetTabData[budgetTabcostCodes.indexOf(budgetParentCstObj.parenCostcd)];
 						} else {
@@ -3964,11 +3975,11 @@ sap.ui.define([
 				}
 
 			},
-			addToBudgetTabData: function(budgetObj) {
+			addToBudgetTabData: function (budgetObj) {
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
 				var budgetTabData = dealMemoDetailInfo.budgetCostData;
-				var oIndex = budgetTabData.map(function(obj) {
+				var oIndex = budgetTabData.map(function (obj) {
 					return obj.Costcd;
 				}).indexOf(budgetObj.Costcd);
 				if (oIndex >= 0) {
@@ -3980,7 +3991,7 @@ sap.ui.define([
 				}
 
 			},
-			updateEpisodeCostData: function() {
+			updateEpisodeCostData: function () {
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
 				var episodeData = dealMemoDetailInfo.episodeData;
@@ -3992,7 +4003,7 @@ sap.ui.define([
 				oModel.sDefaultUpdateMethod = "PUT";
 				var mParameters = {
 					groupId: "eipsodeChanges",
-					success: function(odata, resp) {
+					success: function (odata, resp) {
 						var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
 						MessageToast.show(oSourceBundle.getText("msgSuccEpiDetUpdate"));
 						//		this.loadDetailDealMemo(this.selectedDealMemoObj);
@@ -4002,20 +4013,20 @@ sap.ui.define([
 						this.changedCostCodes = [];
 						this.loadDealMemoList();
 					}.bind(this),
-					error: function(oError) {
+					error: function (oError) {
 						var oErrorResponse = JSON.parse(oError.responseText);
 						var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
 						MessageBox.error(oMsg);
 					}
 				};
 
-				episodeData.map(function(epObj) {
+				episodeData.map(function (epObj) {
 
 					var budgetCostData = epObj.epiSodeCostSheet;
-					var costCodes = budgetCostData.map(function(obj) {
+					var costCodes = budgetCostData.map(function (obj) {
 						return obj.Costcd
 					});
-					budgetCostData.map(function(budgetObj) {
+					budgetCostData.map(function (budgetObj) {
 						if (!budgetObj.hasChild) {
 							if (budgetObj.parenCostcd !== "") {
 								var parentCostHead = budgetCostData[costCodes.indexOf(budgetObj.parenCostcd)];
@@ -4035,7 +4046,7 @@ sap.ui.define([
 
 							if (this.changedCostCodes.indexOf(budgetObj.Scostcd) >= 0) {
 								if (budgetTabUpdatedCost.length) {
-									var existingCostHead = budgetTabUpdatedCost.filter(function(budgetUpObj) {
+									var existingCostHead = budgetTabUpdatedCost.filter(function (budgetUpObj) {
 										return budgetUpObj.Scostcd === budgetObj.Scostcd
 									});
 									if (existingCostHead.length) {
@@ -4070,10 +4081,10 @@ sap.ui.define([
 				}.bind(this));
 
 				var budgetTabData = dealMemoDetailInfo.budgetCostData;
-				var budgetTabcostCodes = budgetTabData.map(function(obj) {
+				var budgetTabcostCodes = budgetTabData.map(function (obj) {
 					return obj.Costcd
 				});
-				budgetTabUpdatedCost.map(function(budgetParentCstObj) {
+				budgetTabUpdatedCost.map(function (budgetParentCstObj) {
 					if (budgetParentCstObj.parenCostcd !== "") {
 						var parentCostHead = budgetTabData[budgetTabcostCodes.indexOf(budgetParentCstObj.parenCostcd)];
 					} else {
@@ -4088,7 +4099,7 @@ sap.ui.define([
 
 				oModel.submitChanges(mParameters);
 			},
-			createEpisodeCostData: function() {
+			createEpisodeCostData: function () {
 				var detailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = detailModel.getData();
 				var episodeData = detailModel.getProperty("/episodeData");
@@ -4098,7 +4109,7 @@ sap.ui.define([
 				oModel.setDeferredGroups(["eipsodeChanges"]);
 				var mParameters = {
 					groupId: "eipsodeChanges",
-					success: function(odata, resp) {
+					success: function (odata, resp) {
 						var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
 						MessageToast.show(oSourceBundle.getText("msgSuccEpiDetSave"));
 						detailModel.setProperty("/episodeDetTabColor", "Positive");
@@ -4111,14 +4122,14 @@ sap.ui.define([
 						this.changedCostCodes = [];
 						this.loadDealMemoList();
 					}.bind(this),
-					error: function(oError) {
+					error: function (oError) {
 						var oErrorResponse = JSON.parse(oError.responseText);
 						var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
 						MessageBox.error(oMsg);
 					}
 				};
 
-				episodeData.map(function(epObj) {
+				episodeData.map(function (epObj) {
 					if (epObj.flag === "Cr") {
 						var payLoadData = this.prepareEpisodePayload(epObj);
 						//oModel.create("/DmEpisodeSet",payLoadData,mParameters);	
@@ -4127,10 +4138,10 @@ sap.ui.define([
 						});
 
 						var budgetCostData = epObj.epiSodeCostSheet;
-						var costCodes = budgetCostData.map(function(obj) {
+						var costCodes = budgetCostData.map(function (obj) {
 							return obj.Costcd
 						});
-						budgetCostData.map(function(budgetObj) {
+						budgetCostData.map(function (budgetObj) {
 							if (!budgetObj.hasChild) {
 								if (budgetObj.parenCostcd !== "") {
 									var parentCostHead = budgetCostData[costCodes.indexOf(budgetObj.parenCostcd)];
@@ -4146,7 +4157,7 @@ sap.ui.define([
 
 								if (this.changedCostCodes.indexOf(budgetObj.Scostcd) >= 0) {
 									if (budgetTabUpdatedCost.length) {
-										var existingCostHead = budgetTabUpdatedCost.filter(function(budgetUpObj) {
+										var existingCostHead = budgetTabUpdatedCost.filter(function (budgetUpObj) {
 											return budgetUpObj.Scostcd === budgetObj.Scostcd
 										});
 										if (existingCostHead.length) {
@@ -4177,10 +4188,10 @@ sap.ui.define([
 				if (budgetTabUpdatedCost.length) {
 					oModel.sDefaultUpdateMethod = "PUT";
 					var budgetTabData = dealMemoDetailInfo.budgetCostData;
-					var budgetTabcostCodes = budgetTabData.map(function(obj) {
+					var budgetTabcostCodes = budgetTabData.map(function (obj) {
 						return obj.Costcd
 					});
-					budgetTabUpdatedCost.map(function(budgetParentCstObj) {
+					budgetTabUpdatedCost.map(function (budgetParentCstObj) {
 						if (budgetParentCstObj.parenCostcd !== "") {
 							var parentCostHead = budgetTabData[budgetTabcostCodes.indexOf(budgetParentCstObj.parenCostcd)];
 						} else {
@@ -4199,7 +4210,7 @@ sap.ui.define([
 				oModel.submitChanges(mParameters);
 
 			},
-			onSavePress: function(oEvent) {
+			onSavePress: function (oEvent) {
 
 				sap.ui.core.BusyIndicator.show(0);
 				var selectedTab = this.getView().byId("idIconTabBar").getSelectedKey();
@@ -4229,12 +4240,12 @@ sap.ui.define([
 				}
 				sap.ui.core.BusyIndicator.hide();
 			},
-			beforeDelete: function() {
+			beforeDelete: function () {
 				var detailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = detailModel.getData();
 				var episodeDataLen = dealMemoDetailInfo.episodeData.length - 1;
 
-				var selectedIndices = this.selEpisodePaths.map(function(oPath) {
+				var selectedIndices = this.selEpisodePaths.map(function (oPath) {
 					var arr = oPath.split("/");
 					// return arr[arr.length - 1];
 					var indicesRet = parseInt(arr[arr.length - 1]);
@@ -4264,7 +4275,7 @@ sap.ui.define([
 				}
 			},
 
-			onDeleteEpisodeConfirm: function() {
+			onDeleteEpisodeConfirm: function () {
 				var detailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = detailModel.getData();
 				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
@@ -4283,7 +4294,7 @@ sap.ui.define([
 							MessageBox.confirm(oSourceBundle.getText("msgdeleteEpiConfirm" + dealMemoDetailInfo.Cnttp), {
 								actions: [oSourceBundle.getText("lblYes"), oSourceBundle.getText("lblNo")],
 								emphasizedAction: "Yes",
-								onClose: function(sAction) {
+								onClose: function (sAction) {
 									if (sAction === oSourceBundle.getText("lblYes")) {
 										this.onDeleteEpisode();
 									} else if (sAction === oSourceBundle.getText("lblNo")) {
@@ -4299,11 +4310,11 @@ sap.ui.define([
 					this.onDeleteEpisodeDialog();
 				}
 			},
-			onCancelEpisodeSelectionDelete: function() {
+			onCancelEpisodeSelectionDelete: function () {
 				this._oEpiDeleteDialog.close();
 			},
 
-			onSelectEpisodeModeDelivery: function(oEvent) {
+			onSelectEpisodeModeDelivery: function (oEvent) {
 				var oselIndex = oEvent.getSource().getSelectedIndex();
 				var detailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = detailModel.getData();
@@ -4315,14 +4326,14 @@ sap.ui.define([
 				}
 				detailModel.refresh(true);
 			},
-			onDeleteEpisodeDialog: function() {
+			onDeleteEpisodeDialog: function () {
 				var detailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = detailModel.getData();
 				detailModel.setProperty("/episodeRangeVisibleDelivery", false);
 				detailModel.setProperty("/episodeModeDelivery", 0);
 				detailModel.setProperty("/epiDelFromId", "");
 				detailModel.setProperty("/epiDelToId", "");
-				var dmedSetData = dealMemoDetailInfo.episodeData.filter(function(epiobj) {
+				var dmedSetData = dealMemoDetailInfo.episodeData.filter(function (epiobj) {
 					return epiobj.Epist != '05';
 				});
 				var dmedSetDataEpi = dmedSetData.sort().reverse();
@@ -4343,7 +4354,7 @@ sap.ui.define([
 					this._oEpiDeleteDialog.open();
 				}
 			},
-			confirmToDelete: function() {
+			confirmToDelete: function () {
 				var detailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = detailModel.getData();
 				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
@@ -4353,7 +4364,7 @@ sap.ui.define([
 					selectedEpisodeList = dealMemoDetailInfo.dmedSetDataEpi;
 				} else {
 					selectedEpisodeList = [];
-					dealMemoDetailInfo.dmedSetDataEpi.map(function(obj) {
+					dealMemoDetailInfo.dmedSetDataEpi.map(function (obj) {
 						if (obj.Epiid <= dealMemoDetailInfo.epiDelFromId && obj.Epiid >= dealMemoDetailInfo.epiDelToId) {
 							selectedEpisodeList.push(obj);
 						}
@@ -4365,7 +4376,7 @@ sap.ui.define([
 						MessageBox.confirm(oSourceBundle.getText("msgdeleteEpiConfirm" + dealMemoDetailInfo.Cnttp), {
 							actions: [oSourceBundle.getText("lblYes"), oSourceBundle.getText("lblNo")],
 							emphasizedAction: "Yes",
-							onClose: function(sAction) {
+							onClose: function (sAction) {
 								if (sAction === oSourceBundle.getText("lblYes")) {
 									this.onDeleteEpisodeViaDialog(selectedEpisodeList);
 								} else if (sAction === oSourceBundle.getText("lblNo")) {
@@ -4383,17 +4394,17 @@ sap.ui.define([
 				}
 			},
 
-			checkDlete: function(selectedEpisodeList) {
+			checkDlete: function (selectedEpisodeList) {
 				var detailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = detailModel.getData();
-				var dmedSetData = dealMemoDetailInfo.episodeData.filter(function(epiobj) {
+				var dmedSetData = dealMemoDetailInfo.episodeData.filter(function (epiobj) {
 					return epiobj.Epist != '05';
 				});
 				var dmedSetDataEpi = dmedSetData.sort().reverse();
-				var epiData = dmedSetDataEpi.map(function(oEpi) {
+				var epiData = dmedSetDataEpi.map(function (oEpi) {
 					return oEpi.Epiid;
 				});
-				var checkEpi = selectedEpisodeList.map(function(oChkEpi) {
+				var checkEpi = selectedEpisodeList.map(function (oChkEpi) {
 					return oChkEpi.Epiid;
 				});
 				var check = true;
@@ -4405,7 +4416,7 @@ sap.ui.define([
 				return check;
 			},
 
-			onDeleteEpisodeViaDialog: function(selectedEpisodeList) {
+			onDeleteEpisodeViaDialog: function (selectedEpisodeList) {
 				sap.ui.core.BusyIndicator.show(0);
 				var detailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = detailModel.getData();
@@ -4424,7 +4435,7 @@ sap.ui.define([
 				}
 				var mParameters = {
 					groupId: "episodeDelete",
-					success: function(odata, resp) {
+					success: function (odata, resp) {
 						var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
 						var oResponse = odata.__batchResponses[0];
 						if (oResponse.__changeResponses && oResponse.__changeResponses.length) {
@@ -4449,15 +4460,15 @@ sap.ui.define([
 								// this.byId(sap.ui.core.Fragment.createId("epiDetailTab", "oTable_epiDetail")).removeSelections();
 							}
 						} else {
-								sap.ui.core.BusyIndicator.hide();
+							sap.ui.core.BusyIndicator.hide();
 							var oError = JSON.parse(oResponse.response.body);
 							var oMsg = oError.error.innererror.errordetails[0].message;
 							MessageBox.error(oMsg);
-							
+
 						}
 
 					}.bind(this),
-					error: function(oError) {
+					error: function (oError) {
 						sap.ui.core.BusyIndicator.hide();
 						var oErrorResponse = JSON.parse(oError.responseText);
 						var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
@@ -4466,7 +4477,7 @@ sap.ui.define([
 					}
 				};
 
-				selectedEpisodeList.map(function(itemPath) {
+				selectedEpisodeList.map(function (itemPath) {
 
 					var payLoadData = this.prepareEpisodePayload(itemPath);
 					var oPath = "/DmEpisodeSet(Tentid='IBS',Dmno='" + dealMemoDetailInfo.Dmno + "',Dmver='" + dealMemoDetailInfo.Dmver + "',Epiid='" +
@@ -4480,8 +4491,8 @@ sap.ui.define([
 				sap.ui.core.BusyIndicator.hide();
 			},
 
-			onDeleteEpisode: function() {
-					sap.ui.core.BusyIndicator.show(0);
+			onDeleteEpisode: function () {
+				sap.ui.core.BusyIndicator.show(0);
 				var detailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = detailModel.getData();
 				var NoOfEpisodes = dealMemoDetailInfo.Noofepi;
@@ -4499,7 +4510,7 @@ sap.ui.define([
 				}
 				var mParameters = {
 					groupId: "episodeDelete",
-					success: function(odata, resp) {
+					success: function (odata, resp) {
 						var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
 						var oResponse = odata.__batchResponses[0];
 						if (oResponse.__changeResponses && oResponse.__changeResponses.length) {
@@ -4524,15 +4535,15 @@ sap.ui.define([
 								this.byId(sap.ui.core.Fragment.createId("epiDetailTab", "oTable_epiDetail")).removeSelections();
 							}
 						} else {
-								sap.ui.core.BusyIndicator.hide();
+							sap.ui.core.BusyIndicator.hide();
 							var oError = JSON.parse(oResponse.response.body);
 							var oMsg = oError.error.innererror.errordetails[0].message;
 							MessageBox.error(oMsg);
 						}
 
 					}.bind(this),
-					error: function(oError) {
-							sap.ui.core.BusyIndicator.hide();
+					error: function (oError) {
+						sap.ui.core.BusyIndicator.hide();
 						var oErrorResponse = JSON.parse(oError.responseText);
 						var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
 						MessageBox.error(oMsg);
@@ -4540,7 +4551,7 @@ sap.ui.define([
 					}
 				};
 
-				this.selEpisodePaths.map(function(itemPath) {
+				this.selEpisodePaths.map(function (itemPath) {
 					var oEpisodeInfo = detailModel.getProperty(itemPath);
 					var payLoadData = this.prepareEpisodePayload(oEpisodeInfo);
 					var oPath = "/DmEpisodeSet(Tentid='IBS',Dmno='" + dealMemoDetailInfo.Dmno + "',Dmver='" + dealMemoDetailInfo.Dmver + "',Epiid='" +
@@ -4553,10 +4564,10 @@ sap.ui.define([
 				oModel.submitChanges(mParameters);
 				sap.ui.core.BusyIndicator.hide();
 			},
-			handleEpiRowSelection: function(oEvent) {
+			handleEpiRowSelection: function (oEvent) {
 				var oSelItems = oEvent.getParameters()['listItems'];
 				var oSelected = oEvent.getParameters()['selected'];
-				oSelItems.map(function(oItem) {
+				oSelItems.map(function (oItem) {
 					var itemPath = oItem.getBindingContext("dealMemoDetailModel").sPath;
 					if (oSelected) {
 						this.selEpisodePaths.push(itemPath);
@@ -4569,7 +4580,7 @@ sap.ui.define([
 				}.bind(this));
 
 			},
-			onConfirmSubmitDm: function() {
+			onConfirmSubmitDm: function () {
 				sap.ui.core.BusyIndicator.show(0);
 				var oModel = this.getView().getModel();
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
@@ -4583,7 +4594,7 @@ sap.ui.define([
 				oModel.callFunction("/CalcLocalCurr", {
 					method: "GET",
 					urlParameters: paramObj,
-					success: function(oData, response) {
+					success: function (oData, response) {
 						sap.ui.core.BusyIndicator.hide();
 						var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 						var dealMemoDetailInfo = dealMemoDetailModel.getData();
@@ -4592,31 +4603,31 @@ sap.ui.define([
 							sap.m.MessageBox.show(oMsg, {
 								icon: sap.m.MessageBox.Icon.INFORMATION,
 								title: "Information",
-								onClose: function() { 
-									if((parseFloat(oData.results[0].LoclCrcyAmt) >= parseFloat("750000000.00")) && (dealMemoDetailInfo.AttachmentDetails.length <= 0)) {
+								onClose: function () {
+									if ((parseFloat(oData.results[0].LoclCrcyAmt) >= parseFloat("750000000.00")) && (dealMemoDetailInfo.AttachmentDetails.length <= 0)) {
 										var oWarningMsg = "'Attachment of COFA approval is mandatory' if deal amount exceeds INR 75 CR"
 										sap.m.MessageBox.show(oWarningMsg, {
 											icon: sap.m.MessageBox.Icon.INFORMATION,
 											title: "Information",
-											onClose: function() { 
-										// that.submitDialog(oData);
+											onClose: function () {
+												// that.submitDialog(oData);
 											}
 										});
 									} else {
 										that.submitDialog(oData);
 									}
-									
+
 								}
 							});
 
 						} else {
-							if((parseFloat(oData.results[0].LoclCrcyAmt) >= parseFloat("750000000.00")) && (dealMemoDetailInfo.AttachmentDetails.length <= 0)) {
+							if ((parseFloat(oData.results[0].LoclCrcyAmt) >= parseFloat("750000000.00")) && (dealMemoDetailInfo.AttachmentDetails.length <= 0)) {
 								var oWarningMsg = "'Attachment of COFA approval is mandatory' if deal amount exceeds INR 75 CR"
 								sap.m.MessageBox.show(oWarningMsg, {
 									icon: sap.m.MessageBox.Icon.INFORMATION,
 									title: "Information",
-									onClose: function() { 
-								// that.submitDialog(oData);
+									onClose: function () {
+										// that.submitDialog(oData);
 									}
 								});
 							} else {
@@ -4624,7 +4635,7 @@ sap.ui.define([
 							}
 						}
 					}.bind(this),
-					error: function(oError) {
+					error: function (oError) {
 						sap.ui.core.BusyIndicator.hide();
 						var oErrorResponse = JSON.parse(oError.responseText);
 						var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
@@ -4633,10 +4644,10 @@ sap.ui.define([
 				});
 
 			},
-			submitDialog: function(oData) {
+			submitDialog: function (oData) {
 				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
 				var dmWaers = oData.results[0].Waers
-					// var locAmt = oData.results[0].LoclCrcyAmt
+				// var locAmt = oData.results[0].LoclCrcyAmt
 				var locKey = oData.results[0].LoclCrcyKey
 				var dollarIndianLocale = Intl.NumberFormat('en-IN');
 				var locAmt = dollarIndianLocale.format(oData.results[0].LoclCrcyAmt)
@@ -4645,7 +4656,7 @@ sap.ui.define([
 					MessageBox.confirm(text, {
 						actions: [oSourceBundle.getText("lblYes"), oSourceBundle.getText("lblNo")],
 						emphasizedAction: "Yes",
-						onClose: function(sAction) {
+						onClose: function (sAction) {
 							if (sAction === oSourceBundle.getText("lblYes")) {
 								this.onSubmitDm();
 							} else if (sAction === oSourceBundle.getText("lblNo")) {
@@ -4658,7 +4669,7 @@ sap.ui.define([
 				}
 			},
 
-			onSubmitDm: function() {
+			onSubmitDm: function () {
 				sap.ui.core.BusyIndicator.show(0);
 				var oModel = this.getView().getModel();
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
@@ -4672,14 +4683,14 @@ sap.ui.define([
 				oModel.callFunction("/SubmitDM", {
 					method: "GET",
 					urlParameters: paramObj,
-					success: function(oData, response) {
+					success: function (oData, response) {
 						sap.ui.core.BusyIndicator.hide();
 						dealMemoDetailModel.setProperty("/costCodes", oData.results);
 						dealMemoDetailModel.refresh(true);
 						this.loadDealMemoList();
 
 					}.bind(this),
-					error: function(oError) {
+					error: function (oError) {
 						sap.ui.core.BusyIndicator.hide();
 						var oErrorResponse = JSON.parse(oError.responseText);
 						var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
@@ -4687,7 +4698,7 @@ sap.ui.define([
 					}
 				});
 			},
-			onConfirmChangeDm: function() {
+			onConfirmChangeDm: function () {
 				var oModel = this.getView().getModel();
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
@@ -4698,7 +4709,7 @@ sap.ui.define([
 					MessageBox.confirm(oSourceBundle.getText("msgcreateNewVersion"), {
 						actions: [oSourceBundle.getText("lblYes"), oSourceBundle.getText("lblNo")],
 						emphasizedAction: "Yes",
-						onClose: function(sAction) {
+						onClose: function (sAction) {
 							if (sAction === oSourceBundle.getText("lblYes")) {
 								this.onChangeDm();
 							} else if (sAction === oSourceBundle.getText("lblNo")) {
@@ -4708,7 +4719,7 @@ sap.ui.define([
 					});
 				}
 			},
-			onRejectedDm: function() {
+			onRejectedDm: function () {
 				sap.ui.core.BusyIndicator.show(0);
 				var oModel = this.getView().getModel();
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
@@ -4722,7 +4733,7 @@ sap.ui.define([
 				oModel.callFunction("/RejectDMStat", {
 					method: "GET",
 					urlParameters: paramObj,
-					success: function(oData, response) {
+					success: function (oData, response) {
 						sap.ui.core.BusyIndicator.hide();
 						dealMemoDetailModel.setProperty("/costCodes", oData.results);
 						dealMemoDetailModel.refresh(true);
@@ -4731,7 +4742,7 @@ sap.ui.define([
 						this.loadDealMemoList();
 
 					}.bind(this),
-					error: function(oError) {
+					error: function (oError) {
 						sap.ui.core.BusyIndicator.hide();
 						var oErrorResponse = JSON.parse(oError.responseText);
 						var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
@@ -4741,7 +4752,7 @@ sap.ui.define([
 				})
 
 			},
-			onChangeDm: function() {
+			onChangeDm: function () {
 				sap.ui.core.BusyIndicator.show(0);
 				var oModel = this.getView().getModel();
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
@@ -4755,7 +4766,7 @@ sap.ui.define([
 				oModel.callFunction("/GenerateVersion", {
 					method: "GET",
 					urlParameters: paramObj,
-					success: function(oData, response) {
+					success: function (oData, response) {
 						sap.ui.core.BusyIndicator.hide();
 						dealMemoDetailModel.setProperty("/costCodes", oData.results);
 						dealMemoDetailModel.refresh(true);
@@ -4763,7 +4774,7 @@ sap.ui.define([
 						this.loadDealMemoList();
 
 					}.bind(this),
-					error: function(oError) {
+					error: function (oError) {
 						sap.ui.core.BusyIndicator.hide();
 						var oErrorResponse = JSON.parse(oError.responseText);
 						var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
@@ -4774,7 +4785,7 @@ sap.ui.define([
 			},
 
 			// CAF
-			loadCAFList: function() {
+			loadCAFList: function () {
 				var aFilters = [
 					new Filter("Tentid", "EQ", "IBS"),
 					new Filter("Transtp", "EQ", "C"),
@@ -4786,19 +4797,19 @@ sap.ui.define([
 				sap.ui.core.BusyIndicator.show(0);
 				oModel.read("/DmHeaderSet", {
 					filters: aFilters,
-					success: function(oData) {
-						var filterCafList = oData.results.filter(function(item) {
+					success: function (oData) {
+						var filterCafList = oData.results.filter(function (item) {
 							return item.Dmst === '04' && item.Recst === 'A' && item.Dmrefno === '';
 						});
 						dealMemoModel.setProperty("/CAFDMList", filterCafList);
 						dealMemoModel.refresh(true);
 					},
-					error: function(oError) {
+					error: function (oError) {
 
 					}
 				});
 			},
-			createCAFDealMemo: function() {
+			createCAFDealMemo: function () {
 
 				if (!this._oSelectCAFDialog) {
 					Fragment.load({
@@ -4815,11 +4826,12 @@ sap.ui.define([
 					this._oSelectCAFDialog.open();
 				}
 			},
-			onSelectCAFNo: function() {
+			onSelectCAFNo: function () {
 				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
 				this.oValueHelpSelectionParams = {
 					"bindPathName": "dealMemoModel>/CAFDMList",
 					"bindPropName": "dealMemoModel>Dmno",
+					"bindPropName2": "dealMemoModel>Dmver",
 					"propName": "Dmno",
 					"bindPropDescName": "dealMemoModel>Cntnm",
 					"keyName": "Dmno",
@@ -4832,7 +4844,7 @@ sap.ui.define([
 				this.openSelectionDialog();
 			},
 
-			onSaveCAF: function() {
+			onSaveCAF: function () {
 				var dealMemoModel = this.getView().getModel("dealMemoModel");
 				var oModel = this.getView().getModel();
 				if (dealMemoModel.getProperty("/CAFDmno") === "" || dealMemoModel.getProperty("/CAFDmno") === undefined) {
@@ -4843,11 +4855,11 @@ sap.ui.define([
 						Tentid: "IBS"
 					}
 					oModel.create("/DmHeaderSet", oPayload, {
-						success: function(oData) {
+						success: function (oData) {
 							this.loadDefaultDealMemo = true;
 							this.loadDealMemoList();
 						}.bind(this),
-						error: function(oError) {
+						error: function (oError) {
 
 						}
 					});
@@ -4855,24 +4867,24 @@ sap.ui.define([
 				}
 
 			},
-			onCancelCAF: function() {
+			onCancelCAF: function () {
 				this._oSelectCAFDialog.close();
 			},
 
-			onDMFilter: function() {
+			onDMFilter: function () {
 				var dealMemoModel = this.getView().getModel("dealMemoModel");
 				var dealMemoModelData = dealMemoModel.getData();
 				var channelFilterList = [],
 					contentTypeFilterList = [],
 					statusFilterList = [];
-				dealMemoModelData.channelList.map(function(obj) {
+				dealMemoModelData.channelList.map(function (obj) {
 					channelFilterList.push({
 						itemText: obj.Chnlnm,
 						itemKey: obj.Chnlid,
 						filterProp: "Chnlid"
 					})
 				});
-				dealMemoModelData.contentTypeList.map(function(obj) {
+				dealMemoModelData.contentTypeList.map(function (obj) {
 					contentTypeFilterList.push({
 						itemText: obj.Mstcdnm,
 						itemKey: obj.Mstcd,
@@ -4931,11 +4943,11 @@ sap.ui.define([
 				}
 			},
 
-			handleDMFilter: function(oEvent) {
+			handleDMFilter: function (oEvent) {
 				var filterItems = oEvent.getParameters()['filterItems'];
 				var aFilters = [];
 
-				filterItems.map(function(filterItem) {
+				filterItems.map(function (filterItem) {
 					var filterItemObj = filterItem.getBindingContext("dealMemoModel").getObject();
 					aFilters.push(new Filter(filterItemObj.filterProp, "EQ", filterItemObj.itemKey));
 				})
@@ -4943,7 +4955,7 @@ sap.ui.define([
 				this.getView().byId("list_dealmemo_master").getBinding("items").filter(aFilters);
 			},
 
-			onDMSort: function() {
+			onDMSort: function () {
 				var oBinding = this.getView().byId("list_dealmemo_master").getBinding("items");
 				var bDescending = '';
 				if (oBinding.aSorters.length === 0) {
@@ -4960,7 +4972,7 @@ sap.ui.define([
 			},
 
 			//Download template
-			onExport: function() {
+			onExport: function () {
 				var oModel = this.getView().getModel();
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
@@ -4973,13 +4985,13 @@ sap.ui.define([
 				oModel.callFunction("/Getcosttemp", {
 					method: "GET",
 					urlParameters: paramObj,
-					success: function(oData, response) {
+					success: function (oData, response) {
 						var costSheetFormatted = this.prepareCostSheet(oData.results, true);
 						var epTypeObj = {
 							ind: 0,
 							label: 'Movie ID',
 							property: 'MovieID'
-								//	type: EdmType.Number
+							//	type: EdmType.Number
 						};
 
 						if (dealMemoDetailInfo.Cnttp === "05" || dealMemoDetailInfo.Cnttp === "09") {
@@ -5016,9 +5028,9 @@ sap.ui.define([
 							}
 						];
 
-						
 
-						costSheetFormatted.map(function(obj) {
+
+						costSheetFormatted.map(function (obj) {
 							if (!obj.hasChild) {
 								var costCodeDesc = obj.Scostdesc;
 								if (obj.parenCostcd === "") {
@@ -5060,23 +5072,23 @@ sap.ui.define([
 						});
 
 						oSheet.build()
-							.then(function() {
+							.then(function () {
 								debugger;
 							})
 							.finally(oSheet.destroy);
 
 					}.bind(this),
-					error: function(oError) {
+					error: function (oError) {
 						var oErrorResponse = JSON.parse(oError.responseText);
 						var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
 						MessageBox.error(oMsg);
 					}
 				})
 			},
-			handleUploadCostSheetCancel: function() {
+			handleUploadCostSheetCancel: function () {
 				this._oUploadSheetDialog.close();
 			},
-			onUploadDialog: function() {
+			onUploadDialog: function () {
 				if (!this._oUploadSheetDialog) {
 					Fragment.load({
 						id: this.createId("uploadCostSheetDialog"),
@@ -5093,7 +5105,7 @@ sap.ui.define([
 					this._oUploadSheetDialog.open();
 				}
 			},
-			get_header_row: function(sheet) {
+			get_header_row: function (sheet) {
 				var headers = [];
 				var range = XLSX.utils.decode_range(sheet['!ref']);
 				var C, R = range.s.r; /* start in the first row */
@@ -5111,7 +5123,7 @@ sap.ui.define([
 				}
 				return headers;
 			},
-			uploadMovieData: function(uploadedData, oControllerRef) {
+			uploadMovieData: function (uploadedData, oControllerRef) {
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoModel = this.getView().getModel("dealMemoModel");
 				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
@@ -5125,22 +5137,22 @@ sap.ui.define([
 				var episodeList, episodeIds;
 				if (dealMemoDetailInfo.Cnttp === "05" || dealMemoDetailInfo.Cnttp === "09") {
 					episodeList = dealMemoModel.getProperty("/matchList");
-					episodeIds = episodeList.map(function(obj) {
+					episodeIds = episodeList.map(function (obj) {
 						return obj.Matid
 					});
 				} else if (dealMemoDetailInfo.Cnttp === "02") {
 					episodeList = dealMemoModel.getProperty("/movieList");
-					episodeIds = episodeList.map(function(obj) {
+					episodeIds = episodeList.map(function (obj) {
 						return obj.Mvid
 					});
 				} else if (dealMemoDetailInfo.Cnttp === "04") {
 					episodeList = dealMemoModel.getProperty("/musicList");
-					episodeIds = episodeList.map(function(obj) {
+					episodeIds = episodeList.map(function (obj) {
 						return obj.Mvid
 					});
 				}
 				// var movieList = dealMemoModel.getProperty("/movieList");
-				var movieIds = episodeList.map(function(obj) {
+				var movieIds = episodeList.map(function (obj) {
 					return obj.Mvid
 				});
 				var uploadedMoviedIds = [],
@@ -5264,7 +5276,7 @@ sap.ui.define([
 									break;
 									//error message Movie id does not exist
 								}
-								
+
 							} else if (aKey === "Year") {
 
 								if (!(parseInt(mvObj[aKey]) >= parseInt(dealMemoDetailInfo.FromYr) && parseInt(mvObj[aKey]) <= parseInt(dealMemoDetailInfo.ToYr))) {
@@ -5279,11 +5291,11 @@ sap.ui.define([
 									episodeData[oIndex]['Gjahr'] = mvObj[aKey];
 								}
 							} else if (aKey == "Description") {
-								
+
 							} else {
 								var costCode = aKey.split("/")[1];
 								if (episodeData[oIndex].epiSodeCostSheet.length > 0) {
-									var costCodesInfo = episodeData[oIndex].epiSodeCostSheet.map(function(obj) {
+									var costCodesInfo = episodeData[oIndex].epiSodeCostSheet.map(function (obj) {
 										return obj.Costcd;
 									});
 									if (costCodesInfo.indexOf(costCode) >= 0) {
@@ -5317,7 +5329,7 @@ sap.ui.define([
 											}
 										}
 										if (!Number.isNaN(parseFloat(costCodeObj.Prdhsamt)) && !Number.isNaN(parseFloat(costCodeObj.Inhsamt)) && !Number.isNaN(
-												parseFloat(costCodeObj.Inhouseamt))) {
+											parseFloat(costCodeObj.Inhouseamt))) {
 											costCodeObj.Totcostamt = parseFloat(costCodeObj.Prdhsamt) + parseFloat(costCodeObj.Inhsamt) + parseFloat(costCodeObj.Inhouseamt);
 										}
 
@@ -5387,10 +5399,10 @@ sap.ui.define([
 
 				return statusFlag;
 			},
-			fillValueInCostSheet: function(episodeCostSheet) {
+			fillValueInCostSheet: function (episodeCostSheet) {
 
 			},
-			handleUploadPress: function() {
+			handleUploadPress: function () {
 
 				var oFileUploader = this.byId(sap.ui.core.Fragment.createId("uploadCostSheetDialog", "fileUploader")); // get the sap.ui.unified.FileUploader
 				var file = oFileUploader.getFocusDomRef().files[0]; // get the file from the FileUploader control
@@ -5398,12 +5410,12 @@ sap.ui.define([
 
 				if (file && window.FileReader) {
 					var reader = new FileReader();
-					reader.onload = function(e) {
+					reader.onload = function (e) {
 						var data = e.target.result;
 						var excelsheet = XLSX.read(data, {
 							type: "binary"
 						});
-						excelsheet.SheetNames.forEach(function(sheetName) {
+						excelsheet.SheetNames.forEach(function (sheetName) {
 							var oExcelRow = XLSX.utils.sheet_to_row_object_array(excelsheet.Sheets[sheetName]); // this is the required data in Object format
 							var headerCols = oControllerRef.get_header_row(excelsheet.Sheets[sheetName]);
 							var sJSONData = JSON.stringify(oExcelRow); // this is the required data in String format
@@ -5416,7 +5428,7 @@ sap.ui.define([
 
 			//Schedule Tab
 
-			onCreateSchedule: function() {
+			onCreateSchedule: function () {
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
 				dealMemoDetailInfo.scheduleTimeFrom = "";
@@ -5438,15 +5450,15 @@ sap.ui.define([
 					this._oCreateScheduleDialog.open();
 				}
 			},
-			getMaxOfArray: function(numArray) {
+			getMaxOfArray: function (numArray) {
 				return Math.max.apply(null, numArray);
 			},
-			onCreateScheduleOk: function() {
+			onCreateScheduleOk: function () {
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
 				var dealMemoModel = this.getView().getModel("dealMemoModel");
 				var daysList = dealMemoModel.getData()['daysList'];
-				var daysInfo = daysList.map(function(dayObj) {
+				var daysInfo = daysList.map(function (dayObj) {
 					return dayObj.Mstcd;
 				});
 				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
@@ -5483,13 +5495,13 @@ sap.ui.define([
 						scheduleInfo = dealMemoDetailInfo.scheduleInfo;
 
 					}
-					var existingScheduleDays = scheduleInfo.map(function(schObj) {
+					var existingScheduleDays = scheduleInfo.map(function (schObj) {
 						return schObj.Bcschcd;
 					})
 
 					scheduleDays = scheduleDays.sort();
 					//	var scheduleDays = scheduleDays.sort((a,b) => (a.Mstcd > b.Mstcd) ? 1 : ((b.Lifnr > a.Lifnr) ? -1 : 0));
-					scheduleDays.map(function(scheduleDay) {
+					scheduleDays.map(function (scheduleDay) {
 						var dayInfoObj = {};
 						if (daysInfo.indexOf(scheduleDay) >= 0) {
 							dayInfoObj = daysList[daysInfo.indexOf(scheduleDay)];
@@ -5526,7 +5538,7 @@ sap.ui.define([
 					var countWeeks = 0;
 					var flagOneIterationDone = true;
 					while (countWeeks < noOfEpi) {
-						scheduleInfo.map(function(schInfo) {
+						scheduleInfo.map(function (schInfo) {
 							if (flagOneIterationDone) {
 								schInfo.Seqnr = seqNo + 1;
 								schInfo.Noofweeks = 0;
@@ -5546,10 +5558,10 @@ sap.ui.define([
 				}
 
 			},
-			onCreateScheduleCancel: function() {
+			onCreateScheduleCancel: function () {
 				this._oCreateScheduleDialog.close();
 			},
-			onTimeChange: function(oEvent) {
+			onTimeChange: function (oEvent) {
 
 				var oSchObj = oEvent.getSource().getBindingContext("dealMemoDetailModel").getObject();
 				var scheduleTimeToHrs = oSchObj.TimeslotfmDt.getHours() + oSchObj.DurationDt.getHours();
@@ -5561,14 +5573,14 @@ sap.ui.define([
 				this.getView().getModel("dealMemoDetailModel").refresh(true);
 
 			},
-			onScheduleChange: function(oEvent) {
+			onScheduleChange: function (oEvent) {
 				var schObj = oEvent.getSource().getBindingContext("dealMemoDetailModel").getObject();
 				if (schObj.flag === undefined || schObj.flag !== "Cr") {
 					schObj.flag = "Ch";
 				}
 				this.getView().getModel("dealMemoDetailModel").refresh(true);
 			},
-			prepareSchedulePayload: function(scheduleObj) {
+			prepareSchedulePayload: function (scheduleObj) {
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
 				return {
@@ -5586,7 +5598,7 @@ sap.ui.define([
 				}
 
 			},
-			prepareDmafPayload: function() {
+			prepareDmafPayload: function () {
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
 				return {
@@ -5623,7 +5635,7 @@ sap.ui.define([
 					Totbudcashamt: "0.00",
 				}
 			},
-			validateScheduleData: function() {
+			validateScheduleData: function () {
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
 				var scheduleData = dealMemoDetailInfo.scheduleInfo;
@@ -5668,7 +5680,7 @@ sap.ui.define([
 				return statusFlag;
 
 			},
-			saveScheduleData: function() {
+			saveScheduleData: function () {
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
 				var scheduleData = dealMemoDetailInfo.scheduleInfo;
@@ -5682,21 +5694,21 @@ sap.ui.define([
 					var saveScheduleParams = {
 						groupId: "scheduleSaveChanges",
 
-						success: function(odata, resp) {
+						success: function (odata, resp) {
 							var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
 							MessageToast.show(oSourceBundle.getText("msgSuccSchDetUpdate"));
 							this.getView().byId("idIconTabBar").setSelectedKey("schedule");
 							//	this.loadDealMemoList();
 							this.loadDetailDealMemo(this.selectedDealMemoObj);
 						}.bind(this),
-						error: function(oError) {
+						error: function (oError) {
 							var oErrorResponse = JSON.parse(oError.responseText);
 							var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
 							MessageBox.error(oMsg);
 						}
 					}
 					var schPayloadArr = [];
-					scheduleData.map(function(schObj) {
+					scheduleData.map(function (schObj) {
 						var schPayload = this.prepareSchedulePayload(schObj);
 						schPayloadArr.push(schPayload);
 						if (schObj.flag === "Cr") {
@@ -5727,7 +5739,7 @@ sap.ui.define([
 					}
 				}
 			},
-			onDeleteScheduleConfirm: function() {
+			onDeleteScheduleConfirm: function () {
 				var detailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = detailModel.getData();
 				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
@@ -5737,7 +5749,7 @@ sap.ui.define([
 					MessageBox.confirm(oSourceBundle.getText("msgDeleteconfirm"), {
 						actions: [oSourceBundle.getText("lblYes"), oSourceBundle.getText("lblNo")],
 						emphasizedAction: "Yes",
-						onClose: function(sAction) {
+						onClose: function (sAction) {
 							if (sAction === oSourceBundle.getText("lblYes")) {
 								this.onDeleteSchedule();
 							} else if (sAction === oSourceBundle.getText("lblNo")) {
@@ -5750,7 +5762,7 @@ sap.ui.define([
 					MessageBox.error(oSourceBundle.getText("msgSelectAtleastOneDay"));
 				}
 			},
-			onDeleteSchedule: function() {
+			onDeleteSchedule: function () {
 				var detailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = detailModel.getData();
 				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
@@ -5760,7 +5772,7 @@ sap.ui.define([
 				oModel.setDeferredGroups(["scheduleDelete"]);
 				var mParameters = {
 					groupId: "scheduleDelete",
-					success: function(odata, resp) {
+					success: function (odata, resp) {
 						var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
 						var oResponse = odata.__batchResponses[0];
 						if (oResponse.__changeResponses && oResponse.__changeResponses.length) {
@@ -5778,7 +5790,7 @@ sap.ui.define([
 						}
 
 					}.bind(this),
-					error: function(oError) {
+					error: function (oError) {
 						var oErrorResponse = JSON.parse(oError.responseText);
 						var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
 						MessageBox.error(oMsg);
@@ -5786,7 +5798,7 @@ sap.ui.define([
 					}
 				};
 
-				selRows.map(function(oRow) {
+				selRows.map(function (oRow) {
 					var schObj = oRow.getObject();
 					var oPath = "/DmbsSet(Tentid='IBS',Dmno='" + dealMemoDetailInfo.Dmno + "',Seqnr='" + schObj.Seqnr + "',Bcschcd='" + schObj.Bcschcd +
 						"')"
@@ -5800,7 +5812,7 @@ sap.ui.define([
 			},
 
 			//Release Status Tab
-			getDateInMS: function(date, time) {
+			getDateInMS: function (date, time) {
 				date.setHours(0, 0, 0, 0);
 				var Actdt = date.getTime();
 				var Time = time;
@@ -5809,7 +5821,7 @@ sap.ui.define([
 				return DtTime;
 
 			},
-			loadReleaseStatusDetails: function() {
+			loadReleaseStatusDetails: function () {
 				var oModel = this.getView().getModel();
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
@@ -5864,9 +5876,9 @@ sap.ui.define([
 				};
 				oModel.read("/DmlgSet", {
 					filters: aFilters,
-					success: function(oData) {
+					success: function (oData) {
 
-						oData.results.map(function(obj) {
+						oData.results.map(function (obj) {
 							var relStObj = $.extend(true, {}, releaseStatusObj);
 							relStObj.Author = obj.Usernm;
 							relStObj.Status = obj.Usractiondesc;
@@ -5900,7 +5912,7 @@ sap.ui.define([
 						dealMemoDetailModel.refresh(true);
 
 					}.bind(this),
-					error: function(oError) {
+					error: function (oError) {
 						var oErrorResponse = JSON.parse(oError.responseText);
 						var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
 						MessageBox.error(oMsg);
@@ -5911,7 +5923,7 @@ sap.ui.define([
 
 			//Attachmment Tab
 
-			onChange: function(oEvent) {
+			onChange: function (oEvent) {
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
 				var oUploadCollection = oEvent.getSource();
@@ -5925,7 +5937,7 @@ sap.ui.define([
 				oUploadCollection.addHeaderParameter(oCustomerHeaderToken);
 
 			},
-			onBeforeUploadStarts: function(oEvent) {
+			onBeforeUploadStarts: function (oEvent) {
 				// Header Slug
 				var oCustomerHeaderSlug = new sap.m.UploadCollectionParameter({
 					name: "slug",
@@ -5934,24 +5946,24 @@ sap.ui.define([
 				oEvent.getParameters().addHeaderParameter(oCustomerHeaderSlug);
 
 			},
-			onUploadComplete: function() {
+			onUploadComplete: function () {
 				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
 				MessageToast.show(oSourceBundle.getText("msgUpldSucc"));
 				this.loadAttachments();
 			},
-			onTypeMissmatch: function(oEvent) {
+			onTypeMissmatch: function (oEvent) {
 				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
 				MessageBox.error(oSourceBundle.getText("msgFileTypeMismatch"));
 			},
-			onFileSizeExceed: function() {
+			onFileSizeExceed: function () {
 				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
 				MessageBox.error(oSourceBundle.getText("msgFileSizeExceed"));
 			},
-			onFilenameLengthExceed: function() {
+			onFilenameLengthExceed: function () {
 				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
 				MessageBox.error(oSourceBundle.getText("msgFileNameLenExceed"));
 			},
-			onFileDeleted: function(oEvent) {
+			onFileDeleted: function (oEvent) {
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
 				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
@@ -5960,11 +5972,11 @@ sap.ui.define([
 				var oPath = "/AttachmentSet(Tentid='IBS',Dmno='" + dealMemoDetailInfo.Dmno + "',Dmver='" + dealMemoDetailInfo.Dmver +
 					"',Contno='',Contver='',Instanceid='" + docId + "')";
 				oModel.remove(oPath, {
-					success: function(oData) {
+					success: function (oData) {
 						MessageToast.show(oSourceBundle.getText("msgFileDelSucc"));
 						this.loadAttachments();
 					}.bind(this),
-					error: function(oError) {
+					error: function (oError) {
 						var oErrorResponse = JSON.parse(oError.responseText);
 						var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
 						MessageBox.error(oMsg);
@@ -5972,7 +5984,7 @@ sap.ui.define([
 				})
 			},
 
-			loadAttachments: function() {
+			loadAttachments: function () {
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
 				var oModel = this.getView().getModel();
@@ -5987,17 +5999,17 @@ sap.ui.define([
 				sap.ui.core.BusyIndicator.show(0);
 				oModel.read("/AttachmentSet", {
 					filters: aFilters,
-					success: function(oData) {
+					success: function (oData) {
 						sap.ui.core.BusyIndicator.hide();
 						dealMemoDetailInfo.AttachmentDetails = oData.results;
-						if(oData.results.length > 0) {
+						if (oData.results.length > 0) {
 							dealMemoDetailInfo.attachmentTabColor = "Positive";
 						} else {
 							dealMemoDetailInfo.attachmentTabColor = "Critical";
 						}
 						dealMemoDetailModel.refresh(true);
 					},
-					error: function(oError) {
+					error: function (oError) {
 						var oErrorResponse = JSON.parse(oError.responseText);
 						var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
 						MessageBox.error(oMsg);
@@ -6006,7 +6018,7 @@ sap.ui.define([
 				});
 			},
 			// load Revenue tab
-			loadRevenueTab: function() {
+			loadRevenueTab: function () {
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
 				sap.ui.core.BusyIndicator.show(0);
@@ -6015,7 +6027,7 @@ sap.ui.define([
 				var srvUrl = "/sap/opu/odata/IBSCMS/DEALMEMO_SRV/";
 				var oModelSav = new sap.ui.model.odata.ODataModel(srvUrl, true, "", "");
 				var pValue = "/DmafSet(Tentid='IBS',Dmno='" + dmNo + "')";
-				oModelSav.read(pValue, null, null, true, function(oData) {
+				oModelSav.read(pValue, null, null, true, function (oData) {
 					sap.ui.core.BusyIndicator.hide();
 					var oModel = new sap.ui.model.json.JSONModel(oData);
 					if (bModel.oData.results.length > 0) {
@@ -6035,7 +6047,7 @@ sap.ui.define([
 					}
 					bModel.refresh();
 					dealMemoDetailModel.refresh(true);
-				}, function() {
+				}, function () {
 					sap.ui.core.BusyIndicator.hide();
 					if (bModel.oData.results.length > 0) {
 						bModel.oData.results[1].sinput = dealMemoDetailInfo.Dmaf.Avgbcrevamt;
@@ -6047,7 +6059,7 @@ sap.ui.define([
 					bModel.refresh();
 				});
 			},
-			calRev30: function(oEvent) {
+			calRev30: function (oEvent) {
 
 				var val = oEvent.getSource().getValue();
 				var bModel = this.getView().byId("Rev30Table").getModel();
@@ -6079,7 +6091,7 @@ sap.ui.define([
 				bModel.refresh();
 
 			},
-			saveRevenueTab: function() {
+			saveRevenueTab: function () {
 				sap.ui.core.BusyIndicator.show(0);
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
@@ -6149,20 +6161,20 @@ sap.ui.define([
 							"X-Requested-With": "X"
 						});
 						var pValue = "/DmafSet";
-						oModelSav.create(pValue, oData, null, function() {
-								//	alert("revenue created");
-								sap.ui.core.BusyIndicator.hide();
-								if (oData.Avgbcrevamt !== "0") {
-									dealMemoDetailModel.setProperty("/revenueTabColor", "Positive");
-								} else {
-									dealMemoDetailModel.setProperty("/revenueTabColor", "Critical");
-								}
-								dealMemoDetailModel.refresh(true);
-								// this.getView().byId("idRev30").setIconColor("Positive");
-								sap.m.MessageToast.show(that.getView().getModel("i18n")._oResourceBundle.getText("msg_revper30save"));
-							},
+						oModelSav.create(pValue, oData, null, function () {
+							//	alert("revenue created");
+							sap.ui.core.BusyIndicator.hide();
+							if (oData.Avgbcrevamt !== "0") {
+								dealMemoDetailModel.setProperty("/revenueTabColor", "Positive");
+							} else {
+								dealMemoDetailModel.setProperty("/revenueTabColor", "Critical");
+							}
+							dealMemoDetailModel.refresh(true);
+							// this.getView().byId("idRev30").setIconColor("Positive");
+							sap.m.MessageToast.show(that.getView().getModel("i18n")._oResourceBundle.getText("msg_revper30save"));
+						},
 
-							function(oData) {
+							function (oData) {
 								sap.ui.core.BusyIndicator.hide();
 								//	alert("revenue creation failed");
 								var errMsg = JSON.parse(oData.response.body);
@@ -6204,19 +6216,19 @@ sap.ui.define([
 								"X-Requested-With": "X"
 							});
 							var pValue = "/DmafSet(Tentid='IBS',Dmno='" + oData.Dmno + "')";
-							oModelSav.update(pValue, oData, null, function() {
-									sap.ui.core.BusyIndicator.hide();
-									if (oData.Avgbcrevamt !== "0") {
-										dealMemoDetailModel.setProperty("/revenueTabColor", "Positive");
-									} else {
-										dealMemoDetailModel.setProperty("/revenueTabColor", "Critical");
-									}
-									dealMemoDetailModel.refresh(true);
-									// this.getView().byId("idRev30").setIconColor("Positive");
-									// this.BudgEnable();
-									sap.m.MessageToast.show(that.getView().getModel("i18n")._oResourceBundle.getText("msg_revper30upd"));
-								},
-								function(oData) {
+							oModelSav.update(pValue, oData, null, function () {
+								sap.ui.core.BusyIndicator.hide();
+								if (oData.Avgbcrevamt !== "0") {
+									dealMemoDetailModel.setProperty("/revenueTabColor", "Positive");
+								} else {
+									dealMemoDetailModel.setProperty("/revenueTabColor", "Critical");
+								}
+								dealMemoDetailModel.refresh(true);
+								// this.getView().byId("idRev30").setIconColor("Positive");
+								// this.BudgEnable();
+								sap.m.MessageToast.show(that.getView().getModel("i18n")._oResourceBundle.getText("msg_revper30upd"));
+							},
+								function (oData) {
 									sap.ui.core.BusyIndicator.hide();
 									var errMsg = JSON.parse(oData.response.body);
 									if (errMsg !== '') {
@@ -6254,7 +6266,7 @@ sap.ui.define([
 
 			},
 
-			saveMarketingTab: function() {
+			saveMarketingTab: function () {
 
 				sap.ui.core.BusyIndicator.show(0);
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
@@ -6268,7 +6280,7 @@ sap.ui.define([
 
 					// var aModel = this.getView().byId("mLabel").getModel();
 					var pValue = "/DmafSet(Tentid='IBS',Dmno='" + dmNo + "')";
-					oModelSave.read(pValue, null, null, true, function(oData) {
+					oModelSave.read(pValue, null, null, true, function (oData) {
 						sap.ui.core.BusyIndicator.hide();
 						var dealMemoDetailModel = that.getView().getModel("dealMemoDetailModel");
 						var dealMemoDetailInfo = dealMemoDetailModel.getData();
@@ -6292,20 +6304,20 @@ sap.ui.define([
 								"X-Requested-With": "X"
 							});
 							var pValue = "/DmafSet";
-							oModelSave.create(pValue, oData, null, function() {
-									sap.ui.core.BusyIndicator.hide();
-									// this.getView().byId("idMarketing").setIconColor("Positive");
-									if (oData.Advoffairamt !== "0") {
-										dealMemoDetailModel.setProperty("/marketTabColor", "Positive");
-										dealMemoDetailModel.setProperty("/progTabColor", "Positive");
-									} else {
-										dealMemoDetailModel.setProperty("/marketTabColor", "Critical");
-										dealMemoDetailModel.setProperty("/progTabColor", "Critical");
-									}
-									dealMemoDetailModel.refresh(true);
-									sap.m.MessageToast.show(that.getView().getModel("i18n").getResourceBundle().getText("msg_maktbudsave"));
-								},
-								function(oData) {
+							oModelSave.create(pValue, oData, null, function () {
+								sap.ui.core.BusyIndicator.hide();
+								// this.getView().byId("idMarketing").setIconColor("Positive");
+								if (oData.Advoffairamt !== "0") {
+									dealMemoDetailModel.setProperty("/marketTabColor", "Positive");
+									dealMemoDetailModel.setProperty("/progTabColor", "Positive");
+								} else {
+									dealMemoDetailModel.setProperty("/marketTabColor", "Critical");
+									dealMemoDetailModel.setProperty("/progTabColor", "Critical");
+								}
+								dealMemoDetailModel.refresh(true);
+								sap.m.MessageToast.show(that.getView().getModel("i18n").getResourceBundle().getText("msg_maktbudsave"));
+							},
+								function (oData) {
 									sap.ui.core.BusyIndicator.hide();
 									var errMsg = JSON.parse(oData.response.body);
 									if (errMsg !== '') {
@@ -6349,21 +6361,21 @@ sap.ui.define([
 									"X-Requested-With": "X"
 								});
 								var pValue = "/DmafSet(Tentid='IBS',Dmno='" + oData.Dmno + "')";
-								oModelSave.update(pValue, oData, null, function() {
-										sap.ui.core.BusyIndicator.hide();
-										// that.getView().byId("idMarketing").setIconColor("Positive");
-										// this.BudgEnable();
-										if (oData.Advoffairamt !== "0") {
-											dealMemoDetailModel.setProperty("/marketTabColor", "Positive");
-											dealMemoDetailModel.setProperty("/progTabColor", "Positive");
-										} else {
-											dealMemoDetailModel.setProperty("/marketTabColor", "Critical");
-											dealMemoDetailModel.setProperty("/progTabColor", "Critical");
-										}
-										dealMemoDetailModel.refresh(true);
-										sap.m.MessageToast.show(that.getView().getModel("i18n").getResourceBundle().getText("msg_maktbudsave"));
-									},
-									function(oData) {
+								oModelSave.update(pValue, oData, null, function () {
+									sap.ui.core.BusyIndicator.hide();
+									// that.getView().byId("idMarketing").setIconColor("Positive");
+									// this.BudgEnable();
+									if (oData.Advoffairamt !== "0") {
+										dealMemoDetailModel.setProperty("/marketTabColor", "Positive");
+										dealMemoDetailModel.setProperty("/progTabColor", "Positive");
+									} else {
+										dealMemoDetailModel.setProperty("/marketTabColor", "Critical");
+										dealMemoDetailModel.setProperty("/progTabColor", "Critical");
+									}
+									dealMemoDetailModel.refresh(true);
+									sap.m.MessageToast.show(that.getView().getModel("i18n").getResourceBundle().getText("msg_maktbudsave"));
+								},
+									function (oData) {
 										sap.ui.core.BusyIndicator.hide();
 										var errMsg = JSON.parse(oData.response.body);
 										if (errMsg !== '') {
@@ -6382,7 +6394,7 @@ sap.ui.define([
 									});
 							}
 						}
-					}, function() {
+					}, function () {
 						sap.ui.core.BusyIndicator.hide();
 					});
 				} else {
@@ -6402,7 +6414,7 @@ sap.ui.define([
 
 			},
 
-			loadMarketingTab: function() {
+			loadMarketingTab: function () {
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
 				sap.ui.core.BusyIndicator.show(0);
@@ -6411,7 +6423,7 @@ sap.ui.define([
 				var srvUrl = "/sap/opu/odata/IBSCMS/DEALMEMO_SRV/";
 				var oModelSav = new sap.ui.model.odata.ODataModel(srvUrl, true, "", "");
 				var pValue = "/DmafSet(Tentid='IBS',Dmno='" + dmNo + "')";
-				oModelSav.read(pValue, null, null, true, function(oData) {
+				oModelSav.read(pValue, null, null, true, function (oData) {
 					sap.ui.core.BusyIndicator.hide();
 					if (bModel.oData.results.length > 0) {
 						if (oData.Advoffairamt !== "0.00") {
@@ -6427,7 +6439,7 @@ sap.ui.define([
 					}
 					bModel.refresh();
 					dealMemoDetailModel.refresh(true);
-				}, function() {
+				}, function () {
 					//	alert("fail");
 					sap.ui.core.BusyIndicator.hide();
 					if (bModel.oData.results.length > 0) {
@@ -6437,7 +6449,7 @@ sap.ui.define([
 					bModel.refresh();
 				});
 			},
-			calcMarket: function(oEvent) {
+			calcMarket: function (oEvent) {
 				var val = oEvent.getSource().getValue();
 				var bModel = this.getView().byId("marketTable").getModel();
 				bModel.oData.results[0].sinput1 = val.toString();
@@ -6455,23 +6467,23 @@ sap.ui.define([
 				}
 			},
 			//ProgPL tab in dealmemo
-			loadProgPL: function() {
+			loadProgPL: function () {
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
 				sap.ui.core.BusyIndicator.show(0);
 				var dmNo = dealMemoDetailInfo.Dmno
-					// this.getView().byId("idPl").setIconColor("Positive");
-					// this.getView().byId("btnSave").setEnabled(false);
+				// this.getView().byId("idPl").setIconColor("Positive");
+				// this.getView().byId("btnSave").setEnabled(false);
 				var intDataModelUrl = "/sap/opu/odata/IBSCMS/DEALMEMO_SRV/";
 				var oModelSav = new sap.ui.model.odata.ODataModel(intDataModelUrl, true, "", "");
 				var pValue = "/DmafSet(Tentid='IBS',Dmno='" + dmNo + "')"; //aModel.oData.Dmno
-				oModelSav.read(pValue, null, null, true, function(oData) {
+				oModelSav.read(pValue, null, null, true, function (oData) {
 					sap.ui.core.BusyIndicator.hide();
 					this.calcProgPL(oData)
 
-				}.bind(this), function() {});
+				}.bind(this), function () { });
 			},
-			calcProgPL: function(oData) {
+			calcProgPL: function (oData) {
 				sap.ui.core.BusyIndicator.show(0);
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
@@ -6604,12 +6616,12 @@ sap.ui.define([
 				sap.ui.core.BusyIndicator.hide();
 			},
 			// 	// Comment Tab
-			loadComment: function() {
+			loadComment: function () {
 				that.getView().byId("commentInner").setSelectedKey("synopsis");
 				this.getComment();
 				this.getDataForComm();
 			},
-			getComment: function() {
+			getComment: function () {
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
 				var aflag = 0;
@@ -6617,7 +6629,7 @@ sap.ui.define([
 				this.assignSynopsis(aflag);
 				this.getTabList();
 			},
-			getDataForComm: function() {
+			getDataForComm: function () {
 				sap.ui.core.BusyIndicator.show(0);
 				var dealMemoDetailModel = that.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
@@ -6627,12 +6639,12 @@ sap.ui.define([
 				var oModelSav = new sap.ui.model.odata.ODataModel(intDataModelUrl, true, "", "");
 				var pValue1 = "/DmHeaderSet(Tentid='IBS',Dmno='" + Dmno + "',Dmver='" + Dmver + "',Transtp='D')?&$expand=DmtxtSet";
 
-				oModelSav.read(pValue1, null, null, true, function(oData) {
+				oModelSav.read(pValue1, null, null, true, function (oData) {
 					sap.ui.core.BusyIndicator.hide();
 					//alert("success");
 					var aModelData = new sap.ui.model.json.JSONModel(oData);
 					that.getView().byId("lblComments").setModel(aModelData);
-				}, function(oData) {
+				}, function (oData) {
 					sap.ui.core.BusyIndicator.hide();
 					var errMsg = JSON.parse(oData.response.body);
 					if (errMsg !== undefined) {
@@ -6645,7 +6657,7 @@ sap.ui.define([
 					}
 				});
 			},
-			getTabList: function() {
+			getTabList: function () {
 
 				//******************************** condition for adding inner tabs in comments tab**********************	
 				var dealMemoDetailModel = that.getView().getModel("dealMemoDetailModel");
@@ -6670,7 +6682,7 @@ sap.ui.define([
 				}
 				//if (TabFlag === "0")
 			},
-			appendTxt: function(that, key) {
+			appendTxt: function (that, key) {
 				sap.ui.core.BusyIndicator.show(0);
 				var jModelData = this.modelDesign(that, key);
 				var intDataModelUrl = "/sap/opu/odata/IBSCMS/DEALMEMO_SRV/";
@@ -6682,16 +6694,16 @@ sap.ui.define([
 					"X-Requested-With": "X"
 				});
 				var pValue = "/DmHeaderSet";
-				oModelSav.create(pValue, jModelData.oData, null, function() {
-						sap.ui.core.BusyIndicator.hide();
-						/*	sap.m.MessageBox.show("comment created successfully", {
-								icon: sap.m.MessageBox.Icon.SUCCESS,
-								title: "Success"
-							});*/
-						sap.m.MessageToast.show(that.getView().getModel("i18n").getResourceBundle().getText("msg_commsave"));
+				oModelSav.create(pValue, jModelData.oData, null, function () {
+					sap.ui.core.BusyIndicator.hide();
+					/*	sap.m.MessageBox.show("comment created successfully", {
+							icon: sap.m.MessageBox.Icon.SUCCESS,
+							title: "Success"
+						});*/
+					sap.m.MessageToast.show(that.getView().getModel("i18n").getResourceBundle().getText("msg_commsave"));
 
-					},
-					function() {
+				},
+					function () {
 						sap.ui.core.BusyIndicator.hide();
 						sap.m.MessageBox.show(that.getView().getModel("i18n").getResourceBundle().getText("msg_commcreatefail"), {
 							icon: sap.m.MessageBox.Icon.ERROR,
@@ -6700,12 +6712,12 @@ sap.ui.define([
 					});
 
 			},
-			onFeedPost: function(that) {
+			onFeedPost: function (that) {
 				var Key = this.getView().byId("commentInner").getSelectedKey();
 				this.saveComments(Key, that);
 			},
 
-			modelDesign: function(that, key) {
+			modelDesign: function (that, key) {
 				var aModelData = that.getView().byId("lblComments").getModel();
 
 				//*********************creation of model for posting comments**************************
@@ -6803,7 +6815,7 @@ sap.ui.define([
 				return yModelData;
 			},
 			//*****************************************Function For adding inner tabs**********************************
-			setTabList: function() {
+			setTabList: function () {
 				sap.ui.core.BusyIndicator.show(0);
 				var dealMemoDetailModel = that.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
@@ -6834,7 +6846,7 @@ sap.ui.define([
 									new sap.m.FeedInput({
 										id: FeedId,
 										showIcon: false,
-										post: function() {
+										post: function () {
 											that.onFeedPost();
 										}
 									}),
@@ -6906,7 +6918,7 @@ sap.ui.define([
 				}
 
 			},
-			saveComments: function(Key) {
+			saveComments: function (Key) {
 
 				if (Key === 'synopsis') {
 					var kValue = "";
@@ -6946,13 +6958,13 @@ sap.ui.define([
 				that.setComments(that, Key);
 
 			},
-			oncommentInnerSelect: function(oEvent) {
+			oncommentInnerSelect: function (oEvent) {
 
 				var Key = this.getView().byId("commentInner").getSelectedKey();
 				this.setComments(that, Key);
 
 			},
-			saveCommData: function(that, val) {
+			saveCommData: function (that, val) {
 				//var jModelData = this.modelDesign(that);
 				var aModelData = that.getView().byId("lblComments").getModel();
 				var idURL = "http://ibssapserv9.inveniodelhi.com:8060";
@@ -7019,7 +7031,7 @@ sap.ui.define([
 					}
 				}
 			},
-			assignConcept: function(aflag) {
+			assignConcept: function (aflag) {
 				sap.ui.core.BusyIndicator.show(0);
 				var dealMemoDetailModel = that.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
@@ -7116,7 +7128,7 @@ sap.ui.define([
 			},
 
 			//*****************************************Assing Synopsis details**********************************
-			assignSynopsis: function(aflag) {
+			assignSynopsis: function (aflag) {
 				sap.ui.core.BusyIndicator.show(0);
 				var dealMemoDetailModel = that.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
@@ -7211,7 +7223,7 @@ sap.ui.define([
 
 			//*************************************** set comments on inner tabs *******************************************
 
-			setComments: function(that, key) {
+			setComments: function (that, key) {
 
 				if (key === 'synopsis') {
 					var aflag = "0";
@@ -7225,10 +7237,10 @@ sap.ui.define([
 					//-------------------- set model and class for list-------------------------
 					var commData = {
 						"EntryCollection": [{
-								"Author": "",
-								"Date": "",
-								"Text": ""
-							}
+							"Author": "",
+							"Date": "",
+							"Text": ""
+						}
 
 						]
 					};
@@ -7247,7 +7259,7 @@ sap.ui.define([
 					var oModelSav = new sap.ui.model.odata.ODataModel(intDataModelUrl, true, "", "");
 					var pValue = "/DmtxtSet?$filter=Tentid eq'IBS' and  Dmno eq '" + Dmno + "' and Dmver eq '" + Dmver + "' and Txtsuffix eq '" +
 						key + "'";
-					oModelSav.read(pValue, null, null, true, function(oData) {
+					oModelSav.read(pValue, null, null, true, function (oData) {
 						sap.ui.core.BusyIndicator.hide();
 						var header = [];
 						var data = [];
@@ -7281,7 +7293,7 @@ sap.ui.define([
 									Text: data[count]
 								};
 								/*	oModel.oData.EntryCollection[count].Author= "Alex";
- 	 	              	oModel.oData.EntryCollection[count].Text= data[count];*/
+								oModel.oData.EntryCollection[count].Text= data[count];*/
 								//	var aEntries = oModel.getData().EntryCollection;
 								var aEntries = oModel.oData.EntryCollection;
 								aEntries.unshift(oEntries);
@@ -7296,7 +7308,7 @@ sap.ui.define([
 								sap.ui.getCore().getControl(id).setModel(yModelData);*/
 						}
 
-					}, function(oData) {
+					}, function (oData) {
 						sap.ui.core.BusyIndicator.hide();
 						var errMsg = JSON.parse(oData.response.body);
 						if (errMsg !== undefined) {
@@ -7314,7 +7326,7 @@ sap.ui.define([
 					});
 				}
 			},
-			oneditSynopsis: function(oEvent) {
+			oneditSynopsis: function (oEvent) {
 				var id = oEvent.getSource().getId();
 				var aflag = 1;
 				id = id.split("--");
@@ -7326,7 +7338,7 @@ sap.ui.define([
 				}
 			},
 			//************************************split header into name,date and time***************************************
-			splitHeader: function(header) {
+			splitHeader: function (header) {
 				var head = header.split("_");
 				var year = head[1].substring(0, 4);
 				var month = head[1].substring(4, 6);
@@ -7341,7 +7353,7 @@ sap.ui.define([
 				return [head[0], date, time];
 			},
 			/************** Vendor Contract Code ********************/
-			toVendorContractCreate: function() {
+			toVendorContractCreate: function () {
 				var oRouter = this.getOwnerComponent().getRouter();
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
@@ -7352,7 +7364,7 @@ sap.ui.define([
 					"Contver": "new"
 				});
 			},
-			toVendorContractDisplay: function(oEvent) {
+			toVendorContractDisplay: function (oEvent) {
 				var oRouter = this.getOwnerComponent().getRouter();
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
@@ -7369,7 +7381,7 @@ sap.ui.define([
 
 			/*********** Artist Contract *******************/
 
-			toArtistContract: function(oEvent) {
+			toArtistContract: function (oEvent) {
 				var oRouter = this.getOwnerComponent().getRouter();
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
@@ -7381,7 +7393,7 @@ sap.ui.define([
 					"Contver": oContractItem.Contver
 				});
 			},
-			toArtistContractCreate: function() {
+			toArtistContractCreate: function () {
 				var oRouter = this.getOwnerComponent().getRouter();
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();

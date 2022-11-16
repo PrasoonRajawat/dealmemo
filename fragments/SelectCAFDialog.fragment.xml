@@ -4,7 +4,8 @@
 	<content>
 		<VBox>
 			<Label text="{i18n>lblCAFNo}"/>
-			<Input value="{dealMemoModel>/CAFDmno}" showValueHelp="true" valueHelpRequest="onSelectCAFNo"/>
+			<Input id="cafDmno" placeholder="Select CAF No." value="{dealMemoModel>/CAFDmno}" showValueHelp="true" valueHelpRequest="onSelectCAFNo"/>
+			<Input id="version" value="{dealMemoModel>/CAFDmver}" showValueHelp="false" enabled="false" width="80%"/>
 		</VBox>
 		
 	</content>
