@@ -117,6 +117,22 @@
 									<core:Fragment fragmentName="com.ui.dealmemolocal.fragments.MarketingTab" type="XML" />
 									</content>
 								</IconTabFilter>
+
+								<IconTabFilter
+                                id="oapTab"
+                                key="oap"
+                                text="OAP"
+                                icon="sap-icon://marketing-campaign"
+                                class="sapMITBHead"
+                                enabled="{dealMemoDetailModel>/marketTabEnable}"
+                                iconColor="{path:'dealMemoDetailModel>/oapTabColor'}"
+                                design="Horizontal"
+                                visible="{=${dealMemoDetailModel>/Dmno} !== '' &amp;&amp; ${dealMemoDetailModel>/OapTab} === 'X' ? true : false }"
+                            >
+                                <content>
+                                    <core:Fragment fragmentName="cafId.fragments.OAPTab" type="XML" />
+                                </content>
+                            </IconTabFilter>
 								
 								<IconTabFilter id="idPl" key="progPL" text="{i18n>IcnTbFlt_ProgPandL}" icon="sap-icon://loan" class="sapMITBHead" 
 									enabled="{dealMemoDetailModel>/progTabEnable}" iconColor="{path:'dealMemoDetailModel>/progTabColor'}" design="Horizontal" visible="{= ${dealMemoDetailModel>/Dmno} !== '' ? true : false }">
