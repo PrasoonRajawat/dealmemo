@@ -130,7 +130,7 @@
                                 visible="{=${dealMemoDetailModel>/Dmno} !== '' &amp;&amp; ${dealMemoDetailModel>/OapTab} === 'X' ? true : false }"
                             >
                                 <content>
-                                    <core:Fragment fragmentName="cafId.fragments.OAPTab" type="XML" />
+                                    <core:Fragment fragmentName="com.ui.dealmemolocal.fragments.OAPTab" type="XML" />
                                 </content>
                             </IconTabFilter>
 								
