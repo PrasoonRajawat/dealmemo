@@ -1,0 +1,21 @@
+<c:FragmentDefinition xmlns="sap.m" xmlns:u="sap.ui.unified" xmlns:l="sap.ui.layout" xmlns:c="sap.ui.core">
+		<Table id="oapTable" items="{/results}">
+											<columns>
+												<Column width="70%">
+													<ObjectIdentifier title=""/>
+												</Column>
+												<Column minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" hAlign="Center">
+													<ObjectIdentifier title="Estimated"/>
+												</Column>
+											</columns>
+											<items>
+												<ColumnListItem>
+													<Text text="OAP Costs" class="sapUiTinyMarginTop" visible="{visible}" ></Text>
+													<Input
+														value="{ parts: [ {path: 'sinput'}, {path: 'curr'} ], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false,minFractionDigits: 2, maxFractionDigits: 2 } }"
+														textAlign="Right" visible="{visible}" editable="{path:'dealMemoDetailModel>/Dmst',formatter:'.Formatter.formatEditableStatus'}"/>
+													<!--	<Input value="{sinput}" type="Number" textAlign="Right" liveChange="calcMarket"/>-->
+												</ColumnListItem>
+											</items>
+										</Table>
+</c:FragmentDefinition>
