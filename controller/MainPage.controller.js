@@ -830,6 +830,9 @@ sap.ui.define([
 				var dealMemoModel = this.getView().getModel(oValueModelAlias);
 				dealMemoModel.setProperty(oValuePath, selectedItemObj[oProp]);
 				dealMemoModel.setProperty(oKeyPath, selectedItemObj[oKey]);
+				if (this.oValueHelpSelectionParams.bindPropName2 !== undefined) {
+					dealMemoModel.setProperty("/CAFDmver", selectedItemObj["Dmver"]);
+				}
 				dealMemoModel.refresh(true);
 				if (this.oValueHelpSelectionParams.callBackFunction) {
 					this.oValueHelpSelectionParams.callBackFunction(this);
