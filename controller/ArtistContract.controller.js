@@ -2745,7 +2745,7 @@ sap.ui.define([
 				success: function (oData) {
 
 					oData.results.map(function (obj) {
-						if (obj.Advwfapp == "X"	|| obj.Posnid == "INIT") {
+						if (obj.Advwfapp == true || obj.Posnid == "INIT") {
 						var relStObj = $.extend(true, {}, releaseStatusObj);
 						relStObj.Author = obj.Usernm;
 						relStObj.Status = obj.Usractiondesc;
