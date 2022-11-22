@@ -29,7 +29,13 @@ sap.ui.define([
 				if (oVal == "04") {
 					return "Success";
 				}
-				if (oVal == "05") {
+				if (oVal == "10") {
+					return "Error";
+				}
+				if (oVal == "11") {
+					return "Success";
+				}
+				if (oVal == "09") {
 					return "Warning";
 				}
            },

@@ -1,7 +1,7 @@
 <c:FragmentDefinition xmlns="sap.m" xmlns:s="sap.suite.ui.commons" xmlns:u="sap.ui.unified" xmlns:l="sap.ui.layout" xmlns:c="sap.ui.core">
 
 <s:Timeline id="idTimelineRlSTatus" showFilterBar="false" enableScroll="false" enableBackendFilter="false" showHeaderBar="false" showSearch="false"
-											sortOldestFirst="false" sort="false" content="{vendorContractModel>/releaseStatusInfo}" growingThreshold="0" >
+											sortOldestFirst="false" sort="false" content="{vendorContractModel>/releaseAdvStatusInfo}" growingThreshold="0" >
 											<s:content>
 												<s:TimelineItem dateTime="{vendorContractModel>Date}" userName="{vendorContractModel>Author}" icon="{vendorContractModel>icon}" userNameClickable="true">
 													<s:embeddedControl>

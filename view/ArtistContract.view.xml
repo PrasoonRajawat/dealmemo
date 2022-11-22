@@ -97,8 +97,8 @@
 								</IconTabBar>
 							</content>
 						</IconTabFilter>
-						<IconTabFilter id="idAdvanceStatusTab" text="Advance Approval Release Status" key="AdvreleaseStatus" icon="sap-icon://order-status" class="sapMITBHead"
-							iconColor="{path:'artistContractModel>/relStatustabcolor'}" design="Horizontal"
+						<IconTabFilter id="idAdvanceStatusTab" text="Advance Approval Status" key="AdvreleaseStatus" icon="sap-icon://order-status" class="sapMITBHead"
+							iconColor="{path:'artistContractModel>/relAdvStatustabcolor'}" design="Horizontal"
 							enabled="{= ${artistContractModel>/Contstat} !== '01' ? true : false }" visible="{artistContractModel>/releaseTabVisible}">
 							<content>
 								<core:Fragment fragmentName="com.ui.dealmemolocal.fragments.DealMemoTabs.ReleaseStatus.AdvanceStatusTabAC" type="XML"/>
