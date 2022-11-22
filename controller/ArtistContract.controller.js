@@ -2510,7 +2510,7 @@ sap.ui.define([
 		onTabSelectionAC: function () {
 			var oTab = this.getView().byId("idACTabBar").getSelectedKey();
 			var oSubTab = this.getView().byId("idACPayTabBar2").getSelectedKey();
-			if (oTab === "releaseStatus") {
+			if (oTab === "releaseStatus" || oTab === "AdvreleaseStatus") {
 				this.loadReleaseStatusDetails();
 			}
 			if (oSubTab === "milestoneTab") {

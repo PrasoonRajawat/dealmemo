@@ -4345,7 +4345,7 @@ sap.ui.define([
 			onTabSelectionVC: function () {
 				var oTab = this.getView().byId("idVCTabBar").getSelectedKey();
 				var oSubTab = this.getView().byId("idVCPayTabBar2").getSelectedKey();
-				if (oTab === "releaseStatus") {
+				if (oTab === "releaseStatus" || oTab === "AdvreleaseStatus") {
 					this.loadReleaseStatusDetails();
 				}
 				if (oSubTab === "milestoneTab") {
