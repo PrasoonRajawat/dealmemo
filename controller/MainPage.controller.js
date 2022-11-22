@@ -1103,6 +1103,14 @@ sap.ui.define([
 								oDmbsObj.Timeslotto = Formatter.formatTimeDuration(DmbsObj.Timeslotto);
 								oDmbsObj.Duration = Formatter.formatTimeDuration(DmbsObj.Duration);
 								oDmbsObj.DurationDt = Formatter.formatTimeDurationDt(DmbsObj.Duration);
+								oData.TargetAudience = DmbsObj.TargetAudience;
+								oData.Over2Months = DmbsObj.Over2Months;
+								oData.Launch = DmbsObj.Launch;
+								oData.Sustenance = DmbsObj.Sustenance;
+								oData.TargetAudienceExisting = DmbsObj.TargetAudienceExisting;
+								oData.WeekAverageTvr = DmbsObj.WeekAverageTvr;
+								oData.TargetAudienceCompeting = DmbsObj.TargetAudienceCompeting;
+								oData.WeekAverageTvrCompeting = DmbsObj.WeekAverageTvrCompeting;
 								scheduleInfo.push(oDmbsObj);
 
 							});
@@ -1154,7 +1162,10 @@ sap.ui.define([
 						var len = that.getView().byId("commentInner").getItems().length;
 						for (var i = 1; i < len; i++) {
 							that.getView().byId("commentInner").getItems()[i].setVisible(false);
-						}
+						};
+						this.calculateInvestmentDetails(oData);
+						oData.Totdmamt = (parseFloat(oData.OapCosts) + parseFloat(oData.Dmaf.Mediacosts) + parseFloat(oData.Dmaf.Digitalcosts) + parseFloat(oData.Dmaf.Othercosts) + parseFloat(oData.Totdmamt)).toFixed(2);
+						this.getView().byId("marketingTotal").setText((parseFloat(oData.Dmaf.Mediacosts) + parseFloat(oData.Dmaf.Digitalcosts) + parseFloat(oData.Dmaf.Othercosts)).toFixed(2).toString())
 					}.bind(this),
 					error: function (oError) {
 						sap.ui.core.BusyIndicator.hide();
@@ -1231,23 +1242,52 @@ sap.ui.define([
 					var txt_makt = this.getView().getModel("i18n").getResourceBundle().getText("txt_advcostoffair");
 
 					var maktData = {
-						"results": [{
-							"skey": txt_makt,
-							"sinput": "",
-							"curr": ""
-						}]
+						"results": [
+							{
+								"skey": "Media Costs",
+								"sinput": "",
+								"curr": "",
+								"visible": true
+							},
+							{
+								"skey": "Digital Costs",
+								"sinput": "",
+								"curr": "",
+								"visible": true
+							},
+							{
+								"skey": "Others",
+								"sinput": "",
+								"curr": "",
+								"visible": true
+							}
+						]
 					};
 					var omarketModel = new sap.ui.model.json.JSONModel(maktData);
 					this.getView().byId("marketTable").setModel(omarketModel);
 					this.loadMarketingTab();
 				} else if (mainSelectedKey == "progPL") {
-					var progModel = new sap.ui.model.json.JSONModel(jQuery.sap.getModulePath("com.ui.dealmemolocal.json", "/prog30Tab.json"));
-					var progTRPModel = new sap.ui.model.json.JSONModel(jQuery.sap.getModulePath("com.ui.dealmemolocal.json", "/progTRPTab.json"));
-					this.getView().byId("prog30Table").setModel(progModel);
-					this.getView().byId("progTRPTable").setModel(progTRPModel);
+					// var progModel = new sap.ui.model.json.JSONModel(jQuery.sap.getModulePath("com.ui.dealmemolocal.json", "/prog30Tab.json"));
+					// var progTRPModel = new sap.ui.model.json.JSONModel(jQuery.sap.getModulePath("com.ui.dealmemolocal.json", "/progTRPTab.json"));
+					// this.getView().byId("prog30Table").setModel(progModel);
+					// this.getView().byId("progTRPTable").setModel(progTRPModel);
 					this.loadProgPL();
 				} else if (mainSelectedKey == "comment") {
 					this.loadComment();
+				} else if (mainSelectedKey == "oap") {
+					var oapData = {
+						"results": [
+							{
+								"skey": "OAP Costs",
+								"sinput": "",
+								"curr": "",
+								"visible": true
+							}
+						]
+					};
+					var oOapModel = new sap.ui.model.json.JSONModel(oapData);
+					this.getView().byId("oapTable").setModel(oOapModel);
+					this.loadOap();
 				}
 
 				if (mainSelectedKey == "progPL") {
@@ -1305,6 +1345,7 @@ sap.ui.define([
 				dealMemoDetailModel.setProperty("/scheduletabcolor", "Critical");
 				dealMemoDetailModel.setProperty("/revenueTabColor", "Critical");
 				dealMemoDetailModel.setProperty("/marketTabColor", "Critical");
+				dealMemoDetailModel.setProperty("/oapTabColor", "Critical");
 				dealMemoDetailModel.setProperty("/progTabColor", "Critical");
 				dealMemoDetailModel.setProperty("/commentTabColor", "Critical");
 				this.getView().byId("btnSubmitDM").setEnabled(false);
@@ -1388,10 +1429,23 @@ sap.ui.define([
 					dealMemoDetailModel.setProperty("/marketTabEnable", false);
 					dealMemoDetailModel.setProperty("/progTabEnable", false);
 				}
-				if (oData.Dmaf.Avgbcrevamt !== "0.00") {
+				if (oData.Dmaf.Adsales !== "0.00" ||
+					oData.Dmaf.Sonylivadrevenue !== "0.00" ||
+					oData.Dmaf.Youtuberevenue !== "0.00" ||
+					oData.Dmaf.Digitalsyndication !== "0.00" ||
+					oData.Dmaf.Linearsyndication !== "0.00" ||
+					oData.Dmaf.Internationaladsales !== "0.00") {
 					dealMemoDetailModel.setProperty("/revenueTabColor", "Positive");
 				}
-				if (oData.Dmaf.Advoffairamt !== "0.00") {
+				// if (oData.Dmaf.Avgbcrevamt !== "0.00") {
+				// 	dealMemoDetailModel.setProperty("/revenueTabColor", "Positive");
+				// }
+				if (oData.OapCosts !== "0.00") {
+					dealMemoDetailModel.setProperty("/oapTabColor", "Positive");
+				}
+				if (oData.Dmaf.Mediacosts !== "0.00" ||
+					oData.Dmaf.Digitalcosts !== "0.00" ||
+					oData.Dmaf.Othercosts !== "0.00") {
 					dealMemoDetailModel.setProperty("/marketTabColor", "Positive");
 					dealMemoDetailModel.setProperty("/progTabColor", "Positive");
 				}
@@ -1543,7 +1597,14 @@ sap.ui.define([
 					Exchrt: dealMemoDetailInfo.Exchrt,
 					Costcenter: dealMemoDetailInfo.Costcenter,
 					Estprgreldt: dealMemoDetailInfo.Estprgreldt !== null ? Formatter.formatDateValForBackend(dealMemoDetailInfo.Estprgreldt) : null,
-					Avgepidur: Formatter.formatTimeValForBackend(dealMemoDetailInfo.Avgepidur)
+					Avgepidur: Formatter.formatTimeValForBackend(dealMemoDetailInfo.Avgepidur),
+					ProgramType: dealMemoDetailInfo.ProgramType,
+					StudioDetails: dealMemoDetailInfo.StudioDetails,
+					ContentRights: dealMemoDetailInfo.ContentRights,
+					RightsPeriod: dealMemoDetailInfo.RightsPeriod,
+					NbocBudget: dealMemoDetailInfo.NbocBudget,
+					NbocBudgetRemarks: dealMemoDetailInfo.NbocBudgetRemarks,
+					OapCosts: dealMemoDetailInfo.OapCosts
 				}
 
 				return payload;
@@ -1560,6 +1621,11 @@ sap.ui.define([
 				var validationFlag = this.validateBeforeSaveDetailTab();
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
+				var bModel = that.getView().byId("oapTable").getModel();
+				if (bModel.oData.results != undefined) {
+					dealMemoDetailInfo.OapCosts = parseFloat(bModel.oData.results[0].sinput).toFixed(2);
+				}
+
 				if (validationFlag) {
 
 					if (dealMemoDetailInfo.Dmno !== "") {
@@ -4237,6 +4303,8 @@ sap.ui.define([
 				} else if (selectedTab == "comment") {
 					var Key = that.getView().byId("commentInner").getSelectedKey();
 					this.saveComments(Key);
+				} else if (selectedTab == "oap") {
+					this.saveDealMemoDetailData();
 				}
 				sap.ui.core.BusyIndicator.hide();
 			},
@@ -4669,11 +4737,31 @@ sap.ui.define([
 				}
 			},
 
+			savePNL: function () {
+				var dealMemoDetailModel = that.getView().getModel("dealMemoDetailModel");
+				var dealMemoDetailInfo = dealMemoDetailModel.getData();
+				var intDataModelUrl = "/sap/opu/odata/IBSCMS/DEALMEMO_SRV/";
+				var oModelSav = new sap.ui.model.odata.ODataModel(intDataModelUrl, true, "", "");
+				oModelSav.setHeaders({
+					"Accept": "application/json"
+				});
+				oModelSav.setHeaders({
+					"X-Requested-With": "X"
+				});
+				var pValue = "/PNLSet";
+				dealMemoDetailInfo.pnl.Dmno = dealMemoDetailInfo.Dmno;
+				dealMemoDetailInfo.pnl.Dmver = dealMemoDetailInfo.Dmver;
+				var payload = dealMemoDetailInfo.pnl;
+				oModelSav.create(pValue, payload, null, function () { });
+			},
+
 			onSubmitDm: function () {
 				sap.ui.core.BusyIndicator.show(0);
 				var oModel = this.getView().getModel();
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
+				this.calculateInvestmentDetails(dealMemoDetailInfo);
+				this.savePNL();
 				var paramObj = {
 					"IV_TENTID": "IBS",
 					"IV_DMNO": dealMemoDetailInfo.Dmno,
@@ -5520,7 +5608,7 @@ sap.ui.define([
 							Duration: dealMemoDetailInfo.scheduleDur,
 							Noofweeks: 0,
 							Trpbudrntg: "0", //Added By Lakshmana on 19.06.2020 for Deal memo changes V2
-							Trpestrntg: "",
+							Trpestrntg: "0.00",
 							Bcschcd: dayInfoObj.Mstcd
 						}
 
@@ -5587,6 +5675,7 @@ sap.ui.define([
 				return {
 					Tentid: 'IBS',
 					Dmno: dealMemoDetailInfo.Dmno,
+					Dmver: dealMemoDetailInfo.Dmver,
 					Seqnr: scheduleObj.Seqnr.toString(),
 					Bcschnm: scheduleObj.Bcschnm,
 					Timeslotfm: Formatter.formatTimeValForBackend(scheduleObj.Timeslotfm),
@@ -5594,8 +5683,17 @@ sap.ui.define([
 					Duration: Formatter.formatTimeValForBackend(scheduleObj.Duration),
 					Noofweeks: scheduleObj.Noofweeks.toString(),
 					Trpbudrntg: "0",
-					Trpestrntg: scheduleObj.Trpestrntg.toString(),
-					Bcschcd: scheduleObj.Bcschcd
+					// Trpestrntg: scheduleObj.Trpestrntg.toString(),
+					Trpestrntg: "0.00",
+					Bcschcd: scheduleObj.Bcschcd,
+					TargetAudience: dealMemoDetailInfo.TargetAudience,
+					Over2Months: dealMemoDetailInfo.Over2Months,
+					Launch: dealMemoDetailInfo.Launch,
+					Sustenance: dealMemoDetailInfo.Sustenance,
+					TargetAudienceExisting: dealMemoDetailInfo.TargetAudienceExisting,
+					WeekAverageTvr: dealMemoDetailInfo.WeekAverageTvr,
+					TargetAudienceCompeting: dealMemoDetailInfo.TargetAudienceCompeting,
+					WeekAverageTvrCompeting: dealMemoDetailInfo.WeekAverageTvrCompeting
 				}
 
 			},
@@ -5605,6 +5703,7 @@ sap.ui.define([
 				return {
 					Tentid: "IBS",
 					Dmno: dealMemoDetailInfo.Dmno,
+					Dmver: dealMemoDetailInfo.Dmver,
 					Netothrev: "0.00",
 					Budcashamt: "0.00",
 					Cntamrtamt: "0.00",
@@ -5613,6 +5712,9 @@ sap.ui.define([
 					Lessmaktamt: "0.00",
 					Totothrevamt: "0.00",
 					Advoffairamt: "0.00",
+					Mediacosts: "0.00",
+					Digitalcosts: "0.00",
+					Othercosts: "0.00",
 					Contriaftoffairmakt: "0.00",
 					Budavgbcrevamt: "0.00",
 					Contriper: "0.00",
@@ -5661,11 +5763,12 @@ sap.ui.define([
 						statusFlag = false;
 						oMsg = oSourceBundle.getText("msgSchweekline");
 						break;
-					} else if (schObj.Trpestrntg == '' || schObj.Trpestrntg == 0) {
-						statusFlag = false;
-						oMsg = oSourceBundle.getText("msgSchestimatetrp");
-						break
 					}
+					// else if (schObj.Trpestrntg == '' || schObj.Trpestrntg == 0) {
+					// 	statusFlag = false;
+					// 	oMsg = oSourceBundle.getText("msgSchestimatetrp");
+					// 	break
+					// }
 					totalWeekCount += parseInt(schObj.Noofweeks);
 
 				}
@@ -5718,9 +5821,9 @@ sap.ui.define([
 								groupId: "scheduleSaveChanges"
 							});
 
-						} else if (schObj.flag === "Ch") {
+						} else if (schObj.flag === "Ch" || schObj.flag == undefined) {
 							alreadySaveFlag = false;
-							var oPath = "/DmbsSet(Tentid='IBS',Dmno='" + dealMemoDetailInfo.Dmno + "',Seqnr='" + schObj.Seqnr + "',Bcschcd='" + schObj.Bcschcd +
+							var oPath = "/DmbsSet(Tentid='IBS',Dmno='" + dealMemoDetailInfo.Dmno + "',Dmver='" + dealMemoDetailInfo.Dmver + "',Seqnr='" + schObj.Seqnr + "',Bcschcd='" + schObj.Bcschcd +
 								"')";
 							oModel.update(oPath, schPayload, {
 								groupId: "scheduleSaveChanges"
@@ -6025,37 +6128,54 @@ sap.ui.define([
 				sap.ui.core.BusyIndicator.show(0);
 				var bModel = this.getView().byId("Rev30Table").getModel();
 				var dmNo = dealMemoDetailInfo.Dmno
+				var dmVer = dealMemoDetailInfo.Dmver
 				var srvUrl = "/sap/opu/odata/IBSCMS/DEALMEMO_SRV/";
 				var oModelSav = new sap.ui.model.odata.ODataModel(srvUrl, true, "", "");
-				var pValue = "/DmafSet(Tentid='IBS',Dmno='" + dmNo + "')";
+				var pValue = "/DmafSet(Tentid='IBS',Dmno='" + dmNo + "',Dmver='" + dmVer + "')";
 				oModelSav.read(pValue, null, null, true, function (oData) {
 					sap.ui.core.BusyIndicator.hide();
 					var oModel = new sap.ui.model.json.JSONModel(oData);
 					if (bModel.oData.results.length > 0) {
-						if (oData.Avgbcrevamt !== "0.00") {
+						if (oData.Adsales !== "0.00" ||
+							oData.Sonylivadrevenue !== "0.00" ||
+							oData.Youtuberevenue !== "0.00" ||
+							oData.Digitalsyndication !== "0.00" ||
+							oData.Linearsyndication !== "0.00" ||
+							oData.Internationaladsales !== "0.00") {
 							dealMemoDetailModel.setProperty("/revenueTabColor", "Positive");
 						} else {
 							dealMemoDetailModel.setProperty("/revenueTabColor", "Critical");
 						}
 						dealMemoDetailModel.refresh(true);
 
-						bModel.oData.results[1].sinput = oData.Avgbcrevamt;
-						bModel.oData.results[2].sinput = oData.Totavgbcrevamt;
-						bModel.oData.results[3].sinput = oData.Totothrevamt;
-						bModel.oData.results[0].sinput = oData.Noofslots;
-						bModel.oData.results[0].curr = bModel.oData.results[1].curr = bModel.oData.results[1].curr = bModel.oData.results[3].curr =
-							dealMemoDetailInfo.Waers;
+						// bModel.oData.results[1].sinput = oData.Avgbcrevamt;
+						// bModel.oData.results[2].sinput = oData.Totavgbcrevamt;
+						// bModel.oData.results[3].sinput = oData.Totothrevamt;
+						bModel.oData.results[0].sinput = oData.Adsales;
+						bModel.oData.results[1].sinput = oData.Sonylivadrevenue;
+						bModel.oData.results[2].sinput = oData.Youtuberevenue;
+						bModel.oData.results[3].sinput = oData.Digitalsyndication;
+						bModel.oData.results[4].sinput = oData.Linearsyndication;
+						bModel.oData.results[5].sinput = oData.Internationaladsales;
+						// bModel.oData.results[0].curr = bModel.oData.results[1].curr = bModel.oData.results[1].curr = bModel.oData.results[3].curr =
+						// 	dealMemoDetailInfo.Waers;
 					}
 					bModel.refresh();
 					dealMemoDetailModel.refresh(true);
 				}, function () {
 					sap.ui.core.BusyIndicator.hide();
 					if (bModel.oData.results.length > 0) {
-						bModel.oData.results[1].sinput = dealMemoDetailInfo.Dmaf.Avgbcrevamt;
-						bModel.oData.results[2].sinput = dealMemoDetailInfo.Dmaf.Totavgbcrevamt;
-						bModel.oData.results[3].sinput = dealMemoDetailInfo.Dmaf.Totothrevamt;
-						bModel.oData.results[0].sinput = dealMemoDetailInfo.Dmaf.Noofslots;
-						bModel.oData.results[0].curr = dealMemoDetailInfo.Waers;
+						// bModel.oData.results[1].sinput = dealMemoDetailInfo.Dmaf.Avgbcrevamt;
+						// bModel.oData.results[2].sinput = dealMemoDetailInfo.Dmaf.Totavgbcrevamt;
+						// bModel.oData.results[3].sinput = dealMemoDetailInfo.Dmaf.Totothrevamt;
+						bModel.oData.results[0].sinput = dealMemoDetailInfo.Dmaf.Adsales;
+						bModel.oData.results[1].sinput = dealMemoDetailInfo.Dmaf.Sonylivadrevenue;
+						bModel.oData.results[2].sinput = dealMemoDetailInfo.Dmaf.Youtuberevenue;
+						bModel.oData.results[3].sinput = dealMemoDetailInfo.Dmaf.Digitalsyndication;
+						bModel.oData.results[4].sinput = dealMemoDetailInfo.Dmaf.Linearsyndication;
+						bModel.oData.results[5].sinput = dealMemoDetailInfo.Dmaf.Internationaladsales;
+						// bModel.oData.results[0].sinput = dealMemoDetailInfo.Dmaf.Noofslots;
+						// bModel.oData.results[0].curr = dealMemoDetailInfo.Waers;
 					}
 					bModel.refresh();
 				});
@@ -6097,6 +6217,7 @@ sap.ui.define([
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
 				var dmNo = dealMemoDetailInfo.Dmno;
+				var dmVer = dealMemoDetailInfo.Dmver;
 				var srvUrl = "/sap/opu/odata/IBSCMS/DEALMEMO_SRV/";
 				var oModelSave = new sap.ui.model.odata.ODataModel(srvUrl, true, "", "");
 				var bModel = this.getView().byId("Rev30Table").getModel();
@@ -6105,9 +6226,14 @@ sap.ui.define([
 				if (bModel.oData.results[1].sinput !== "" && bModel.oData.results[1].sinput !== "0.00" && bModel.oData.results[3].sinput !== "" &&
 					bModel.oData.results[3].sinput !== "0.00" && state1 === "None" && state2 === "None") {
 					// var aModel = this.getView().byId("mLabel").getModel();
-					var pValue = "/DmafSet(Tentid='IBS',Dmno='" + dmNo + "')";
+					var pValue = "/DmafSet(Tentid='IBS',Dmno='" + dmNo + "',Dmver='" + dmVer + "')";
 					oModelSave.read(pValue, null, null, true, dSuccRev30, eFailRev30);
-					if (dealMemoDetailInfo.Dmaf.Avgbcrevamt !== "0.00") {
+					if (dealMemoDetailInfo.Dmaf.Adsales !== "0.00" ||
+						dealMemoDetailInfo.Dmaf.Sonylivadrevenue !== "0.00" ||
+						dealMemoDetailInfo.Dmaf.Youtuberevenue !== "0.00" ||
+						dealMemoDetailInfo.Dmaf.Digitalsyndication !== "0.00" ||
+						dealMemoDetailInfo.Dmaf.Linearsyndication !== "0.00" ||
+						dealMemoDetailInfo.Dmaf.Internationaladsales !== "0.00") {
 						dealMemoDetailModel.setProperty("/revenueTabColor", "Positive");
 					} else {
 						dealMemoDetailModel.setProperty("/revenueTabColor", "Critical");
@@ -6149,9 +6275,16 @@ sap.ui.define([
 						var dealMemoDetailInfo = dealMemoDetailModel.getData();
 						var dmNo = dealMemoDetailInfo.Dmno;
 						oData.Dmno = dmNo;
-						oData.Avgbcrevamt = bModel.oData.results[1].sinput.toString();
-						oData.Totavgbcrevamt = bModel.oData.results[2].sinput.toString();
-						oData.Totothrevamt = bModel.oData.results[3].sinput.toString();
+						oData.Dmver = dealMemoDetailInfo.Dmver;
+						// oData.Avgbcrevamt = bModel.oData.results[1].sinput.toString();
+						// oData.Totavgbcrevamt = bModel.oData.results[2].sinput.toString();
+						// oData.Totothrevamt = bModel.oData.results[3].sinput.toString();
+						oData.Adsales = bModel.oData.results[0].sinput.toString();
+						oData.Sonylivadrevenue = bModel.oData.results[1].sinput.toString();
+						oData.Youtuberevenue = bModel.oData.results[2].sinput.toString();
+						oData.Digitalsyndication = bModel.oData.results[3].sinput.toString();
+						oData.Linearsyndication = bModel.oData.results[4].sinput.toString();
+						oData.Internationaladsales = bModel.oData.results[5].sinput.toString();
 
 						var intDataModelUrl = "/sap/opu/odata/IBSCMS/DEALMEMO_SRV/";
 						var oModelSav = new sap.ui.model.odata.ODataModel(intDataModelUrl, true, "", "");
@@ -6165,7 +6298,12 @@ sap.ui.define([
 						oModelSav.create(pValue, oData, null, function () {
 							//	alert("revenue created");
 							sap.ui.core.BusyIndicator.hide();
-							if (oData.Avgbcrevamt !== "0") {
+							if (oData.Adsales !== "0.00" ||
+								oData.Sonylivadrevenue !== "0.00" ||
+								oData.Youtuberevenue !== "0.00" ||
+								oData.Digitalsyndication !== "0.00" ||
+								oData.Linearsyndication !== "0.00" ||
+								oData.Internationaladsales !== "0.00") {
 								dealMemoDetailModel.setProperty("/revenueTabColor", "Positive");
 							} else {
 								dealMemoDetailModel.setProperty("/revenueTabColor", "Critical");
@@ -6196,16 +6334,24 @@ sap.ui.define([
 							});
 					} else {
 						var bModel = that.getView().byId("Rev30Table").getModel();
-						if (oData.Avgbcrevamt == bModel.oData.results[1].sinput && oData.Totothrevamt == bModel.oData.results[3].sinput) {
+						if (oData.Adsales == bModel.oData.results[0].sinput &&
+							oData.Sonylivadrevenue == bModel.oData.results[1].sinput &&
+							oData.Youtuberevenue == bModel.oData.results[2].sinput &&
+							oData.Digitalsyndication == bModel.oData.results[3].sinput &&
+							oData.Linearsyndication == bModel.oData.results[4].sinput &&
+							oData.Internationaladsales == bModel.oData.results[5].sinput) {
 							sap.m.MessageBox.show(that.getView().getModel("i18n")._oResourceBundle.getText("msg_alreadysave"), {
 								icon: sap.m.MessageBox.Icon.ERROR,
 								title: "{i18n>Error}"
 							});
 						} else {
 							sap.ui.core.BusyIndicator.show(0);
-							oData.Avgbcrevamt = bModel.oData.results[1].sinput.toString();
-							oData.Totavgbcrevamt = bModel.oData.results[2].sinput.toString();
-							oData.Totothrevamt = bModel.oData.results[3].sinput.toString();
+							oData.Adsales = bModel.oData.results[0].sinput.toString();
+							oData.Sonylivadrevenue = bModel.oData.results[1].sinput.toString();
+							oData.Youtuberevenue = bModel.oData.results[2].sinput.toString();
+							oData.Digitalsyndication = bModel.oData.results[3].sinput.toString();
+							oData.Linearsyndication = bModel.oData.results[4].sinput.toString();
+							oData.Internationaladsales = bModel.oData.results[5].sinput.toString();
 							var dealMemoDetailModel = that.getView().getModel("dealMemoDetailModel");
 							var dealMemoDetailInfo = dealMemoDetailModel.getData();
 							var intDataModelUrl = "/sap/opu/odata/IBSCMS/DEALMEMO_SRV/";
@@ -6216,10 +6362,15 @@ sap.ui.define([
 							oModelSav.setHeaders({
 								"X-Requested-With": "X"
 							});
-							var pValue = "/DmafSet(Tentid='IBS',Dmno='" + oData.Dmno + "')";
+							var pValue = "/DmafSet(Tentid='IBS',Dmno='" + oData.Dmno + "',Dmver='" + oData.Dmver + "')";;
 							oModelSav.update(pValue, oData, null, function () {
 								sap.ui.core.BusyIndicator.hide();
-								if (oData.Avgbcrevamt !== "0") {
+								if (oData.Adsales !== "0.00" ||
+									oData.Sonylivadrevenue !== "0.00" ||
+									oData.Youtuberevenue !== "0.00" ||
+									oData.Digitalsyndication !== "0.00" ||
+									oData.Linearsyndication !== "0.00" ||
+									oData.Internationaladsales !== "0.00") {
 									dealMemoDetailModel.setProperty("/revenueTabColor", "Positive");
 								} else {
 									dealMemoDetailModel.setProperty("/revenueTabColor", "Critical");
@@ -6273,6 +6424,7 @@ sap.ui.define([
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
 				var dmNo = dealMemoDetailInfo.Dmno;
+				var dmVer = dealMemoDetailInfo.Dmver;
 				var srvUrl = "/sap/opu/odata/IBSCMS/DEALMEMO_SRV/";
 				var oModelSave = new sap.ui.model.odata.ODataModel(srvUrl, true, "", "");
 				var state = this.getView().byId("marketTable").getItems()[0].getCells()[1].getValueState();
@@ -6280,7 +6432,7 @@ sap.ui.define([
 				if (bModel.oData.results[0].sinput !== "" && bModel.oData.results[0].sinput !== "0.00" && state == "None") {
 
 					// var aModel = this.getView().byId("mLabel").getModel();
-					var pValue = "/DmafSet(Tentid='IBS',Dmno='" + dmNo + "')";
+					var pValue = "/DmafSet(Tentid='IBS',Dmno='" + dmNo + "',Dmver='" + dmVer + "')";
 					oModelSave.read(pValue, null, null, true, function (oData) {
 						sap.ui.core.BusyIndicator.hide();
 						var dealMemoDetailModel = that.getView().getModel("dealMemoDetailModel");
@@ -6294,9 +6446,12 @@ sap.ui.define([
 							oData.Tentid = "IBS";
 							var dealMemoDetailModel = that.getView().getModel("dealMemoDetailModel");
 							var dealMemoDetailInfo = dealMemoDetailModel.getData();
-							var dmNo = dealMemoDetailInfo.Dmno;
-							oData.Advoffairamt = bModel.oData.results[0].sinput;
-							oData.Advoffairamt = oData.Advoffairamt.toString();
+							oData.Mediacosts = bModel.oData.results[0].sinput;
+							oData.Digitalcosts = bModel.oData.results[1].sinput;
+							oData.Othercosts = bModel.oData.results[2].sinput;
+							oData.Mediacosts = oData.Mediacosts.toString();
+							oData.Digitalcosts = oData.Digitalcosts.toString();
+							oData.Othercosts = oData.Othercosts.toString();
 							//	var oModelSave = new sap.ui.model.odata.ODataModel(intDataModelUrl, true, "", "");
 							oModelSave.setHeaders({
 								"Accept": "application/json"
@@ -6308,7 +6463,9 @@ sap.ui.define([
 							oModelSave.create(pValue, oData, null, function () {
 								sap.ui.core.BusyIndicator.hide();
 								// this.getView().byId("idMarketing").setIconColor("Positive");
-								if (oData.Advoffairamt !== "0") {
+								if (oData.Mediacosts !== "0.00" ||
+									oData.Digitalcosts !== "0.00" ||
+									oData.Othercosts !== "0.00") {
 									dealMemoDetailModel.setProperty("/marketTabColor", "Positive");
 									dealMemoDetailModel.setProperty("/progTabColor", "Positive");
 								} else {
@@ -6341,32 +6498,35 @@ sap.ui.define([
 						} else {
 							sap.ui.core.BusyIndicator.show(0);
 							var bModel = that.getView().byId("marketTable").getModel();
-							if (oData.Advoffairamt == bModel.oData.results[0].sinput) {
+							if (oData.Mediacosts == bModel.oData.results[1].sinput &&
+								oData.Digitalcosts == bModel.oData.results[2].sinput &&
+								oData.Othercosts == bModel.oData.results[3].sinput) {
 								sap.m.MessageBox.show(that.getView().getModel("i18n").getResourceBundle().getText("msg_alreadysave"), {
 									icon: sap.m.MessageBox.Icon.ERROR,
 									title: "{i18n>Error}"
 								});
 								sap.ui.core.BusyIndicator.hide();
 							} else {
-								var valCheck = 0;
-								if (oData.Advoffairamt == "0.00") {
-									valCheck = 1;
-								}
-
-								oData.Advoffairamt = bModel.oData.results[0].sinput;
-								oData.Advoffairamt = oData.Advoffairamt.toString();
+								oData.Mediacosts = bModel.oData.results[0].sinput;
+								oData.Digitalcosts = bModel.oData.results[1].sinput;
+								oData.Othercosts = bModel.oData.results[2].sinput;
+								oData.Mediacosts = oData.Mediacosts.toString();
+								oData.Digitalcosts = oData.Digitalcosts.toString();
+								oData.Othercosts = oData.Othercosts.toString();
 								oModelSave.setHeaders({
 									"Accept": "application/json"
 								});
 								oModelSave.setHeaders({
 									"X-Requested-With": "X"
 								});
-								var pValue = "/DmafSet(Tentid='IBS',Dmno='" + oData.Dmno + "')";
+								var pValue = "/DmafSet(Tentid='IBS',Dmno='" + oData.Dmno + "',Dmver='" + oData.Dmver + "')";
 								oModelSave.update(pValue, oData, null, function () {
 									sap.ui.core.BusyIndicator.hide();
 									// that.getView().byId("idMarketing").setIconColor("Positive");
 									// this.BudgEnable();
-									if (oData.Advoffairamt !== "0") {
+									if (oData.Mediacosts !== "0.00" ||
+										oData.Digitalcosts !== "0.00" ||
+										oData.Othercosts !== "0.00") {
 										dealMemoDetailModel.setProperty("/marketTabColor", "Positive");
 										dealMemoDetailModel.setProperty("/progTabColor", "Positive");
 									} else {
@@ -6415,19 +6575,31 @@ sap.ui.define([
 
 			},
 
+			loadOap: function () {
+				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
+				var dealMemoDetailInfo = dealMemoDetailModel.getData();
+				var bModel = this.getView().byId("oapTable").getModel();
+				bModel.oData.results[0].sinput = dealMemoDetailInfo.OapCosts;
+				bModel.refresh();
+				dealMemoDetailModel.refresh(true);
+			},
+
 			loadMarketingTab: function () {
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
 				sap.ui.core.BusyIndicator.show(0);
 				var bModel = this.getView().byId("marketTable").getModel();
 				var dmNo = dealMemoDetailInfo.Dmno
+				var dmVer = dealMemoDetailInfo.Dmver
 				var srvUrl = "/sap/opu/odata/IBSCMS/DEALMEMO_SRV/";
 				var oModelSav = new sap.ui.model.odata.ODataModel(srvUrl, true, "", "");
-				var pValue = "/DmafSet(Tentid='IBS',Dmno='" + dmNo + "')";
+				var pValue = "/DmafSet(Tentid='IBS',Dmno='" + dmNo + "',Dmver='" + dmVer + "')";
 				oModelSav.read(pValue, null, null, true, function (oData) {
 					sap.ui.core.BusyIndicator.hide();
 					if (bModel.oData.results.length > 0) {
-						if (oData.Advoffairamt !== "0.00") {
+						if (oData.Mediacosts !== "0.00" ||
+							oData.Digitalcosts !== "0.00" ||
+							oData.Othercosts !== "0.00") {
 							dealMemoDetailModel.setProperty("/marketTabColor", "Positive");
 							dealMemoDetailModel.setProperty("/progTabColor", "Positive");
 						} else {
@@ -6435,8 +6607,14 @@ sap.ui.define([
 							dealMemoDetailModel.setProperty("/progTabColor", "Critical");
 						}
 
-						bModel.oData.results[0].sinput = oData.Advoffairamt;
+						// bModel.oData.results[0].sinput = oData.Advoffairamt;
+						bModel.oData.results[0].sinput = oData.Mediacosts;
+						bModel.oData.results[1].sinput = oData.Digitalcosts;
+						bModel.oData.results[2].sinput = oData.Othercosts;
+						// bModel.oData.results[0].curr = dealMemoDetailInfo.Waers;
 						bModel.oData.results[0].curr = dealMemoDetailInfo.Waers;
+						bModel.oData.results[1].curr = dealMemoDetailInfo.Waers;
+						bModel.oData.results[2].curr = dealMemoDetailInfo.Waers;
 					}
 					bModel.refresh();
 					dealMemoDetailModel.refresh(true);
@@ -6444,8 +6622,14 @@ sap.ui.define([
 					//	alert("fail");
 					sap.ui.core.BusyIndicator.hide();
 					if (bModel.oData.results.length > 0) {
-						bModel.oData.results[0].sinput = dealMemoDetailInfo.Dmaf.Advoffairamt;
+						// bModel.oData.results[0].sinput = dealMemoDetailInfo.Dmaf.Advoffairamt;
+						bModel.oData.results[0].sinput = dealMemoDetailInfo.Dmaf.Mediacosts;
+						bModel.oData.results[1].sinput = dealMemoDetailInfo.Dmaf.Digitalcosts;
+						bModel.oData.results[2].sinput = dealMemoDetailInfo.Dmaf.Othercosts;
 						bModel.oData.results[0].curr = dealMemoDetailInfo.Waers;
+						bModel.oData.results[1].curr = dealMemoDetailInfo.Waers;
+						bModel.oData.results[2].curr = dealMemoDetailInfo.Waers;
+						// bModel.oData.results[3].curr = dealMemoDetailInfo.Waers;
 					}
 					bModel.refresh();
 				});
@@ -6467,22 +6651,78 @@ sap.ui.define([
 					oEvent.getSource().setValueStateText(this.getView().getModel("i18n").getResourceBundle().getText("msg_tooltipamount"));
 				}
 			},
+			calculateInvestmentDetails: function (dealMemoDetailInfo) {
+
+				dealMemoDetailInfo.pnl = {};
+				dealMemoDetailInfo.pnl.NoOfTitles = dealMemoDetailInfo.Noofepi;
+				dealMemoDetailInfo.pnl.AvgTitleCost = parseFloat(dealMemoDetailInfo.BudgetTotal / dealMemoDetailInfo.Noofepi).toFixed(2);
+				dealMemoDetailInfo.pnl.TotalContentCosts = parseFloat(dealMemoDetailInfo.pnl.NoOfTitles * dealMemoDetailInfo.pnl.AvgTitleCost).toFixed(2);
+				dealMemoDetailInfo.pnl.OapCosts = parseFloat(dealMemoDetailInfo.OapCosts).toFixed(2);
+				dealMemoDetailInfo.pnl.MarketingCosts = (parseFloat(dealMemoDetailInfo.Dmaf.Mediacosts) + parseFloat(dealMemoDetailInfo.Dmaf.Digitalcosts) + parseFloat(dealMemoDetailInfo.Dmaf.Othercosts)).toFixed(2);
+				dealMemoDetailInfo.pnl.AdRevenueTitle = parseFloat(dealMemoDetailInfo.pnl.NoOfTitles != 0 ? dealMemoDetailInfo.Dmaf.Adsales / dealMemoDetailInfo.pnl.NoOfTitles : 0).toFixed(2);
+				dealMemoDetailInfo.pnl.TotalCosts = parseFloat(dealMemoDetailInfo.pnl.TotalContentCosts).toFixed(2);
+				dealMemoDetailInfo.pnl.TotalAdRevenue = parseFloat(dealMemoDetailInfo.Dmaf.Adsales).toFixed(2);
+				dealMemoDetailInfo.pnl.DigitalRevenue = parseFloat(parseFloat(dealMemoDetailInfo.Dmaf.Sonylivadrevenue) + parseFloat(dealMemoDetailInfo.Dmaf.Youtuberevenue) + parseFloat(dealMemoDetailInfo.Dmaf.Digitalsyndication)).toFixed(2);
+				dealMemoDetailInfo.pnl.SyndicationRevenue = parseFloat(dealMemoDetailInfo.Dmaf.Linearsyndication).toFixed(2);
+				dealMemoDetailInfo.pnl.OtherRevenue = "0.00";
+				dealMemoDetailInfo.pnl.TotalRevenue = (parseFloat(dealMemoDetailInfo.pnl.DigitalRevenue) + parseFloat(dealMemoDetailInfo.Dmaf.Linearsyndication) + parseFloat(dealMemoDetailInfo.Dmaf.Adsales)).toFixed(2);
+				dealMemoDetailInfo.pnl.Profit = (parseFloat(dealMemoDetailInfo.pnl.TotalRevenue) - parseFloat(dealMemoDetailInfo.pnl.TotalCosts)).toFixed(2);
+				dealMemoDetailInfo.pnl.ProfitMargin = parseFloat((dealMemoDetailInfo.pnl.Profit / dealMemoDetailInfo.pnl.TotalCosts) * 100).toFixed(2);
+				var costSales = parseFloat(dealMemoDetailInfo.pnl.TotalCosts != 0 ? dealMemoDetailInfo.Dmaf.Adsales / dealMemoDetailInfo.pnl.TotalCosts : 0).toFixed(2);
+				var costRevenue = parseFloat(dealMemoDetailInfo.pnl.TotalCosts != 0 ? dealMemoDetailInfo.Dmaf.Adsales / dealMemoDetailInfo.pnl.TotalAdRevenue : 0).toFixed(2);
+				dealMemoDetailInfo.pnl.RatioCostSales = "1 : " + costSales;
+				dealMemoDetailInfo.pnl.RatioCostRevenue = "1 : " + costRevenue;
+				dealMemoDetailInfo.pnl.PerTitleCost = parseFloat(dealMemoDetailInfo.pnl.TotalCosts / dealMemoDetailInfo.pnl.NoOfTitles).toFixed(2);
+				dealMemoDetailInfo.pnl.PerTitleRevenue = parseFloat(dealMemoDetailInfo.pnl.NoOfTitles != 0 ? dealMemoDetailInfo.Dmaf.Adsales / dealMemoDetailInfo.pnl.NoOfTitles : 0).toFixed(2);
+				dealMemoDetailInfo.pnl.CostPerTvr = parseFloat(dealMemoDetailInfo.pnl.NoOfTitles != 0 ? dealMemoDetailInfo.pnl.TotalCosts / dealMemoDetailInfo.pnl.NoOfTitles : 0).toFixed(2);
+				dealMemoDetailInfo.pnl.RevenuePerTvr = parseFloat(dealMemoDetailInfo.pnl.NoOfTitles != 0 ? dealMemoDetailInfo.pnl.TotalRevenue / dealMemoDetailInfo.pnl.NoOfTitles : 0).toFixed(2);
+				this.getView().byId("totalTitles").setNumber(parseInt(dealMemoDetailInfo.pnl.NoOfTitles));
+				this.getView().byId("avgTitleCosts").setNumber(parseFloat(dealMemoDetailInfo.pnl.AvgTitleCost).toFixed(2));
+				this.getView().byId("totalContentCosts").setNumber(parseFloat(dealMemoDetailInfo.pnl.TotalContentCosts).toFixed(2));
+				this.getView().byId("totalCosts").setNumber(parseFloat(dealMemoDetailInfo.pnl.TotalCosts).toFixed(2));
+				this.getView().byId("marketingCosts").setNumber(parseFloat(dealMemoDetailInfo.pnl.MarketingCosts).toFixed(2));
+				this.getView().byId("adRevenueTitle").setNumber(parseFloat(dealMemoDetailInfo.pnl.AdRevenueTitle).toFixed(2));
+				this.getView().byId("totalAdRevenue").setNumber(parseFloat(dealMemoDetailInfo.pnl.TotalAdRevenue).toFixed(2));
+				this.getView().byId("syndicationRevenue").setNumber(parseFloat(dealMemoDetailInfo.pnl.SyndicationRevenue));
+				this.getView().byId("digitalRevenue").setNumber(parseFloat(dealMemoDetailInfo.pnl.DigitalRevenue).toFixed(2));
+				this.getView().byId("otherRevenue").setNumber(parseFloat(dealMemoDetailInfo.pnl.OtherRevenue).toFixed(2));
+				this.getView().byId("totalRevenue").setNumber(parseFloat(dealMemoDetailInfo.pnl.TotalRevenue).toFixed(2));
+				this.getView().byId("totalRevenue").setState(dealMemoDetailInfo.pnl.TotalRevenue > dealMemoDetailInfo.pnl.TotalCosts ? "Success" : "Error");
+				this.getView().byId("profit").setNumber(parseFloat(dealMemoDetailInfo.pnl.Profit).toFixed(2));
+				this.getView().byId("profit").setState(dealMemoDetailInfo.pnl.Profit > 0 ? "Success" : "Error");
+				this.getView().byId("profitMargin").setNumber(parseFloat(dealMemoDetailInfo.pnl.ProfitMargin).toFixed(2));
+				this.getView().byId("profitMargin").setState(dealMemoDetailInfo.pnl.ProfitMargin > 0 ? "Success" : "Error");
+				this.getView().byId("ratioProgAd").setText(dealMemoDetailInfo.pnl.RatioCostSales);
+				this.getView().byId("ratioTotalAd").setText(dealMemoDetailInfo.pnl.RatioCostRevenue);
+				this.getView().byId("perTitleCost").setNumber(parseFloat(dealMemoDetailInfo.pnl.PerTitleCost).toFixed(2));
+				this.getView().byId("perTitleRevenue").setNumber(parseFloat(dealMemoDetailInfo.pnl.PerTitleRevenue).toFixed(2));
+				this.getView().byId("costPerTVR").setNumber(parseFloat(dealMemoDetailInfo.pnl.CostPerTvr).toFixed(2));
+				this.getView().byId("revenuePerTVR").setNumber(parseFloat(dealMemoDetailInfo.pnl.RevenuePerTvr).toFixed(2));
+				this.getView().byId("oapCosts").setNumber(parseFloat(dealMemoDetailInfo.pnl.OapCosts).toFixed(2));
+				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
+				dealMemoDetailModel.setData(dealMemoDetailInfo);
+				dealMemoDetailModel.refresh(true)
+
+			},
 			//ProgPL tab in dealmemo
 			loadProgPL: function () {
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
-				sap.ui.core.BusyIndicator.show(0);
-				var dmNo = dealMemoDetailInfo.Dmno
-				// this.getView().byId("idPl").setIconColor("Positive");
-				// this.getView().byId("btnSave").setEnabled(false);
-				var intDataModelUrl = "/sap/opu/odata/IBSCMS/DEALMEMO_SRV/";
-				var oModelSav = new sap.ui.model.odata.ODataModel(intDataModelUrl, true, "", "");
-				var pValue = "/DmafSet(Tentid='IBS',Dmno='" + dmNo + "')"; //aModel.oData.Dmno
-				oModelSav.read(pValue, null, null, true, function (oData) {
-					sap.ui.core.BusyIndicator.hide();
-					this.calcProgPL(oData)
+				this.loadDetailDealMemo(dealMemoDetailInfo);
+				dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
+				dealMemoDetailInfo = dealMemoDetailModel.getData();
+				this.calculateInvestmentDetails(dealMemoDetailInfo);
+				// sap.ui.core.BusyIndicator.show(0);
+				// var dmNo = dealMemoDetailInfo.Dmno
+				// var dmVer = dealMemoDetailInfo.Dmver
+				// var intDataModelUrl = "/sap/opu/odata/IBSCMS/DEALMEMO_SRV/";
+				// var oModelSav = new sap.ui.model.odata.ODataModel(intDataModelUrl, true, "", "");
+				// var pValue = "/DmafSet(Tentid='IBS',Dmno='" + dmNo + "',Dmver='" + dmVer + "')"; //aModel.oData.Dmno
+				// oModelSav.read(pValue, null, null, true, function (oData) {
+				// 	sap.ui.core.BusyIndicator.hide();
+				// 	this.calcProgPL(oData)
 
-				}.bind(this), function () { });
+				// }.bind(this), function () { });
 			},
 			calcProgPL: function (oData) {
 				sap.ui.core.BusyIndicator.show(0);
@@ -6638,7 +6878,7 @@ sap.ui.define([
 				var Dmver = dealMemoDetailInfo.Dmver;
 				var intDataModelUrl = "/sap/opu/odata/IBSCMS/DEALMEMO_SRV/";
 				var oModelSav = new sap.ui.model.odata.ODataModel(intDataModelUrl, true, "", "");
-				var pValue1 = "/DmHeaderSet(Tentid='IBS',Dmno='" + Dmno + "',Dmver='" + Dmver + "',Transtp='D')?&$expand=DmtxtSet";
+				var pValue1 = "/DmHeaderSet(Tentid='IBS',Dmno='" + Dmno + "',Dmver='" + Dmver + "',Transtp='C')?&$expand=DmtxtSet";
 
 				oModelSav.read(pValue1, null, null, true, function (oData) {
 					sap.ui.core.BusyIndicator.hide();

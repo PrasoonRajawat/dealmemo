@@ -54,6 +54,17 @@
 													<Text text="{dealMemoDetailModel>/Cafrefno}" class="sapUiTinyMarginBegin"/>
 												</HBox>
 											</VBox>
+											<VBox>
+												<HBox>
+													<Label text="Programming:" design="Bold" class="sapUiLargeMarginBegin"  />
+													<!-- <Text text="{dealMemoDetailModel>/Totdmamt}" class="sapUiSmallMarginBegin" /> -->
+													<Text text="{dealMemoDetailModel>/BudgetTotal}" class="sapUiSmallMarginBegin" />
+														<Label text="Marketing:" design="Bold" class="sapUiSmallMarginBegin"  />
+													<Text class="sapUiSmallMarginBegin"  id="marketingTotal"/>
+														<Label text="OAP:" design="Bold" class="sapUiSmallMarginBegin"  />
+													<Text text="{dealMemoDetailModel>/OapCosts}" class="sapUiSmallMarginBegin" />
+												</HBox>                          
+											</VBox>
 											</content>
 								</HeaderContainer>				
 							</headerContainer>

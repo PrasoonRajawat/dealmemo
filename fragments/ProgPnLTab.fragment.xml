@@ -1,55 +1,156 @@
 <c:FragmentDefinition xmlns="sap.m" xmlns:u="sap.ui.unified" xmlns:l="sap.ui.layout" xmlns:c="sap.ui.core">
-											<Table id="prog30Table" items="{/results}">
-											<columns>
-												<Column>
-													<ObjectIdentifier title="{i18n>ObjIden_Per30min}"/>
-												</Column>
-												<Column minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" hAlign="Center">
-													<ObjectIdentifier title="{i18n>ObjIden_Est}"/>
-												</Column>
-												<Column minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" hAlign="Center">
-													<ObjectIdentifier title="{i18n>ObjIden_Slotbudgets}"/>
-												</Column>
-												<!--<Column minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
-														<ObjectIdentifier title="Estimated as per CAF"/>
-												</Column>-->
-											</columns>
-											<items>
-												<ColumnListItem>
-													<Text text="{skey}" class="sapUiTinyMarginTop"></Text>
-												<!--	<Input value="{sinput1}" enabled="false" textAlign="Right"/>-->
-													<Input value="{ parts: [ {path: 'sinput1'}, {path: 'curr'} ], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false } }"
-														textAlign="Right" enabled="false"/>
-													<!--	<Input value="{sinput2}" enabled="false" textAlign="Right"/>-->
-													<Input value="{ parts: [ {path: 'sinput2'}, {path: 'curr'} ], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false } }"
-														textAlign="Right" enabled="false"/>
-													<!--<Input value="" />-->
-												</ColumnListItem>
-											</items>
-										</Table>
-										<Table id="progTRPTable" items="{/results}">
-											<columns>
-												<Column>
-													<ObjectIdentifier title="{i18n>ObjIden_PerTRPmin}"/>
-												</Column>
-												<Column minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" hAlign="Center">
-													<ObjectIdentifier title="{i18n>ObjIden_Est}"/>
-												</Column>
-												<Column minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" hAlign="Center">
-													<ObjectIdentifier title="{i18n>ObjIden_Slotbudgets}"/>
-												</Column>
-											</columns>
-											<items>
-												<ColumnListItem>
-													<Text text="{skey}" class="sapUiTinyMarginTop"></Text>
-													<!--	<Input value="{sinput1}" enabled="false" textAlign="Right"/>-->
-													<Input value="{ parts: [ {path: 'sinput1'}, {path: 'curr'} ], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false } }"
-														textAlign="Right" enabled="false"/>
-													<!--	<Input value="{sinput2}" enabled="false" textAlign="Right"/>-->
-													<Input value="{ parts: [ {path: 'sinput2'}, {path: 'curr'} ], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false } }"
-														textAlign="Right" enabled="false"/>
-													<!--<Input value="" />-->
-												</ColumnListItem>
-											</items>
-										</Table>
+    <!-- <Table id="prog30Table" items="{/results}">
+        <columns>
+            <Column>
+                <ObjectIdentifier title="{i18n>ObjIden_Per30min}" />
+            </Column>
+            <Column minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" hAlign="Center">
+                <ObjectIdentifier title="{i18n>ObjIden_Est}" />
+            </Column>
+            <Column minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" hAlign="Center">
+                <ObjectIdentifier title="{i18n>ObjIden_Slotbudgets}" />
+            </Column>
+        </columns>
+        <items>
+            <ColumnListItem>
+                <Text text="{skey}" class="sapUiTinyMarginTop" />
+                <Input value="{ parts: [ {path: 'sinput1'}, {path: 'curr'} ], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false } }" textAlign="Right" enabled="false" />
+                <Input value="{ parts: [ {path: 'sinput2'}, {path: 'curr'} ], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false } }" textAlign="Right" enabled="false" />
+            </ColumnListItem>
+        </items>
+    </Table>
+    <Table id="progTRPTable" items="{/results}">
+        <columns>
+            <Column>
+                <ObjectIdentifier title="{i18n>ObjIden_PerTRPmin}" />
+            </Column>
+            <Column minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" hAlign="Center">
+                <ObjectIdentifier title="{i18n>ObjIden_Est}" />
+            </Column>
+            <Column minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" hAlign="Center">
+                <ObjectIdentifier title="{i18n>ObjIden_Slotbudgets}" />
+            </Column>
+        </columns>
+        <items>
+            <ColumnListItem>
+                <Text text="{skey}" class="sapUiTinyMarginTop" />
+                <Input value="{ parts: [ {path: 'sinput1'}, {path: 'curr'} ], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false } }" textAlign="Right" enabled="false" />
+                <Input value="{ parts: [ {path: 'sinput2'}, {path: 'curr'} ], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false } }" textAlign="Right" enabled="false" />
+            </ColumnListItem>
+        </items>
+    </Table> -->
+	<Table id="investmentDetails">
+        <columns>
+            <Column>
+                <ObjectIdentifier title="Investment Details" />
+            </Column>
+            <Column minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" hAlign="Center">
+                <ObjectIdentifier title="Estimated" />
+            </Column>
+        </columns>
+        <items>
+            <ColumnListItem>
+				<Text text="No of Titles" class="sapUiTinyMarginTop" />
+				<ObjectNumber id="totalTitles" textAlign="Right" enabled="false"></ObjectNumber>
+			</ColumnListItem>
+            <ColumnListItem>
+				<Text text="Avg. Title Cost" class="sapUiTinyMarginTop" />
+				<ObjectNumber id="avgTitleCosts" textAlign="Right" enabled="false"></ObjectNumber>
+			</ColumnListItem>
+            <ColumnListItem>
+				<Text text="Total Content Costs" class="sapUiTinyMarginTop" />
+				<ObjectNumber id="totalContentCosts" textAlign="Right" enabled="false"></ObjectNumber>
+			</ColumnListItem>
+            <ColumnListItem>
+				<Text text="OAP Costs" class="sapUiTinyMarginTop" />
+				<ObjectNumber id="oapCosts" textAlign="Right" enabled="false"></ObjectNumber>
+			</ColumnListItem>
+            <ColumnListItem>
+				<Text text="Marketing Costs" class="sapUiTinyMarginTop" />
+				<ObjectNumber id="marketingCosts" textAlign="Right" enabled="false"></ObjectNumber>
+			</ColumnListItem>
+            <ColumnListItem>
+				<Text text="Total Costs" class="sapUiTinyMarginTop" />
+				<ObjectNumber id="totalCosts" textAlign="Right" enabled="false"></ObjectNumber>
+			</ColumnListItem>
+            <ColumnListItem>
+				<Text text="Ad Revenue Title" class="sapUiTinyMarginTop" />
+				<ObjectNumber id="adRevenueTitle" textAlign="Right" enabled="false"></ObjectNumber>
+			</ColumnListItem>
+            <ColumnListItem>
+				<Text text="Total Ad Revenue" class="sapUiTinyMarginTop" />
+				<ObjectNumber id="totalAdRevenue" textAlign="Right" enabled="false"></ObjectNumber>
+			</ColumnListItem>
+            <ColumnListItem>
+				<Text text="Digital Revenue" class="sapUiTinyMarginTop" />
+				<ObjectNumber id="digitalRevenue" textAlign="Right" enabled="false"></ObjectNumber>
+			</ColumnListItem>
+            <ColumnListItem>
+				<Text text="Syndication Revenue" class="sapUiTinyMarginTop" />
+				<ObjectNumber id="syndicationRevenue" textAlign="Right" enabled="false"></ObjectNumber>
+			</ColumnListItem>
+            <ColumnListItem>
+				<Text text="Other Revenue" class="sapUiTinyMarginTop" />
+				<ObjectNumber id="otherRevenue" textAlign="Right" enabled="false"></ObjectNumber>
+			</ColumnListItem>
+            <ColumnListItem>
+				<Text text="Total Revenue" class="sapUiTinyMarginTop" />
+				<ObjectNumber id="totalRevenue" textAlign="Right" enabled="false"></ObjectNumber>
+			</ColumnListItem>
+            <ColumnListItem>
+				<Text text="Profit" class="sapUiTinyMarginTop" />
+				<ObjectNumber id="profit" textAlign="Right" enabled="false"></ObjectNumber>
+			</ColumnListItem>
+             
+        </items>
+    </Table>
+	<Table id="marginsAndRatios">
+        <columns>
+            <Column>
+                <ObjectIdentifier title="Margins and Ratios" />
+            </Column>
+            <Column minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" hAlign="Center">
+                <ObjectIdentifier title="Estimated" />
+            </Column>
+        </columns>
+        <items>
+            <ColumnListItem>
+				<Text text="Profit Margin %" class="sapUiTinyMarginTop" />
+				<ObjectNumber
+				id="profitMargin"
+				textAlign="Right"/>
+				<!-- <Input  textAlign="Right" enabled="false"></Input> -->
+			</ColumnListItem>
+            <ColumnListItem>
+				<Text text="Ratio of Programming Cost to Ad Sales" class="sapUiTinyMarginTop" />
+				<Text
+				id="ratioProgAd"
+				textAlign="Right"/>
+				<!-- <Input id="ratioProgAd" textAlign="Right" enabled="false"></Input> -->
+			</ColumnListItem>
+			<ColumnListItem>
+				<Text text="Ratio of Programming Cost to Ad Revenue" class="sapUiTinyMarginTop" />
+				<Text
+				id="ratioTotalAd"
+				textAlign="Right"/>
+				<!-- <Input id="ratioProgAd" textAlign="Right" enabled="false"></Input> -->
+			</ColumnListItem>
+            <ColumnListItem>
+				<Text text="Estimated per Title Cost" class="sapUiTinyMarginTop" />
+				<ObjectNumber id="perTitleCost" textAlign="Right" enabled="false"></ObjectNumber>
+			</ColumnListItem>
+            <ColumnListItem>
+				<Text text="Estimated per Title Revenue" class="sapUiTinyMarginTop" />
+				<ObjectNumber id="perTitleRevenue" textAlign="Right" enabled="false"></ObjectNumber>
+			</ColumnListItem>
+            <ColumnListItem>
+				<Text text="Cost per TVR" class="sapUiTinyMarginTop" />
+				<ObjectNumber id="costPerTVR" textAlign="Right" enabled="false"></ObjectNumber>
+			</ColumnListItem>
+            <ColumnListItem>
+				<Text text="Revenue per TVR" class="sapUiTinyMarginTop" />
+				<ObjectNumber id="revenuePerTVR" textAlign="Right" enabled="false"></ObjectNumber>
+			</ColumnListItem>          
+        </items>
+    </Table>
 </c:FragmentDefinition>
