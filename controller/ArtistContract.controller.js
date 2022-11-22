@@ -2643,6 +2643,7 @@ sap.ui.define([
 				success: function (oData) {
 
 					oData.results.map(function (obj) {
+						if (obj.Advwfapp == true ) {
 						var relStObj = $.extend(true, {}, releaseStatusObj);
 						relStObj.Author = obj.Usernm;
 						relStObj.Status = obj.Usractiondesc;
@@ -2668,6 +2669,7 @@ sap.ui.define([
 							}
 						}
 						releaseStatusInfo.push(relStObj);
+					}
 					}.bind(this));
 					artistContractDetailInfo.releaseStatusInfo = releaseStatusInfo;
 					if (releaseStatusInfo.length) {
@@ -2745,7 +2747,7 @@ sap.ui.define([
 				success: function (oData) {
 
 					oData.results.map(function (obj) {
-						if (obj.Advwfapp == true || obj.Posnid == "INIT") {
+						if (obj.Advwfapp == true ) {
 						var relStObj = $.extend(true, {}, releaseStatusObj);
 						relStObj.Author = obj.Usernm;
 						relStObj.Status = obj.Usractiondesc;
