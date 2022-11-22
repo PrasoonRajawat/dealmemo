@@ -187,7 +187,7 @@ sap.ui.define([
 						artistContractModel.setProperty("/Ebeln", oData.Ebeln);
 						artistContractModel.setProperty("/epiDeleteEnable", false);
 						artistContractModel.setProperty("/saveVisible", true);
-						if (oData.Contstat === "01" || oData.Contstat === "03") { // added by dhiraj on 20/05/2022 for submit butn.
+						if (oData.Contstat === "01" || oData.Contstat === "03"  || oData.Contstat === "10") { // added by dhiraj on 20/05/2022 for submit butn.
 							artistContractModel.setProperty("/submitVisible", true);
 						} else {
 							artistContractModel.setProperty("/submitVisible", false);
@@ -1552,7 +1552,7 @@ sap.ui.define([
 						artistContractDetailInfo.ContDate = Formatter.formatDateVal(oData.Contdt),
 							oData.Cntnm = artistContractDetailInfo.Cntnm;
 						artistContractDetailInfo.saveVisible = true;
-						if (oData.Contstat === "01" || oData.Contstat === "03") { // added by dhiraj on 20/05/2022 for submit butn.
+						if (oData.Contstat === "01" || oData.Contstat === "03"  || oData.Contstat === "10") { // added by dhiraj on 20/05/2022 for submit butn.
 							artistContractModel.setProperty("/submitVisible", true);
 						} else {
 							artistContractModel.setProperty("/submitVisible", false);

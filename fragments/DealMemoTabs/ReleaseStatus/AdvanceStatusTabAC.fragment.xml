@@ -1,0 +1,13 @@
+<c:FragmentDefinition xmlns="sap.m" xmlns:s="sap.suite.ui.commons" xmlns:u="sap.ui.unified" xmlns:l="sap.ui.layout" xmlns:c="sap.ui.core">
+
+<s:Timeline id="idTimelineRlSTatus" showFilterBar="false" enableScroll="false" enableBackendFilter="false" showHeaderBar="false" showSearch="false"
+											sortOldestFirst="false" sort="false" content="{artistContractModel>/releaseStatusInfo}" growingThreshold="0" >
+											<s:content>
+												<s:TimelineItem dateTime="{artistContractModel>Date}" userName="{artistContractModel>Author}" icon="{artistContractModel>icon}" userNameClickable="true">
+													<s:embeddedControl>
+														<ObjectStatus class="sapUiSmallMarginBottom" text="{artistContractModel>Status}" state="{artistContractModel>state}"/>
+													</s:embeddedControl>
+												</s:TimelineItem>
+											</s:content>
+										</s:Timeline>
+</c:FragmentDefinition>
