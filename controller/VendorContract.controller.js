@@ -4347,8 +4347,11 @@ sap.ui.define([
 			onTabSelectionVC: function () {
 				var oTab = this.getView().byId("idVCTabBar").getSelectedKey();
 				var oSubTab = this.getView().byId("idVCPayTabBar2").getSelectedKey();
-				if (oTab === "releaseStatus" || oTab === "AdvreleaseStatus") {
+				if (oTab === "releaseStatus" ) {
 					this.loadReleaseStatusDetails();
+				}
+				if ( oTab === "AdvreleaseStatus") {
+					this.loadAdvReleaseStatusDetails();
 				}
 				if (oSubTab === "milestoneTab") {
 					this.loadMileTabDetails();
@@ -4579,6 +4582,111 @@ sap.ui.define([
 						vendorContractDetailInfo.releaseStatusInfo = releaseStatusInfo;
 						if (releaseStatusInfo.length) {
 							vendorContractDetailInfo.relStatustabcolor = "Positive";
+						}
+						vendorContractModel.refresh(true);
+
+					}.bind(this),
+					error: function (oError) {
+						var oErrorResponse = JSON.parse(oError.responseText);
+						var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
+						MessageBox.error(oMsg);
+					}
+
+				})
+			},
+			loadAdvReleaseStatusDetails: function () {
+				var oModel = this.getView().getModel();
+				var vendorContractModel = this.getView().getModel("vendorContractModel");
+				var vendorContractDetailInfo = vendorContractModel.getData();
+				vendorContractDetailInfo.relAdvStatustabcolor = "Critical";
+				var iconUserActionMap = {
+					"S": {
+						icon: "sap-icon://initiative",
+						state: "Success"
+					},
+					"A": {
+						icon: "sap-icon://accept",
+						state: "Success"
+					},
+					"R": {
+						icon: "sap-icon://decline",
+						state: "Error"
+					},
+					"F": {
+						icon: "sap-icon://forward",
+						state: "Warning"
+					},
+					"I": {
+						icon: "sap-icon://lateness",
+						state: "Warning"
+					},
+					"C": {
+						icon: "sap-icon://activity-2",
+						state: "Success"
+					},
+					"P": {
+						icon: "sap-icon://pending",
+						state: "Warning"
+					}
+				};
+				var aFilters = [
+					new Filter("Tentid", "EQ", "IBS"),
+					new Filter("Dmno", "EQ", vendorContractDetailInfo.Dmno),
+					new Filter("Dmver", "EQ", vendorContractDetailInfo.Dmver),
+					new Filter("Contno", "EQ", vendorContractDetailInfo.Contno),
+					new Filter("Contver", "EQ", vendorContractDetailInfo.Contver),
+					new Filter("Conttp", "EQ", vendorContractDetailInfo.Conttp)
+				];
+				var timeFormat = sap.ui.core.format.DateFormat.getTimeInstance({
+					pattern: "KK:mm:ss"
+				});
+				var TZOffsetMs = new Date(0).getTimezoneOffset() * 60 * 1000;
+				var releaseStatusInfo = [];
+				var releaseStatusObj = {
+					Author: "",
+					Date: "",
+					Status: "",
+					Text: "",
+					icon: "",
+					state: ""
+				};
+				oModel.read("/DmlgSet", {
+					filters: aFilters,
+					success: function (oData) {
+
+						oData.results.map(function (obj) {
+							if (obj.Advwfapp == "X"	|| obj.Posnid == "INIT") {
+							var relStObj = $.extend(true, {}, releaseStatusObj);
+							relStObj.Author = obj.Usernm;
+							relStObj.Status = obj.Usractiondesc;
+							relStObj.icon = iconUserActionMap[obj.Usraction].icon;
+							relStObj.state = iconUserActionMap[obj.Usraction].state;
+							if (obj.Actdt != null) { //Added By Dhiraj Sarang for release strategy error
+								var date = obj.Actdt;
+								date = new Date(date);
+								if (date == "Invalid Date") {
+									/*for json format date*/
+									var jsonDateString = obj.Actdt;
+									var dt = new Date(parseInt(jsonDateString.replace(/\/+Date\(([\d+-]+)\)\/+/, '$1')));
+									obj.Actdt = dt;
+									var time = obj.Acttm[2] + obj.Acttm[3] + ":" + obj.Acttm[5] + obj.Acttm[6] +
+										":" + obj.Acttm[8] + obj.Acttm[9];
+									obj.Acttm = new Date(timeFormat.parse(time).getTime() - TZOffsetMs).getTime();
+									var DtTime = this.getDateInMS(obj.Actdt, obj.Acttm);
+									relStObj.Date = DtTime;
+
+								} else {
+									var DtTime = this.getDateInMS(obj.Actdt, obj.Acttm.ms);
+									relStObj.Date = DtTime;
+								}
+							}
+							releaseStatusInfo.push(relStObj);
+							}
+						}.bind(this));
+						
+						vendorContractDetailInfo.releaseAdvStatusInfo = releaseStatusInfo;
+						if (releaseStatusInfo.length) {
+							vendorContractDetailInfo.relAdvStatustabcolor = "Positive";
 						}
 						vendorContractModel.refresh(true);
 
