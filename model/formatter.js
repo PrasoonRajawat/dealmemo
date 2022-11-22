@@ -128,7 +128,7 @@ sap.ui.define([
         	   }
            },
             formatEditableContStatus:function(Contstat){
-        	   if(Contstat === "01" || Contstat === undefined || Contstat === "" || Contstat === null || Contstat === "03" ) {
+        	   if(Contstat === "01" || Contstat === undefined || Contstat === "" || Contstat === null || Contstat === "03" || Contstat === "10" ) {
         		   return true;
         	   }
         	   else{

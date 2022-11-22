@@ -1166,7 +1166,7 @@ sap.ui.define([
 							oData.vcTabEnable = false;
 						}
 						oData.submitVisible = false;
-						if ((oData.Contstat === "01" || oData.Contstat === "03")) { // added by dhiraj on 20/05/2022 for submit butn.
+						if ((oData.Contstat === "01" || oData.Contstat === "03" || oData.Contstat === "10")) { // added by dhiraj on 20/05/2022 for submit butn.
 							oData.submitVisible = true;
 						}
 						oData.releaseTabVisible = false;
