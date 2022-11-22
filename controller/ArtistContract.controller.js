@@ -996,7 +996,9 @@ sap.ui.define([
 				artistContractDetailInfo.episodeMode = 0;
 				artistContractDetailInfo.epiFromId = "";
 				artistContractDetailInfo.epiToId = "";
+				if (vendorContractDetailInfo.Mwskz != "") {
 				artistContractDetailInfo.taxCodeName = artistContractDetailInfo.taxCodeList.find(a => a.Mwskz == artistContractDetailInfo.Mwskz).Mwstx == "" ? "" : artistContractDetailInfo.taxCodeList.find(a => a.Mwskz == artistContractDetailInfo.Mwskz).Mwstx
+				}
 				artistContractDetailInfo.taxCodeKey = artistContractDetailInfo.Mwskz == "" ? "" : artistContractDetailInfo.Mwskz;
 				artistContractDetailInfo.costCodes = $.extend(true, [], artistContractDetailInfo.costCodeList);
 				artistContractDetailInfo.costValueEditable = false;
@@ -2510,7 +2512,7 @@ sap.ui.define([
 		onTabSelectionAC: function () {
 			var oTab = this.getView().byId("idACTabBar").getSelectedKey();
 			var oSubTab = this.getView().byId("idACPayTabBar2").getSelectedKey();
-			if (oTab === "releaseStatus") {
+			if (oTab === "releaseStatus" || oTab === "AdvreleaseStatus") {
 				this.loadReleaseStatusDetails();
 			}
 			if (oSubTab === "milestoneTab") {

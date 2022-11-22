@@ -119,7 +119,14 @@
 								<c:Fragment fragmentName="com.ui.dealmemolocal.fragments.vcIPRDataTab" type="XML"/>
 							</content>
 						</IconTabFilter>
-						<IconTabFilter id="idReleaseStatusTab" text="{i18n>lblReleaseSt}" key="releaseStatus" icon="sap-icon://order-status" class="sapMITBHead"
+						<IconTabFilter id="idAdvanceStatusTab" text="Advance Approval Release Status" key="AdvreleaseStatus" icon="sap-icon://order-status" class="sapMITBHead"
+							iconColor="{path:'vendorContractModel>/relStatustabcolor'}" design="Horizontal"
+							enabled="{= ${vendorContractModel>/Contstat} !== '01' ? true : false }" visible="{vendorContractModel>/releaseTabVisible}">
+							<content>
+								<core:Fragment fragmentName="com.ui.dealmemolocal.fragments.DealMemoTabs.ReleaseStatus.AdvanceStatusTabVC" type="XML"/>
+							</content>
+						</IconTabFilter>
+						<IconTabFilter id="idReleaseStatusTab" text="Contract Release Status" key="releaseStatus" icon="sap-icon://order-status" class="sapMITBHead"
 							iconColor="{path:'vendorContractModel>/relStatustabcolor'}" design="Horizontal"
 							enabled="{= ${vendorContractModel>/Contstat} !== '01' ? true : false }" visible="{vendorContractModel>/releaseTabVisible}">
 							<content>

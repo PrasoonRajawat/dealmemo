@@ -1217,7 +1217,9 @@ sap.ui.define([
 				vendorContractDetailInfo.episodeMode = 0;
 				vendorContractDetailInfo.epiFromId = "";
 				vendorContractDetailInfo.epiToId = "";
+				if (vendorContractDetailInfo.Mwskz != "") {
 				vendorContractDetailInfo.taxCodeName = vendorContractDetailInfo.taxCodeList.find(a => a.Mwskz == vendorContractDetailInfo.Mwskz).Mwstx == "" ? "" : vendorContractDetailInfo.taxCodeList.find(a => a.Mwskz == vendorContractDetailInfo.Mwskz).Mwstx
+				}
 				// vendorContractDetailInfo.taxCodeName = "";
 				vendorContractDetailInfo.taxCodeKey = vendorContractDetailInfo.Mwskz == "" ? "" : vendorContractDetailInfo.Mwskz;
 				vendorContractDetailInfo.episodeRangeVisible = false;
@@ -4345,7 +4347,7 @@ sap.ui.define([
 			onTabSelectionVC: function () {
 				var oTab = this.getView().byId("idVCTabBar").getSelectedKey();
 				var oSubTab = this.getView().byId("idVCPayTabBar2").getSelectedKey();
-				if (oTab === "releaseStatus") {
+				if (oTab === "releaseStatus" || oTab === "AdvreleaseStatus") {
 					this.loadReleaseStatusDetails();
 				}
 				if (oSubTab === "milestoneTab") {
