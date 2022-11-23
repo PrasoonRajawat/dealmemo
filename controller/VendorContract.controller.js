@@ -3026,7 +3026,7 @@ sap.ui.define([
 				});
 					
 				var linkCount = oEvent.getParameters()['selectedItems'].filter(function(linkObj){
-					return linkObj.getBindingContext("vendorContractModel").getObject().Delvpay = true;
+					return linkObj.getBindingContext("vendorContractModel").getObject().Delvpay == true;
 				});
 				
 				if (oContentReceiptPayObjs.length) {
