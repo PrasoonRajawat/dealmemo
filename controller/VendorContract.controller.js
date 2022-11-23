@@ -2961,9 +2961,9 @@ sap.ui.define([
 
 				// } else {}
 				var oContentReceiptPayObjs = vendorContractDetailInfo.vcPaymentData.filter(function (epPayObj) {
-					return epPayObj.Epiid === selEpObj.Epiid && epPayObj.Msid === "02"
+					return epPayObj.Msid === "02"
 				});
-				
+
 				if (oContentReceiptPayObjs.length) {
 					if (count == 0) {
 						pushStatus = false;
