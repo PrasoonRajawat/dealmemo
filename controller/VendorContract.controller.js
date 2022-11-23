@@ -2863,6 +2863,9 @@ sap.ui.define([
 				var showLinkPaymentMsg = false;
 				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
 				var selectedEpisodeList = [];
+				var count = 0;
+				var pushStatus = true;
+				var pushMsg = "";
 				var oselIndex = vendorContractDetailInfo.episodeModeDelivery;
 				var deliveryPayloadArr = [];
 				if (oselIndex == 0) {
@@ -2884,6 +2887,7 @@ sap.ui.define([
 					});
 					if (oContentReceiptPayObjs.length && oSelDelvCodeObj.Delvpay) {
 						// showLinkPaymentMsg = true;
+						count = count + 1
 						selEpObj.Delvpay = true;
 					} else {
 						selEpObj.Delvpay = false;
@@ -2917,46 +2921,55 @@ sap.ui.define([
 					});
 				}.bind(this));
 
-				if (showLinkPaymentMsg) {
-					MessageBox.confirm(oSourceBundle.getText("msgisPaymentLinked"), {
-						actions: [oSourceBundle.getText("lblYes"), oSourceBundle.getText("lblNo")],
-						emphasizedAction: "Yes",
-						onClose: function (sAction) {
-							if (sAction === oSourceBundle.getText("lblYes")) {
+				// if (showLinkPaymentMsg) {
+				// 	MessageBox.confirm(oSourceBundle.getText("msgisPaymentLinked"), {
+				// 		actions: [oSourceBundle.getText("lblYes"), oSourceBundle.getText("lblNo")],
+				// 		emphasizedAction: "Yes",
+				// 		onClose: function (sAction) {
+				// 			if (sAction === oSourceBundle.getText("lblYes")) {
 
-								var oResp = this.updateDeliveryData(deliveryPayloadArr, $.extend(true, [], vendorContractDetailInfo.vcDeliveryData));
-								if (oResp.flag) {
-									vendorContractDetailInfo.vcDeliveryData = oResp.oResTable;
-									vendorContractModel.refresh(true);
-								} else {
+				// 				var oResp = this.updateDeliveryData(deliveryPayloadArr, $.extend(true, [], vendorContractDetailInfo.vcDeliveryData));
+				// 				if (oResp.flag) {
+				// 					vendorContractDetailInfo.vcDeliveryData = oResp.oResTable;
+				// 					vendorContractModel.refresh(true);
+				// 				} else {
 
-									var epiIds = oResp.oResTable.join(",");
-									var oMsg = oSourceBundle.getText("lblForEpisodes" + vendorContractDetailInfo.Cnttp) + " " + epiIds + "Delivery Code" +
-										oSelDelvCodeObj.Mstcdnm + " is already pushed";
-									MessageBox.error(Msg);
-								}
+				// 					var epiIds = oResp.oResTable.join(",");
+				// 					var oMsg = oSourceBundle.getText("lblForEpisodes" + vendorContractDetailInfo.Cnttp) + " " + epiIds + "Delivery Code" +
+				// 						oSelDelvCodeObj.Mstcdnm + " is already pushed";
+				// 					MessageBox.error(Msg);
+				// 				}
 
-							} else if (sAction === oSourceBundle.getText("lblNo")) {
-								deliveryPayloadArr.map(function (delPayloadObj) {
-									delPayloadObj.Delvpay = false;
-								});
-								var oResp = this.updateDeliveryData(deliveryPayloadArr, $.extend(true, [], vendorContractDetailInfo.vcDeliveryData));
-								if (oResp.flag) {
-									vendorContractDetailInfo.vcDeliveryData = oResp.oResTable;
-									vendorContractModel.refresh(true);
-								} else {
+				// 			} else if (sAction === oSourceBundle.getText("lblNo")) {
+				// 				deliveryPayloadArr.map(function (delPayloadObj) {
+				// 					delPayloadObj.Delvpay = false;
+				// 				});
+				// 				var oResp = this.updateDeliveryData(deliveryPayloadArr, $.extend(true, [], vendorContractDetailInfo.vcDeliveryData));
+				// 				if (oResp.flag) {
+				// 					vendorContractDetailInfo.vcDeliveryData = oResp.oResTable;
+				// 					vendorContractModel.refresh(true);
+				// 				} else {
 
-									var epiIds = oResp.oResTable.join(",");
-									var oMsg = oSourceBundle.getText("lblForEpisodes" + vendorContractDetailInfo.Cnttp) + " " + epiIds + "Delivery Code" +
-										oSelDelvCodeObj.Mstcdnm + " is already pushed";
-									MessageBox.error(Msg);
-								}
-							}
-						}.bind(this)
-					});
+				// 					var epiIds = oResp.oResTable.join(",");
+				// 					var oMsg = oSourceBundle.getText("lblForEpisodes" + vendorContractDetailInfo.Cnttp) + " " + epiIds + "Delivery Code" +
+				// 						oSelDelvCodeObj.Mstcdnm + " is already pushed";
+				// 					MessageBox.error(Msg);
+				// 				}
+				// 			}
+				// 		}.bind(this)
+				// 	});
 
-				} else {
-
+				// } else {}
+				if (oContentReceiptPayObjs.length) {
+					if (count == 0) {
+						pushStatus = false;
+						pushMsg = "Atleast one Deliverable should be Linked to Payment"
+					} else if (count > 1) {
+						pushStatus = false
+						pushMsg = "Only one Deliverable should be Linked to Payment"
+					}
+				}
+				if (pushStatus) {
 					var oResp = this.updateDeliveryData(deliveryPayloadArr, $.extend(true, [], vendorContractDetailInfo.vcDeliveryData));
 					if (oResp.flag) {
 						vendorContractDetailInfo.vcDeliveryData = oResp.oResTable;
@@ -2968,7 +2981,10 @@ sap.ui.define([
 							oSelDelvCodeObj.Mstcdnm + " is already pushed";
 						MessageBox.error(oMsg)
 					}
+				} else {
+					MessageBox.error(pushMsg)
 				}
+				
 
 			},
 
