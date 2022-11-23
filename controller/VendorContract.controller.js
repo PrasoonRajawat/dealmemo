@@ -3026,14 +3026,14 @@ sap.ui.define([
 				});
 					
 				var linkCount = oEvent.getParameters()['selectedItems'].filter(function(linkObj){
-					return linkObj.Delvpay = true;
+					return linkObj.getBindingContext("vendorContractModel").getObject().Delvpay = true;
 				});
 				
 				if (oContentReceiptPayObjs.length) {
-					if (linkCount.lenght == 0) {
+					if (linkCount.length == 0) {
 						pushStatus = false;
 						pushMsg = "Atleast one Deliverable should be Linked to Payment"
-					} else if (linkCount.lenght > 1) {
+					} else if (linkCount.length > 1) {
 						pushStatus = false
 						pushMsg = "Only one Deliverable should be Linked to Payment"
 					}
