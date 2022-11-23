@@ -2863,9 +2863,6 @@ sap.ui.define([
 				var showLinkPaymentMsg = false;
 				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
 				var selectedEpisodeList = [];
-				var count = 0;
-				var pushStatus = true;
-				var pushMsg = "";
 				var oselIndex = vendorContractDetailInfo.episodeModeDelivery;
 				var deliveryPayloadArr = [];
 				if (oselIndex == 0) {
@@ -2887,7 +2884,7 @@ sap.ui.define([
 					});
 					if (oContentReceiptPayObjs.length && oSelDelvCodeObj.Delvpay) {
 						// showLinkPaymentMsg = true;
-						count = count + 1
+						
 						selEpObj.Delvpay = true;
 					} else {
 						selEpObj.Delvpay = false;
@@ -2960,20 +2957,8 @@ sap.ui.define([
 				// 	});
 
 				// } else {}
-				var oContentReceiptPayObjs = vendorContractDetailInfo.vcPaymentData.filter(function (epPayObj) {
-					return epPayObj.Msid === "02"
-				});
-
-				if (oContentReceiptPayObjs.length) {
-					if (count == 0) {
-						pushStatus = false;
-						pushMsg = "Atleast one Deliverable should be Linked to Payment"
-					} else if (count > 1) {
-						pushStatus = false
-						pushMsg = "Only one Deliverable should be Linked to Payment"
-					}
-				}
-				if (pushStatus) {
+				
+				
 					var oResp = this.updateDeliveryData(deliveryPayloadArr, $.extend(true, [], vendorContractDetailInfo.vcDeliveryData));
 					if (oResp.flag) {
 						vendorContractDetailInfo.vcDeliveryData = oResp.oResTable;
@@ -2985,9 +2970,7 @@ sap.ui.define([
 							oSelDelvCodeObj.Mstcdnm + " is already pushed";
 						MessageBox.error(oMsg)
 					}
-				} else {
-					MessageBox.error(pushMsg)
-				}
+				
 				
 
 			},
@@ -3031,22 +3014,37 @@ sap.ui.define([
 			},
 
 			onConfirmDeliverySelection: function (oEvent) {
-				// var vendorContractModel = this.getView().getModel("vendorContractModel");
-				// var vendorContractDetailInfo = vendorContractModel.getData();
-				// var selectedList = vendorContractDetailInfo.deliveryPayList;
 
-				// for (var sel = 0 ; sel < selectedList.length ; sel++ ) {
-				// 	var oSelDelvCodeObj = selectedList[sel] ;
-				// 	if (oSelDelvCodeObj.Delslct) {
-				// 		this.prepareDeliverypayload(oSelDelvCodeObj);
-				// 	}
-				// }
+				var count = 0;
+				var pushStatus = true;
+				var pushMsg = "";
 				// for (var sel = 0; sel < oEvent.getParameters()['selectedItems'].length; sel++) { //added by Dhiraj On 19/05/2022 for selecting multiple deliverables
+				var oContentReceiptPayObjs = vendorContractDetailInfo.vcPaymentData.filter(function (epPayObj) {
+					return epPayObj.Msid === "02"
+				});
+					
+				var linkCount = oEvent.getParameters()['selectedItems'].filter(function(linkObj){
+					return linkObj.Delvpay = true;
+				});
+				
+				if (oContentReceiptPayObjs.length) {
+					if (linkCount.lenght == 0) {
+						pushStatus = false;
+						pushMsg = "Atleast one Deliverable should be Linked to Payment"
+					} else if (linkCount.lenght > 1) {
+						pushStatus = false
+						pushMsg = "Only one Deliverable should be Linked to Payment"
+					}
+				}
+				if(pushStatus) {
 				for (var sel = oEvent.getParameters()['selectedItems'].length - 1; sel >= 0; sel--) {	//added by Mandar On 20/09/2022 for selecting multiple deliverables
 					var oSelDelvCodeObj = oEvent.getParameters()['selectedItems'][sel].getBindingContext("vendorContractModel").getObject();
 					this.prepareDeliverypayload(oSelDelvCodeObj);
 				}
-
+				
+			} else {
+				MessageBox.error(pushMsg)
+			}
 				// var oSelDelvCodeObj = oEvent.getParameters()['selectedItem'].getBindingContext("vendorContractModel").getObject();   			
 				// 	this.prepareDeliverypayload(oSelDelvCodeObj);  //ComMented by Dhiraj On 19/05/2022 for selecting multiple deliverables
 			},
