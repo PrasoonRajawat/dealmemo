@@ -3015,6 +3015,8 @@ sap.ui.define([
 
 			onConfirmDeliverySelection: function (oEvent) {
 
+				var vendorContractModel = this.getView().getModel("vendorContractModel");
+				var vendorContractDetailInfo = vendorContractModel.getData();
 				var count = 0;
 				var pushStatus = true;
 				var pushMsg = "";
