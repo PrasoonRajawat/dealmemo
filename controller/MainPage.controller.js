@@ -722,14 +722,17 @@ sap.ui.define([
 
 				this.oValueHelpSelectionParams = {
 					"bindPathName": "dealMemoModel>/filterDmlist",
-					"bindPropName": "dealMemoModel>Cntnm",
-					"propName": "Cntnm",
+					"bindPropName": "dealMemoModel>Dmno",
+					"bindPropName2": "dealMemoModel>Dmver",
+					"propName": "Dmno",
+					"bindPropDescName": "dealMemoModel>Cntnm",
 					"keyName": "Dmno",
 					"keyPath": "/createParams/Refformatdmno",
 					"valuePath": "/createParams/RefFormDmno",
 					"valueModel": "dealMemoModel",
 					"dialogTitle": "Reference Format Deal Memo No."
 				};
+				
 				this.openSelectionDialog();
 			},
 			onValueHelpContentNature: function () {
