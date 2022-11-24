@@ -56,6 +56,12 @@
 											</VBox>
 											<VBox>
 												<HBox>
+													<Label text="{i18n>lbl_RefFormatDm}" design="Bold"/>
+													<Text text="{dealMemoDetailModel>/Refformatdmno}" class="sapUiTinyMarginBegin"/>
+												</HBox>
+											</VBox>
+											<VBox>
+												<HBox>
 													<Label text="Programming:" design="Bold" class="sapUiLargeMarginBegin"  />
 													<!-- <Text text="{dealMemoDetailModel>/Totdmamt}" class="sapUiSmallMarginBegin" /> -->
 													<Text text="{dealMemoDetailModel>/BudgetTotal}" class="sapUiSmallMarginBegin" />

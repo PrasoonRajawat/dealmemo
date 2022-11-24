@@ -708,6 +708,33 @@ sap.ui.define([
 				};
 				this.openSelectionDialog();
 			},
+			onValueHelpRefFDmno: function () {
+				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
+				var dealMemoModel = this.getView().getModel("dealMemoModel");
+				var dealMemoInfo = dealMemoModel.getData();
+				var dmList = dealMemoInfo.dealmemolist;
+				var filterDmList = [];
+				filterDmList = dmList.filter(function (obj) {
+					return obj.Dmst == "04" && obj.Recst == "A";
+				});
+				dealMemoInfo.filterDmList = filterDmList;
+				dealMemoModel.refresh(true);
+
+				this.oValueHelpSelectionParams = {
+					"bindPathName": "dealMemoModel>/filterDmlist",
+					"bindPropName": "dealMemoModel>Dmno",
+					"bindPropName2": "dealMemoModel>Dmver",
+					"propName": "Dmno",
+					"bindPropDescName": "dealMemoModel>Cntnm",
+					"keyName": "Dmno",
+					"keyPath": "/createParams/Refformatdmno",
+					"valuePath": "/createParams/RefFormDmno",
+					"valueModel": "dealMemoModel",
+					"dialogTitle": "Reference Format Deal Memo No."
+				};
+				
+				this.openSelectionDialog();
+			},
 			onValueHelpContentNature: function () {
 				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
 				this.oValueHelpSelectionParams = {
@@ -971,7 +998,8 @@ sap.ui.define([
 					"Exchrt": "1.00",
 					"fisYrEnableFlag": true,
 					"secChanelEnableFlag": true,
-					"secChannelList": this.getSecChannelList(dealMemoModel.getProperty("/createParams/Chnlid"))
+					"secChannelList": this.getSecChannelList(dealMemoModel.getProperty("/createParams/Chnlid")),
+					"Refformatdmno":  dealMemoModel.getProperty("/createParams/Refformatdmno")
 				};
 
 				this.selectedDealMemoObj = dealmemoDetObj;
