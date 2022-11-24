@@ -1749,7 +1749,11 @@ sap.ui.define([
 				vendorContractDetailInfo.payee = vendorContractDetailInfo.vendorName;
 				vendorContractDetailInfo.payeeKey = vendorContractDetailInfo.vendorKey;
 				vendorContractDetailInfo.ZtermKey = vendorContractDetailInfo.Zterm;
+				if (vendorContractDetailInfo.payTermList.find(tt => tt.Zterm === vendorContractDetailInfo.Zterm) != undefined ) {
 				vendorContractDetailInfo.ZtermT = vendorContractDetailInfo.Zterm != "" ? vendorContractDetailInfo.payTermList.find(tt => tt.Zterm === vendorContractDetailInfo.Zterm).ZtermT : "";
+				} else {
+					vendorContractDetailInfo.ZtermKey  = "";
+				}
 				vendorContractDetailInfo.Hsncode = "";
 				vendorContractDetailInfo.payEnable = true;
 				vendorContractDetailInfo.termEnable = true;

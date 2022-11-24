@@ -1685,7 +1685,11 @@ sap.ui.define([
 				artistContractDetailInfo.payee = artistContractDetailInfo.vendorName;
 				artistContractDetailInfo.payeeKey = artistContractDetailInfo.vendorKey;
 				artistContractDetailInfo.ZtermKey = artistContractDetailInfo.Zterm;
+				if (artistContractDetailInfo.payTermList.find(tt => tt.Zterm === artistContractDetailInfo.Zterm) != undefined ) {
 				artistContractDetailInfo.ZtermT = artistContractDetailInfo.Zterm != "" ? artistContractDetailInfo.payTermList.find(tt => tt.Zterm === artistContractDetailInfo.Zterm).ZtermT : "";
+				} else {
+					artistContractDetailInfo.ZtermKey = "";
+				}
 				artistContractDetailInfo.Hsncode = ""
 				artistContractDetailInfo.payEnable = true;
 				artistContractDetailInfo.termEnable = true;
