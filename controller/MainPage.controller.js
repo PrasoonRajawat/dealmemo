@@ -3164,7 +3164,7 @@ sap.ui.define([
 						detailModelData.ChangeEpiVisibility = true;
 						detailModelData.AddEpiVisibility = false;
 
-						if (detailModelData.DmCoSet.results.length > 0) {
+						if (detailModelData.episodeData.length > 0) {
 							detailModelData.AddEpiVisibility = true;
 						}
 						detailModel.refresh(true);
