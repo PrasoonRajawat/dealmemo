@@ -80,6 +80,18 @@
 					<l:GridData span="XL12 L12 M12 S12"/>
 				</layoutData>
 			</Input>
+
+			<Label text="{i18n>lbl_RefFormatDm}" design="Bold" class="sapUiTinyMarginTop" >
+				<layoutData>
+					<l:GridData span="XL12 L12 M12 S12"/>
+				</layoutData>
+			</Label>
+			<Input width="100%" value="{dealMemoModel>/createParams/Refformatdmno}" showValueHelp="true" valueHelpRequest="onValueHelpRefFDmno">
+				<layoutData>
+					<l:GridData span="XL12 L12 M12 S12"/>
+				</layoutData>
+			</Input>
+			
 			
 			</l:Grid>
 			<beginButton>
