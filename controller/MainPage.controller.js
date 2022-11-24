@@ -721,7 +721,7 @@ sap.ui.define([
 				dealMemoModel.refresh(true);
 
 				this.oValueHelpSelectionParams = {
-					"bindPathName": "dealMemoModel>/filterDmlist",
+					"bindPathName": "dealMemoModel>/filterDmList",
 					"bindPropName": "dealMemoModel>Dmno",
 					"bindPropName2": "dealMemoModel>Dmver",
 					"propName": "Dmno",
