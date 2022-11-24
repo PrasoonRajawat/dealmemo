@@ -1632,7 +1632,8 @@ sap.ui.define([
 					RightsPeriod: dealMemoDetailInfo.RightsPeriod,
 					NbocBudget: dealMemoDetailInfo.NbocBudget,
 					NbocBudgetRemarks: dealMemoDetailInfo.NbocBudgetRemarks,
-					OapCosts: dealMemoDetailInfo.OapCosts
+					OapCosts: dealMemoDetailInfo.OapCosts,
+					Refformatdmno: dealMemoDetailInfo.Refformatdmno
 				}
 
 				return payload;
