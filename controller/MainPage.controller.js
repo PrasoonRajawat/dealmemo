@@ -125,6 +125,7 @@ sap.ui.define([
 					filters: aFilters,
 					success: function (oData) {
 						dealMemoModel.setProperty("/dealmemolist", oData.results);
+						// oData.Totdmamt = (parseFloat(oData.OapCosts) + parseFloat(oData.Dmaf.Mediacosts) + parseFloat(oData.Dmaf.Digitalcosts) + parseFloat(oData.Dmaf.Othercosts) + parseFloat(oData.Totdmamt)).toFixed(2)
 						dealMemoModel.refresh(true);
 						sap.ui.core.BusyIndicator.hide();
 						if (this.loadDefaultDealMemo && this.getView().byId("list_dealmemo_master").getItems().length > 0) {
@@ -1192,7 +1193,7 @@ sap.ui.define([
 							that.getView().byId("commentInner").getItems()[i].setVisible(false);
 						};
 						this.calculateInvestmentDetails(oData);
-						oData.Totdmamt = (parseFloat(oData.OapCosts) + parseFloat(oData.Dmaf.Mediacosts) + parseFloat(oData.Dmaf.Digitalcosts) + parseFloat(oData.Dmaf.Othercosts) + parseFloat(oData.Totdmamt)).toFixed(2);
+						// oData.Totdmamt = (parseFloat(oData.OapCosts) + parseFloat(oData.Dmaf.Mediacosts) + parseFloat(oData.Dmaf.Digitalcosts) + parseFloat(oData.Dmaf.Othercosts) + parseFloat(oData.Totdmamt)).toFixed(2);
 						this.getView().byId("marketingTotal").setText((parseFloat(oData.Dmaf.Mediacosts) + parseFloat(oData.Dmaf.Digitalcosts) + parseFloat(oData.Dmaf.Othercosts)).toFixed(2).toString())
 					}.bind(this),
 					error: function (oError) {
