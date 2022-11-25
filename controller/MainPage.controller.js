@@ -716,7 +716,7 @@ sap.ui.define([
 				var dmList = dealMemoInfo.dealmemolist;
 				var filterDmList = [];
 				filterDmList = dmList.filter(function (obj) {
-					return obj.Dmst == "04" && obj.Recst == "A";
+					return obj.Dmst == "04" && obj.Recst == "A" && obj.Cntnt == "05";
 				});
 				dealMemoInfo.filterDmList = filterDmList;
 				dealMemoModel.refresh(true);

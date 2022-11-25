@@ -53,8 +53,6 @@
 													<Label text="{i18n>lbl_RefDocumentNo}" design="Bold"/>
 													<Text text="{dealMemoDetailModel>/Cafrefno}" class="sapUiTinyMarginBegin"/>
 												</HBox>
-											</VBox>
-											<VBox>
 												<HBox>
 													<Label text="{i18n>lbl_RefFormatDm}" design="Bold"/>
 													<Text text="{dealMemoDetailModel>/Refformatdmno}" class="sapUiTinyMarginBegin"/>
