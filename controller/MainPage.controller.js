@@ -318,6 +318,15 @@ sap.ui.define([
 				dealMemoModel.setProperty("/matchMasterList", oData.results);
 				dealMemoModel.refresh(true);
 			},
+			storeSeriesListInfo: function (cnt) {
+				var dealMemoModel = this.getView().getModel("dealMemoModel");
+				cnt.map(function(mvObj) {
+					mvObj.Matnm = mvObj.Cntid + "-" + mvObj.Cntdesc; // added by dhiraj on 23/05/2022
+				});
+				
+				dealMemoModel.setProperty("/seriesMasterList", oData.results);
+				dealMemoModel.refresh(true);
+			},
 			storeMatchListInfo: function (oData) {
 				var dealMemoModel = this.getView().getModel("dealMemoModel");
 				oData.results.map(function (mvObj) {
@@ -456,23 +465,23 @@ sap.ui.define([
 						MessageBox.error(oMsg);
 					}
 				});
-				// var oMatchMasterModel = this.getView().getModel("CONTENT_MAST");
-				// additionalFilters = [new Filter("Cntty", "EQ", "05"), new Filter("Mlevel", "EQ", "02")];
-				// var oPath = "/es_content_list?$filter=Tentid eq 'IBS' and Cntty eq '05' and Mlevel eq '02'";
-				// oMatchMasterModel.read(oPath, {
-				// 	// filters:   basicFiilters.concat(additionalFilters), // added by dhiraj on 24/05/2022
-				// 	success: function(oData) {
-				// 		var cnt = oData.results.filter(function(obj) {
-				// 			return obj.Mlevel === "02" && obj.Cntty === "05" && obj.Mkdm === "X"
-				// 		}.bind(this));
-				// 		this.storeMatchMasterListInfo(cnt);
-				// 	}.bind(this),
-				// 	error: function(oError) {
-				// 			var oErrorResponse = JSON.parse(oError.responseText);
-				// 			var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
-				// 			MessageBox.error(oMsg);
-				// 		}
-				// });
+				var oMatchMasterModel = this.getView().getModel("CONTENT_MAST");
+				additionalFilters = [new Filter("Cntty", "EQ", "05"), new Filter("Mlevel", "EQ", "02")];
+				var oPath = "/es_content_list?$filter=Tentid eq 'IBS' and Cntty eq '05' and Mlevel eq '02'";
+				oMatchMasterModel.read(oPath, {
+					// filters:   basicFiilters.concat(additionalFilters), // added by dhiraj on 24/05/2022
+					success: function(oData) {
+						var cnt = oData.results.filter(function(obj) {
+							return obj.Mlevel === "02" && obj.Cntty === "05" && obj.Mkdm === "X"
+						}.bind(this));
+						this.storeSeriesListInfo(cnt);
+					}.bind(this),
+					error: function(oError) {
+							var oErrorResponse = JSON.parse(oError.responseText);
+							var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
+							MessageBox.error(oMsg);
+						}
+				});
 				// 	var additionalFilters = [new Filter("Mstcd", "EQ", "05")];
 				// oModel.read("/F4CntIDSet", {
 				// 	filters: basicFiilters.concat(additionalFilters),
@@ -766,6 +775,24 @@ sap.ui.define([
 				};
 				this.openSelectionDialog();
 			},
+			onValuHelpMpml2: function () {
+				var oPath = oEvent.getSource().getBindingContext("dealMemoDetailModel").sPath;
+				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
+				var dealMemoDetailInfo = dealMemoDetailModel.getData();
+				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
+				this.oValueHelpSelectionParams = {
+					"bindPathName": "dealMemoModel>/seriesMasterList",
+					"bindPropName": "dealMemoModel>Matnm",
+					"propName": "Matnm",
+					"keyName": "Matid",
+					"keyPath": "/Matnm",
+					"valuePath": "/Matid",
+					"valueModel": "dealMemoDetailModel",
+					"dialogTitle": oSourceBundle.getText("titleMatch"),
+					"callBackFunction": this.mapSeriesDetails
+				};
+				this.openSelectionDialog();
+			},
 			onValueHelpEpiDesc: function (oEvent) {
 				var oPath = oEvent.getSource().getBindingContext("dealMemoDetailModel").sPath;
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
@@ -885,6 +912,26 @@ sap.ui.define([
 					//alert("fail");
 
 				});
+
+			},
+			mapSeriesDetails: function (oRef) {
+				sap.ui.core.BusyIndicator.show(0);
+				var dealMemoDetailModel = oRef.getView().getModel("dealMemoDetailModel");
+				var dealMemoDetailInfo = dealMemoDetailModel.getData();
+				var Chnlid = dealMemoDetailInfo.Chnlid;
+				var Waers = dealMemoDetailInfo.Waers;
+				var srvUrl = "/sap/opu/odata/IBSCMS/DEALMEMO_SRV";
+				var oMatchMasterModel = this.getView().getModel("CONTENT_MAST");
+				var oFilter = new filter("Cntid", "EQ", oObject.Cntid);
+				oMatchMasterModel.read("/es_sports_data", {
+						filters: [oFilter],
+						success: function(oData) {
+							
+						}.bind(this),
+						error: function(error) {
+							oBusyIndicator.hide();
+						}
+					});
 
 			},
 			onSearchSelection: function (oEvent) {
