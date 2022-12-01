@@ -13,6 +13,9 @@
 																	<ObjectIdentifier title="Match Type"/>
 																</Column>
 																 <Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" width="10%">
+																	<ObjectIdentifier title="No Of Matches"/>
+																</Column> 
+																 <Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" width="10%">
 																	<ObjectIdentifier title="{i18n>ObjIden_Year}"/>
 																</Column> 
 																<Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" visible="{= ${dealMemoDetailModel>/Cnttp} === '02' || ${dealMemoDetailModel>/Cnttp} === '05' || ${dealMemoDetailModel>/Cnttp} === '09' || ${dealMemoDetailModel>/Cnttp} === '04' ? true : false }" width="20%">

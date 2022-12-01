@@ -795,7 +795,7 @@ sap.ui.define([
 				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
 				this.oValueHelpSelectionParams = {
 					"bindPathName": "dealMemoModel>/matchTypeList",
-					"bindPropName": "dealMemoModel>Matnm",
+					"bindPropName": "dealMemoModel>Mstcdnm",
 					"propName": "Mstcdnm",
 					"keyName": "Mstcd",
 					"valuePath": oPath + "/Matyp",
