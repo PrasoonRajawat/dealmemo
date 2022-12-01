@@ -265,6 +265,9 @@ sap.ui.define([
 				dealMemoModel.setProperty("/OrigLibraryList", oData.results.filter(function (item) {
 					return item.Mstpcd === "25";
 				}));
+				dealMemoModel.setProperty("/matchTypeList", oData.results.filter(function (item) {
+					return item.Mstpcd === "22";
+				}));
 				dealMemoModel.refresh(true);
 			},
 
@@ -325,11 +328,6 @@ sap.ui.define([
 				});
 
 				dealMemoModel.setProperty("/seriesMasterList", cnt);
-				dealMemoModel.refresh(true);
-			},
-			storeMatchType :  function (cnt) {
-				var dealMemoModel = this.getView().getModel("dealMemoModel");
-				dealMemoModel.setProperty("/matchTypeList", cnt.results);
 				dealMemoModel.refresh(true);
 			},
 			storeMatchListInfo: function (oData) {
@@ -400,7 +398,10 @@ sap.ui.define([
 				}, {
 					"key": "Mstpcd",
 					"val": "21"
-				}, {
+				},{
+					"key": "Mstpcd",
+					"val": "22"
+				},{
 					"key": "Mstpcd",
 					"val": "25"
 				},];
@@ -488,33 +489,8 @@ sap.ui.define([
 					}
 				});
 
-				var oMatchMasterModel = this.getView().getModel("CONTENT_MAST");
-				var oFilter = new Filter("Cntid", "EQ", oRef.Cntid);
-				oMatchMasterModel.read("/es_sports_data", {
-					filters: [oFilter],
-					success: function () {
-						this.storeMatchType(oData);
-					}.bind(this),
-					error: function (error) {
-						var oErrorResponse = JSON.parse(oError.responseText);
-						var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
-						MessageBox.error(oMsg);
-					}
-				});
-				// 	var additionalFilters = [new Filter("Mstcd", "EQ", "05")];
-				// oModel.read("/F4CntIDSet", {
-				// 	filters: basicFiilters.concat(additionalFilters),
-				// 	success: function(oData) {
-				// 		this.storeMatchListInfo(oData);
-				// 	}.bind(this),
-				// 	error: function(oError) {
-				// 		var oErrorResponse = JSON.parse(oError.responseText);
-				// 		var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
-				// 		MessageBox.error(oMsg);
-				// 	}
-				// });
-				// var oMatchModel = this.getView().getModel("MATCH_MAST"); // Added by dhiraj for level 3 on 23/06/2022
-				// oMatchModel.read("/es_match_master", {					//Comented by dhiraj for repeated content
+				
+				
 				additionalFilters = [new Filter("Matid", "EQ", "")];
 				oModel.read("/MatIDSet", {
 					filters: basicFiilters.concat(additionalFilters),
