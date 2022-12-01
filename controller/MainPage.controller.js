@@ -398,10 +398,10 @@ sap.ui.define([
 				}, {
 					"key": "Mstpcd",
 					"val": "21"
-				},{
+				}, {
 					"key": "Mstpcd",
 					"val": "22"
-				},{
+				}, {
 					"key": "Mstpcd",
 					"val": "25"
 				},];
@@ -489,8 +489,8 @@ sap.ui.define([
 					}
 				});
 
-				
-				
+
+
 				additionalFilters = [new Filter("Matid", "EQ", "")];
 				oModel.read("/MatIDSet", {
 					filters: basicFiilters.concat(additionalFilters),
@@ -787,7 +787,7 @@ sap.ui.define([
 				};
 				this.openSelectionDialog();
 			},
-			
+
 			onValueHelpMatchTy: function (oEvent) {
 				var oPath = oEvent.getSource().getBindingContext("dealMemoDetailModel").sPath;
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
@@ -893,8 +893,8 @@ sap.ui.define([
 				var oKeyPath = this.oValueHelpSelectionParams.keyPath;
 				var oProp = this.oValueHelpSelectionParams.propName;
 				var oKey = this.oValueHelpSelectionParams.keyName;
-				var oKeyAttName = this.oValueHelpSelectionParams.keyAttName; 
-				var oKeyAttPath = this.oValueHelpSelectionParams.keyAttPath; 
+				var oKeyAttName = this.oValueHelpSelectionParams.keyAttName;
+				var oKeyAttPath = this.oValueHelpSelectionParams.keyAttPath;
 				var oValueModelAlias = this.oValueHelpSelectionParams.valueModel;
 				var dealMemoModel = this.getView().getModel(oValueModelAlias);
 				dealMemoModel.setProperty(oValuePath, selectedItemObj[oProp]);
@@ -908,7 +908,7 @@ sap.ui.define([
 				dealMemoModel.refresh(true);
 				if (this.oValueHelpSelectionParams.callBackFunction) {
 					// if (this.oValueHelpSelectionParams.callBackFunction.name != "mapSeriesDetails") {
-						this.oValueHelpSelectionParams.callBackFunction(this);
+					this.oValueHelpSelectionParams.callBackFunction(this);
 					// } else {
 					// 	this.mapSeriesDetails(selectedItemObj);
 					// }
@@ -3315,7 +3315,16 @@ sap.ui.define([
 				}.bind(this));
 			},
 			launchPushMpml2Cancel: function () {
-				this._oCreateParamDialog.close();
+				this._oMpml2PushDialog.close();
+			},
+			onAddRowMpml2: function (oEvent) {
+				var oPath = oEvent.getSource().getBindingContext("dealMemoDetailModel").sPath
+				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
+				var dealMemoDetailInfo = dealMemoDetailModel.getData();
+				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
+				var oMsg = "";
+				dealMemoDetailInfo.additonalEpisodeData.push($.extend(true, {}, dealMemoDetailInfo.mpml2PushList));
+				dealMemoDetailModel.refresh(true);
 			},
 			_validateBeforPush: function () {
 				var YearInfo = this._oYearEpisodeDialog.getModel().getData().YearEpisodes;
