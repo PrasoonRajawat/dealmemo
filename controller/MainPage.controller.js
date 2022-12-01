@@ -788,7 +788,7 @@ sap.ui.define([
 					"keyPath": "/Matnm",
 					"valuePath": "/Matid",
 					"valueModel": "dealMemoDetailModel",
-					"dialogTitle": oSourceBundle.getText("titleMatch"),
+					"dialogTitle": "MPML2 Select Dailog",
 					"callBackFunction": this.mapSeriesDetails
 				};
 				this.openSelectionDialog();
@@ -890,7 +890,11 @@ sap.ui.define([
 				}
 				dealMemoModel.refresh(true);
 				if (this.oValueHelpSelectionParams.callBackFunction) {
+					if(this.oValueHelpSelectionParams.callBackFunction.name != "mapSeriesDetails") {
 					this.oValueHelpSelectionParams.callBackFunction(this);
+					} else {
+						this.mapSeriesDetails(selectedItemObj);
+					}
 				}
 			},
 			mapExchrt: function (oRef) {
@@ -916,16 +920,20 @@ sap.ui.define([
 			},
 			mapSeriesDetails: function (oRef) {
 				sap.ui.core.BusyIndicator.show(0);
-				var dealMemoDetailModel = oRef.getView().getModel("dealMemoDetailModel");
+				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
 				var Chnlid = dealMemoDetailInfo.Chnlid;
 				var Waers = dealMemoDetailInfo.Waers;
+				var pre = [];
 				var srvUrl = "/sap/opu/odata/IBSCMS/DEALMEMO_SRV";
 				var oMatchMasterModel = this.getView().getModel("CONTENT_MAST");
-				var oFilter = new filter("Cntid", "EQ", oObject.Cntid);
+				var oFilter = new filter("Cntid", "EQ", selectedItemObj[oKey]);
 				oMatchMasterModel.read("/es_sports_data", {
 						filters: [oFilter],
-						success: function(oData) {
+						success: function(oData) {	
+							oData.results.map(function (obj) {
+								
+							})
 							
 						}.bind(this),
 						error: function(error) {
