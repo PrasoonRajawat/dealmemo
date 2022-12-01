@@ -3319,11 +3319,13 @@ sap.ui.define([
 			},
 			onAddRowMpml2: function (oEvent) {
 				var oPath = oEvent.getSource().getBindingContext("dealMemoDetailModel").sPath
+				var oObj = oEvent.getSource().getBindingContext("dealMemoDetailModel").getObject()
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
 				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
-				var oMsg = "";
-				dealMemoDetailInfo.additonalEpisodeData.push($.extend(true, {}, dealMemoDetailInfo.mpml2PushList));
+				var addItemPos = parseInt(oPath.split("/")[2]) + 1
+				// dealMemoDetailInfo.additonalEpisodeData.push($.extend(true, {}, dealMemoDetailInfo.mpml2PushList));
+				dealMemoDetailInfo.mpml2PushList.splice(addItemPos , 0 , oObj)
 				dealMemoDetailModel.refresh(true);
 			},
 			_validateBeforPush: function () {
