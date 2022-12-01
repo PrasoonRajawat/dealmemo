@@ -996,7 +996,7 @@ sap.ui.define([
 				artistContractDetailInfo.episodeMode = 0;
 				artistContractDetailInfo.epiFromId = "";
 				artistContractDetailInfo.epiToId = "";
-				if (vendorContractDetailInfo.Mwskz != "") {
+				if (artistContractDetailInfo.Mwskz != "") {
 				artistContractDetailInfo.taxCodeName = artistContractDetailInfo.taxCodeList.find(a => a.Mwskz == artistContractDetailInfo.Mwskz).Mwstx == "" ? "" : artistContractDetailInfo.taxCodeList.find(a => a.Mwskz == artistContractDetailInfo.Mwskz).Mwstx
 				}
 				artistContractDetailInfo.taxCodeKey = artistContractDetailInfo.Mwskz == "" ? "" : artistContractDetailInfo.Mwskz;
