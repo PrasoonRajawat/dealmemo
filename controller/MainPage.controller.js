@@ -927,12 +927,12 @@ sap.ui.define([
 				var pre = [];
 				var srvUrl = "/sap/opu/odata/IBSCMS/DEALMEMO_SRV";
 				var oMatchMasterModel = this.getView().getModel("CONTENT_MAST");
-				var oFilter = new Filter("Cntid", "EQ", selectedItemObj[oKey]);
+				var oFilter = new Filter("Cntid", "EQ", oRef.Cntid);
 				oMatchMasterModel.read("/es_sports_data", {
 					filters: [oFilter],
 					success: function (oData) {
 						oData.results.map(function (obj) {
-
+							
 						})
 
 					}.bind(this),
