@@ -36,7 +36,7 @@
 																		<Input
 																			value="{ parts: [ {path: 'dealMemoDetailModel>Leadcost'}, {path: 'dealMemoDetailModel>Waers'} ], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false,minFractionDigits: 2, maxFractionDigits: 2 } }"
 																			textAlign="Right" change="onLeadingValueChange" editable="{dealMemoDetailModel>epiDescEditable}"/>
-																		<Button icon="sap-icon://add" press="onAddRow" tooltip="Add Row" type="Transparent"/>
+																		<Button icon="sap-icon://add" press="onAddRowMpml2" tooltip="Add Row" type="Transparent"/>
 																	</cells>
 																</ColumnListItem>
 															</items>
