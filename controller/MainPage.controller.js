@@ -775,7 +775,7 @@ sap.ui.define([
 				};
 				this.openSelectionDialog();
 			},
-			onValuHelpMpml2: function () {
+			onValuHelpMpml2: function (oEvent) {
 				var oPath = oEvent.getSource().getBindingContext("dealMemoDetailModel").sPath;
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
@@ -785,8 +785,8 @@ sap.ui.define([
 					"bindPropName": "dealMemoModel>Matnm",
 					"propName": "Matnm",
 					"keyName": "Matid",
-					"keyPath": "/Matnm",
-					"valuePath": "/Matid",
+					"valuePath": oPath + "/Epinm",
+					"keyPath": oPath + "/Epiid",
 					"valueModel": "dealMemoDetailModel",
 					"dialogTitle": "MPML2 Select Dailog",
 					"callBackFunction": this.mapSeriesDetails
