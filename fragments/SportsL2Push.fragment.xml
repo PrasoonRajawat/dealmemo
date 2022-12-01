@@ -25,7 +25,7 @@
 																	<cells>
 																		<Input showValueHelp="true" valueHelpRequest="onValuHelpMpml2" editable="{dealMemoDetailModel>epiDescEditable}" change="" value="{dealMemoDetailModel>Epinm}" tooltip="{Epinm}"/>
 																		 <Input value="{dealMemoDetailModel>Matyp}" editable="{dealMemoDetailModel>epiDescEditable}" showValueHelp="true" valueHelpRequest="onValueHelpMatchTy" />
-																		 <Input value="{dealMemoDetailModel>NoofMatch}" editable="{dealMemoDetailModel>epiDescEditable}"  />
+																		 <Input value="{dealMemoDetailModel>NoofMatch}" editable="{dealMemoDetailModel>epiDescEditable}" />
 																		 <Input value="{dealMemoDetailModel>Gjahr}" editable="{dealMemoDetailModel>epiDescEditable}"  change="handleYearChange"/>
 																		<Input
 																			value="{ parts: [ {path: 'dealMemoDetailModel>Leadcost'}, {path: 'dealMemoDetailModel>Waers'} ], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false,minFractionDigits: 2, maxFractionDigits: 2 } }"

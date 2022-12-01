@@ -796,12 +796,10 @@ sap.ui.define([
 				this.oValueHelpSelectionParams = {
 					"bindPathName": "dealMemoModel>/matchTypeList",
 					"bindPropName": "dealMemoModel>Matnm",
-					"propName": "Mstcd",
-					"keyName": "Mstpcd",
-					"keyAttName" : "Nomatch",
+					"propName": "Mstcdnm",
+					"keyName": "Mstcd",
 					"valuePath": oPath + "/Matyp",
-					"keyPath": oPath + "/MatchKey",
-					"keyAttPath" : oPath + "/NoofMatch",
+					"keyPath": oPath + "/MatyKey",
 					"valueModel": "dealMemoDetailModel",
 					"dialogTitle": "Select Match Type"
 				}
