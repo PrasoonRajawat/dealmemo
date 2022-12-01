@@ -3,7 +3,7 @@
 		title="{parts:[{value:'lblBtnChangeCostEpiDet'},{path:'dealMemoDetailModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}"
 		contentWidth="70%">
 		
-		<Table id="oTable_epiDetail" visible="true" itemPress="onPressEpisodeDetail" items="{dealMemoDetailModel>/episodeData}" mode="{= ${dealMemoDetailModel>/tableMode} === true ? 'MultiSelect' : 'None'}" selectionChange="handleEpiRowSelection">
+		<Table id="oTable_epiDetail" visible="true" itemPress="onPressEpisodeDetail" items="{dealMemoDetailModel>/mpml2PushList}" mode="{= ${dealMemoDetailModel>/tableMode} === true ? 'MultiSelect' : 'None'}" selectionChange="handleEpiRowSelection">
 															
 															<columns>
 																<Column width="40%" >
