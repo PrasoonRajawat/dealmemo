@@ -23,7 +23,7 @@
 															<items >
 																<ColumnListItem type="Navigation">
 																	<cells>
-																		<Input showValueHelp="true" valueHelpRequest="onValueHelpEpiDesc" editable="{dealMemoDetailModel>epiDescEditable}" change="" value="{dealMemoDetailModel>Epinm}" tooltip="{Epinm}"/>
+																		<Input showValueHelp="true" valueHelpRequest="onValuHelpMpml2" editable="{dealMemoDetailModel>epiDescEditable}" change="" value="{dealMemoDetailModel>Epinm}" tooltip="{Epinm}"/>
 																		 <Input value="{dealMemoDetailModel>Matyp}" editable="{dealMemoDetailModel>epiDescEditable}"  change="handleYearChange"/>
 																		 <Input value="{dealMemoDetailModel>Gjahr}" editable="{dealMemoDetailModel>epiDescEditable}"  change="handleYearChange"/>
 																		<Input
@@ -43,7 +43,7 @@
 				press="onApplyChangeCost"/>
 		</beginButton>
 		<endButton>
-			<Button text="{i18n>Cancel}" press="onCancelChangeCost"/>
+			<Button text="{i18n>Cancel}" press="launchPushMpml2Cancel"/>
 		</endButton>
 	</Dialog>
 </c:FragmentDefinition>

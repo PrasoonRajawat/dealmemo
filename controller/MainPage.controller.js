@@ -324,7 +324,7 @@ sap.ui.define([
 					mvObj.Matnm = mvObj.Cntid + "-" + mvObj.Cntdesc; // added by dhiraj on 23/05/2022
 				});
 
-				dealMemoModel.setProperty("/seriesMasterList", oData.results);
+				dealMemoModel.setProperty("/seriesMasterList", cnt);
 				dealMemoModel.refresh(true);
 			},
 			storeMatchListInfo: function (oData) {
@@ -3283,6 +3283,9 @@ sap.ui.define([
 					this._oMpml2PushDialog.open();
 
 				}.bind(this));
+			},
+			launchPushMpml2Cancel: function () {
+				this._oCreateParamDialog.close();
 			},
 			_validateBeforPush: function () {
 				var YearInfo = this._oYearEpisodeDialog.getModel().getData().YearEpisodes;
