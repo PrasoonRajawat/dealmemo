@@ -3340,7 +3340,7 @@ sap.ui.define([
 					"Matyp": oObj.Matyp,
 					"MatyKey": oObj.MatyKey,
 					"Epitp": "00",
-					"Gjahr": oObj.Matyp,
+					"Gjahr": oObj.Gjahr,
 					"Leadcost": "0.00",
 					"Leadcostcd": "",
 					"Loekz": false,
