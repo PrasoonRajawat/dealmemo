@@ -3325,8 +3325,43 @@ sap.ui.define([
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
 				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
 				var addItemPos = parseInt(oPath.split("/")[2]) + 1
+				var arr = {
+					"Anln1": "",
+					"Anln2": "",
+					"Aufnr": "",
+					"Cntid": "",
+					"Dmno": "20003486",
+					"Dmver": "001",
+					"Epidur": { ms: 0, __edmType: 'Edm.Time' },
+					"Epiid": undefined,
+					"Epinm": oObj.Epinm,
+					"Epist": "",
+					"Epistdsc": "",
+					"Matyp": oObj.Matyp,
+					"MatyKey": oObj.MatyKey,
+					"Epitp": "00",
+					"Gjahr": oObj.Matyp,
+					"Leadcost": "0.00",
+					"Leadcostcd": "",
+					"Loekz": false,
+					"Mpmid": "",
+					"Mvid": "",
+					"Permincost": "0.00",
+					"Posid": "",
+					"Pspnr": "000000000000000000000000",
+					"Recst": "",
+					"Sanln1": "",
+					"Sanln2": "",
+					"Spras": "",
+					"Tentid": "IBS",
+					"Totepiamt": "0.00",
+					"Totinhsamt": "0.00",
+					"Totprdhsamt": "0.00",
+					"Trp": "00",
+					"Waers": ""
+				}
 				// dealMemoDetailInfo.additonalEpisodeData.push($.extend(true, {}, dealMemoDetailInfo.mpml2PushList));
-				dealMemoDetailInfo.mpml2PushList.splice(addItemPos, 0, oObj)
+				dealMemoDetailInfo.mpml2PushList.splice(addItemPos, 0, arr)
 				dealMemoDetailModel.refresh(true);
 			},
 			_validateBeforPush: function () {
