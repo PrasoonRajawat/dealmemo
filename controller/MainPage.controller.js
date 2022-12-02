@@ -3373,39 +3373,14 @@ sap.ui.define([
 				this.episodesGenerated = false;
 				mpml2PushList.map(function (oObj) {
 					var postData = {
-						"Anln1": "",
-					"Anln2": "",
-					"Aufnr": "",
-					"Cntid": "",
-					"Dmno": "20003486",
-					"Dmver": "001",
-					"Epidur": { ms: 0, __edmType: 'Edm.Time' },
-					"Epiid": undefined,
+					"Dmno": dealMemoDetailInfo.Dmno,
+					"Dmver": dealMemoDetailInfo.Dmver,
 					"Epinm": oObj.Epinm,
-					"Epist": "",
-					"Epistdsc": "",
-					"Matyp": oObj.Matyp,
-					"MatyKey": oObj.MatyKey,
+					// "MatyKey": oObj.MatyKey,
 					"Epitp": "00",
 					"Gjahr": oObj.Gjahr,
 					"Leadcost": oObj.Leadcost,
-					"Leadcostcd": "",
-					"Loekz": false,
-					"Mpmid": "",
-					"Mvid": "",
-					"Permincost": "0.00",
-					"Posid": "",
-					"Pspnr": "000000000000000000000000",
-					"Recst": "",
-					"Sanln1": "",
-					"Sanln2": "",
-					"Spras": "",
-					"Tentid": "IBS",
-					"Totepiamt": "0.00",
-					"Totinhsamt": "0.00",
-					"Totprdhsamt": "0.00",
-					"Trp": "00",
-					"Waers": ""
+				
 					};
 					mpmL2info.push(postData);
 				}.bind(this));
