@@ -47,8 +47,8 @@
 
 
 		<beginButton>
-			<Button text="{parts:[{value:'lblBtnChangeCostEpiDet'},{path:'dealMemoDetailModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}"
-				press="onApplyChangeCost"/>
+			<Button text="Push"
+				press="onpushMpmL2"/>
 		</beginButton>
 		<endButton>
 			<Button text="{i18n>Cancel}" press="launchPushMpml2Cancel"/>

@@ -3364,7 +3364,7 @@ sap.ui.define([
 				dealMemoDetailInfo.mpml2PushList.splice(addItemPos, 0, arr)
 				dealMemoDetailModel.refresh(true);
 			},
-			pushMpmL2: function () {
+			onpushMpmL2: function () {
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
 				var additionalEpiData = dealMemoDetailInfo.mpml2PushList;
@@ -3388,7 +3388,7 @@ sap.ui.define([
 					"MatyKey": oObj.MatyKey,
 					"Epitp": "00",
 					"Gjahr": oObj.Gjahr,
-					"Leadcost": "0.00",
+					"Leadcost": oObj.Leadcost,
 					"Leadcostcd": "",
 					"Loekz": false,
 					"Mpmid": "",
