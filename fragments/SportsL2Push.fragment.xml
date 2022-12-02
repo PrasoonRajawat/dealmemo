@@ -6,7 +6,7 @@
 		<Table id="oTable_epiDetail" visible="true" itemPress="" items="{dealMemoDetailModel>/mpml2PushList}" mode="{= ${dealMemoDetailModel>/tableMode} === true ? 'MultiSelect' : 'None'}" selectionChange="handleEpiRowSelection">
 															
 															<columns>
-																<Column width="40%" mergeDuplicates="true" >
+																<Column width="40%" mergeDuplicates="" >
 																	<ObjectIdentifier title="Series" />
 																</Column>
 																<Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" width="15%">
@@ -35,7 +35,7 @@
 																		 <Input value="{dealMemoDetailModel>Gjahr}" editable="{dealMemoDetailModel>epiDescEditable}"  change="handleYearChange"/>
 																		<Input
 																			value="{ parts: [ {path: 'dealMemoDetailModel>Leadcost'}, {path: 'dealMemoDetailModel>Waers'} ], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false,minFractionDigits: 2, maxFractionDigits: 2 } }"
-																			textAlign="Right" change="onLeadingValueChange" editable="{dealMemoDetailModel>epiDescEditable}"/>
+																			textAlign="Right" change="" editable="{dealMemoDetailModel>epiDescEditable}"/>
 																		<Button icon="sap-icon://add" press="onAddRowMpml2" tooltip="Add Row" type="Transparent"/>
 																	</cells>
 																</ColumnListItem>
