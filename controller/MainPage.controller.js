@@ -3330,8 +3330,8 @@ sap.ui.define([
 					"Anln2": "",
 					"Aufnr": "",
 					"Cntid": "",
-					"Dmno": "20003486",
-					"Dmver": "001",
+					"Dmno": dealMemoDetailInfo.Dmno,
+					"Dmver": dealMemoDetailInfo.Dmver,
 					"Epidur": { ms: 0, __edmType: 'Edm.Time' },
 					"Epiid": undefined,
 					"Epinm": oObj.Epinm,
@@ -3364,6 +3364,74 @@ sap.ui.define([
 				dealMemoDetailInfo.mpml2PushList.splice(addItemPos, 0, arr)
 				dealMemoDetailModel.refresh(true);
 			},
+			pushMpmL2: function () {
+				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
+				var dealMemoDetailInfo = dealMemoDetailModel.getData();
+				var additionalEpiData = dealMemoDetailInfo.mpml2PushList;
+				// var changedCostSheet = dealMemoDetailInfo.creteEpisodeCostData;
+				var mpmL2info = [];
+				this.episodesGenerated = false;
+				mpml2PushList.map(function (epiObj) {
+					var postData = {
+						"Anln1": "",
+					"Anln2": "",
+					"Aufnr": "",
+					"Cntid": "",
+					"Dmno": "20003486",
+					"Dmver": "001",
+					"Epidur": { ms: 0, __edmType: 'Edm.Time' },
+					"Epiid": undefined,
+					"Epinm": oObj.Epinm,
+					"Epist": "",
+					"Epistdsc": "",
+					"Matyp": oObj.Matyp,
+					"MatyKey": oObj.MatyKey,
+					"Epitp": "00",
+					"Gjahr": oObj.Gjahr,
+					"Leadcost": "0.00",
+					"Leadcostcd": "",
+					"Loekz": false,
+					"Mpmid": "",
+					"Mvid": "",
+					"Permincost": "0.00",
+					"Posid": "",
+					"Pspnr": "000000000000000000000000",
+					"Recst": "",
+					"Sanln1": "",
+					"Sanln2": "",
+					"Spras": "",
+					"Tentid": "IBS",
+					"Totepiamt": "0.00",
+					"Totinhsamt": "0.00",
+					"Totprdhsamt": "0.00",
+					"Trp": "00",
+					"Waers": ""
+					};
+					mpmL2info.push(postData);
+				}.bind(this));
+
+				var postPayload = {
+					"DmMpml2Set": mpmL2info
+				};
+				var oModel = this.getView().getModel();
+				oModel.create("/DmHeaderSet", postPayload, {
+					success: function (oData) {
+						
+							
+						dealMemoDetailModel.refresh(true);
+					
+
+					}.bind(this),
+					error: function (oError) {
+						var oErrorResponse = JSON.parse(oError.responseText);
+						var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
+						MessageBox.error(oMsg);
+					}
+				});
+				this.createEpiCostFlag = false;
+				this._oCreateEpisodeDialog.close();
+			},
+
 			_validateBeforPush: function () {
 				var YearInfo = this._oYearEpisodeDialog.getModel().getData().YearEpisodes;
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
