@@ -3367,7 +3367,7 @@ sap.ui.define([
 			onpushMpmL2: function () {
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
-				var additionalEpiData = dealMemoDetailInfo.mpml2PushList;
+				var mpml2PushList = dealMemoDetailInfo.mpml2PushList;
 				// var changedCostSheet = dealMemoDetailInfo.creteEpisodeCostData;
 				var mpmL2info = [];
 				this.episodesGenerated = false;
