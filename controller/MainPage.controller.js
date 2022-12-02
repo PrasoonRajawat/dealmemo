@@ -3077,9 +3077,13 @@ sap.ui.define([
 					method: "GET",
 					urlParameters: paramObj,
 					success: function (oData, response) {
-						this.calculateCostSheetPerMovie(oData);
-						dealMemoDetailModel.setProperty("/mpml2PushList", oData.results);
-						dealMemoDetailModel.refresh(true);
+						if (dealMemoDetailInfo.Cnttp != "09") {
+							this.calculateCostSheetPerMovie(oData);
+						} else {
+							dealMemoDetailModel.setProperty("/mpml2PushList", oData.results);
+							dealMemoDetailModel.refresh(true);
+							this.launchPushMpml2();
+						}
 
 					}.bind(this),
 					error: function (oError) {
@@ -3250,9 +3254,6 @@ sap.ui.define([
 
 							if (dealMemoDetailInfo.enableFlow === "M") {
 								this.generateMovies();
-								if (dealMemoDetailInfo.episodeData.length && dealMemoDetailInfo.Cnttp == "09") {
-									this.launchPushMpml2()
-								}
 							} else {
 								this.generateEpisodes();
 							}
@@ -3325,7 +3326,7 @@ sap.ui.define([
 				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
 				var addItemPos = parseInt(oPath.split("/")[2]) + 1
 				// dealMemoDetailInfo.additonalEpisodeData.push($.extend(true, {}, dealMemoDetailInfo.mpml2PushList));
-				dealMemoDetailInfo.mpml2PushList.splice(addItemPos , 0 , oObj)
+				dealMemoDetailInfo.mpml2PushList.splice(addItemPos, 0, oObj)
 				dealMemoDetailModel.refresh(true);
 			},
 			_validateBeforPush: function () {
