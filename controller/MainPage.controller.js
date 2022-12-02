@@ -3371,7 +3371,7 @@ sap.ui.define([
 				// var changedCostSheet = dealMemoDetailInfo.creteEpisodeCostData;
 				var mpmL2info = [];
 				this.episodesGenerated = false;
-				mpml2PushList.map(function (epiObj) {
+				mpml2PushList.map(function (oObj) {
 					var postData = {
 						"Anln1": "",
 					"Anln2": "",
