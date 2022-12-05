@@ -936,43 +936,9 @@ sap.ui.define([
 				});
 
 			},
-			mapSeriesDetails: function (selectedItemAtt) {
-				sap.ui.core.BusyIndicator.show(0);
-				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
-				var dealMemoDetailInfo = dealMemoDetailModel.getData();
-				var Chnlid = dealMemoDetailInfo.Chnlid;
-				var Waers = dealMemoDetailInfo.Waers;
-				var pre = [];
-				var cntid = selectedItemAtt.getObject().Cntid;
-				var srvUrl = "/sap/opu/odata/IBSCMS/DEALMEMO_SRV";
-				var oMatchMasterModel = this.getView().getModel("CONTENT_MAST");
-				var oFilter = new Filter("Cntid", "EQ", cntid);
-				oMatchMasterModel.read("/es_sports_data", {
-					filters: [oFilter],
-					success: function (oData) {
-						oBusyIndicator.hide();
-						
-					}.bind(this),
-					error: function (error) {
-						oBusyIndicator.hide();
-					}
-				});
-			},
+			
 
-			// allocateMpm: function (oRef, oData) {
-			// 	var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
-			// 	var dealMemoDetailInfo = dealMemoDetailModel.getData();
-			// 	var arr = [];
-			// 	oData.results.map(function (obj) {
-			// 		arr.push({
-			// 			"Epinm": oRef.Epinm,
-			// 			"Cntid": oRef.Cntid,
-			// 			"Gjahr": oRef.Gjahr,
-			// 			"Leadcost": oRef.Leadcost,
-			// 			"NoofMatch": obj.NoofMatch
-			// 		})
-			// 	})
-			// },
+			
 
 			onSearchSelection: function (oEvent) {
 				var sValue = oEvent.getParameter("value");
@@ -3304,6 +3270,47 @@ sap.ui.define([
 					this._oYearEpisodeDialog.open();
 
 				}.bind(this));
+			},
+			// MPMl2 push for sports contract
+			mapSeriesDetails: function (selectedItemAtt) {
+				sap.ui.core.BusyIndicator.show(0);
+				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
+				var dealMemoDetailInfo = dealMemoDetailModel.getData();
+				var Chnlid = dealMemoDetailInfo.Chnlid;
+				var Waers = dealMemoDetailInfo.Waers;
+				var pre = [];
+				var cntid = selectedItemAtt.getObject().Cntid;
+				var srvUrl = "/sap/opu/odata/IBSCMS/DEALMEMO_SRV";
+				var oMatchMasterModel = this.getView().getModel("CONTENT_MAST");
+				var oFilter = new Filter("Cntid", "EQ", cntid);
+				oMatchMasterModel.read("/es_sports_data", {
+					filters: [oFilter],
+					success: function (oData , selectedItemAtt) {
+						sap.ui.core.BusyIndicator.hide();
+					
+				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
+				var dealMemoDetailInfo = dealMemoDetailModel.getData();
+				var arr = [];
+				var selectedObj = selectedItemAtt.getObject();
+				var selectedPath = selectedItemAtt.sPath;
+				var addItemPos = parseInt(oPath.split("/")[2]) 
+				dealMemoDetailModel.mpml2PushList.splice(addItemPos, 1);
+
+				oData.results.map(function (obj) {
+					arr.push({
+						"Epinm": selectedObj.Epinm,
+						"Matyp": obj.Mstcd,
+						"MatyKey":obj.Mstpcd,
+						"NoofMatch": obj.NoofMatch,
+					})
+				})
+				dealMemoDetailInfo.mpml2PushList.splice(addItemPos, 0, arr)
+				dealMemoDetailModel.refresh(true);
+					}.bind(this),
+					error: function (error) {
+						sap.ui.core.BusyIndicator.hide();
+					}
+				});
 			},
 			launchPushMpml2: function () {
 				Fragment.load({
