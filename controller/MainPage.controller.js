@@ -3300,12 +3300,15 @@ sap.ui.define([
 			
 				
 				oData.results.map(function (obj) {
+					arr = [];
+					addItemPos = addItemPos + 1;
 					arr.push({
 						"Epinm": selectedObj.Cntid + '-' + selectedObj.Cntdesc,
 						"Matyp": obj.Mstcd,
 						"MatyKey":obj.Mstpcd,
 						"Nomatch": obj.Nomatch
 					})
+					dealMemoDetailInfo.mpml2PushList.splice(addItemPos, 0, arr)
 				})
 				dealMemoDetailInfo.mpml2PushList.splice(addItemPos, 0, arr)
 				var rowDel = dealMemoDetailInfo.mpml2PushList;
