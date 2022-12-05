@@ -3297,7 +3297,7 @@ sap.ui.define([
 				var selectedPath = this.selectedItemAtt.oKeyPath;
 				var selectedItemAtt = this.selectedItemAtt;
 				var addItemPos = parseInt(selectedPath.split("/")[2]) 
-			
+				var listItem = $.extend(true, [], dealMemoDetailInfo.mpml2PushList);
 				
 				oData.results.map(function (obj) {
 					arr = [];
@@ -3308,8 +3308,9 @@ sap.ui.define([
 						"MatyKey":obj.Mstpcd,
 						"Nomatch": obj.Nomatch
 					})
-					dealMemoDetailInfo.mpml2PushList.splice(addItemPos, 0, arr)
+					listItem.splice(addItemPos, 0, arr)
 				})
+				dealMemoDetailInfo.mpml2PushList = listItem;
 				dealMemoDetailInfo.mpml2PushList.splice(addItemPos, 0, arr)
 				var rowDel = dealMemoDetailInfo.mpml2PushList;
 				rowDel.splice(addItemPos, 1);
