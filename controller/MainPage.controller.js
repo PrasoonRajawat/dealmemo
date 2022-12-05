@@ -3394,8 +3394,8 @@ sap.ui.define([
 				var oModel = this.getView().getModel();
 				oModel.create("/DmHeaderSet", postPayload, {
 					success: function (oData) {
-						
-							
+
+						this.calculateCostSheetMpml2push(oData.DmMpml2Set);
 						dealMemoDetailModel.refresh(true);
 					
 
@@ -3408,6 +3408,29 @@ sap.ui.define([
 				});
 				this._oMpml2PushDialog.close();
 				this._oMpml2PushDialog.destroy();
+			},
+			calculateCostSheetMpml2push: function (oData) {
+				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
+				var moviebudgetCostData = $.extend(true, [], dealMemoDetailModel.getData().moviebudgetCostData);
+				var totalEpiCostsPerEpisode = {};
+				oData.results.map(function (obj) {
+					obj.epiSodeCostSheet = $.extend(true, [], moviebudgetCostData);
+					obj.epiSodeCostSheetEditMode = $.extend(true, [], moviebudgetCostData);
+					obj.Totepiamt = "0.00";
+					obj.Epidur = Formatter.formatTimeDuration(obj.Epidur);
+					obj.epiDescEditable = true;
+					obj.flag = "Cr";
+				});
+
+				totalEpiCostsPerEpisode['AcquisitionTot'] = "0.00";
+				totalEpiCostsPerEpisode['ExternalTot'] = "0.00";
+				totalEpiCostsPerEpisode['InhouseTot'] = "0.00";
+				totalEpiCostsPerEpisode['Tot'] = "0.00";
+				totalEpiCostsPerEpisode['Waers'] = dealMemoDetailModel.getProperty("/Waers");
+
+				dealMemoDetailModel.setProperty("/episodeData", oData.results);
+				dealMemoDetailModel.setProperty("/episodeTotalData", [totalEpiCostsPerEpisode]);
+				dealMemoDetailModel.refresh(true);
 			},
 
 			_validateBeforPush: function () {
