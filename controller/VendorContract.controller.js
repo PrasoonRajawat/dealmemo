@@ -1766,14 +1766,14 @@ sap.ui.define([
 					vendorContractDetailInfo.payee = DmCmSetData[0].Empfk != "" ? vendorContractDetailInfo.vendorsList.find(t=>t.Lifnr == DmCmSetData[0].Empfk).Mcod1 : "";
 					vendorContractDetailInfo.payeeKey = DmCmSetData[0].Empfk;
 					vendorContractDetailInfo.Hsncode = DmCmSetData[0].Hsncd
-					if (parseInt(vendorContractDetailInfo.Contver) > 1 ) {
-						if(vendorContractDetailInfo.payeeKey !=  "") {
-						vendorContractDetailInfo.payEnable = false;
-						}
-						if(vendorContractDetailInfo.ZtermKey !=  "") {
-						vendorContractDetailInfo.termEnable = false;
-						}
-					}
+					// if (parseInt(vendorContractDetailInfo.Contver) > 1 ) {
+					// 	if(vendorContractDetailInfo.payeeKey !=  "") {
+					// 	vendorContractDetailInfo.payEnable = false;
+					// 	}
+					// 	if(vendorContractDetailInfo.ZtermKey !=  "") {
+					// 	vendorContractDetailInfo.termEnable = false;
+					// 	}
+					// }
 				}
 
 				var DmCmSetEpIds = DmCmSetData.map(function (dmcmobj) {

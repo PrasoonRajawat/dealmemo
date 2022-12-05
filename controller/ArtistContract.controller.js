@@ -1701,14 +1701,14 @@ sap.ui.define([
 					artistContractDetailInfo.payee = DmCmSetData[0].Empfk != "" ? artistContractDetailInfo.vendorsList.find(t => t.Lifnr == DmCmSetData[0].Empfk).Mcod1 : "";
 					artistContractDetailInfo.payeeKey = DmCmSetData[0].Empfk;
 					artistContractDetailInfo.Hsncode = DmCmSetData[0].Hsncd
-					if (parseInt(artistContractDetailInfo.Contver) > 1) {
-						if(artistContractDetailInfo.payeeKey !=  "") {
-							artistContractDetailInfo.payEnable = false;
-							}
-							if(artistContractDetailInfo.ZtermKey !=  "") {
-							artistContractDetailInfo.termEnable = false;
-							}
-					}
+					// if (parseInt(artistContractDetailInfo.Contver) > 1) {
+					// 	if(artistContractDetailInfo.payeeKey !=  "") {
+					// 		artistContractDetailInfo.payEnable = false;
+					// 		}
+					// 		if(artistContractDetailInfo.ZtermKey !=  "") {
+					// 		artistContractDetailInfo.termEnable = false;
+					// 		}
+					// }
 				}
 
 				var DmCmSetEpIds = DmCmSetData.map(function (dmcmobj) {

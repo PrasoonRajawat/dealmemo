@@ -3411,6 +3411,7 @@ sap.ui.define([
 			},
 			calculateCostSheetMpml2push: function (oData) {
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
+				var dealMemoDetailInfo = dealMemoDetailModel.getData();
 				var moviebudgetCostData = $.extend(true, [], dealMemoDetailModel.getData().moviebudgetCostData);
 				var totalEpiCostsPerEpisode = {};
 				oData.results.map(function (obj) {
@@ -3431,6 +3432,50 @@ sap.ui.define([
 				dealMemoDetailModel.setProperty("/episodeData", oData.results);
 				dealMemoDetailModel.setProperty("/episodeTotalData", [totalEpiCostsPerEpisode]);
 				dealMemoDetailModel.refresh(true);
+
+				//Calculate Leading Value
+				dealMemoDetailInfo.episodeData.map(function (obj, oIndex) {
+					obj.epiSodeCostSheet.map(function (oRObj, oIndex) {
+					if (!(oRObj.hasChild) && oRObj.Leadcostcd !== "" && oRObj.Leadcostcd !== undefined && oRObj.parenCostcd != "") {
+						var parentCostHeadObj = oRowObj.epiSodeCostSheet[oRowObj.epiSodeCostSheet.map(function (obj) {
+							return obj.Costcd
+						}).indexOf(oRObj.parenCostcd)];
+						oRObj.flag = "Ch";
+						if (oRObj.Leadcostcd === "P") {
+							oRObj.Prdhsamt = leadingValue;
+						} else if (oRObj.Leadcostcd === "I") {
+							oRObj.Inhsamt = leadingValue;
+						}
+						parentCostHeadObj.Prdhsamt = parseFloat(parentCostHeadObj.Prdhsamt) + oRObj.Prdhsamt;
+						parentCostHeadObj.Inhsamt = parseFloat(parentCostHeadObj.Inhsamt) + oRObj.Inhsamt;
+						oRObj.Totcostamt = parseFloat(oRObj.Prdhsamt) + parseFloat(oRObj.Inhsamt) + parseFloat(oRObj.Inhouseamt);
+						parentCostHeadObj.Totcostamt = parseFloat(parentCostHeadObj.Prdhsamt) + parseFloat(parentCostHeadObj.Inhsamt) + parseFloat(
+							parentCostHeadObj.Inhouseamt);
+					} else if (!(oRObj.hasChild) && oRObj.Leadcostcd !== "" && oRObj.Leadcostcd !== undefined && oRObj.parenCostcd == "") {
+						var parentCostHeadObj = oRowObj.epiSodeCostSheet[oRowObj.epiSodeCostSheet.map(function (obj) {
+							return obj.Costcd
+						}).indexOf(oRObj.Costcd)];
+						oRObj.flag = "Ch";
+						if (oRObj.Leadcostcd === "P") {
+							oRObj.Prdhsamt = leadingValue;
+						} else if (oRObj.Leadcostcd === "I") {
+							oRObj.Inhsamt = leadingValue;
+						}
+						parentCostHeadObj.Prdhsamt = parseFloat(parentCostHeadObj.Prdhsamt); //+ oRObj.Prdhsamt;
+						parentCostHeadObj.Inhsamt = parseFloat(parentCostHeadObj.Inhsamt); //+ oRObj.Inhsamt;
+						oRObj.Totcostamt = parseFloat(oRObj.Prdhsamt) + parseFloat(oRObj.Inhsamt) + parseFloat(oRObj.Inhouseamt);
+						parentCostHeadObj.Totcostamt = parseFloat(parentCostHeadObj.Prdhsamt) + parseFloat(parentCostHeadObj.Inhsamt) + parseFloat(
+							parentCostHeadObj.Inhouseamt);
+					} else {
+						oRObj.Prdhsamt = 0;
+						oRObj.Inhsamt = 0;
+					}
+				});
+				obj.epiSodeCostSheetEditMode = $.extend(true, [], obj.epiSodeCostSheet);
+				});
+				dealMemoDetailModel.refresh(true);
+				this.calculateEpisodeHeadCost();
+
 			},
 
 			_validateBeforPush: function () {
