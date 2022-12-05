@@ -3292,8 +3292,8 @@ sap.ui.define([
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
 				var arr = [];
-				var selectedObj = selectedItemAtt.getObject();
-				var selectedPath = selectedItemAtt.sPath;
+				var selectedObj = this.selectedItemAtt.getObject();
+				var selectedPath = this.selectedItemAtt.sPath;
 				var selectedItemAtt = this.selectedItemAtt;
 				var addItemPos = parseInt(oPath.split("/")[2]) 
 				dealMemoDetailModel.mpml2PushList.splice(addItemPos, 1);
