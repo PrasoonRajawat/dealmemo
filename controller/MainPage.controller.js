@@ -3279,13 +3279,14 @@ sap.ui.define([
 				var Chnlid = dealMemoDetailInfo.Chnlid;
 				var Waers = dealMemoDetailInfo.Waers;
 				var pre = [];
+				this.selectedItemAtt = selectedItemAtt;
 				var cntid = selectedItemAtt.getObject().Cntid;
 				var srvUrl = "/sap/opu/odata/IBSCMS/DEALMEMO_SRV";
 				var oMatchMasterModel = this.getView().getModel("CONTENT_MAST");
 				var oFilter = new Filter("Cntid", "EQ", cntid);
 				oMatchMasterModel.read("/es_sports_data", {
 					filters: [oFilter],
-					success: function (oData , selectedItemAtt) {
+					success: function (oData ) {
 						sap.ui.core.BusyIndicator.hide();
 					
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
@@ -3293,6 +3294,7 @@ sap.ui.define([
 				var arr = [];
 				var selectedObj = selectedItemAtt.getObject();
 				var selectedPath = selectedItemAtt.sPath;
+				var selectedItemAtt = this.selectedItemAtt;
 				var addItemPos = parseInt(oPath.split("/")[2]) 
 				dealMemoDetailModel.mpml2PushList.splice(addItemPos, 1);
 
