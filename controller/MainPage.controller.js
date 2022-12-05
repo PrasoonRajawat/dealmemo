@@ -3312,9 +3312,7 @@ sap.ui.define([
 				})
 				dealMemoDetailInfo.mpml2PushList = listItem;
 				addItemPos = parseInt(selectedPath.split("/")[2]); 
-				dealMemoDetailInfo.mpml2PushList.splice(addItemPos, 0, arr)
-				var rowDel = dealMemoDetailInfo.mpml2PushList;
-				rowDel.splice(addItemPos, 1);
+				dealMemoDetailInfo.mpml2PushList.splice(addItemPos, 1);
 				dealMemoDetailModel.refresh(true);
 					}.bind(this),
 					error: function (error) {
