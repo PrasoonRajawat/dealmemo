@@ -943,10 +943,10 @@ sap.ui.define([
 				var Chnlid = dealMemoDetailInfo.Chnlid;
 				var Waers = dealMemoDetailInfo.Waers;
 				var pre = [];
-				var selectedItem = selectedItemAtt.getObject().Epinm.split("-");
+				var cntid = selectedItemAtt.getObject().Cntid;
 				var srvUrl = "/sap/opu/odata/IBSCMS/DEALMEMO_SRV";
 				var oMatchMasterModel = this.getView().getModel("CONTENT_MAST");
-				var oFilter = new Filter("Cntid", "EQ", selectedItem);
+				var oFilter = new Filter("Cntid", "EQ", cntid);
 				oMatchMasterModel.read("/es_sports_data", {
 					filters: [oFilter],
 					success: function (oData) {
