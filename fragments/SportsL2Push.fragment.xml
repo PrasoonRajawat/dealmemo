@@ -17,10 +17,10 @@
                 <Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" visible="{= ${dealMemoDetailModel>/Cnttp} === '02' || ${dealMemoDetailModel>/Cnttp} === '05' || ${dealMemoDetailModel>/Cnttp} === '09' || ${dealMemoDetailModel>/Cnttp} === '04' ? true : false }" width="20%">
                     <ObjectIdentifier title="{i18n>ObjIden_LeadingValue}" />
                 </Column>
-                <Column width="10%">
+                <Column width="5%">
                     <Text text="" />
                 </Column>
-				 <Column width="10%">
+				 <Column width="5%">
                     <Text text="" />
                 </Column>
             </columns>
