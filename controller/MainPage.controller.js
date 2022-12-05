@@ -3379,7 +3379,7 @@ sap.ui.define([
 					// "MatyKey": oObj.MatyKey,
 					"Epitp": "00",
 					"Gjahr": oObj.Gjahr,
-					// "Leadcost": oObj.Leadcost,
+					"Leadcost": oObj.Leadcost
 				
 					};
 					mpmL2info.push(postData);
