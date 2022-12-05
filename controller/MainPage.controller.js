@@ -3317,6 +3317,7 @@ sap.ui.define([
 			},
 			launchPushMpml2Cancel: function () {
 				this._oMpml2PushDialog.close();
+				this._oMpml2PushDialog.destroy();
 			},
 			onAddRowMpml2: function (oEvent) {
 				var oPath = oEvent.getSource().getBindingContext("dealMemoDetailModel").sPath
@@ -3405,8 +3406,8 @@ sap.ui.define([
 						MessageBox.error(oMsg);
 					}
 				});
-				this.createEpiCostFlag = false;
-				this._oCreateEpisodeDialog.close();
+				this._oMpml2PushDialog.close();
+				this._oMpml2PushDialog.destroy();
 			},
 
 			_validateBeforPush: function () {
