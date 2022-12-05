@@ -3297,9 +3297,8 @@ sap.ui.define([
 				var selectedPath = this.selectedItemAtt.oKeyPath;
 				var selectedItemAtt = this.selectedItemAtt;
 				var addItemPos = parseInt(selectedPath.split("/")[2]) 
-				var rowDel = dealMemoDetailInfo.mpml2PushList;
-				rowDel.splice(addItemPos, 1);
-				dealMemoDetailModel.refresh(true);
+			
+				
 				oData.results.map(function (obj) {
 					arr.push({
 						"Epinm": selectedObj.Cntid + '-' + selectedObj.Cntdesc,
@@ -3309,6 +3308,8 @@ sap.ui.define([
 					})
 				})
 				dealMemoDetailInfo.mpml2PushList.splice(addItemPos, 0, arr)
+				var rowDel = dealMemoDetailInfo.mpml2PushList;
+				rowDel.splice(addItemPos, 1);
 				dealMemoDetailModel.refresh(true);
 					}.bind(this),
 					error: function (error) {
