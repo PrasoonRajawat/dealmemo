@@ -20,6 +20,9 @@
                 <Column width="10%">
                     <Text text="" />
                 </Column>
+				 <Column width="10%">
+                    <Text text="" />
+                </Column>
             </columns>
             <items>
                 <ColumnListItem type="">
@@ -35,6 +38,7 @@
                             editable="{dealMemoDetailModel>epiDescEditable}"
                         />
                         <Button icon="sap-icon://add" press="onAddRowMpml2" tooltip="Add Row" type="Transparent" />
+							<Button icon="sap-icon://delete"  press="onDeleteRowMpml2" tooltip="Delete Row" type="Transparent"/>
                     </cells>
                 </ColumnListItem>
             </items>

@@ -3366,6 +3366,20 @@ sap.ui.define([
 				dealMemoDetailInfo.mpml2PushList.splice(addItemPos, 0, arr)
 				dealMemoDetailModel.refresh(true);
 			},
+			onDeleteRowMpml2: function (oEvent) {
+				var oContextPath = oEvent.getSource().getBindingContext("dealMemoDetailModel").getPath();
+				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
+				var dealMemoDetailInfo = dealMemoDetailModel.getData();
+				var rowDel = dealMemoDetailInfo.mpml2PushList
+					var splittedPath = oContextPath.split("/");
+					if (splittedPath.length) {
+						var oRowInd = splittedPath[2];
+						rowDel.splice(oRowInd, 1);
+
+					}
+					dealMemoDetailModel.refresh(true);
+				
+			},
 			onpushMpmL2: function () {
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
