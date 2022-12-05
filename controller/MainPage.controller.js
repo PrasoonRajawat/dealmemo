@@ -3434,8 +3434,8 @@ sap.ui.define([
 				dealMemoDetailModel.refresh(true);
 
 				//Calculate Leading Value
-				dealMemoDetailInfo.episodeData.map(function (objEpi , oInd , ObjEpi) {
-					
+				dealMemoDetailInfo.episodeData.map(function (objEpi , oInd ) {
+					var episodeItem = $.extend(true, [], objEpi);
 					objEpi.epiSodeCostSheet.map(function (oRObj, oIndex , ObjEpi) {
 						// var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 						// var dealMemoDetailInfo = dealMemoDetailModel.getData();
@@ -3446,9 +3446,9 @@ sap.ui.define([
 						}).indexOf(oRObj.parenCostcd)];
 						oRObj.flag = "Ch";
 						if (oRObj.Leadcostcd === "P") {
-							oRObj.Prdhsamt = leadingValue;
+							oRObj.Prdhsamt = episodeItem.Leadcost;
 						} else if (oRObj.Leadcostcd === "I") {
-							oRObj.Inhsamt = leadingValue;
+							oRObj.Inhsamt = episodeItem.Leadcost;
 						}
 						parentCostHeadObj.Prdhsamt = parseFloat(parentCostHeadObj.Prdhsamt) + oRObj.Prdhsamt;
 						parentCostHeadObj.Inhsamt = parseFloat(parentCostHeadObj.Inhsamt) + oRObj.Inhsamt;
@@ -3461,9 +3461,9 @@ sap.ui.define([
 						}).indexOf(oRObj.Costcd)];
 						oRObj.flag = "Ch";
 						if (oRObj.Leadcostcd === "P") {
-							oRObj.Prdhsamt = leadingValue;
+							oRObj.Prdhsamt = episodeItem.Leadcost;
 						} else if (oRObj.Leadcostcd === "I") {
-							oRObj.Inhsamt = leadingValue;
+							oRObj.Inhsamt = episodeItem.Leadcost;
 						}
 						parentCostHeadObj.Prdhsamt = parseFloat(parentCostHeadObj.Prdhsamt); //+ oRObj.Prdhsamt;
 						parentCostHeadObj.Inhsamt = parseFloat(parentCostHeadObj.Inhsamt); //+ oRObj.Inhsamt;
