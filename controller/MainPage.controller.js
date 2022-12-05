@@ -782,8 +782,8 @@ sap.ui.define([
 					"valuePath": oPath + "/Epinm",
 					"keyPath": oPath + "/Epiid",
 					"valueModel": "dealMemoDetailModel",
-					"dialogTitle": "MPML2 Select Dailog"
-					// "callBackFunction": this.mapSeriesDetails
+					"dialogTitle": "MPML2 Select Dailog",
+					 "callBackFunction": this.mapSeriesDetails
 				};
 				this.openSelectionDialog();
 			},
@@ -889,6 +889,7 @@ sap.ui.define([
 
 			onConfirmSelection: function (oEvent) {
 				var selectedItemObj = oEvent.getParameters()['selectedItem'].getBindingContext("dealMemoModel").getObject();
+				var selectedItemAtt = oEvent.getParameters()['selectedItem'].getBindingContext("dealMemoModel")
 				var oValuePath = this.oValueHelpSelectionParams.valuePath;
 				var oKeyPath = this.oValueHelpSelectionParams.keyPath;
 				var oProp = this.oValueHelpSelectionParams.propName;
@@ -907,11 +908,11 @@ sap.ui.define([
 				}
 				dealMemoModel.refresh(true);
 				if (this.oValueHelpSelectionParams.callBackFunction) {
-					// if (this.oValueHelpSelectionParams.callBackFunction.name != "mapSeriesDetails") {
+					if (this.oValueHelpSelectionParams.callBackFunction.name != "mapSeriesDetails") {
 					this.oValueHelpSelectionParams.callBackFunction(this);
-					// } else {
-					// 	this.mapSeriesDetails(selectedItemObj);
-					// }
+					} else {
+						this.mapSeriesDetails(selectedItemAtt);
+					}
 				}
 			},
 			mapExchrt: function (oRef) {
@@ -935,28 +936,29 @@ sap.ui.define([
 				});
 
 			},
-			// mapSeriesDetails: function (oRef) {
-			// 	sap.ui.core.BusyIndicator.show(0);
-			// 	var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
-			// 	var dealMemoDetailInfo = dealMemoDetailModel.getData();
-			// 	var Chnlid = dealMemoDetailInfo.Chnlid;
-			// 	var Waers = dealMemoDetailInfo.Waers;
-			// 	var pre = [];
-			// 	var srvUrl = "/sap/opu/odata/IBSCMS/DEALMEMO_SRV";
-			// 	var oMatchMasterModel = this.getView().getModel("CONTENT_MAST");
-			// 	var oFilter = new Filter("Cntid", "EQ", oRef.Cntid);
-			// 	oMatchMasterModel.read("/es_sports_data", {
-			// 		filters: [oFilter],
-			// 		success: function (oData, oRef) {
-			// 			oBusyIndicator.hide();
-			// 			this.allocateMpm(oRef, oData);
-			// 		}.bind(this),
-			// 		error: function (error) {
-			// 			oBusyIndicator.hide();
-			// 		}
-			// 	});
+			mapSeriesDetails: function (selectedItemAtt) {
+				sap.ui.core.BusyIndicator.show(0);
+				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
+				var dealMemoDetailInfo = dealMemoDetailModel.getData();
+				var Chnlid = dealMemoDetailInfo.Chnlid;
+				var Waers = dealMemoDetailInfo.Waers;
+				var pre = [];
+				var selectedItem = selectedItemAtt.getObject().Epinm.split("-");
+				var srvUrl = "/sap/opu/odata/IBSCMS/DEALMEMO_SRV";
+				var oMatchMasterModel = this.getView().getModel("CONTENT_MAST");
+				var oFilter = new Filter("Cntid", "EQ", selectedItem);
+				oMatchMasterModel.read("/es_sports_data", {
+					filters: [oFilter],
+					success: function (oData) {
+						oBusyIndicator.hide();
+						
+					}.bind(this),
+					error: function (error) {
+						oBusyIndicator.hide();
+					}
+				});
+			},
 
-			// },
 			// allocateMpm: function (oRef, oData) {
 			// 	var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 			// 	var dealMemoDetailInfo = dealMemoDetailModel.getData();
