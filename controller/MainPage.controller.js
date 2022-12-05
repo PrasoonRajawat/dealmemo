@@ -911,7 +911,7 @@ sap.ui.define([
 					if (this.oValueHelpSelectionParams.callBackFunction.name != "mapSeriesDetails") {
 					this.oValueHelpSelectionParams.callBackFunction(this);
 					} else {
-						this.mapSeriesDetails(selectedItemAtt);
+						this.mapSeriesDetails(selectedItemAtt,oKeyPath);
 					}
 				}
 			},
@@ -3272,13 +3272,14 @@ sap.ui.define([
 				}.bind(this));
 			},
 			// MPMl2 push for sports contract
-			mapSeriesDetails: function (selectedItemAtt) {
+			mapSeriesDetails: function (selectedItemAtt , oKeyPath) {
 				sap.ui.core.BusyIndicator.show(0);
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
 				var Chnlid = dealMemoDetailInfo.Chnlid;
 				var Waers = dealMemoDetailInfo.Waers;
 				var pre = [];
+				selectedItemAtt.oKeyPath = oKeyPath;
 				this.selectedItemAtt = selectedItemAtt;
 				var cntid = selectedItemAtt.getObject().Cntid;
 				var srvUrl = "/sap/opu/odata/IBSCMS/DEALMEMO_SRV";
@@ -3293,11 +3294,12 @@ sap.ui.define([
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
 				var arr = [];
 				var selectedObj = this.selectedItemAtt.getObject();
-				var selectedPath = this.selectedItemAtt.sPath;
+				var selectedPath = this.selectedItemAtt.oKeyPath;
 				var selectedItemAtt = this.selectedItemAtt;
-				var addItemPos = parseInt(selectedPath.split("/")[2]) 
-				dealMemoDetailInfo.mpml2PushList.splice(addItemPos, 1);
-
+				var addItemPos = parseInt(selectedPath.split("/")[1]) 
+				var rowDel = dealMemoDetailInfo.mpml2PushList;
+				rowDel.splice(addItemPos, 1);
+				dealMemoDetailModel.refresh(true);
 				oData.results.map(function (obj) {
 					arr.push({
 						"Epinm": selectedObj.Cntid + '-' + selectedObj.Cntdesc,
