@@ -3434,9 +3434,12 @@ sap.ui.define([
 				dealMemoDetailModel.refresh(true);
 
 				//Calculate Leading Value
-				dealMemoDetailInfo.episodeData.map(function (objEpi) {
-					var ObjEpi = objEpi;
-					objEpi.epiSodeCostSheet.map(function (oRObj, oIndex , ObjEpi) {
+				dealMemoDetailInfo.episodeData.map(function (objEpi , oInd) {
+					
+					objEpi.epiSodeCostSheet.map(function (oRObj, oIndex ) {
+						var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
+						var dealMemoDetailInfo = dealMemoDetailModel.getData();
+						var ObjEpi =  dealMemoDetailInfo.episodeData[oInd].epiSodeCostSheet[oIndex];
 					if (!(oRObj.hasChild) && oRObj.Leadcostcd !== "" && oRObj.Leadcostcd !== undefined && oRObj.parenCostcd != "") {
 						var parentCostHeadObj = ObjEpi.epiSodeCostSheet[ObjEpi.epiSodeCostSheet.map(function (obj) {
 							return obj.Costcd
