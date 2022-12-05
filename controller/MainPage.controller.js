@@ -3434,14 +3434,14 @@ sap.ui.define([
 				dealMemoDetailModel.refresh(true);
 
 				//Calculate Leading Value
-				dealMemoDetailInfo.episodeData.map(function (objEpi , oInd) {
+				dealMemoDetailInfo.episodeData.map(function (objEpi , oInd , ObjEpi) {
 					
-					objEpi.epiSodeCostSheet.map(function (oRObj, oIndex ) {
-						var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
-						var dealMemoDetailInfo = dealMemoDetailModel.getData();
-						var ObjEpi =  dealMemoDetailInfo.episodeData[oInd].epiSodeCostSheet[oIndex];
+					objEpi.epiSodeCostSheet.map(function (oRObj, oIndex , ObjEpi) {
+						// var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
+						// var dealMemoDetailInfo = dealMemoDetailModel.getData();
+						// var ObjEpi =  dealMemoDetailInfo.episodeData[oInd].epiSodeCostSheet[oIndex];
 					if (!(oRObj.hasChild) && oRObj.Leadcostcd !== "" && oRObj.Leadcostcd !== undefined && oRObj.parenCostcd != "") {
-						var parentCostHeadObj = ObjEpi.epiSodeCostSheet[ObjEpi.epiSodeCostSheet.map(function (obj) {
+						var parentCostHeadObj = ObjEpi[ObjEpi.map(function (obj) {
 							return obj.Costcd
 						}).indexOf(oRObj.parenCostcd)];
 						oRObj.flag = "Ch";
@@ -3456,7 +3456,7 @@ sap.ui.define([
 						parentCostHeadObj.Totcostamt = parseFloat(parentCostHeadObj.Prdhsamt) + parseFloat(parentCostHeadObj.Inhsamt) + parseFloat(
 							parentCostHeadObj.Inhouseamt);
 					} else if (!(oRObj.hasChild) && oRObj.Leadcostcd !== "" && oRObj.Leadcostcd !== undefined && oRObj.parenCostcd == "") {
-						var parentCostHeadObj = ObjEpi.epiSodeCostSheet[ObjEpi.epiSodeCostSheet.map(function (obj) {
+						var parentCostHeadObj = ObjEpi[ObjEpi.map(function (obj) {
 							return obj.Costcd
 						}).indexOf(oRObj.Costcd)];
 						oRObj.flag = "Ch";
