@@ -3339,6 +3339,7 @@ sap.ui.define([
 					"Epistdsc": "",
 					"Matyp": oObj.Matyp,
 					"MatyKey": oObj.MatyKey,
+					"Nomatch": oObj.Nomatch,
 					"Epitp": "00",
 					"Gjahr": oObj.Gjahr,
 					"Leadcost": "0.00",
@@ -3376,10 +3377,11 @@ sap.ui.define([
 					"Dmno": dealMemoDetailInfo.Dmno,
 					"Dmver": dealMemoDetailInfo.Dmver,
 					"Epinm": oObj.Epinm,
-					// "MatyKey": oObj.MatyKey,
+					"Matty": oObj.MatyKey,
+					"Nomatch": oObj.Nomatch,
 					"Epitp": "00",
 					"Gjahr": oObj.Gjahr,
-					"Leadcost": oObj.Leadcost
+					"Leadcost": oObj.Leadcost.toString()
 				
 					};
 					mpmL2info.push(postData);
