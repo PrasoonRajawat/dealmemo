@@ -3308,7 +3308,7 @@ sap.ui.define([
 						"MatyKey":obj.Mstpcd,
 						"Nomatch": obj.Nomatch,
 						"Leadcost": "0.00",
-						"Gjahr": oObj.Gjahr
+						"Gjahr": "0000"
 					}
 					listItem.splice(addItemPos, 0, arr)
 				})
