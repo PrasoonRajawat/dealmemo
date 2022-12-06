@@ -3306,7 +3306,9 @@ sap.ui.define([
 						"Epinm": selectedObj.Cntid + '-' + selectedObj.Cntdesc,
 						"Matyp": obj.Mstcd,
 						"MatyKey":obj.Mstpcd,
-						"Nomatch": obj.Nomatch
+						"Nomatch": obj.Nomatch,
+						"Leadcost": "0.00",
+						"Gjahr": oObj.Gjahr
 					}
 					listItem.splice(addItemPos, 0, arr)
 				})
@@ -3397,13 +3399,100 @@ sap.ui.define([
 					dealMemoDetailModel.refresh(true);
 				
 			},
+			mpml2pushValid: function () {
+				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
+				var dealMemoModel = this.getView().getModel("dealMemoModel");
+				var dealMemoDetailInfo = dealMemoDetailModel.getData();
+				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
+				var oMsg = "";
+				var statusFlag = true;
+				var episodeData = dealMemoDetailInfo.mpml2PushList;
+				var Epids = [],
+					episodeList = [],
+					episodeIds = [];
+
+				if (dealMemoDetailInfo.Cnttp === "09") {
+					episodeList = dealMemoModel.getProperty("/seriesMasterList");
+					for (var i = 0; i < episodeData.length; i++) { //Added By Dhiraj For converting matid
+						var epiidSplit = episodeData[i].Epinm.split("-");
+						episodeData[i].Epiid = epiidSplit[0].trim();
+						episodeData[i].Mvid = epiidSplit[0].trim();
+					}
+					episodeIds = episodeList.map(function (obj) {
+						return obj.Cntid
+					});
+				} 
+
+				for (var oInd = 0; oInd < episodeData.length; oInd++) {
+					var epObj = episodeData[oInd];
+
+					if (epObj.Epinm === "" || epObj.Epinm === undefined || epObj.Epinm === null) {
+						statusFlag = false;
+						oMsg = oSourceBundle.getText("msgEpDescBlank" + dealMemoDetailInfo.Cnttp);
+						break;
+
+					} else if (episodeList[episodeIds.indexOf(epObj.Epiid)].Mpmid === "") {
+						statusFlag = false;
+						oMsg = oSourceBundle.getText("msgNOMPMExist" + dealMemoDetailInfo.Cnttp, epObj.Epiid);
+						break;
+					// } else if (Epids.indexOf(epObj.Epiid) >= 0) {
+					// 	statusFlag = false;
+					// 	oMsg = oSourceBundle.getText("msgDuplicateEpId" + dealMemoDetailInfo.Cnttp);
+					// 	break;
+					} else if (!(parseInt(epObj.Gjahr) >= parseInt(dealMemoDetailInfo.FromYr) && parseInt(epObj.Gjahr) <= parseInt(dealMemoDetailInfo.ToYr))) {
+						statusFlag = false;
+						oMsg = oSourceBundle.getText("msgYearNotInRange");
+						break;
+					} else if (parseInt(epObj.Leadcost) <= 0 ) {
+						statusFlag = false;
+						oMsg = oSourceBundle.getText("msgtotEpiCostNonZero" + dealMemoDetailInfo.Cnttp);
+						break;
+					} else if (epObj.MatyKey == "" || epObj.MatyKey == undefined || epObj.Matyp == "" || epObj.Matyp == undefined ) {
+						statusFlag = false;
+						oMsg = "Select Match type for Matches";
+						break;
+					} else if (epObj.Nomatch == "" || epObj.Nomatch == undefined) {
+						statusFlag = false;
+						oMsg = "Enter the Number of Matches";
+						break;
+					}
+
+					if (Epids.indexOf(epObj.Epiid) === -1) {
+						Epids.push(epObj.Epiid);
+					}
+				}
+				//-----------------------------------------
+
+				var yearChk = episodeData.map(function (yObj) {
+					return yObj.Gjahr
+				});
+				for (var year = dealMemoDetailInfo.FromYr; year <= dealMemoDetailInfo.ToYr; year++) {
+					var yearFind = yearChk.find(y => y == year);
+
+					if (yearFind == "" || yearFind == undefined) {
+						statusFlag = false;
+						var yearRange = dealMemoDetailInfo.FromYr + " - " + dealMemoDetailInfo.ToYr;
+						oMsg = oSourceBundle.getText("msgtotEpiYearChek" + dealMemoDetailInfo.Cnttp, yearRange);
+						// oMsg = "Enter atleast one movie for each individual year in range ''"
+					}
+				}
+
+				//--------------------------------
+
+				if (!statusFlag && oMsg !== "") {
+					MessageBox.error(oMsg);
+				}
+			
+				return statusFlag;
+			},
 			onpushMpmL2: function () {
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
+				var flag = this.mpml2pushValid();
+				if(flag) {
 				var mpml2PushList = dealMemoDetailInfo.mpml2PushList;
-				// var changedCostSheet = dealMemoDetailInfo.creteEpisodeCostData;
+			
 				var mpmL2info = [];
-				this.episodesGenerated = false;
 				mpml2PushList.map(function (oObj) {
 					var postData = {
 					"Dmno": dealMemoDetailInfo.Dmno,
@@ -3427,6 +3516,7 @@ sap.ui.define([
 					success: function (oData) {
 
 						this.calculateCostSheetMpml2push(oData.DmMpml2Set);
+						dealMemoDetailInfo.mpml2PushList = [];
 						dealMemoDetailModel.refresh(true);
 					
 
@@ -3439,6 +3529,7 @@ sap.ui.define([
 				});
 				this._oMpml2PushDialog.close();
 				this._oMpml2PushDialog.destroy();
+				}
 			},
 			calculateCostSheetMpml2push: function (oData) {
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
