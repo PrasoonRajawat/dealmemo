@@ -3,7 +3,7 @@
 <s:Timeline id="idTimelineRlSTatus" showFilterBar="false" enableScroll="false" enableBackendFilter="false" showHeaderBar="false" showSearch="false"
 											sortOldestFirst="false" sort="false" content="{vendorContractModel>/releaseAdvStatusInfo}" growingThreshold="0" >
 											<s:content>
-												<s:TimelineItem dateTime="{vendorContractModel>Date}" userName="{vendorContractModel>Author}" icon="{vendorContractModel>icon}" userNameClickable="true">
+												<s:TimelineItem dateTime="{vendorContractModel>Date}" userName="{vendorContractModel>Author}" icon="{vendorContractModel>icon}" title="{dealMemoDetailModel>Actby}" userNameClickable="true">
 													<s:embeddedControl>
 														<ObjectStatus class="sapUiSmallMarginBottom" text="{vendorContractModel>Status}" state="{vendorContractModel>state}"/>
 													</s:embeddedControl>

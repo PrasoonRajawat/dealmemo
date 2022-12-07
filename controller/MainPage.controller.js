@@ -6406,6 +6406,7 @@ sap.ui.define([
 							var relStObj = $.extend(true, {}, releaseStatusObj);
 							relStObj.Author = obj.Usernm;
 							relStObj.Status = obj.Usractiondesc;
+							relStObj.Actby = obj.Actby;
 							relStObj.icon = iconUserActionMap[obj.Usraction].icon;
 							relStObj.state = iconUserActionMap[obj.Usraction].state;
 							if (obj.Actdt != null) { //Added By Dhiraj Sarang for release strategy error
