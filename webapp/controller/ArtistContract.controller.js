@@ -1701,14 +1701,14 @@ sap.ui.define([
 					artistContractDetailInfo.payee = DmCmSetData[0].Empfk != "" ? artistContractDetailInfo.vendorsList.find(t => t.Lifnr == DmCmSetData[0].Empfk).Mcod1 : "";
 					artistContractDetailInfo.payeeKey = DmCmSetData[0].Empfk;
 					artistContractDetailInfo.Hsncode = DmCmSetData[0].Hsncd
-					if (parseInt(artistContractDetailInfo.Contver) > 1) {
-						if(artistContractDetailInfo.payeeKey !=  "") {
-							artistContractDetailInfo.payEnable = false;
-							}
-							if(artistContractDetailInfo.ZtermKey !=  "") {
-							artistContractDetailInfo.termEnable = false;
-							}
-					}
+					// if (parseInt(artistContractDetailInfo.Contver) > 1) {
+					// 	if(artistContractDetailInfo.payeeKey !=  "") {
+					// 		artistContractDetailInfo.payEnable = false;
+					// 		}
+					// 		if(artistContractDetailInfo.ZtermKey !=  "") {
+					// 		artistContractDetailInfo.termEnable = false;
+					// 		}
+					// }
 				}
 
 				var DmCmSetEpIds = DmCmSetData.map(function (dmcmobj) {
@@ -2651,6 +2651,7 @@ sap.ui.define([
 						var relStObj = $.extend(true, {}, releaseStatusObj);
 						relStObj.Author = obj.Usernm;
 						relStObj.Status = obj.Usractiondesc;
+						relStObj.Actby = obj.Actby;
 						relStObj.icon = iconUserActionMap[obj.Usraction].icon;
 						relStObj.state = iconUserActionMap[obj.Usraction].state;
 						if (obj.Actdt != null) { //Added By Dhiraj Sarang for release strategy error
@@ -2755,6 +2756,7 @@ sap.ui.define([
 						var relStObj = $.extend(true, {}, releaseStatusObj);
 						relStObj.Author = obj.Usernm;
 						relStObj.Status = obj.Usractiondesc;
+						relStObj.Actby = obj.Actby;
 						relStObj.icon = iconUserActionMap[obj.Usraction].icon;
 						relStObj.state = iconUserActionMap[obj.Usraction].state;
 						if (obj.Actdt != null) { //Added By Dhiraj Sarang for release strategy error
