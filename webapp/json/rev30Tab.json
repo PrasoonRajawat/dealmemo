@@ -1,0 +1,46 @@
+{
+	"results": [
+		{
+			"skey": "Ad Sales",
+			"sinput": "0.00",
+			"curr": "",
+			"enab": true,
+			"visible": true
+		},
+		{
+			"skey": "Sony Liv Ad Revenue",
+			"sinput": "0.00",
+			"curr": "",
+			"enab": true,
+			"visible": true
+		},
+		{
+			"skey": "Youtube Revenue",
+			"sinput": "0.00",
+			"curr": "",
+			"enab": true,
+			"visible": true
+		},
+		{
+			"skey": "Digital Syndication/Digital Licensing",
+			"sinput": "0.00",
+			"curr": "",
+			"enab": true,
+			"visible": true
+		},
+		{
+			"skey": "Linear Syndication",
+			"sinput": "0.00",
+			"curr": "",
+			"enab": true,
+			"visible": true
+		},
+		{
+			"skey": "International Ad Sales",
+			"sinput": "0.00",
+			"curr": "",
+			"enab": true,
+			"visible": true
+		}
+	]
+}
