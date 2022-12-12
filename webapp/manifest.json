@@ -1,0 +1,184 @@
+{
+    "_version": "1.32.0",
+    "sap.app": {
+        "id": "com.ui.dealmemolocal",
+        "type": "application",
+        "i18n": "i18n/i18n.properties",
+        "applicationVersion": {
+            "version": "0.0.1"
+        },
+        "title": "{{appTitle}}",
+        "description": "{{appDescription}}",
+        "dataSources": {
+            "mainService": {
+                "uri": "/sap/opu/odata/IBSCMS/DEALMEMO_SRV",
+                "type": "OData",
+                "settings": {
+                    "odataVersion": "2.0",
+                    "localUri": "localService/DEALMEMO_SRV/metadata.xml"
+                }
+            },
+            "contMatchSrv": {
+                "uri": "/sap/opu/odata/IBSCMS/content_mast_match_srv",
+                "type": "OData",
+                "settings": {
+                    "odataVersion": "2.0",
+                    "localUri": "localService/content_mast_match_srv/metadata.xml"
+                }
+            },
+            "matchMasterSrv": {
+                "uri": "/sap/opu/odata/IBSCMS/matchmaster_srv",
+                "type": "OData",
+                "settings": {
+                    "odataVersion": "2.0",
+                    "localUri": "localService/DEALMEMO_SRV/metadata.xml"
+                }
+            }
+        },
+        "sourceTemplate": {
+            "id": "@sap/ux-app-migrator:freestyle",
+            "version": "1.8.3",
+            "toolsId": "f934f402-a9e1-47ee-847e-557539a0a380"
+        }
+    },
+    "sap.ui": {
+        "technology": "UI5",
+        "icons": {
+            "icon": "",
+            "favIcon": "",
+            "phone": "",
+            "phone@2": "",
+            "tablet": "",
+            "tablet@2": ""
+        },
+        "deviceTypes": {
+            "desktop": true,
+            "tablet": true,
+            "phone": true
+        },
+        "fullWidth": true
+    },
+    "sap.ui5": {
+        "flexEnabled": true,
+        "rootView": {
+            "viewName": "com.ui.dealmemolocal.view.App",
+            "type": "XML"
+        },
+        "dependencies": {
+            "minUI5Version": "1.97.2",
+            "libs": {
+                "sap.ui.core": {}
+            }
+        },
+        "contentDensities": {
+            "compact": true,
+            "cozy": true
+        },
+        "models": {
+            "i18n": {
+                "type": "sap.ui.model.resource.ResourceModel",
+                "settings": {
+                    "bundleName": "com.ui.dealmemolocal.i18n.i18n"
+                }
+            },
+            "": {
+                "dataSource": "mainService",
+                "preload": true,
+                "settings": {
+                    "synchronizationMode": "None",
+                    "operationMode": "Server",
+                    "autoExpandSelect": true,
+                    "earlyRequests": true,
+                    "groupId": "$direct"
+                }
+            },
+            "CONTENT_MAST": {
+                "dataSource": "contMatchSrv",
+                "preload": true,
+                "settings": {
+                    "synchronizationMode": "None",
+                    "operationMode": "Server",
+                    "autoExpandSelect": true,
+                    "earlyRequests": true,
+                    "groupId": "$direct"
+                }
+            },
+            "MATCH_MAST": {
+                "dataSource": "matchMasterSrv",
+                "preload": true,
+                "settings": {
+                    "synchronizationMode": "None",
+                    "operationMode": "Server",
+                    "autoExpandSelect": true,
+                    "earlyRequests": true,
+                    "groupId": "$direct"
+                }
+            }
+        },
+        "resources": {
+            "css": [
+                {
+                    "uri": "css/style.css"
+                }
+            ]
+        },
+        "routing": {
+            "config": {
+                "routerClass": "sap.m.routing.Router",
+                "viewType": "XML",
+                "async": true,
+                "viewPath": "com.ui.dealmemolocal.view",
+                "controlAggregation": "pages",
+                "controlId": "app",
+                "clearControlAggregation": false
+            },
+            "routes": [
+                {
+                    "pattern": "",
+                    "name": "MainPage",
+                    "targetControl": "app",
+                    "target": "MainPage"
+                },
+                {
+                    "pattern": "ArtistContract/{Dmno}/{Dmver}/{Contno}/{Contver}/:App:",
+                    "name": "ArtistContract",
+                    "targetControl": "app",
+                    "target": "ArtistContract"
+                },
+                {
+                    "pattern": "VendorContract/{Dmno}/{Dmver}/{Contno}/{Contver}/:App:",
+                    "name": "VendorContract",
+                    "targetControl": "app",
+                    "target": "VendorContract"
+                }
+            ],
+            "targets": {
+                "MainPage": {
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "clearControlAggregation": false,
+                    "viewId": "MainPage",
+                    "viewName": "MainPage"
+                },
+                "ArtistContract": {
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "clearControlAggregation": false,
+                    "viewId": "ArtistContract",
+                    "viewName": "ArtistContract"
+                },
+                "VendorContract": {
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "clearControlAggregation": false,
+                    "viewId": "VendorContract",
+                    "viewName": "VendorContract"
+                }
+            }
+        }
+    },
+    "sap.platform.abap": {
+        "uri": "/sap/bc/ui5_ui5/sap/zdealmemo",
+        "_version": "1.1.0"
+    }
+}
