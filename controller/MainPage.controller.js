@@ -3045,7 +3045,7 @@ sap.ui.define([
 					method: "GET",
 					urlParameters: paramObj,
 					success: function (oData, response) {
-						if (dealMemoDetailInfo.Cnttp != "09") {
+						if (dealMemoDetailInfo.Cnttp != "09" && "10") {
 							this.calculateCostSheetPerMovie(oData);
 						} else {
 							dealMemoDetailModel.setProperty("/mpml2PushList", oData.results);
