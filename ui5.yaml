@@ -7,7 +7,7 @@ server:
     - name: fiori-tools-proxy
       afterMiddleware: compression
       configuration:
-        ignoreCertError: false
+        ignoreCertError: true
         backend:
           - path: /sap
             url: https://devs4happ01.sapdev.setindia.com:44300

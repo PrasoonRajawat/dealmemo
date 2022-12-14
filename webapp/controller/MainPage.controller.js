@@ -773,7 +773,10 @@ sap.ui.define([
 				var oPath = oEvent.getSource().getBindingContext("dealMemoDetailModel").sPath;
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
+				var dealMemoModel = this.getView().getModel("dealMemoModel");
+				var dealMemoInfo = dealMemoModel.getData();
 				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
+				if (dealMemoDetailInfo.Cnttp === "09") {
 				this.oValueHelpSelectionParams = {
 					"bindPathName": "dealMemoModel>/seriesMasterList",
 					"bindPropName": "dealMemoModel>Matnm",
@@ -783,8 +786,36 @@ sap.ui.define([
 					"keyPath": oPath + "/Epiid",
 					"valueModel": "dealMemoDetailModel",
 					"dialogTitle": "MPML2 Select Dailog",
-					 "callBackFunction": this.mapSeriesDetails
+					"callBackFunction": this.mapSeriesDetails
 				};
+				} else if (dealMemoDetailInfo.Cnttp === "10") {
+					var contentList = $.extend(true, [], dealMemoInfo.contentList);
+				var filteredContentList = [];
+				if (dealMemoDetailInfo.Cntnt == "06" || dealMemoDetailInfo.Cntnt == "07") {
+					filteredContentList = contentList.filter(function (obj) {
+						return obj.Mstcd === '01' && obj.Snxtp == true;
+					});
+				} else {
+					filteredContentList = contentList.filter(function (obj) {
+						return obj.Mstcd === '01';
+					});
+				}
+				filteredContentList.map(function (mvObj) {
+					mvObj.Epinm = mvObj.Cntid + "-" + mvObj.Cntnm; // added by dhiraj on 23/05/2022
+				});
+				dealMemoInfo.filteredContentList = filteredContentList;
+				dealMemoModel.refresh(true);
+				this.oValueHelpSelectionParams = {
+					"bindPathName": "dealMemoModel>/filteredContentList",
+					"bindPropName": "dealMemoModel>Epinm",
+					"propName": "Epinm",
+					"keyName": "Cntid",
+					"keyPath": oPath + "/Epiid",
+					"valuePath":  oPath + "/Epinm",
+					"valueModel": "dealMemoDetailModel",
+					"dialogTitle": "MPML2 Select Dailog"
+				};
+			}
 				this.openSelectionDialog();
 			},
 
@@ -909,9 +940,9 @@ sap.ui.define([
 				dealMemoModel.refresh(true);
 				if (this.oValueHelpSelectionParams.callBackFunction) {
 					if (this.oValueHelpSelectionParams.callBackFunction.name != "mapSeriesDetails") {
-					this.oValueHelpSelectionParams.callBackFunction(this);
+						this.oValueHelpSelectionParams.callBackFunction(this);
 					} else {
-						this.mapSeriesDetails(selectedItemAtt,oKeyPath);
+						this.mapSeriesDetails(selectedItemAtt, oKeyPath);
 					}
 				}
 			},
@@ -936,9 +967,9 @@ sap.ui.define([
 				});
 
 			},
-			
 
-			
+
+
 
 			onSearchSelection: function (oEvent) {
 				var sValue = oEvent.getParameter("value");
@@ -1169,7 +1200,7 @@ sap.ui.define([
 							oData.CurrencyEnableFlag = false;
 						}
 						oData.enableFlow = "P";
-						if (oData.Cnttp === "02" || oData.Cnttp === "05" || oData.Cnttp === "09" || oData.Cnttp === "04") {
+						if (oData.Cnttp === "02" || oData.Cnttp === "05" || oData.Cnttp === "09" || oData.Cnttp === "04" || oData.Cnttp === "10") {
 							oData.enableFlow = "M" // MovieFlow
 
 						}
@@ -1212,7 +1243,7 @@ sap.ui.define([
 
 						dealMemoDetailModel.setData(oData);
 						dealMemoDetailModel.refresh(true);
-						if (oData.Cnttp === "02" || oData.Cnttp === "05" || oData.Cnttp === "09" || oData.Cnttp === "04") {
+						if (oData.Cnttp === "02" || oData.Cnttp === "05" || oData.Cnttp === "09" || oData.Cnttp === "04" || oData.Cnttp === "10") {
 							this.loadMovieCostTemplate();
 						}
 						if (oData.DmEpisodeSet.results.length) {
@@ -3045,14 +3076,13 @@ sap.ui.define([
 					method: "GET",
 					urlParameters: paramObj,
 					success: function (oData, response) {
-						if (dealMemoDetailInfo.Cnttp != "09" && "10") {
-							this.calculateCostSheetPerMovie(oData);
-						} else {
+						if (dealMemoDetailInfo.Cnttp == "09" || dealMemoDetailInfo.Cnttp == "10") {
 							dealMemoDetailModel.setProperty("/mpml2PushList", oData.results);
 							dealMemoDetailModel.refresh(true);
 							this.launchPushMpml2();
+						} else {
+							this.calculateCostSheetPerMovie(oData);
 						}
-
 					}.bind(this),
 					error: function (oError) {
 						var oErrorResponse = JSON.parse(oError.responseText);
@@ -3272,7 +3302,7 @@ sap.ui.define([
 				}.bind(this));
 			},
 			// MPMl2 push for sports contract
-			mapSeriesDetails: function (selectedItemAtt , oKeyPath) {
+			mapSeriesDetails: function (selectedItemAtt, oKeyPath) {
 				sap.ui.core.BusyIndicator.show(0);
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
@@ -3287,35 +3317,35 @@ sap.ui.define([
 				var oFilter = new Filter("Cntid", "EQ", cntid);
 				oMatchMasterModel.read("/es_sports_data", {
 					filters: [oFilter],
-					success: function (oData ) {
+					success: function (oData) {
 						sap.ui.core.BusyIndicator.hide();
-					
-				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
-				var dealMemoDetailInfo = dealMemoDetailModel.getData();
-				var arr = [];
-				var selectedObj = this.selectedItemAtt.getObject();
-				var selectedPath = this.selectedItemAtt.oKeyPath;
-				var selectedItemAtt = this.selectedItemAtt;
-				var addItemPos = parseInt(selectedPath.split("/")[2]) ;
-				var listItem = $.extend(true, [], dealMemoDetailInfo.mpml2PushList);
-				
-				oData.results.map(function (obj) {
-					arr = [];
-					addItemPos = addItemPos + 1;
-					arr = {
-						"Epinm": selectedObj.Cntid + '-' + selectedObj.Cntdesc,
-						"Matyp": obj.Mstcd,
-						"MatyKey":obj.Mstpcd,
-						"Nomatch": obj.Nomatch,
-						"Leadcost": "0.00",
-						"Gjahr": "0000"
-					}
-					listItem.splice(addItemPos, 0, arr)
-				})
-				dealMemoDetailInfo.mpml2PushList = listItem;
-				addItemPos = parseInt(selectedPath.split("/")[2]); 
-				dealMemoDetailInfo.mpml2PushList.splice(addItemPos, 1);
-				dealMemoDetailModel.refresh(true);
+
+						var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
+						var dealMemoDetailInfo = dealMemoDetailModel.getData();
+						var arr = [];
+						var selectedObj = this.selectedItemAtt.getObject();
+						var selectedPath = this.selectedItemAtt.oKeyPath;
+						var selectedItemAtt = this.selectedItemAtt;
+						var addItemPos = parseInt(selectedPath.split("/")[2]);
+						var listItem = $.extend(true, [], dealMemoDetailInfo.mpml2PushList);
+
+						oData.results.map(function (obj) {
+							arr = [];
+							addItemPos = addItemPos + 1;
+							arr = {
+								"Epinm": selectedObj.Cntid + '-' + selectedObj.Cntdesc,
+								"Matyp": obj.Mstcd,
+								"MatyKey": obj.Mstpcd,
+								"Nomatch": obj.Nomatch,
+								"Leadcost": "0.00",
+								"Gjahr": "0000"
+							}
+							listItem.splice(addItemPos, 0, arr)
+						})
+						dealMemoDetailInfo.mpml2PushList = listItem;
+						addItemPos = parseInt(selectedPath.split("/")[2]);
+						dealMemoDetailInfo.mpml2PushList.splice(addItemPos, 1);
+						dealMemoDetailModel.refresh(true);
 					}.bind(this),
 					error: function (error) {
 						sap.ui.core.BusyIndicator.hide();
@@ -3390,14 +3420,14 @@ sap.ui.define([
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
 				var rowDel = dealMemoDetailInfo.mpml2PushList
-					var splittedPath = oContextPath.split("/");
-					if (splittedPath.length) {
-						var oRowInd = splittedPath[2];
-						rowDel.splice(oRowInd, 1);
+				var splittedPath = oContextPath.split("/");
+				if (splittedPath.length) {
+					var oRowInd = splittedPath[2];
+					rowDel.splice(oRowInd, 1);
 
-					}
-					dealMemoDetailModel.refresh(true);
-				
+				}
+				dealMemoDetailModel.refresh(true);
+
 			},
 			mpml2pushValid: function () {
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
@@ -3421,7 +3451,18 @@ sap.ui.define([
 					episodeIds = episodeList.map(function (obj) {
 						return obj.Cntid
 					});
-				} 
+				}
+				if (dealMemoDetailInfo.Cnttp === "10") {
+					episodeList = dealMemoModel.getProperty("/filteredContentList");
+					for (var i = 0; i < episodeData.length; i++) { //Added By Dhiraj For converting matid
+						var epiidSplit = episodeData[i].Epinm.split("-");
+						episodeData[i].Epiid = epiidSplit[0].trim();
+						episodeData[i].Mvid = epiidSplit[0].trim();
+					}
+					episodeIds = episodeList.map(function (obj) {
+						return obj.Cntid
+					});
+				}
 
 				for (var oInd = 0; oInd < episodeData.length; oInd++) {
 					var epObj = episodeData[oInd];
@@ -3435,22 +3476,24 @@ sap.ui.define([
 						statusFlag = false;
 						oMsg = oSourceBundle.getText("msgNOMPMExist" + dealMemoDetailInfo.Cnttp, epObj.Epiid);
 						break;
-					// } else if (Epids.indexOf(epObj.Epiid) >= 0) {
-					// 	statusFlag = false;
-					// 	oMsg = oSourceBundle.getText("msgDuplicateEpId" + dealMemoDetailInfo.Cnttp);
-					// 	break;
+						// } else if (Epids.indexOf(epObj.Epiid) >= 0) {
+						// 	statusFlag = false;
+						// 	oMsg = oSourceBundle.getText("msgDuplicateEpId" + dealMemoDetailInfo.Cnttp);
+						// 	break;
 					} else if (!(parseInt(epObj.Gjahr) >= parseInt(dealMemoDetailInfo.FromYr) && parseInt(epObj.Gjahr) <= parseInt(dealMemoDetailInfo.ToYr))) {
 						statusFlag = false;
 						oMsg = oSourceBundle.getText("msgYearNotInRange");
 						break;
-					} else if (parseInt(epObj.Leadcost) <= 0 ) {
+					} else if (parseInt(epObj.Leadcost) <= 0) {
 						statusFlag = false;
 						oMsg = oSourceBundle.getText("msgtotEpiCostNonZero" + dealMemoDetailInfo.Cnttp);
 						break;
-					} else if (epObj.MatyKey == "" || epObj.MatyKey == undefined || epObj.Matyp == "" || epObj.Matyp == undefined ) {
+					} else if (epObj.MatyKey == "" || epObj.MatyKey == undefined || epObj.Matyp == "" || epObj.Matyp == undefined) {
+						if(dealMemoDetailInfo.Cnttp == '09'){
 						statusFlag = false;
 						oMsg = "Select Match type for Matches";
 						break;
+						}
 					} else if (epObj.Nomatch == "" || epObj.Nomatch == undefined) {
 						statusFlag = false;
 						oMsg = "Enter the Number of Matches";
@@ -3482,53 +3525,53 @@ sap.ui.define([
 				if (!statusFlag && oMsg !== "") {
 					MessageBox.error(oMsg);
 				}
-			
+
 				return statusFlag;
 			},
 			onpushMpmL2: function () {
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
 				var flag = this.mpml2pushValid();
-				if(flag) {
-				var mpml2PushList = dealMemoDetailInfo.mpml2PushList;
-			
-				var mpmL2info = [];
-				mpml2PushList.map(function (oObj) {
-					var postData = {
-					"Dmno": dealMemoDetailInfo.Dmno,
-					"Dmver": dealMemoDetailInfo.Dmver,
-					"Epinm": oObj.Epinm,
-					"Matty": oObj.MatyKey,
-					"Nomatch": oObj.Nomatch,
-					"Epitp": "00",
-					"Gjahr": oObj.Gjahr,
-					"Leadcost": oObj.Leadcost.toString()
-				
+				if (flag) {
+					var mpml2PushList = dealMemoDetailInfo.mpml2PushList;
+
+					var mpmL2info = [];
+					mpml2PushList.map(function (oObj) {
+						var postData = {
+							"Dmno": dealMemoDetailInfo.Dmno,
+							"Dmver": dealMemoDetailInfo.Dmver,
+							"Epinm": oObj.Epinm,
+							"Matty": oObj.MatyKey,
+							"Nomatch": oObj.Nomatch,
+							"Epitp": "00",
+							"Gjahr": oObj.Gjahr,
+							"Leadcost": oObj.Leadcost.toString()
+
+						};
+						mpmL2info.push(postData);
+					}.bind(this));
+
+					var postPayload = {
+						"DmMpml2Set": mpmL2info
 					};
-					mpmL2info.push(postData);
-				}.bind(this));
+					var oModel = this.getView().getModel();
+					oModel.create("/DmHeaderSet", postPayload, {
+						success: function (oData) {
 
-				var postPayload = {
-					"DmMpml2Set": mpmL2info
-				};
-				var oModel = this.getView().getModel();
-				oModel.create("/DmHeaderSet", postPayload, {
-					success: function (oData) {
+							this.calculateCostSheetMpml2push(oData.DmMpml2Set);
+							dealMemoDetailInfo.mpml2PushList = [];
+							dealMemoDetailModel.refresh(true);
 
-						this.calculateCostSheetMpml2push(oData.DmMpml2Set);
-						dealMemoDetailInfo.mpml2PushList = [];
-						dealMemoDetailModel.refresh(true);
-					
 
-					}.bind(this),
-					error: function (oError) {
-						var oErrorResponse = JSON.parse(oError.responseText);
-						var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
-						MessageBox.error(oMsg);
-					}
-				});
-				this._oMpml2PushDialog.close();
-				this._oMpml2PushDialog.destroy();
+						}.bind(this),
+						error: function (oError) {
+							var oErrorResponse = JSON.parse(oError.responseText);
+							var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
+							MessageBox.error(oMsg);
+						}
+					});
+					this._oMpml2PushDialog.close();
+					this._oMpml2PushDialog.destroy();
 				}
 			},
 			calculateCostSheetMpml2push: function (oData) {
@@ -3556,48 +3599,48 @@ sap.ui.define([
 				dealMemoDetailModel.refresh(true);
 
 				//Calculate Leading Value
-				dealMemoDetailInfo.episodeData.map(function (objEpi , oInd ) {
+				dealMemoDetailInfo.episodeData.map(function (objEpi, oInd) {
 					var episodeItem = $.extend(true, [], objEpi);
-					objEpi.epiSodeCostSheet.map(function (oRObj, oIndex , ObjEpi) {
+					objEpi.epiSodeCostSheet.map(function (oRObj, oIndex, ObjEpi) {
 						// var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 						// var dealMemoDetailInfo = dealMemoDetailModel.getData();
 						// var ObjEpi =  dealMemoDetailInfo.episodeData[oInd].epiSodeCostSheet[oIndex];
-					if (!(oRObj.hasChild) && oRObj.Leadcostcd !== "" && oRObj.Leadcostcd !== undefined && oRObj.parenCostcd != "") {
-						var parentCostHeadObj = ObjEpi[ObjEpi.map(function (obj) {
-							return obj.Costcd
-						}).indexOf(oRObj.parenCostcd)];
-						oRObj.flag = "Ch";
-						if (oRObj.Leadcostcd === "P") {
-							oRObj.Prdhsamt = episodeItem.Leadcost;
-						} else if (oRObj.Leadcostcd === "I") {
-							oRObj.Inhsamt = episodeItem.Leadcost;
+						if (!(oRObj.hasChild) && oRObj.Leadcostcd !== "" && oRObj.Leadcostcd !== undefined && oRObj.parenCostcd != "") {
+							var parentCostHeadObj = ObjEpi[ObjEpi.map(function (obj) {
+								return obj.Costcd
+							}).indexOf(oRObj.parenCostcd)];
+							oRObj.flag = "Ch";
+							if (oRObj.Leadcostcd === "P") {
+								oRObj.Prdhsamt = episodeItem.Leadcost;
+							} else if (oRObj.Leadcostcd === "I") {
+								oRObj.Inhsamt = episodeItem.Leadcost;
+							}
+							parentCostHeadObj.Prdhsamt = parseFloat(parentCostHeadObj.Prdhsamt) + oRObj.Prdhsamt;
+							parentCostHeadObj.Inhsamt = parseFloat(parentCostHeadObj.Inhsamt) + oRObj.Inhsamt;
+							oRObj.Totcostamt = parseFloat(oRObj.Prdhsamt) + parseFloat(oRObj.Inhsamt) + parseFloat(oRObj.Inhouseamt);
+							parentCostHeadObj.Totcostamt = parseFloat(parentCostHeadObj.Prdhsamt) + parseFloat(parentCostHeadObj.Inhsamt) + parseFloat(
+								parentCostHeadObj.Inhouseamt);
+						} else if (!(oRObj.hasChild) && oRObj.Leadcostcd !== "" && oRObj.Leadcostcd !== undefined && oRObj.parenCostcd == "") {
+							var parentCostHeadObj = ObjEpi[ObjEpi.map(function (obj) {
+								return obj.Costcd
+							}).indexOf(oRObj.Costcd)];
+							oRObj.flag = "Ch";
+							if (oRObj.Leadcostcd === "P") {
+								oRObj.Prdhsamt = episodeItem.Leadcost;
+							} else if (oRObj.Leadcostcd === "I") {
+								oRObj.Inhsamt = episodeItem.Leadcost;
+							}
+							parentCostHeadObj.Prdhsamt = parseFloat(parentCostHeadObj.Prdhsamt); //+ oRObj.Prdhsamt;
+							parentCostHeadObj.Inhsamt = parseFloat(parentCostHeadObj.Inhsamt); //+ oRObj.Inhsamt;
+							oRObj.Totcostamt = parseFloat(oRObj.Prdhsamt) + parseFloat(oRObj.Inhsamt) + parseFloat(oRObj.Inhouseamt);
+							parentCostHeadObj.Totcostamt = parseFloat(parentCostHeadObj.Prdhsamt) + parseFloat(parentCostHeadObj.Inhsamt) + parseFloat(
+								parentCostHeadObj.Inhouseamt);
+						} else {
+							oRObj.Prdhsamt = 0;
+							oRObj.Inhsamt = 0;
 						}
-						parentCostHeadObj.Prdhsamt = parseFloat(parentCostHeadObj.Prdhsamt) + oRObj.Prdhsamt;
-						parentCostHeadObj.Inhsamt = parseFloat(parentCostHeadObj.Inhsamt) + oRObj.Inhsamt;
-						oRObj.Totcostamt = parseFloat(oRObj.Prdhsamt) + parseFloat(oRObj.Inhsamt) + parseFloat(oRObj.Inhouseamt);
-						parentCostHeadObj.Totcostamt = parseFloat(parentCostHeadObj.Prdhsamt) + parseFloat(parentCostHeadObj.Inhsamt) + parseFloat(
-							parentCostHeadObj.Inhouseamt);
-					} else if (!(oRObj.hasChild) && oRObj.Leadcostcd !== "" && oRObj.Leadcostcd !== undefined && oRObj.parenCostcd == "") {
-						var parentCostHeadObj = ObjEpi[ObjEpi.map(function (obj) {
-							return obj.Costcd
-						}).indexOf(oRObj.Costcd)];
-						oRObj.flag = "Ch";
-						if (oRObj.Leadcostcd === "P") {
-							oRObj.Prdhsamt = episodeItem.Leadcost;
-						} else if (oRObj.Leadcostcd === "I") {
-							oRObj.Inhsamt = episodeItem.Leadcost;
-						}
-						parentCostHeadObj.Prdhsamt = parseFloat(parentCostHeadObj.Prdhsamt); //+ oRObj.Prdhsamt;
-						parentCostHeadObj.Inhsamt = parseFloat(parentCostHeadObj.Inhsamt); //+ oRObj.Inhsamt;
-						oRObj.Totcostamt = parseFloat(oRObj.Prdhsamt) + parseFloat(oRObj.Inhsamt) + parseFloat(oRObj.Inhouseamt);
-						parentCostHeadObj.Totcostamt = parseFloat(parentCostHeadObj.Prdhsamt) + parseFloat(parentCostHeadObj.Inhsamt) + parseFloat(
-							parentCostHeadObj.Inhouseamt);
-					} else {
-						oRObj.Prdhsamt = 0;
-						oRObj.Inhsamt = 0;
-					}
-				});
-				objEpi.epiSodeCostSheetEditMode = $.extend(true, [], objEpi.epiSodeCostSheet);
+					});
+					objEpi.epiSodeCostSheetEditMode = $.extend(true, [], objEpi.epiSodeCostSheet);
 				});
 				dealMemoDetailModel.refresh(true);
 				this.calculateEpisodeHeadCost();
@@ -4066,7 +4109,7 @@ sap.ui.define([
 					episodeIds = episodeList.map(function (obj) {
 						return obj.Mvid
 					});
-				}
+				} 
 
 				for (var oInd = 0; oInd < episodeData.length; oInd++) {
 					var epObj = episodeData[oInd];
@@ -4076,10 +4119,12 @@ sap.ui.define([
 						oMsg = oSourceBundle.getText("msgEpDescBlank" + dealMemoDetailInfo.Cnttp);
 						break;
 
-					} else if (episodeList[episodeIds.indexOf(epObj.Epiid)].Mpmid === "") {
+					} else if (dealMemoDetailInfo.Cnttp != "10") {
+					 if (episodeList[episodeIds.indexOf(epObj.Epiid)].Mpmid === "") {
 						statusFlag = false;
 						oMsg = oSourceBundle.getText("msgNOMPMExist" + dealMemoDetailInfo.Cnttp, epObj.Epiid);
 						break;
+					 }
 					} else if (Epids.indexOf(epObj.Epiid) >= 0) {
 						statusFlag = false;
 						oMsg = oSourceBundle.getText("msgDuplicateEpId" + dealMemoDetailInfo.Cnttp);
