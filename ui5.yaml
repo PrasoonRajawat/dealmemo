@@ -11,7 +11,7 @@ server:
         backend:
           - path: /sap
             url: https://devs4happ01.sapdev.setindia.com:44300
-            client: "110"
+            client: "120"
             destination: SONYDEV
         ui5:
           path:
