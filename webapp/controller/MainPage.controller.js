@@ -3456,8 +3456,9 @@ sap.ui.define([
 					episodeList = dealMemoModel.getProperty("/filteredContentList");
 					for (var i = 0; i < episodeData.length; i++) { //Added By Dhiraj For converting matid
 						var epiidSplit = episodeData[i].Epinm.split("-");
+						var mpml2Split = episodeData[i].Mpml2.split("-")
 						episodeData[i].Epiid = epiidSplit[0].trim();
-						episodeData[i].Mvid = epiidSplit[0].trim();
+						episodeData[i].Mvid = mpml2Split[0].trim();
 					}
 					episodeIds = episodeList.map(function (obj) {
 						return obj.Cntid
