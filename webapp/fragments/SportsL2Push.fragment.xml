@@ -1,0 +1,54 @@
+<c:FragmentDefinition xmlns="sap.m" xmlns:u="sap.ui.unified" xmlns:l="sap.ui.layout" xmlns:c="sap.ui.core">
+    <Dialog type="Message" title="{parts:[{value:'lblBtnChangeCostEpiDet'},{path:'dealMemoDetailModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" contentWidth="70%">
+        <Table id="oTable_epiDetail" visible="true" itemPress="" items="{dealMemoDetailModel>/mpml2PushList}" mode="{= ${dealMemoDetailModel>/tableMode} === true ? 'MultiSelect' : 'None'}" selectionChange="handleEpiRowSelection">
+            <columns>
+                <Column width="40%" mergeDuplicates="">
+                    <ObjectIdentifier title="Series" />
+                </Column>
+                <Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" visible="{= ${dealMemoDetailModel>/Cnttp} === '09'  ? true : false }" width="15%">
+                    <ObjectIdentifier title="Match Type" />
+                </Column>
+                <Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline"  width="10%">
+                    <ObjectIdentifier title="No Of Matches" />
+                </Column>
+                <Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" width="10%">
+                    <ObjectIdentifier title="{i18n>ObjIden_Year}" />
+                </Column>
+                <Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" visible="{= ${dealMemoDetailModel>/Cnttp} === '09' || ${dealMemoDetailModel>/Cnttp} === '10' ? true : false }" width="20%">
+                    <ObjectIdentifier title="{i18n>ObjIden_LeadingValue}" />
+                </Column>
+                <Column width="5%">
+                    <Text text="" />
+                </Column>
+				 <Column width="5%">
+                    <Text text="" />
+                </Column>
+            </columns>
+            <items>
+                <ColumnListItem type="">
+                    <cells>
+                        <Input showValueHelp="true" valueHelpRequest="onValuHelpMpml2" editable="{dealMemoDetailModel>epiDescEditable}" change="" value="{dealMemoDetailModel>Epinm}" tooltip="{Epinm}" />
+                        <Input value="{dealMemoDetailModel>Matyp}" editable="{dealMemoDetailModel>epiDescEditable}" showValueHelp="true" valueHelpRequest="onValueHelpMatchTy" />
+                        <Input value="{dealMemoDetailModel>Nomatch}" editable="{dealMemoDetailModel>epiDescEditable}" />
+                        <Input value="{dealMemoDetailModel>Gjahr}" editable="{dealMemoDetailModel>epiDescEditable}" change="handleYearChange" />
+                        <Input
+                            value="{ parts: [ {path: 'dealMemoDetailModel>Leadcost'}, {path: 'dealMemoDetailModel>Waers'} ], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false,minFractionDigits: 2, maxFractionDigits: 2 } }"
+                            textAlign="Right"
+                            change=""
+                            editable="{dealMemoDetailModel>epiDescEditable}"
+                        />
+                        <Button icon="sap-icon://add" press="onAddRowMpml2" tooltip="Add Row" type="Transparent" />
+							<Button icon="sap-icon://delete"  press="onDeleteRowMpml2" tooltip="Delete Row" type="Transparent"/>
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+
+        <beginButton>
+            <Button text="Push" press="onpushMpmL2" />
+        </beginButton>
+        <endButton>
+            <Button text="{i18n>Cancel}" press="launchPushMpml2Cancel" />
+        </endButton>
+    </Dialog>
+</c:FragmentDefinition>

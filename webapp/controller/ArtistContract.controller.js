@@ -1675,6 +1675,7 @@ sap.ui.define([
 				artistContractDetailInfo.epiPaymentFromId = "";
 				artistContractDetailInfo.epiPaymentToId = "";
 				artistContractModel.setProperty("/episodeRangeVisiblePayment", false);
+				artistContractModel.setProperty("/SeriesRangeVisiblePayment", false);
 				artistContractModel.setProperty("/episodeModePayment", 0);
 				artistContractModel.setProperty("/mileStonesForEpi", []);
 				artistContractModel.setProperty("/selContextsData", []);
@@ -1701,14 +1702,14 @@ sap.ui.define([
 					artistContractDetailInfo.payee = DmCmSetData[0].Empfk != "" ? artistContractDetailInfo.vendorsList.find(t => t.Lifnr == DmCmSetData[0].Empfk).Mcod1 : "";
 					artistContractDetailInfo.payeeKey = DmCmSetData[0].Empfk;
 					artistContractDetailInfo.Hsncode = DmCmSetData[0].Hsncd
-					if (parseInt(artistContractDetailInfo.Contver) > 1) {
-						if(artistContractDetailInfo.payeeKey !=  "") {
-							artistContractDetailInfo.payEnable = false;
-							}
-							if(artistContractDetailInfo.ZtermKey !=  "") {
-							artistContractDetailInfo.termEnable = false;
-							}
-					}
+					// if (parseInt(artistContractDetailInfo.Contver) > 1) {
+					// 	if(artistContractDetailInfo.payeeKey !=  "") {
+					// 		artistContractDetailInfo.payEnable = false;
+					// 		}
+					// 		if(artistContractDetailInfo.ZtermKey !=  "") {
+					// 		artistContractDetailInfo.termEnable = false;
+					// 		}
+					// }
 				}
 
 				var DmCmSetEpIds = DmCmSetData.map(function (dmcmobj) {
@@ -1724,7 +1725,23 @@ sap.ui.define([
 
 					}
 				});
-				artistContractModel.setProperty("/epPaymentList", distEpisodes);
+				if (artistContractDetailInfo.Cnttp == "09") {
+					var mpmIds = [];
+					var distMpml2 = [];
+					artistContractDetailInfo.epiVCTabData.map(function (obj) {
+						if (mpmIds.indexOf(obj.Mpml2) === -1) {
+
+							mpmIds.push(obj.Mpml2);
+							distMpml2.push(obj);
+
+						}
+					});
+					artistContractModel.setProperty("/epPaymentList", distMpml2);
+					artistContractModel.setProperty("/epMpml2List", distEpisodes)
+					artistContractModel.setProperty("/mpmL2avail", mpmIds)
+				} else {
+					artistContractModel.setProperty("/epPaymentList", distEpisodes);
+				}
 				artistContractModel.refresh(true);
 
 				if (!this._oSelectPaymentDialogAC) {
@@ -1780,7 +1797,11 @@ sap.ui.define([
 				artistContractDetailInfo.mileStonesForEpi = [];
 				artistContractDetailInfo.episodeRangeVisiblePayment = false;
 				if (artistContractDetailInfo.episodeModePayment === 1) {
-					artistContractDetailInfo.episodeRangeVisiblePayment = true;
+					if (artistContractDetailInfo.Cnttp == "09") {
+						artistContractDetailInfo.SeriesRangeVisiblePayment = true;
+					} else {
+						artistContractDetailInfo.episodeRangeVisiblePayment = true;
+					}
 				}
 				artistContractModel.refresh(true);
 			},
@@ -1899,15 +1920,36 @@ sap.ui.define([
 				var oselIndex = artistContractDetailInfo.episodeModePayment;
 				var paymentPayloadArr = [];
 				if (oselIndex == 0) {
+					if (artistContractDetailInfo.Cnttp != "09") {
 					selectedEpisodeList = artistContractDetailInfo.epPaymentList;
+					} else {
+						selectedEpisodeList = artistContractDetailInfo.epMpml2List;
+					}
 				} else {
 					selectedEpisodeList = [];
-					artistContractDetailInfo.epPaymentList.map(function (epACObj) {
-						if (epACObj.Epiid >= artistContractDetailInfo.epiPaymentFromId && epACObj.Epiid <= artistContractDetailInfo.epiPaymentToId) {
-							selectedEpisodeList.push(epACObj);
-						}
-
-					});
+					if (artistContractDetailInfo.Cnttp != "09") {
+						artistContractDetailInfo
+							.epPaymentList.map(function (epVCObj) {
+								if (epVCObj.Epiid >= artistContractDetailInfo.epiPaymentFromId && epVCObj.Epiid <= artistContractDetailInfo.epiPaymentToId) {
+									selectedEpisodeList.push(epVCObj);
+								}
+							});
+					} else {
+						artistContractDetailInfo.mpmL2avail.map(function (mpmObj) {
+							if ((mpmObj == artistContractDetailInfo.epiPaymentFromId || initalMpm == 1) && lastMpm == 0) {
+								initalMpm = 1;
+								if (artistContractDetailInfo.epiPaymentToId == mpmObj) {
+									lastMpm = 1
+								}
+								var mpml2 = mpmObj
+								artistContractDetailInfo.epMpml2List.map(function (epVCObj) {
+									if (epVCObj.Mpml2 == mpml2) {
+										selectedEpisodeList.push(epVCObj);
+									}
+								});
+							}
+						});
+					}
 				}
 
 				selectedEpisodeList.map(function (selEpObj) {
@@ -2651,6 +2693,7 @@ sap.ui.define([
 						var relStObj = $.extend(true, {}, releaseStatusObj);
 						relStObj.Author = obj.Usernm;
 						relStObj.Status = obj.Usractiondesc;
+						relStObj.Actby = obj.Actby;
 						relStObj.icon = iconUserActionMap[obj.Usraction].icon;
 						relStObj.state = iconUserActionMap[obj.Usraction].state;
 						if (obj.Actdt != null) { //Added By Dhiraj Sarang for release strategy error
@@ -2755,6 +2798,7 @@ sap.ui.define([
 						var relStObj = $.extend(true, {}, releaseStatusObj);
 						relStObj.Author = obj.Usernm;
 						relStObj.Status = obj.Usractiondesc;
+						relStObj.Actby = obj.Actby;
 						relStObj.icon = iconUserActionMap[obj.Usraction].icon;
 						relStObj.state = iconUserActionMap[obj.Usraction].state;
 						if (obj.Actdt != null) { //Added By Dhiraj Sarang for release strategy error

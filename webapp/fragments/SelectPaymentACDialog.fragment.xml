@@ -39,6 +39,25 @@
                         </VBox>
                     </items>
                 </HBox>
+                 <HBox visible="{artistContractModel>/SeriesRangeVisiblePayment}">
+                    <layoutData>
+                        <l:GridData span="XL6 L6 M6 S12" />
+                    </layoutData>
+                    <items>
+                        <VBox>
+                            <Label text="{parts:[{value:'lblSelectEpiFrom'},{path:'artistContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" required="true" width="100%" />
+                            <ComboBox width="95%" items="{artistContractModel>/epPaymentList}" selectedKey="{artistContractModel>/epiPaymentFromId}">
+                                <c:Item text="{artistContractModel>Mpml2nm}" key="{artistContractModel>Mpml2}" />
+                            </ComboBox>
+                        </VBox>
+                        <VBox>
+                            <Label text="{parts:[{value:'lblSelectEpiTo'},{path:'artistContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" required="true" width="100%" />
+                            <ComboBox width="95%" items="{artistContractModel>/epPaymentList}" selectedKey="{artistContractModel>/epiPaymentToId}">
+                                <c:Item text="{artistContractModel>Mpml2nm}" key="{artistContractModel>Mpml2}" />
+                            </ComboBox>
+                        </VBox>
+                    </items>
+                </HBox>
                 <HBox>
                  <layoutData>
                         <l:GridData span="XL8 L8 M7 S12" />
