@@ -820,7 +820,7 @@ sap.ui.define([
 					"IV_TENTID": "IBS",
 					"IV_DMNO": artistContractDetailInfo.Dmno,
 					"IV_DMVER": artistContractDetailInfo.Dmver,
-					"IV_CONTTP": "02"
+					"IV_CONTTP": artistContractDetailInfo.App == "Spike" ? "03" : "02" 
 
 				};
 				oModel.callFunction("/GetContractCostCode", {
