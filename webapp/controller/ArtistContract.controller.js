@@ -1320,7 +1320,8 @@ sap.ui.define([
 					"R2quoamt": artistContractDetailInfo.R2quoamt.toString(),
 					"Finalquoamt": artistContractDetailInfo.Finalquoamt.toString(),
 					"Skiprfpreason": artistContractDetailInfo.Skiprfpreason,
-					"Retenaplty": artistContractDetailInfo.Retenaplty
+					"Retenaplty": artistContractDetailInfo.Retenaplty,
+					"MiscFlag" : artistContractDetailInfo.App == "Spike" ? "X" : ""
 				};
 				return oPayload;
 
