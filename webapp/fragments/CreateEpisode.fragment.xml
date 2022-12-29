@@ -2,6 +2,10 @@
     <Dialog type="Message" title="{parts:[{value:'lblBtnCreateEpiDet'},{path:'dealMemoDetailModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" contentWidth="40%">
         <MessageStrip type="Error" text="{dealMemoDetailModel>/errorMsgCreateEpisode}" showCloseButton="true" visible="{dealMemoDetailModel>/msgVisibleCreateEpisode}" class="sapUiMediumMarginBottom" />
         <Toolbar visible="{dealMemoDetailModel>/createEpiLayoutVisible}">
+		<HBox>
+		<Label text="{i18n>lblFiscalYr} : "  design="Bold" />
+		<Label text="{dealMemoDetailModel>/FromYr} - {dealMemoDetailModel>/ToYr}" />
+		</HBox>
             <ToolbarSpacer />
             <Button icon="sap-icon://add" press="onAddRow" tooltip="Add Row" type="Transparent" />
             <Button icon="sap-icon://delete" visible="false" press="onDeleteRow" tooltip="Delete Row" type="Transparent" />
