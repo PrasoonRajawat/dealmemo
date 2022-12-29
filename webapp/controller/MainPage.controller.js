@@ -2768,6 +2768,24 @@ sap.ui.define([
 					dealMemoDetailModel.refresh(true);
 				}
 			},
+			handleChangeYear: function (oEvent) {
+				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
+				var dealMemoDetailInfo = dealMemoDetailModel.getData();
+				if( oEvent.mParameters.valid == true && oEvent.mParameters.value != "") {
+					var yearValue = oEvent.mParameters.value ;
+					if(yearValue < dealMemoDetailInfo.FromYr) {
+						dealMemoDetailInfo.FromYr = yearValue ; 
+						this.yearChanged = true ;
+					} else if (yearValue > dealMemoDetailInfo.ToYr) {
+						dealMemoDetailInfo.ToYr = yearValue ;
+						this.yearChanged = true ;
+					}
+				} else {
+					var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
+					dealMemoDetailInfo.errorMsgCreateEpisode = oSourceBundle.getText("msgfillvalidYear");
+					dealMemoDetailInfo.msgVisibleCreateEpisode = true;
+				}
+			},
 			onNextCreateEpisode: function () {
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
@@ -4172,12 +4190,14 @@ sap.ui.define([
 				if (!statusFlag && oMsg !== "") {
 					MessageBox.error(oMsg);
 				}
+				if (dealMemoDetailInfo.Cnttp != "10") {
 				for (var i = 0; i < episodeData.length; i++) { //Added By Dhiraj For converting matid or mvid to epiid of 5 digits
 					const a = i + 1;
 					var str = a.toString();
 					episodeData[i].Epiid = str; //"0000" + a
 
 				}
+			}
 				return statusFlag;
 			},
 			saveMovieCostDetails: function () {
