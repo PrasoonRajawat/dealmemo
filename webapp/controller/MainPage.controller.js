@@ -2768,6 +2768,24 @@ sap.ui.define([
 					dealMemoDetailModel.refresh(true);
 				}
 			},
+			handleChangeYear: function (oEvent) {
+				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
+				var dealMemoDetailInfo = dealMemoDetailModel.getData();
+				if( oEvent.mParameters.valid == true && oEvent.mParameters.value != "") {
+					var yearValue = oEvent.mParameters.value ;
+					if(yearValue < dealMemoDetailInfo.FromYr) {
+						dealMemoDetailInfo.FromYr = yearValue ; 
+						this.yearChanged = true ;
+					} else if (yearValue > dealMemoDetailInfo.ToYr) {
+						dealMemoDetailInfo.ToYr = yearValue ;
+						this.yearChanged = true ;
+					}
+				} else {
+					var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
+					dealMemoDetailInfo.errorMsgCreateEpisode = oSourceBundle.getText("msgfillvalidYear");
+					dealMemoDetailInfo.msgVisibleCreateEpisode = true;
+				}
+			},
 			onNextCreateEpisode: function () {
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
