@@ -2028,14 +2028,14 @@ sap.ui.define([
 				milestones.map(function (mlObj) {
 
 					mileStonePayload.push({
-						Amtper: oAmtType === 0 ? mlObj.Dueamt : "0.00",
+						Amtper: oAmtType === 0 ? mlObj.Dueamt.toString() : "0.00",
 						Contno: artistContractDetailInfo.Contno,
 						Conttp: "02",
 						Contver: artistContractDetailInfo.Contver,
 						Costperamt: oAmtType === 1 ? "A" : "P",
 						Dmno: artistContractDetailInfo.Dmno,
 						Dmver: artistContractDetailInfo.Dmver,
-						Dueamt: oAmtType === 1 ? mlObj.Dueamt : "0.00",
+						Dueamt: oAmtType === 1 ? mlObj.Dueamt.toString() : "0.00",
 						Empfk: artistContractDetailInfo.payeeKey,
 						Mestdt: Formatter.formatDateValForBackend(mlObj.estDate),
 						Msid: mlObj.Mstcd,
@@ -2077,7 +2077,7 @@ sap.ui.define([
 							statusFlag = false;
 							oMsg = "msgEnterPayee";
 							break;
-						} else if (mlObj.Dueamt === "" || mlObj.Dueamt === "0") {
+						} else if (mlObj.Dueamt.toString() === "" || mlObj.Dueamt.toString() === "0") {
 							statusFlag = false;
 							if (oAmtType === 0) {
 								oMsg = "msgPercentangeNonzero";
