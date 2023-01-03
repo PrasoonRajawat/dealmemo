@@ -680,7 +680,7 @@ sap.ui.define([
 				};
 				this.openSelectionDialog();
 			},
-
+			
 			loadDepartmentValue: function () { // added by dhiraj on 24/05/2022
 				var oModel = this.getView().getModel();
 				sap.ui.core.BusyIndicator.show();
@@ -1856,6 +1856,7 @@ sap.ui.define([
 				}
 				vendorContractModel.refresh(true);
 			},
+			
 			onSelectEpisodeModePayment: function () {
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
@@ -2096,14 +2097,14 @@ sap.ui.define([
 				milestones.map(function (mlObj) {
 
 					mileStonePayload.push({
-						Amtper: oAmtType === 0 ? mlObj.Dueamt : "0.00",
+						Amtper: oAmtType === 0 ? mlObj.Dueamt.toString() : "0.00",
 						Contno: vendorContractDetailInfo.Contno,
 						Conttp: "01",
 						Contver: vendorContractDetailInfo.Contver,
 						Costperamt: oAmtType === 1 ? "A" : "P",
 						Dmno: vendorContractDetailInfo.Dmno,
 						Dmver: vendorContractDetailInfo.Dmver,
-						Dueamt: oAmtType === 1 ? mlObj.Dueamt : "0.00",
+						Dueamt: oAmtType === 1 ? mlObj.Dueamt.toString() : "0.00",
 						Empfk: vendorContractDetailInfo.payeeKey,
 						Mestdt: mlObj.estDate != null ? Formatter.formatDateValForBackend(mlObj.estDate) : null,
 						Msid: mlObj.Mstcd,
@@ -2195,7 +2196,7 @@ sap.ui.define([
 							statusFlag = false;
 							oMsg = "msgEnterPayee";
 							break;
-						} else if (mlObj.Dueamt === "" || mlObj.Dueamt === "0") {
+						} else if (mlObj.Dueamt.toString() === "" || mlObj.Dueamt.toString() === "0") {
 							statusFlag = false;
 							if (oAmtType === 0) {
 								oMsg = "msgPercentangeNonzero";

@@ -2773,13 +2773,6 @@ sap.ui.define([
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
 				if( oEvent.mParameters.valid == true && oEvent.mParameters.value != "") {
 					var yearValue = oEvent.mParameters.value ;
-					if(yearValue < dealMemoDetailInfo.FromYr) {
-						dealMemoDetailInfo.FromYr = yearValue ; 
-						this.yearChanged = true ;
-					} else if (yearValue > dealMemoDetailInfo.ToYr) {
-						dealMemoDetailInfo.ToYr = yearValue ;
-						this.yearChanged = true ;
-					}
 				} else {
 					var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
 					dealMemoDetailInfo.errorMsgCreateEpisode = oSourceBundle.getText("msgfillvalidYear");

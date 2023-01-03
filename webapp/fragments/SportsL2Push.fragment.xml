@@ -3,13 +3,13 @@
         <Table id="oTable_epiDetail" visible="true" itemPress="" items="{dealMemoDetailModel>/mpml2PushList}" mode="{= ${dealMemoDetailModel>/tableMode} === true ? 'MultiSelect' : 'None'}" selectionChange="handleEpiRowSelection">
             <columns>
                 <Column width="40%" mergeDuplicates="">
-                    <ObjectIdentifier title="Series" />
+                    <ObjectIdentifier title="{parts:[{value:'lblVCContent'},{path:'vendorContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" />
                 </Column>
                 <Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" visible="{= ${dealMemoDetailModel>/Cnttp} === '09'  ? true : false }" width="15%">
                     <ObjectIdentifier title="Match Type" />
                 </Column>
                 <Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline"  width="10%">
-                    <ObjectIdentifier title="No Of Matches" />
+                    <ObjectIdentifier title="{parts:[{value:'lblNoOfEp'},{path:'dealMemoDetailModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" />
                 </Column>
                 <Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" width="10%">
                     <ObjectIdentifier title="{i18n>ObjIden_Year}" />

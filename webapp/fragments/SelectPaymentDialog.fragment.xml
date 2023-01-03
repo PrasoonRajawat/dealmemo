@@ -144,7 +144,7 @@
                                     <!-- <Input value="{vendorContractModel>payeeKey}" showValueHelp="true" valueHelpRequest="onValueHelpAlternatePayee" /> -->
                                     <Input value="{vendorContractModel>Hsncd}" showValueHelp="true" valueHelpRequest="onValueHelpHsnCode" />
                                     <!-- <Input value="{vendorContractModel>Zterm}" showValueHelp="true" valueHelpRequest="onValueHelpPayterm" /> -->
-                                    <Input value="{vendorContractModel>Dueamt}" showValueHelp="false" />
+                                    <Input  value="{parts: [ { path:'vendorContractModel>Dueamt'},{path: 'vendorContractModel>Waers'}],type: 'sap.ui.model.type.Currency',formatOptions: { showMeasure: false,minFractionDigits: 2, maxFractionDigits: 2 }}" showValueHelp="false" change ="changeDeuamt"/>
                                     <DatePicker dateValue="{vendorContractModel>estDate}" displayFormat="dd-MM-yyyy" valueFormat="yyyy-MM-dd" />
 									<CheckBox selected="{vendorContractModel>Retepi}" select = "chckBoxTik"  editable="true" visible = "{vendorContractModel>retMileEnable}" />
                                 </cells>
