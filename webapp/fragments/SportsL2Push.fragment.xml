@@ -14,7 +14,7 @@
                 <Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" width="10%">
                     <ObjectIdentifier title="{i18n>ObjIden_Year}" />
                 </Column>
-                <Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" visible="{= ${dealMemoDetailModel>/Cnttp} === '09' || ${dealMemoDetailModel>/Cnttp} === '10' ? true : false }" width="20%">
+                <Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" visible="{= ${dealMemoDetailModel>/Cnttp} === '09' || ${dealMemoDetailModel>/Cnttp} === '06' ? true : false }" width="20%">
                     <ObjectIdentifier title="{i18n>ObjIden_LeadingValue}" />
                 </Column>
                 <Column width="5%">
