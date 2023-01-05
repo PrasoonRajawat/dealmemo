@@ -788,7 +788,7 @@ sap.ui.define([
 						"dialogTitle": "MPML2 Select Dailog",
 						"callBackFunction": this.mapSeriesDetails
 					};
-				} else if (dealMemoDetailInfo.Cnttp === "10") {
+				} else if (dealMemoDetailInfo.Cnttp === "06") {
 					var contentList = $.extend(true, [], dealMemoInfo.contentList);
 					var filteredContentList = [];
 					if (dealMemoDetailInfo.Cntnt == "06" || dealMemoDetailInfo.Cntnt == "07") {
@@ -1200,7 +1200,7 @@ sap.ui.define([
 							oData.CurrencyEnableFlag = false;
 						}
 						oData.enableFlow = "P";
-						if (oData.Cnttp === "02" || oData.Cnttp === "05" || oData.Cnttp === "09" || oData.Cnttp === "04" || oData.Cnttp === "10") {
+						if (oData.Cnttp === "02" || oData.Cnttp === "05" || oData.Cnttp === "09" || oData.Cnttp === "04" || oData.Cnttp === "06") {
 							oData.enableFlow = "M" // MovieFlow
 
 						}
@@ -1243,7 +1243,7 @@ sap.ui.define([
 
 						dealMemoDetailModel.setData(oData);
 						dealMemoDetailModel.refresh(true);
-						if (oData.Cnttp === "02" || oData.Cnttp === "05" || oData.Cnttp === "09" || oData.Cnttp === "04" || oData.Cnttp === "10") {
+						if (oData.Cnttp === "02" || oData.Cnttp === "05" || oData.Cnttp === "09" || oData.Cnttp === "04" || oData.Cnttp === "06") {
 							this.loadMovieCostTemplate();
 						}
 						if (oData.DmEpisodeSet.results.length) {
@@ -3087,7 +3087,7 @@ sap.ui.define([
 					method: "GET",
 					urlParameters: paramObj,
 					success: function (oData, response) {
-						if (dealMemoDetailInfo.Cnttp == "09" || dealMemoDetailInfo.Cnttp == "10") {
+						if (dealMemoDetailInfo.Cnttp == "09" || dealMemoDetailInfo.Cnttp == "06") {
 							dealMemoDetailModel.setProperty("/mpml2PushList", oData.results);
 							dealMemoDetailModel.refresh(true);
 							this.launchPushMpml2();
@@ -3463,7 +3463,7 @@ sap.ui.define([
 						return obj.Cntid
 					});
 				}
-				if (dealMemoDetailInfo.Cnttp === "10") {
+				if (dealMemoDetailInfo.Cnttp === "06") {
 					episodeList = dealMemoModel.getProperty("/filteredContentList");
 					for (var i = 0; i < episodeData.length; i++) { //Added By Dhiraj For converting matid
 						var epiidSplit = episodeData[i].Epinm.split("-");
@@ -4120,7 +4120,7 @@ sap.ui.define([
 					episodeIds = episodeList.map(function (obj) {
 						return obj.Mvid
 					});
-				} else if (dealMemoDetailInfo.Cnttp === "10") {
+				} else if (dealMemoDetailInfo.Cnttp === "06") {
 					for (var i = 0; i < episodeData.length; i++) { //Added By Dhiraj For converting matid
 						var mpml2Split = episodeData[i].Mpml2.split("-")
 						episodeData[i].Mvid = mpml2Split[0].trim();
@@ -4136,13 +4136,13 @@ sap.ui.define([
 						oMsg = oSourceBundle.getText("msgEpDescBlank" + dealMemoDetailInfo.Cnttp);
 						break;
 
-					} else if (dealMemoDetailInfo.Cnttp != "10") {
+					} else if (dealMemoDetailInfo.Cnttp != "06") {
 						if (episodeList[episodeIds.indexOf(epObj.Epiid)].Mpmid === "") {
 							statusFlag = false;
 							oMsg = oSourceBundle.getText("msgNOMPMExist" + dealMemoDetailInfo.Cnttp, epObj.Epiid);
 							break;
 						}
-					} else if (dealMemoDetailInfo.Cnttp != "10") {
+					} else if (dealMemoDetailInfo.Cnttp != "06") {
 						if (Epids.indexOf(epObj.Epiid) >= 0) {
 							statusFlag = false;
 							oMsg = oSourceBundle.getText("msgDuplicateEpId" + dealMemoDetailInfo.Cnttp);
@@ -4183,7 +4183,7 @@ sap.ui.define([
 				if (!statusFlag && oMsg !== "") {
 					MessageBox.error(oMsg);
 				}
-				if (dealMemoDetailInfo.Cnttp != "10") {
+				if (dealMemoDetailInfo.Cnttp != "06") {
 				for (var i = 0; i < episodeData.length; i++) { //Added By Dhiraj For converting matid or mvid to epiid of 5 digits
 					const a = i + 1;
 					var str = a.toString();
