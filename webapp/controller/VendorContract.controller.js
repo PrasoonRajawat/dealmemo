@@ -1790,7 +1790,7 @@ sap.ui.define([
 
 					}
 				});
-				if (vendorContractDetailInfo.Cnttp == "09") {
+				if (vendorContractDetailInfo.Cnttp == "09" || vendorContractDetailInfo.Cnttp == "06" ) {
 					var mpmIds = [];
 					var distMpml2 = [];
 					vendorContractDetailInfo.epiVCTabData.map(function (obj) {
@@ -1863,7 +1863,7 @@ sap.ui.define([
 				vendorContractDetailInfo.mileStonesForEpi = [];
 				vendorContractDetailInfo.episodeRangeVisiblePayment = false;
 				if (vendorContractDetailInfo.episodeModePayment === 1) {
-					if (vendorContractDetailInfo.Cnttp == "09") {
+					if (vendorContractDetailInfo.Cnttp == "09" || vendorContractDetailInfo.Cnttp == "06") {
 						vendorContractDetailInfo.SeriesRangeVisiblePayment = true;
 					} else {
 						vendorContractDetailInfo.episodeRangeVisiblePayment = true;
@@ -1990,14 +1990,14 @@ sap.ui.define([
 				var initalMpm = 0;
 				var lastMpm = 0;
 				if (oselIndex == 0) {
-					if (vendorContractDetailInfo.Cnttp != "09") {
+					if (vendorContractDetailInfo.Cnttp != "09" && vendorContractDetailInfo.Cnttp != "06") {
 					selectedEpisodeList = vendorContractDetailInfo.epPaymentList;
 					} else {
 						selectedEpisodeList = vendorContractDetailInfo.epMpml2List;
 					}
 				} else {
 					selectedEpisodeList = [];
-					if (vendorContractDetailInfo.Cnttp != "09") {
+					if (vendorContractDetailInfo.Cnttp != "09"  && vendorContractDetailInfo.Cnttp != "06") {
 						vendorContractDetailInfo
 							.epPaymentList.map(function (epVCObj) {
 								if (epVCObj.Epiid >= vendorContractDetailInfo.epiPaymentFromId && epVCObj.Epiid <= vendorContractDetailInfo.epiPaymentToId) {
