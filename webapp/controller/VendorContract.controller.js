@@ -1510,6 +1510,8 @@ sap.ui.define([
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
 				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
+				var oContexts = this.byId(sap.ui.core.Fragment.createId("vcEpiTab", "oTbl_vcepiData")).getSelectedContexts();
+				if (oContexts.length) {
 				MessageBox.confirm(oSourceBundle.getText("msgdeleteConfirmContractEpi" + vendorContractDetailInfo.Cnttp), {
 					actions: [oSourceBundle.getText("lblYes"), oSourceBundle.getText("lblNo")],
 					emphasizedAction: "Yes",
@@ -1522,8 +1524,19 @@ sap.ui.define([
 						}
 					}.bind(this)
 				});
+			} else {
+				var epIds = [];
+					var distEpisodes = [];
+					vendorContractDetailInfo.epiVCTabData.map(function (obj) {
+						if (epIds.indexOf(obj.Epiid) === -1) {
+							epIds.push(obj.Epiid);
+							distEpisodes.push(obj);
+						}
+					});
+				this.onDeleteEpisodeDialog(distEpisodes , {} , "A" , false);
+			}
 			},
-			deletevcEpiData: function () {
+			deletevcEpiData: function (selectedEpisodeList) {
 				sap.ui.core.BusyIndicator.show(0);
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
@@ -1556,7 +1569,7 @@ sap.ui.define([
 						MessageBox.error(oMsg);
 					}
 				};
-
+				if(selectedEpisodeList == undefined ) {
 				oContexts.map(function (oContext) {
 					var oEpiObj = oContext.getObject()
 					var oPath = "/DmCeSet(Tentid='IBS',Dmno='" + vendorContractDetailInfo.Dmno + "',Dmver='" + vendorContractDetailInfo.Dmver +
@@ -1565,8 +1578,17 @@ sap.ui.define([
 					oModel.remove(oPath, {
 						groupId: "epiVCDeleteChanges"
 					});
-
 				}.bind(this));
+			} else {
+				selectedEpisodeList.map(function (oEpiObj) {
+					var oPath = "/DmCeSet(Tentid='IBS',Dmno='" + vendorContractDetailInfo.Dmno + "',Dmver='" + vendorContractDetailInfo.Dmver +
+						"',Conttp='01',Contno='" + vendorContractDetailInfo.Contno + "',Contver='" + vendorContractDetailInfo.Contver + "',Epiid='" +
+						oEpiObj.Epiid + "')";
+					oModel.remove(oPath, {
+						groupId: "epiVCDeleteChanges"
+					});
+				}.bind(this));
+			}
 
 				oModel.submitChanges(mParameters);
 				sap.ui.core.BusyIndicator.hide();
@@ -2568,14 +2590,15 @@ sap.ui.define([
 				vendorContractModel.refresh(true);
 			},
 			//--------delete--episode--from--contracts------//
-			onDeleteEpisodeDialog: function (episodeData, paramList) {
+			onDeleteEpisodeDialog: function (episodeData, paramList , paramKey , visbleParam) {
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
 				vendorContractModel.setProperty("/episodeRangeVisibleDelivery", false);
 				vendorContractModel.setProperty("/episodeModeDelivery", 0);
 				vendorContractModel.setProperty("/epiDelFromId", "");
 				vendorContractModel.setProperty("/epiDelToId", "");
-				vendorContractModel.setProperty("/paramKey", "");
+				vendorContractModel.setProperty("/paramKey", paramKey);
+				vendorContractModel.setProperty("/visbleParam", visbleParam);
 				// var dmedSetData = episodeData;
 
 				vendorContractDetailInfo.SetDataEpi = $.extend(true, [], episodeData);
@@ -2630,7 +2653,9 @@ sap.ui.define([
 										this.onDeleteDelvViaDialog(selectedEpisodeList);
 									} else if (oTab === "vcIPRData") {
 										this.onDeleteIPRViaDialog(selectedEpisodeList);
-									};
+									} else if (oTab === "vcEpiData") {
+										this.deletevcEpiData(selectedEpisodeList);
+									}
 
 								} else if (sAction === oSourceBundle.getText("lblNo")) {
 
@@ -2690,13 +2715,13 @@ sap.ui.define([
 					var oTab = this.getView().byId("idVCTabBar").getSelectedKey();
 					if (oTab === "vcPaymentData") {
 						vendorContractDetailInfo.paramName = "Select Milestone"
-						this.onDeleteEpisodeDialog(distEpisodes, vendorContractDetailInfo.mileStoneList);
+						this.onDeleteEpisodeDialog(distEpisodes, vendorContractDetailInfo.mileStoneList , "" , true);
 					} else if (oTab === "vcDeliveryData") {
 						vendorContractDetailInfo.paramName = "Select Deliverables"
-						this.onDeleteEpisodeDialog(distEpisodes, vendorContractDetailInfo.deliveryCodeList);
+						this.onDeleteEpisodeDialog(distEpisodes, vendorContractDetailInfo.deliveryCodeList , "" , true);
 					} else if (oTab === "vcIPRData") {
 						vendorContractDetailInfo.paramName = "Select Platform"
-						this.onDeleteEpisodeDialog(distEpisodes, vendorContractDetailInfo.platformList);
+						this.onDeleteEpisodeDialog(distEpisodes, vendorContractDetailInfo.platformList , "" , true);
 					};
 
 				}

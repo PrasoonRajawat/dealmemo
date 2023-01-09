@@ -8,7 +8,7 @@
 										<Toolbar>
 											<Label text="{parts:[{value:'lblEpisodeData'},{path:'vendorContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}"/>
 											<ToolbarSpacer></ToolbarSpacer>
-											<Button id="idBdelete" press="onDeletevcEpi" text="{i18n>Btn_Delete}" icon="sap-icon://delete/" enabled="{vendorContractModel>/epiDeleteEnable}" visible="{vendorContractModel>/saveVisible}"/>
+											<Button id="idBdelete" press="onDeletevcEpi" text="{i18n>Btn_Delete}" icon="sap-icon://delete/" enabled="true" visible="{vendorContractModel>/saveVisible}"/>
 										</Toolbar>
 									</infoToolbar>
 									<columns>

@@ -4100,16 +4100,16 @@ sap.ui.define([
 					episodeIds = episodeList.map(function (obj) {
 						return obj.Mvid
 					});
-				} else if (dealMemoDetailInfo.Cnttp === "09") {
-					episodeList = dealMemoModel.getProperty("/matchMasterList");
-					for (var i = 0; i < episodeData.length; i++) { //Added By Dhiraj For converting matid
-						var epiidSplit = episodeData[i].Epinm.split("-");
-						episodeData[i].Epiid = epiidSplit[0].trim();
-						episodeData[i].Mvid = epiidSplit[0].trim();
-					}
-					episodeIds = episodeList.map(function (obj) {
-						return obj.Matid
-					});
+				// } else if (dealMemoDetailInfo.Cnttp === "09") {
+				// 	episodeList = dealMemoModel.getProperty("/matchMasterList");
+				// 	for (var i = 0; i < episodeData.length; i++) { //Added By Dhiraj For converting matid
+				// 		var epiidSplit = episodeData[i].Epinm.split("-");
+				// 		episodeData[i].Epiid = epiidSplit[0].trim();
+				// 		episodeData[i].Mvid = epiidSplit[0].trim();
+				// 	}
+				// 	episodeIds = episodeList.map(function (obj) {
+				// 		return obj.Matid
+				// 	});
 				} else if (dealMemoDetailInfo.Cnttp === "04") {
 					episodeList = dealMemoModel.getProperty("/musicList");
 					for (var i = 0; i < episodeData.length; i++) { //Added By Dhiraj For converting matid
@@ -4125,9 +4125,12 @@ sap.ui.define([
 						var mpml2Split = episodeData[i].Mpml2.split("-")
 						episodeData[i].Mvid = mpml2Split[0].trim();
 					}
+				} else if (dealMemoDetailInfo.Cnttp === "09") {
+					for (var i = 0; i < episodeData.length; i++) { //Added By Dhiraj For converting matid
+						var epiidSplit = episodeData[i].Epinm.split("-");
+						episodeData[i].Mvid = epiidSplit[0].trim();
+					}
 				}
-
-
 				for (var oInd = 0; oInd < episodeData.length; oInd++) {
 					var epObj = episodeData[oInd];
 
@@ -4136,13 +4139,13 @@ sap.ui.define([
 						oMsg = oSourceBundle.getText("msgEpDescBlank" + dealMemoDetailInfo.Cnttp);
 						break;
 
-					} else if (dealMemoDetailInfo.Cnttp != "06") {
+					} else if (dealMemoDetailInfo.Cnttp != "06" && dealMemoDetailInfo.Cnttp != "09" ) {
 						if (episodeList[episodeIds.indexOf(epObj.Epiid)].Mpmid === "") {
 							statusFlag = false;
 							oMsg = oSourceBundle.getText("msgNOMPMExist" + dealMemoDetailInfo.Cnttp, epObj.Epiid);
 							break;
 						}
-					} else if (dealMemoDetailInfo.Cnttp != "06") {
+					} else if (dealMemoDetailInfo.Cnttp != "06" && dealMemoDetailInfo.Cnttp != "09") {
 						if (Epids.indexOf(epObj.Epiid) >= 0) {
 							statusFlag = false;
 							oMsg = oSourceBundle.getText("msgDuplicateEpId" + dealMemoDetailInfo.Cnttp);
