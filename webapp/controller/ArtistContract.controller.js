@@ -1623,6 +1623,8 @@ sap.ui.define([
 				var artistContractModel = this.getView().getModel("artistContractModel");
 				var artistContractDetailInfo = artistContractModel.getData();
 				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
+				var oContexts = this.byId(sap.ui.core.Fragment.createId("acEpiTab", "oTbl_acepiData")).getSelectedContexts();
+				if (oContexts.length) {
 				MessageBox.confirm(oSourceBundle.getText("msgdeleteConfirmContractEpi" + artistContractDetailInfo.Cnttp), {
 					actions: [oSourceBundle.getText("lblYes"), oSourceBundle.getText("lblNo")],
 					emphasizedAction: "Yes",
@@ -1634,8 +1636,19 @@ sap.ui.define([
 						}
 					}.bind(this)
 				});
+			} else {
+				var epIds = [];
+				var distEpisodes = [];
+				artistContractDetailInfo.epiTabData.map(function (obj) {
+					if (epIds.indexOf(obj.Epiid) === -1) {
+						epIds.push(obj.Epiid);
+						distEpisodes.push(obj);
+					}
+				});
+				this.onDeleteEpisodeDialog(distEpisodes , {} , "A" , false);
+			}
 			},
-			deleteEpiData: function () {
+			deleteEpiData: function (selectedEpisodeList) {
 				sap.ui.core.BusyIndicator.show(0);
 				var artistContractModel = this.getView().getModel("artistContractModel");
 				var artistContractDetailInfo = artistContractModel.getData();
@@ -1660,7 +1673,7 @@ sap.ui.define([
 						console.log(resp);
 					}
 				};
-
+				if (selectedEpisodeList == undefined ) {
 				oContexts.map(function (oContext) {
 					var oEpiObj = oContext.getObject()
 					var oPath = "/DmCeSet(Tentid='IBS',Dmno='" + artistContractDetailInfo.Dmno + "',Dmver='" + artistContractDetailInfo.Dmver +
@@ -1671,7 +1684,17 @@ sap.ui.define([
 					});
 
 				}.bind(this));
+			} else {
+				selectedEpisodeList.map(function (oEpiObj) {
+					var oPath = "/DmCeSet(Tentid='IBS',Dmno='" + artistContractDetailInfo.Dmno + "',Dmver='" + artistContractDetailInfo.Dmver +
+						"',Conttp='02',Contno='" + artistContractDetailInfo.Contno + "',Contver='" + artistContractDetailInfo.Contver + "',Epiid='" +
+						oEpiObj.Epiid + "')";
+					oModel.remove(oPath, {
+						groupId: "epiACDeleteChanges"
+					});
 
+				}.bind(this));
+			}
 				oModel.submitChanges(mParameters);
 
 			},
@@ -2295,14 +2318,15 @@ sap.ui.define([
 				sap.ui.core.BusyIndicator.hide();
 			},
 			//--------delete--episode--from--contracts------//
-			onDeleteEpisodeDialog: function (episodeData, paramList) {
+			onDeleteEpisodeDialog: function (episodeData, paramList,  paramKey , visbleParam) {
 				var artistContractModel = this.getView().getModel("artistContractModel");
 				var artistContractDetailInfo = artistContractModel.getData();
 				artistContractModel.setProperty("/episodeRangeVisibleDelivery", false);
 				artistContractModel.setProperty("/episodeModeDelivery", 0);
 				artistContractModel.setProperty("/epiDelFromId", "");
 				artistContractModel.setProperty("/epiDelToId", "");
-				artistContractModel.setProperty("/paramKey", "");
+				artistContractModel.setProperty("/paramKey", paramKey);
+				artistContractModel.setProperty("/visbleParam", visbleParam);
 				// var dmedSetData = episodeData;
 
 				artistContractDetailInfo.SetDataEpi = $.extend(true, [], episodeData);
@@ -2385,9 +2409,12 @@ sap.ui.define([
 							emphasizedAction: "Yes",
 							onClose: function (sAction) {
 								if (sAction === oSourceBundle.getText("lblYes")) {
-
+									var oTab = this.getView().byId("idVCTabBar").getSelectedKey();
+									if(oTab == "acEpiData") {
+										this.deleteEpiData(selectedEpisodeList);
+									}else {
 									this.onDeleteMileViaDialog(selectedEpisodeList);
-
+									}
 
 								} else if (sAction === oSourceBundle.getText("lblNo")) {
 
@@ -2412,7 +2439,7 @@ sap.ui.define([
 					}
 				});
 				artistContractDetailInfo.paramName = "Select Milestone"
-				this.onDeleteEpisodeDialog(distEpisodes, artistContractDetailInfo.mileStoneList);
+				this.onDeleteEpisodeDialog(distEpisodes, artistContractDetailInfo.mileStoneList , "" , true);
 			},
 			onDeleteMileViaDialog: function (selectedEpisodeList) {
 				sap.ui.core.BusyIndicator.show(0);

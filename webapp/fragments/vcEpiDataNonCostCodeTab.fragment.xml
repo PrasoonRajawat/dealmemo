@@ -5,7 +5,7 @@
 										<Toolbar>
 											<Label text="{parts:[{value:'lblEpisodeData'},{path:'vendorContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}"/>
 											<ToolbarSpacer></ToolbarSpacer>
-											<Button id="idBdeleteBal"  visible="false" press="onDeletevcEpi" text="{i18n>Btn_Delete}" icon="sap-icon://delete/" enabled="{vendorContractModel>/epiDeleteEnable}"/>
+											<Button id="idBdeleteBal"  visible="false" press="onDeletevcEpi" text="{i18n>Btn_Delete}" icon="sap-icon://delete/" enabled=""/>
 										</Toolbar>
 									</infoToolbar>
 									<columns>
