@@ -2410,7 +2410,7 @@ sap.ui.define([
 							emphasizedAction: "Yes",
 							onClose: function (sAction) {
 								if (sAction === oSourceBundle.getText("lblYes")) {
-									var oTab = this.getView().byId("idVCTabBar").getSelectedKey();
+									var oTab = this.getView().byId("idACTabBar").getSelectedKey();
 									if(oTab == "acEpiData") {
 										this.deleteEpiData(selectedEpisodeList);
 									}else {
