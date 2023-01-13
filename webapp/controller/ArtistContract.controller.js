@@ -1828,6 +1828,7 @@ sap.ui.define([
 				var artistContractDetailInfo = artistContractModel.getData();
 				artistContractDetailInfo.mileStonesForEpi = [];
 				artistContractDetailInfo.episodeRangeVisiblePayment = false;
+				artistContractDetailInfo.SeriesRangeVisiblePayment = false;	
 				if (artistContractDetailInfo.episodeModePayment === 1) {
 					if (artistContractDetailInfo.Cnttp == "09" || artistContractDetailInfo.Cnttp == "06") {
 						artistContractDetailInfo.SeriesRangeVisiblePayment = true;
