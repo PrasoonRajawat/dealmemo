@@ -3873,7 +3873,8 @@ sap.ui.define([
 					"Epist": "",
 					"Gjahr": epObj.Gjahr,
 					"Leadcost": "0.000",
-					"Mvid": detailModel.oData.Cnttp === "02" || "03" ? epObj.Mvid : ""
+					"Mvid": detailModel.oData.Cnttp === "02" || "03" ? epObj.Mvid : "",
+					"Mpml2": epObj.Mpml2
 				};
 			},
 			prepareEpisodePayloadYear: function (epObj) { // Added by Dhiraj For fiscal year change
@@ -3901,6 +3902,7 @@ sap.ui.define([
 					"Gjahr": epObj.Gjahr,
 					"Leadcost": "0.000",
 					"Mvid": detailModel.oData.Cnttp === "02" || "03" ? epObj.Mvid : ""
+					
 
 				};
 			},
@@ -4123,7 +4125,7 @@ sap.ui.define([
 				} else if (dealMemoDetailInfo.Cnttp === "06") {
 					for (var i = 0; i < episodeData.length; i++) { //Added By Dhiraj For converting matid
 						var mpml2Split = episodeData[i].Mpml2.split("-")
-						episodeData[i].Mvid = mpml2Split[0].trim();
+						episodeData[i].Mpml2 = mpml2Split[0].trim();
 					}
 				} else if (dealMemoDetailInfo.Cnttp === "09") {
 					for (var i = 0; i < episodeData.length; i++) { //Added By Dhiraj For converting matid

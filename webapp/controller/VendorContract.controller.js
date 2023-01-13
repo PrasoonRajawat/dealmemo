@@ -1884,6 +1884,7 @@ sap.ui.define([
 				var vendorContractDetailInfo = vendorContractModel.getData();
 				vendorContractDetailInfo.mileStonesForEpi = [];
 				vendorContractDetailInfo.episodeRangeVisiblePayment = false;
+				vendorContractDetailInfo.SeriesRangeVisiblePayment = false;
 				if (vendorContractDetailInfo.episodeModePayment === 1) {
 					if (vendorContractDetailInfo.Cnttp == "09" || vendorContractDetailInfo.Cnttp == "06") {
 						vendorContractDetailInfo.SeriesRangeVisiblePayment = true;

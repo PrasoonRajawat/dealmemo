@@ -33,8 +33,8 @@
             <HBox>
                 <items>
                     <VBox>
-                        <Label id = "paramNm" text="{artistContractModel>/paramName}" required="true" visible = "{vendorContractModel>/visbleParam}" width="100%" />
-                        <ComboBox width="95%" items="{artistContractModel>/paramList}" visible = "{vendorContractModel>/visbleParam}" selectedKey="{artistContractModel>/paramKey}">
+                        <Label id = "paramNm" text="{artistContractModel>/paramName}" required="true" visible = "{artistContractModel>/visbleParam}" width="100%" />
+                        <ComboBox width="95%" items="{artistContractModel>/paramList}" visible = "{artistContractModel>/visbleParam}" selectedKey="{artistContractModel>/paramKey}">
                             <c:Item text="{artistContractModel>Mstcdnm}" key="{artistContractModel>Mstcd}" />
                         </ComboBox>
                     </VBox>
