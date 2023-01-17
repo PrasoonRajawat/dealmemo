@@ -186,7 +186,7 @@
 					<Button id="btnSaveVC" text="{i18n>btnTxtSave}" enabled="{path:'vendorContractModel>/Contstat',formatter:'.Formatter.formatEditableContStatus'}"
 						visible="{vendorContractModel>/saveVisible}" press="onSaveVendorContract"/>
 					<Button id="btnEditVC" text="{i18n>btnTxtEdit}" enabled="{path:'vendorContractModel>/Contstat',formatter:'.Formatter.formatEditableContStatus'}"
-						press="onEditVendorContract"/>
+						press="checkDealVersionOpen"/>
 					<Button id="btnChangeVC" text="{i18n>btnTxtChange}" visible="{vendorContractModel>/changeVisible}" press="onConfirmChangeVC"/>
 					<Button id="btnSubmitVC" text="{i18n>btnTxtSubmit}" press="onSubmitVC" visible="{vendorContractModel>/submitVisible}"/>
 				</Toolbar>

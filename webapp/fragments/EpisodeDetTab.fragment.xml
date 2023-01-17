@@ -51,7 +51,7 @@
                     enabled="{path:'dealMemoDetailModel>/Dmst',formatter:'.Formatter.formatEditableStatus'}"
                 />
                 <Button
-                    press="onCreateAdditionalEpisode"
+                    press="createEpisode"
                     text="{parts:[{value:'lblBtnCreateEpiDet'},{path:'dealMemoDetailModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}"
                     visible="{dealMemoDetailModel>/AddEpiVisibility}"
                     enabled="{path:'dealMemoDetailModel>/Dmst',formatter:'.Formatter.formatEditableStatus'}"
