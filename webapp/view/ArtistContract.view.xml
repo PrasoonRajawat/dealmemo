@@ -162,7 +162,7 @@
 				<Toolbar>
 					<ToolbarSpacer/>
 					<Button id = "btnSaveAC" text="{i18n>btnSave}" visible="{artistContractModel>/saveVisible}" press="onSaveArtistContract" enabled="{path:'artistContractModel>/Contstat',formatter:'.Formatter.formatEditableContStatus'}"/>
-					<Button id="btnEditAC" text="{i18n>btnTxtEdit}" press="onEditArtistContract" enabled="{path:'artistContractModel>/Contstat',formatter:'.Formatter.formatEditableContStatus'}" />
+					<Button id="btnEditAC" text="{i18n>btnTxtEdit}" press="checkDealVersionOpen" enabled="{path:'artistContractModel>/Contstat',formatter:'.Formatter.formatEditableContStatus'}" />
 					<Button id="btnSubmitAC" text="{i18n>btnTxtSubmit}" press="onSubmitAC" visible="{artistContractModel>/submitVisible}"/>
 					<Button id="btnChangeAC" text="{i18n>btnTxtChange}" visible="{artistContractModel>/changeVisible}" press="onConfirmChangeAC"/>
 				</Toolbar>

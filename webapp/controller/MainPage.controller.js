@@ -2700,6 +2700,41 @@ sap.ui.define([
 				});
 				oModel.refresh(true);
 			},
+			createEpisode : function () {
+				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
+				var dealMemoDetailInfo = dealMemoDetailModel.getData();
+				if (dealMemoDetailInfo.Cnttp == "06" || dealMemoDetailInfo.Cnttp == "09") {
+					var oModel = this.getView().getModel();
+				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
+				var dealMemoDetailInfo = dealMemoDetailModel.getData();
+				var paramObj = {
+					"IV_TENTID": "IBS",
+					"IV_DMNO": dealMemoDetailInfo.Dmno,
+					"IV_DMVER": dealMemoDetailInfo.Dmver,
+					"IV_NOOFEPI": "0001",
+					"IV_LASTEPI": ""
+
+				};
+				oModel.callFunction("/GenerateEpi", {
+					method: "GET",
+					urlParameters: paramObj,
+					success: function (oData, response) {
+							dealMemoDetailModel.setProperty("/mpml2PushList", oData.results);
+							dealMemoDetailModel.refresh(true);
+							this.onCreateAdditionalEpi = true ;
+							this.launchPushMpml2();
+		
+					}.bind(this),
+					error: function (oError) {
+						var oErrorResponse = JSON.parse(oError.responseText);
+						var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
+						MessageBox.error(oMsg);
+					}
+				})
+				} else {
+					onCreateAdditionalEpisode();
+				}
+			},
 			onCreateAdditionalEpisode: function () {
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
@@ -3376,6 +3411,7 @@ sap.ui.define([
 				}.bind(this));
 			},
 			launchPushMpml2Cancel: function () {
+				this.onCreateAdditionalEpi = false;
 				this._oMpml2PushDialog.close();
 				this._oMpml2PushDialog.destroy();
 			},
@@ -3395,14 +3431,14 @@ sap.ui.define([
 					"Dmver": dealMemoDetailInfo.Dmver,
 					"Epidur": { ms: 0, __edmType: 'Edm.Time' },
 					"Epiid": undefined,
-					"Epinm": oObj.Epinm,
+					"Epinm": "",
 					"Epist": "",
 					"Epistdsc": "",
-					"Matyp": oObj.Matyp,
-					"MatyKey": oObj.MatyKey,
-					"Nomatch": oObj.Nomatch,
+					"Matyp": "",
+					"MatyKey": "",
+					"Nomatch": "",
 					"Epitp": "00",
-					"Gjahr": oObj.Gjahr,
+					"Gjahr": "",
 					"Leadcost": "0.00",
 					"Leadcostcd": "",
 					"Loekz": false,
@@ -3516,7 +3552,7 @@ sap.ui.define([
 					}
 				}
 				//-----------------------------------------
-
+				if (this.onCreateAdditionalEpi == false) {
 				var yearChk = episodeData.map(function (yObj) {
 					return yObj.Gjahr
 				});
@@ -3530,7 +3566,7 @@ sap.ui.define([
 						// oMsg = "Enter atleast one movie for each individual year in range ''"
 					}
 				}
-
+			}
 				//--------------------------------
 
 				if (!statusFlag && oMsg !== "") {
@@ -3604,9 +3640,13 @@ sap.ui.define([
 				totalEpiCostsPerEpisode['InhouseTot'] = "0.00";
 				totalEpiCostsPerEpisode['Tot'] = "0.00";
 				totalEpiCostsPerEpisode['Waers'] = dealMemoDetailModel.getProperty("/Waers");
-
+				if (this.onCreateAdditionalEpi == true) {
+					this.onCreateAdditionalEpi = false;
+					dealMemoDetailInfo.episodeData = dealMemoDetailInfo.episodeData.concat(oData.results)
+				}else {
 				dealMemoDetailModel.setProperty("/episodeData", oData.results);
 				dealMemoDetailModel.setProperty("/episodeTotalData", [totalEpiCostsPerEpisode]);
+				}	
 				dealMemoDetailModel.refresh(true);
 
 				//Calculate Leading Value

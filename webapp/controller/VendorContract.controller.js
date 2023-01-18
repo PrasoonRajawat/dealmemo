@@ -163,8 +163,50 @@ sap.ui.define([
 					window.history.go(-1);
 				}
 			},
+			checkDealVersionOpen: function () {
+				var vendorContractModel = this.getView().getModel("vendorContractModel");
+				var vendorContractDetailInfo = vendorContractModel.getData();
+				var dealMemoService = "/sap/opu/odata/IBSCMS/DEALMEMO_SRV";
+				var oDataModel = new sap.ui.model.odata.ODataModel(dealMemoService, true, "", "");
+				var path = "DmHeaderSet?$filter=Tentid eq 'IBS'  and Dmno eq '" + vendorContractDetailInfo.Dmno + "' and Transtp eq 'D' and Spras eq 'E'";
+				var oBusyIndicator = sap.ui.core.BusyIndicator;
+				oDataModel.read(path, {
+	
+					success: function (oData) {
+						oBusyIndicator.hide();
+						var dealList = oData.results;
+						if (dealList[0].Dmver != vendorContractDetailInfo.Dmver ) {
+							var errorMessage = "Latest Deal Memo version exists, create contract from Deal Memo Application" ;
+							sap.m.MessageBox.show(
+								errorMessage, {
+								icon: sap.m.MessageBox.Icon.ERROR,
+								title: "Error",
+								actions: [sap.m.MessageBox.Action.OK],
+								onClose: function (oAction) { }
+							}
+							);
+						} else {
+							this.onEditVendorContract();
+						}
+					
+					}.bind(this),
+					error: function (errorMessage) {
+						oBusyIndicator.hide();
+						sap.m.MessageBox.show(
+							errorMessage, { 
+							icon: sap.m.MessageBox.Icon.ERROR,
+							title: "Internal Error",
+							actions: [sap.m.MessageBox.Action.OK],
+							onClose: function (oAction) { }
+						}
+						);
+					}
+				});
+	
+			},
 			onEditVendorContract: function (oEvent) {
-				oEvent.getSource().setVisible(false);
+				this.getView().byId("btnEditVC").setVisible(false);
+				// oEvent.getSource().setVisible(false);
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
 				vendorContractDetailInfo.saveVisible = true;

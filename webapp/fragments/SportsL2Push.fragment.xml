@@ -1,9 +1,9 @@
 <c:FragmentDefinition xmlns="sap.m" xmlns:u="sap.ui.unified" xmlns:l="sap.ui.layout" xmlns:c="sap.ui.core">
-    <Dialog type="Message" title="Enter {parts:[{value:'lblVCContent'},{path:'vendorContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'} Details" contentWidth="70%">
+    <Dialog type="Message" title="Enter {parts:[{value:'lblVCContent'},{path:'dealMemoDetailModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'} Details" contentWidth="70%">
         <Table id="oTable_epiDetail" visible="true" itemPress="" items="{dealMemoDetailModel>/mpml2PushList}" mode="{= ${dealMemoDetailModel>/tableMode} === true ? 'MultiSelect' : 'None'}" selectionChange="handleEpiRowSelection">
             <columns>
                 <Column width="40%" mergeDuplicates="">
-                    <ObjectIdentifier title="{parts:[{value:'lblVCContent'},{path:'vendorContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" />
+                    <ObjectIdentifier title="{parts:[{value:'lblVCContent'},{path:'dealMemoDetailModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" />
                 </Column>
                 <Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" visible="{= ${dealMemoDetailModel>/Cnttp} === '09'  ? true : false }" width="15%">
                     <ObjectIdentifier title="Match Type" />
