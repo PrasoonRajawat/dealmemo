@@ -17,13 +17,13 @@
             <HBox visible="{vendorContractModel>/episodeRangeVisibleDelivery}">
                 <items>
                     <VBox>
-                        <Label text="{parts:[{value:'lblSelectEpiDFrom'},{path:'vendorContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" required="true" width="100%" />
+                        <Label text="{parts:[{value:'lblSelectEpiFrom'},{path:'vendorContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" required="true" width="100%" />
                         <ComboBox width="95%" items="{vendorContractModel>/SetDataEpi}" selectedKey="{vendorContractModel>/epiDelFromId}">
                             <c:Item text="{vendorContractModel>Epinm}" key="{vendorContractModel>Epiid}" />
                         </ComboBox>
                     </VBox>
                     <VBox>
-                        <Label text="{parts:[{value:'lblSelectEpiDTo'},{path:'vendorContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" required="true" width="100%" />
+                        <Label text="{parts:[{value:'lblSelectEpiTo'},{path:'vendorContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" required="true" width="100%" />
                         <ComboBox width="95%" items="{vendorContractModel>/SetDataEpi}" selectedKey="{vendorContractModel>/epiDelToId}">
                             <c:Item text="{vendorContractModel>Epinm}" key="{vendorContractModel>Epiid}" />
                         </ComboBox>

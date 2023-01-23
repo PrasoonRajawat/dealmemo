@@ -363,6 +363,9 @@ sap.ui.define([
 						//                    	);
 						var sortedList = oData.results.sort((a, b) => (a.Lifnr > b.Lifnr) ? 1 : ((b.Lifnr > a.Lifnr) ? -1 : 0));
 						//var filterNonBlank = sortedList.filter(function(obj){return obj.Mcod1 !== ""});
+						sortedList = sortedList.filter(function (obj) {
+							return obj.Bukrs == artistContractDetailInfo.Bukrs;
+						});
 						artistContractModel.setProperty("/vendorsList", sortedList);
 						artistContractModel.refresh(true);
 						sap.ui.core.BusyIndicator.hide();
@@ -391,6 +394,9 @@ sap.ui.define([
 						//                    	);
 						var sortedList = oData.results.sort((a, b) => (a.Lifnr > b.Lifnr) ? 1 : ((b.Lifnr > a.Lifnr) ? -1 : 0));
 						//var filterNonBlank = sortedList.filter(function(obj){return obj.Mcod1 !== ""});
+						sortedList = sortedList.filter(function (obj) {
+							return obj.Bukrs == artistContractDetailInfo.Bukrs;
+						});
 						artistContractModel.setProperty("/vendorsList", sortedList);
 						artistContractModel.refresh(true);
 						sap.ui.core.BusyIndicator.hide();
@@ -1068,18 +1074,18 @@ sap.ui.define([
 					artistContractModel.refresh(true);
 					return false;
 				}
-				for (var oInd = 0; oInd < selectedCostCodeContexts.length; oInd++) {
-					var oCostObj = selectedCostCodeContexts[oInd].getObject();
+				// for (var oInd = 0; oInd < selectedCostCodeContexts.length; oInd++) {
+				// 	var oCostObj = selectedCostCodeContexts[oInd].getObject();
 
-					if (parseInt(oCostObj.costCodeValue) <= 0) {
-						//MessageBox.error(oSourceBundle.getText("msgtotCostCodeCostNonZero"));
-						artistContractDetailInfo.acEpiDataMsgVisible = true;
-						artistContractDetailInfo.acEpiDataErrorMsg = oSourceBundle.getText("msgtotCostCodeCostNonZero");
-						artistContractModel.refresh(true);
-						return false;
-						break;
-					}
-				}
+				// 	if (parseInt(oCostObj.costCodeValue) <= 0) {
+				// 		//MessageBox.error(oSourceBundle.getText("msgtotCostCodeCostNonZero"));
+				// 		artistContractDetailInfo.acEpiDataMsgVisible = true;
+				// 		artistContractDetailInfo.acEpiDataErrorMsg = oSourceBundle.getText("msgtotCostCodeCostNonZero");
+				// 		artistContractModel.refresh(true);
+				// 		return false;
+				// 		break;
+				// 	}
+				// }
 				return true;
 			},
 			validateMilestoneAchievementDate: function () {
@@ -1159,6 +1165,13 @@ sap.ui.define([
 								}
 								var lastEpiCost = (parseFloat(selectedCostCodeObj.costCodeValue / Noofepi)) + remainCost;
 
+								if ( artistContractDetailInfo.contractMode == "Ch" &&  artistContractDetailInfo.DmCeSet.results.length > 0 ) {
+									var dmceList = artistContractDetailInfo.DmCeSet.results;
+									if (dmceList.find(obj => obj.Epiid == epObj.Epiid  &&  obj.Costcd == selectedCostCodeObj.Costcode ) != undefined ) {
+										var itemCost = dmceList.find(obj => obj.Epiid == epObj.Epiid  &&  obj.Costcd == selectedCostCodeObj.Costcode ).Coepiamt
+										lastEpiCost = parseFloat(itemCost) + parseFloat(lastEpiCost) ;
+									}
+								}
 
 								var oEpiDataObj = {
 									Tentid: "IBS",
@@ -1197,7 +1210,13 @@ sap.ui.define([
 							var selectedCostCodeObj = selCostCodeContext.getObject();
 							if (selectedCostCodeObj.costCodeValue !== 0) {
 								var perEpiValue = parseFloat(selectedCostCodeObj.costCodeValue / Noofepi).toFixed(2);
-
+								if ( artistContractDetailInfo.contractMode == "Ch" && artistContractDetailInfo.DmCeSet.results.length > 0 ) {
+									var dmceList = artistContractDetailInfo.DmCeSet.results;
+									if (dmceList.find(obj => obj.Epiid == epObj.Epiid  &&  obj.Costcd == selectedCostCodeObj.Costcode ) != undefined ) {
+										var itemCost = dmceList.find(obj => obj.Epiid == epObj.Epiid  &&  obj.Costcd == selectedCostCodeObj.Costcode ).Coepiamt
+										perEpiValue = parseFloat(itemCost) + parseFloat(perEpiValue) ;
+									}
+								}
 								var oEpiDataObj = {
 									Tentid: "IBS",
 									Dmno: artistContractDetailInfo.Dmno,
@@ -1298,7 +1317,11 @@ sap.ui.define([
 					}.bind(this),
 					error: function (oError) {
 						sap.ui.core.BusyIndicator.hide();
-						console.log(oError);
+						// console.log(oError);
+						sap.ui.core.BusyIndicator.hide();
+						var oBody = JSON.parse(oError.responseText);
+						var oMsg = oBody.error.innererror.errordetails[0].message;
+						MessageBox.error(oMsg);
 					}
 				});
 			},

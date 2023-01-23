@@ -73,9 +73,10 @@
 			
 			<VBox width="50%" class="sapUiTinyMarginBegin">
 				<Label text="{i18n>lblTerritory}"/>
-				<ComboBox width="100%" items="{vendorContractModel>/teritoryList}"  selectedItemId ="{vendorContractModel>/TeritoryItem}" selectedKey="{vendorContractModel>/territoryKey}">
+				<Input id = "terNm" value = "{vendorContractModel>/territoryKey}" change= "onChangeTerritoryPush" maxLength = "200" enabled="{vendorContractModel>/saveVisible}"></Input>
+				<!-- <ComboBox width="100%" items="{vendorContractModel>/teritoryList}"  selectedItemId ="{vendorContractModel>/TeritoryItem}" selectedKey="{vendorContractModel>/territoryKey}">
 					<c:Item text="{vendorContractModel>Mstcdnm}" key="{vendorContractModel>Mstcd}"/>
-				</ComboBox>
+				</ComboBox> -->
 			</VBox>
 		</HBox>
 		<HBox>
