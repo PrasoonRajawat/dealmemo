@@ -139,7 +139,8 @@
                         <items>
                             <ColumnListItem>
                                 <cells>
-                                    <ObjectIdentifier title="{vendorContractModel>Mstcdnm}" />
+                                    <!-- <ObjectIdentifier title="{vendorContractModel>Mstcdnm}" /> -->
+                                    <Input value="{vendorContractModel>Mstcdnm}" />
                                     <!-- <Text text="{vendorContractModel>payee}"/> -->
                                     <!-- <Input value="{vendorContractModel>payeeKey}" showValueHelp="true" valueHelpRequest="onValueHelpAlternatePayee" /> -->
                                     <Input value="{vendorContractModel>Hsncd}" showValueHelp="true" valueHelpRequest="onValueHelpHsnCode" />

@@ -41,7 +41,7 @@
 		</VBox>
 		<VBox class="sapUiTinyMarginTopBottom">
 			<Label text="{parts:[{value:'lblSelectCostCode'},{path:'artistContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" width="100%" required="true"/>
-			<List id="list_costCodes" mode="MultiSelect" width="99%" class="classBoxBorder" items="{artistContractModel>/costCodes}" selectionChange="onSelectionACostCodes">
+			<List id="list_costCodes" mode="{artistContractModel>/SelectMode}" width="99%" class="classBoxBorder" items="{artistContractModel>/costCodes}" selectionChange="onSelectionACostCodes">
 				<items>
 				
 					<CustomListItem>

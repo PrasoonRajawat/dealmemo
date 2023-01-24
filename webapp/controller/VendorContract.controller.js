@@ -2293,6 +2293,12 @@ sap.ui.define([
 							oMsg = "msgTermNotSame";
 						}
 					}
+					if (statusFlag) {
+						if (mlObj.Msidnm == "" || mlObj.Msidnm == undefined ) {
+							statusFlag = false;
+							oMsg = "msgEnterMileNm";
+						}
+					}
 				}
 				if (oMsg !== "") {
 					var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
@@ -3768,7 +3774,8 @@ sap.ui.define([
 					"04": "Episode ID",
 					"06": "Episode ID",
 					"07": "Episode ID",
-					"08": "Episode ID"
+					"08": "Episode ID",
+					"09": "Match ID"
 				};
 
 				var aCols = [{
@@ -4060,7 +4067,7 @@ sap.ui.define([
 					var aKeys = Object.keys(epiObj);
 
 					if (aKeys.indexOf("Episode ID") === -1 && vendorContractDetailInfo.Cnttp === "01" || aKeys.indexOf("Movie ID") === -1 &&
-						vendorContractDetailInfo.Cnttp === "02" || aKeys.indexOf("Match ID") === -1 && vendorContractDetailInfo.Cnttp === "05") {
+						vendorContractDetailInfo.Cnttp === "02" || aKeys.indexOf("Match ID") === -1 && (vendorContractDetailInfo.Cnttp === "05" || vendorContractDetailInfo.Cnttp === "09")) {
 						statusFlag = false;
 						oMsg = oSourceBundle.getText("msgMovIdNonBlank" + vendorContractDetailInfo.Cnttp);
 						break;

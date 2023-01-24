@@ -943,6 +943,7 @@ sap.ui.define([
 				var oParams = oEvent.getParameters();
 				var oSelected = oParams['selected'];
 				var artistContractModel = this.getView().getModel("artistContractModel");
+				var artistContractDetailInfo = artistContractModel.getData();
 				var oSelItemObj = oParams['listItem'].getBindingContext("artistContractModel").getObject();
 				oSelItemObj.costValueEditable = oSelected;
 				if (!oSelected) {
@@ -1022,6 +1023,10 @@ sap.ui.define([
 				artistContractDetailInfo.retEpi = false;
 				if (artistContractDetailInfo.Retenaplty == "01") {
 					artistContractDetailInfo.retEpi = true;
+				}
+				artistContractDetailInfo.SelectMode = "MultiSelect"
+				if (artistContractDetailInfo.App == "Spike") {
+					artistContractDetailInfo.SelectMode = "SingleSelectLeft"
 				}
 
 				artistContractModel.refresh(true);
@@ -1165,11 +1170,11 @@ sap.ui.define([
 								}
 								var lastEpiCost = (parseFloat(selectedCostCodeObj.costCodeValue / Noofepi)) + remainCost;
 
-								if ( artistContractDetailInfo.contractMode == "Ch" &&  artistContractDetailInfo.DmCeSet.results.length > 0 ) {
+								if (artistContractDetailInfo.contractMode == "Ch" && artistContractDetailInfo.DmCeSet.results.length > 0) {
 									var dmceList = artistContractDetailInfo.DmCeSet.results;
-									if (dmceList.find(obj => obj.Epiid == epObj.Epiid  &&  obj.Costcd == selectedCostCodeObj.Costcode ) != undefined ) {
-										var itemCost = dmceList.find(obj => obj.Epiid == epObj.Epiid  &&  obj.Costcd == selectedCostCodeObj.Costcode ).Coepiamt
-										lastEpiCost = parseFloat(itemCost) + parseFloat(lastEpiCost) ;
+									if (dmceList.find(obj => obj.Epiid == epObj.Epiid && obj.Costcd == selectedCostCodeObj.Costcode) != undefined) {
+										var itemCost = dmceList.find(obj => obj.Epiid == epObj.Epiid && obj.Costcd == selectedCostCodeObj.Costcode).Coepiamt
+										lastEpiCost = parseFloat(itemCost) + parseFloat(lastEpiCost);
 									}
 								}
 
@@ -1210,11 +1215,11 @@ sap.ui.define([
 							var selectedCostCodeObj = selCostCodeContext.getObject();
 							if (selectedCostCodeObj.costCodeValue !== 0) {
 								var perEpiValue = parseFloat(selectedCostCodeObj.costCodeValue / Noofepi).toFixed(2);
-								if ( artistContractDetailInfo.contractMode == "Ch" && artistContractDetailInfo.DmCeSet.results.length > 0 ) {
+								if (artistContractDetailInfo.contractMode == "Ch" && artistContractDetailInfo.DmCeSet.results.length > 0) {
 									var dmceList = artistContractDetailInfo.DmCeSet.results;
-									if (dmceList.find(obj => obj.Epiid == epObj.Epiid  &&  obj.Costcd == selectedCostCodeObj.Costcode ) != undefined ) {
-										var itemCost = dmceList.find(obj => obj.Epiid == epObj.Epiid  &&  obj.Costcd == selectedCostCodeObj.Costcode ).Coepiamt
-										perEpiValue = parseFloat(itemCost) + parseFloat(perEpiValue) ;
+									if (dmceList.find(obj => obj.Epiid == epObj.Epiid && obj.Costcd == selectedCostCodeObj.Costcode) != undefined) {
+										var itemCost = dmceList.find(obj => obj.Epiid == epObj.Epiid && obj.Costcd == selectedCostCodeObj.Costcode).Coepiamt
+										perEpiValue = parseFloat(itemCost) + parseFloat(perEpiValue);
 									}
 								}
 								var oEpiDataObj = {
@@ -1648,28 +1653,28 @@ sap.ui.define([
 				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
 				var oContexts = this.byId(sap.ui.core.Fragment.createId("acEpiTab", "oTbl_acepiData")).getSelectedContexts();
 				if (oContexts.length) {
-				MessageBox.confirm(oSourceBundle.getText("msgdeleteConfirmContractEpi" + artistContractDetailInfo.Cnttp), {
-					actions: [oSourceBundle.getText("lblYes"), oSourceBundle.getText("lblNo")],
-					emphasizedAction: "Yes",
-					onClose: function (sAction) {
-						if (sAction === oSourceBundle.getText("lblYes")) {
-							this.deleteEpiData();
-						} else if (sAction === oSourceBundle.getText("lblNo")) {
+					MessageBox.confirm(oSourceBundle.getText("msgdeleteConfirmContractEpi" + artistContractDetailInfo.Cnttp), {
+						actions: [oSourceBundle.getText("lblYes"), oSourceBundle.getText("lblNo")],
+						emphasizedAction: "Yes",
+						onClose: function (sAction) {
+							if (sAction === oSourceBundle.getText("lblYes")) {
+								this.deleteEpiData();
+							} else if (sAction === oSourceBundle.getText("lblNo")) {
 
+							}
+						}.bind(this)
+					});
+				} else {
+					var epIds = [];
+					var distEpisodes = [];
+					artistContractDetailInfo.epiTabData.map(function (obj) {
+						if (epIds.indexOf(obj.Epiid) === -1) {
+							epIds.push(obj.Epiid);
+							distEpisodes.push(obj);
 						}
-					}.bind(this)
-				});
-			} else {
-				var epIds = [];
-				var distEpisodes = [];
-				artistContractDetailInfo.epiTabData.map(function (obj) {
-					if (epIds.indexOf(obj.Epiid) === -1) {
-						epIds.push(obj.Epiid);
-						distEpisodes.push(obj);
-					}
-				});
-				this.onDeleteEpisodeDialog(distEpisodes , {} , "A" , false);
-			}
+					});
+					this.onDeleteEpisodeDialog(distEpisodes, {}, "A", false);
+				}
 			},
 			deleteEpiData: function (selectedEpisodeList) {
 				sap.ui.core.BusyIndicator.show(0);
@@ -1696,28 +1701,28 @@ sap.ui.define([
 						console.log(resp);
 					}
 				};
-				if (selectedEpisodeList == undefined ) {
-				oContexts.map(function (oContext) {
-					var oEpiObj = oContext.getObject()
-					var oPath = "/DmCeSet(Tentid='IBS',Dmno='" + artistContractDetailInfo.Dmno + "',Dmver='" + artistContractDetailInfo.Dmver +
-						"',Conttp='02',Contno='" + artistContractDetailInfo.Contno + "',Contver='" + artistContractDetailInfo.Contver + "',Epiid='" +
-						oEpiObj.Epiid + "')";
-					oModel.remove(oPath, {
-						groupId: "epiACDeleteChanges"
-					});
+				if (selectedEpisodeList == undefined) {
+					oContexts.map(function (oContext) {
+						var oEpiObj = oContext.getObject()
+						var oPath = "/DmCeSet(Tentid='IBS',Dmno='" + artistContractDetailInfo.Dmno + "',Dmver='" + artistContractDetailInfo.Dmver +
+							"',Conttp='02',Contno='" + artistContractDetailInfo.Contno + "',Contver='" + artistContractDetailInfo.Contver + "',Epiid='" +
+							oEpiObj.Epiid + "')";
+						oModel.remove(oPath, {
+							groupId: "epiACDeleteChanges"
+						});
 
-				}.bind(this));
-			} else {
-				selectedEpisodeList.map(function (oEpiObj) {
-					var oPath = "/DmCeSet(Tentid='IBS',Dmno='" + artistContractDetailInfo.Dmno + "',Dmver='" + artistContractDetailInfo.Dmver +
-						"',Conttp='02',Contno='" + artistContractDetailInfo.Contno + "',Contver='" + artistContractDetailInfo.Contver + "',Epiid='" +
-						oEpiObj.Epiid + "')";
-					oModel.remove(oPath, {
-						groupId: "epiACDeleteChanges"
-					});
+					}.bind(this));
+				} else {
+					selectedEpisodeList.map(function (oEpiObj) {
+						var oPath = "/DmCeSet(Tentid='IBS',Dmno='" + artistContractDetailInfo.Dmno + "',Dmver='" + artistContractDetailInfo.Dmver +
+							"',Conttp='02',Contno='" + artistContractDetailInfo.Contno + "',Contver='" + artistContractDetailInfo.Contver + "',Epiid='" +
+							oEpiObj.Epiid + "')";
+						oModel.remove(oPath, {
+							groupId: "epiACDeleteChanges"
+						});
 
-				}.bind(this));
-			}
+					}.bind(this));
+				}
 				oModel.submitChanges(mParameters);
 
 			},
@@ -1851,7 +1856,7 @@ sap.ui.define([
 				var artistContractDetailInfo = artistContractModel.getData();
 				artistContractDetailInfo.mileStonesForEpi = [];
 				artistContractDetailInfo.episodeRangeVisiblePayment = false;
-				artistContractDetailInfo.SeriesRangeVisiblePayment = false;	
+				artistContractDetailInfo.SeriesRangeVisiblePayment = false;
 				if (artistContractDetailInfo.episodeModePayment === 1) {
 					if (artistContractDetailInfo.Cnttp == "09" || artistContractDetailInfo.Cnttp == "06") {
 						artistContractDetailInfo.SeriesRangeVisiblePayment = true;
@@ -2152,6 +2157,12 @@ sap.ui.define([
 							oMsg = "msgTermNotSame";
 						}
 					}
+					if (statusFlag) {
+						if (mlObj.Msidnm == "" || mlObj.Msidnm == undefined ) {
+							statusFlag = false;
+							oMsg = "msgEnterMileNm";
+						}
+					}
 				}
 				if (oMsg !== "") {
 					var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
@@ -2342,7 +2353,7 @@ sap.ui.define([
 				sap.ui.core.BusyIndicator.hide();
 			},
 			//--------delete--episode--from--contracts------//
-			onDeleteEpisodeDialog: function (episodeData, paramList,  paramKey , visbleParam) {
+			onDeleteEpisodeDialog: function (episodeData, paramList, paramKey, visbleParam) {
 				var artistContractModel = this.getView().getModel("artistContractModel");
 				var artistContractDetailInfo = artistContractModel.getData();
 				artistContractModel.setProperty("/episodeRangeVisibleDelivery", false);
@@ -2434,10 +2445,10 @@ sap.ui.define([
 							onClose: function (sAction) {
 								if (sAction === oSourceBundle.getText("lblYes")) {
 									var oTab = this.getView().byId("idACTabBar").getSelectedKey();
-									if(oTab == "acEpiData") {
+									if (oTab == "acEpiData") {
 										this.deleteEpiData(selectedEpisodeList);
-									}else {
-									this.onDeleteMileViaDialog(selectedEpisodeList);
+									} else {
+										this.onDeleteMileViaDialog(selectedEpisodeList);
 									}
 
 								} else if (sAction === oSourceBundle.getText("lblNo")) {
@@ -2463,7 +2474,7 @@ sap.ui.define([
 					}
 				});
 				artistContractDetailInfo.paramName = "Select Milestone"
-				this.onDeleteEpisodeDialog(distEpisodes, artistContractDetailInfo.mileStoneList , "" , true);
+				this.onDeleteEpisodeDialog(distEpisodes, artistContractDetailInfo.mileStoneList, "", true);
 			},
 			onDeleteMileViaDialog: function (selectedEpisodeList) {
 				sap.ui.core.BusyIndicator.show(0);
@@ -2524,12 +2535,12 @@ sap.ui.define([
 				var path = "DmHeaderSet?$filter=Tentid eq 'IBS'  and Dmno eq '" + artistContractDetailInfo.Dmno + "' and Transtp eq 'D' and Spras eq 'E'";
 				var oBusyIndicator = sap.ui.core.BusyIndicator;
 				oDataModel.read(path, {
-	
+
 					success: function (oData) {
 						oBusyIndicator.hide();
 						var dealList = oData.results;
-						if (dealList[0].Dmver != artistContractDetailInfo.Dmver ) {
-							var errorMessage = "Latest Deal Memo version exists, create contract from Deal Memo Application" ;
+						if (dealList[0].Dmver != artistContractDetailInfo.Dmver) {
+							var errorMessage = "Latest Deal Memo version exists, create contract from Deal Memo Application";
 							sap.m.MessageBox.show(
 								errorMessage, {
 								icon: sap.m.MessageBox.Icon.ERROR,
@@ -2541,12 +2552,12 @@ sap.ui.define([
 						} else {
 							this.onEditArtistContract();
 						}
-					
+
 					}.bind(this),
 					error: function (errorMessage) {
 						oBusyIndicator.hide();
 						sap.m.MessageBox.show(
-							errorMessage, { 
+							errorMessage, {
 							icon: sap.m.MessageBox.Icon.ERROR,
 							title: "Internal Error",
 							actions: [sap.m.MessageBox.Action.OK],
@@ -2555,7 +2566,7 @@ sap.ui.define([
 						);
 					}
 				});
-	
+
 			},
 			onEditArtistContract: function () {
 				var artistContractModel = this.getView().getModel("artistContractModel");
