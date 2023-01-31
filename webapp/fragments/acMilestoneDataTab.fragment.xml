@@ -16,10 +16,10 @@
 			<!--</Column>-->
 			<Column minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
 				<ObjectIdentifier title="{i18n>lblMilestoneCode}"></ObjectIdentifier>
-			</Column>
-			<Column minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
+			</Column> 
+			<!-- <Column minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
 				<ObjectIdentifier title="{i18n>lblMilestoneName}"></ObjectIdentifier>
-			</Column>
+			</Column> -->
 			<Column minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
 				<ObjectIdentifier title="{i18n>lblVersion}"></ObjectIdentifier>
 			</Column>
@@ -46,7 +46,7 @@
 			<ColumnListItem mergeDuplicates="true">
 				<cells>
 					<!--<ObjectIdentifier title="{artistContractModel>Epinm}"></ObjectIdentifier>-->
-					<ObjectIdentifier text="{artistContractModel>Msid}"></ObjectIdentifier>
+					<!-- <ObjectIdentifier text="{artistContractModel>Msid}"></ObjectIdentifier> -->
 					<ObjectIdentifier text="{artistContractModel>Msidnm}"></ObjectIdentifier>
 					<Label text="{artistContractModel>Dmver}"></Label>
 					 <Text text="{artistContractModel>Epiid}" class="sapUiSizeCompact"/>

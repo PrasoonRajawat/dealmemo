@@ -50,7 +50,7 @@
 										<ColumnListItem>
 											<cells>
 												<ObjectIdentifier title="{vendorContractModel>Epinm}"></ObjectIdentifier>
-												<ObjectIdentifier text="{vendorContractModel>Msidnm}"></ObjectIdentifier>
+												<ObjectIdentifier text="{vendorContractModel>Msid} - {vendorContractModel>Msidnm}"></ObjectIdentifier>
 												<Label text="{vendorContractModel>Dmver}"></Label>
 												<ObjectIdentifier text="{vendorContractModel>Ztermt}"></ObjectIdentifier>
 												<Label text="{vendorContractModel>Amtper}"></Label> 

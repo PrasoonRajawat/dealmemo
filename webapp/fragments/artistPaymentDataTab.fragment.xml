@@ -56,7 +56,7 @@
 												<cells>
 												<!--	<ObjectIdentifier title="{Seqnr}"></ObjectIdentifier>-->
 													<ObjectIdentifier title="{artistContractModel>Epinm}"></ObjectIdentifier>
-													<ObjectIdentifier text="{artistContractModel>Msidnm}"></ObjectIdentifier>
+													<ObjectIdentifier text="{artistContractModel>Msid} - {artistContractModel>Msidnm}"></ObjectIdentifier>
 															<Label text="{artistContractModel>Dmver}"></Label>
 													<ObjectIdentifier text="{artistContractModel>Ztermt}"></ObjectIdentifier>
 													<ObjectIdentifier text="{artistContractModel>Amtper}"></ObjectIdentifier>
