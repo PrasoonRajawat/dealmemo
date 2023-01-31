@@ -200,12 +200,11 @@
 					<l:GridData span="XL2 L2 M6 S12"/>
 				</layoutData>
 			</Label>
-			<Input width="80%" value="{dealMemoDetailModel>/Exchrt}" textAlign="Right" type="Number" editable="{path:'dealMemoDetailModel>/Dmst',formatter:'.Formatter.formatEditableStatus'}" >
+			<Input width="80%"  value="{dealMemoDetailModel>/Exchrt}" type="Number" textAlign="Right"  editable="{path:'dealMemoDetailModel>/Dmst',formatter:'.Formatter.formatEditableStatus'}" >
 				<layoutData>
 					<l:GridData span="XL4 L4 M6 S12"/>
 				</layoutData>
 			</Input>
-
 			<ObjectIdentifier title="Additional Details" class="sapUiSmallMarginTop sapUiSmallMarginBottom">
 				<layoutData>
 					<l:GridData span="XL12 L12 M12 S12" />

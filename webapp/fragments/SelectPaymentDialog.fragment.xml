@@ -140,7 +140,7 @@
                             <ColumnListItem>
                                 <cells>
                                     <!-- <ObjectIdentifier title="{vendorContractModel>Mstcdnm}" /> -->
-                                    <Input value="{vendorContractModel>Mstcdnm}" />
+                                    <Input value="{vendorContractModel>Mstcdnm}" editable="{=${vendorContractModel>Mstcd} !== '02' &amp;&amp; ${vendorContractModel>/Dmver} === '001' ? true : false }"/>
                                     <!-- <Text text="{vendorContractModel>payee}"/> -->
                                     <!-- <Input value="{vendorContractModel>payeeKey}" showValueHelp="true" valueHelpRequest="onValueHelpAlternatePayee" /> -->
                                     <Input value="{vendorContractModel>Hsncd}" showValueHelp="true" valueHelpRequest="onValueHelpHsnCode" />

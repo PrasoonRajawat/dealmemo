@@ -364,6 +364,7 @@ sap.ui.define([
 						var sortedList = oData.results.sort((a, b) => (a.Lifnr > b.Lifnr) ? 1 : ((b.Lifnr > a.Lifnr) ? -1 : 0));
 						//var filterNonBlank = sortedList.filter(function(obj){return obj.Mcod1 !== ""});
 						sortedList = sortedList.filter(function (obj) {
+							obj.landDesc = obj.Mcod3 + "," + obj.Land1
 							return obj.Bukrs == artistContractDetailInfo.Bukrs;
 						});
 						artistContractModel.setProperty("/vendorsList", sortedList);
@@ -395,6 +396,7 @@ sap.ui.define([
 						var sortedList = oData.results.sort((a, b) => (a.Lifnr > b.Lifnr) ? 1 : ((b.Lifnr > a.Lifnr) ? -1 : 0));
 						//var filterNonBlank = sortedList.filter(function(obj){return obj.Mcod1 !== ""});
 						sortedList = sortedList.filter(function (obj) {
+							obj.landDesc = obj.Mcod3 + "," + obj.Land1
 							return obj.Bukrs == artistContractDetailInfo.Bukrs;
 						});
 						artistContractModel.setProperty("/vendorsList", sortedList);
@@ -414,7 +416,9 @@ sap.ui.define([
 					"bindPropName": "artistContractModel>Mcod1",
 					"propName": "Mcod1",
 					"keyName": "Lifnr",
+					"propName2":"landDesc",
 					"bindPropDescName": "artistContractModel>Lifnr",
+					"bindPropDescName3": "artistContractModel>landDesc",
 					"keyPath": "/vendorKey",
 					"valuePath": "/vendorName",
 					"valueModel": "artistContractModel",
@@ -982,6 +986,9 @@ sap.ui.define([
 					});
 					if (this.oValueHelpSelectionParams.bindPropDescName) {
 						oItem.bindProperty("description", this.oValueHelpSelectionParams.bindPropDescName);
+					}
+					if (this.oValueHelpSelectionParams.bindPropDescName3) {
+						oItem.bindProperty("info", this.oValueHelpSelectionParams.bindPropDescName3);
 					}
 					this._oSelectionDialog.bindAggregation("items", this.oValueHelpSelectionParams.bindPathName, oItem);
 					this._oSelectionDialog.open();
@@ -2158,7 +2165,7 @@ sap.ui.define([
 						}
 					}
 					if (statusFlag) {
-						if (mlObj.Msidnm == "" || mlObj.Msidnm == undefined ) {
+						if (mlObj.Mstcdnm == "" || mlObj.Mstcdnm == undefined ) {
 							statusFlag = false;
 							oMsg = "msgEnterMileNm";
 						}
@@ -2587,9 +2594,12 @@ sap.ui.define([
 				var oFilter =
 					new Filter([
 						new Filter(this.oValueHelpSelectionParams.propName, FilterOperator.Contains, sValue),
-						new Filter(this.oValueHelpSelectionParams.keyName, FilterOperator.Contains, sValue)
+						new Filter(this.oValueHelpSelectionParams.keyName, FilterOperator.Contains, sValue),
+						
 					], false);
-
+					if (this.oValueHelpSelectionParams.bindPropDescName3) {
+						oFilter.aFilters.push(new Filter(this.oValueHelpSelectionParams.propName2, FilterOperator.Contains, sValue))
+					}
 				var oBinding = oEvent.getParameter("itemsBinding");
 				oBinding.filter([oFilter]);
 			},

@@ -492,8 +492,9 @@ sap.ui.define([
 						var sortedList = oData.results.sort((a, b) => (a.Lifnr > b.Lifnr) ? 1 : ((b.Lifnr > a.Lifnr) ? -1 : 0));
 						//   	var filterNonBlank = sortedList.filter(function(obj){return obj.Mcod1 !== ""});	
 						sortedList = sortedList.filter(function (obj) {
-											return obj.Bukrs == vendorContractDetailInfo.Bukrs;
-										});
+							obj.landDesc = obj.Mcod3 + "," + obj.Land1
+							return obj.Bukrs == vendorContractDetailInfo.Bukrs;
+						});
 						vendorContractModel.setProperty("/vendorsList", sortedList);
 						vendorContractModel.refresh(true);
 						sap.ui.core.BusyIndicator.hide();
@@ -525,6 +526,7 @@ sap.ui.define([
 						var sortedList = oData.results.sort((a, b) => (a.Lifnr > b.Lifnr) ? 1 : ((b.Lifnr > a.Lifnr) ? -1 : 0));
 						//   	var filterNonBlank = sortedList.filter(function(obj){return obj.Mcod1 !== ""});
 						sortedList = sortedList.filter(function (obj) {
+							obj.landDesc = obj.Mcod3 + "," + obj.Land1
 							return obj.Bukrs == vendorContractDetailInfo.Bukrs;
 						});
 						vendorContractModel.setProperty("/vendorsList", sortedList);
@@ -547,7 +549,9 @@ sap.ui.define([
 					"bindPropName": "vendorContractModel>Mcod1",
 					"propName": "Mcod1",
 					"keyName": "Lifnr",
+					"propName2": "landDesc",
 					"bindPropDescName": "vendorContractModel>Lifnr",
+					"bindPropDescName3": "vendorContractModel>landDesc",
 					"keyPath": "/vendorKey",
 					"valuePath": "/vendorName",
 					"valueModel": "vendorContractModel",
@@ -1084,6 +1088,9 @@ sap.ui.define([
 					});
 					if (this.oValueHelpSelectionParams.bindPropDescName) {
 						oItem.bindProperty("description", this.oValueHelpSelectionParams.bindPropDescName);
+					}
+					if (this.oValueHelpSelectionParams.bindPropDescName3) {
+						oItem.bindProperty("info", this.oValueHelpSelectionParams.bindPropDescName3);
 					}
 					this._oSelectionDialog.bindAggregation("items", this.oValueHelpSelectionParams.bindPathName, oItem);
 					//Added By Dhiraj For creating vendorcontract to default it as for production House
@@ -2294,7 +2301,7 @@ sap.ui.define([
 						}
 					}
 					if (statusFlag) {
-						if (mlObj.Msidnm == "" || mlObj.Msidnm == undefined ) {
+						if (mlObj.Mstcdnm == "" || mlObj.Mstcdnm == undefined) {
 							statusFlag = false;
 							oMsg = "msgEnterMileNm";
 						}
@@ -3759,7 +3766,9 @@ sap.ui.define([
 						new Filter(this.oValueHelpSelectionParams.propName, FilterOperator.Contains, sValue),
 						new Filter(this.oValueHelpSelectionParams.keyName, FilterOperator.Contains, sValue)
 					], false);
-
+				if (this.oValueHelpSelectionParams.bindPropDescName3) {
+					oFilter.aFilters.push(new Filter(this.oValueHelpSelectionParams.propName2, FilterOperator.Contains, sValue))
+				}
 				var oBinding = oEvent.getParameter("itemsBinding");
 				oBinding.filter([oFilter]);
 			},
@@ -3771,7 +3780,7 @@ sap.ui.define([
 					"02": "Movie ID",
 					"05": "Match ID",
 					"03": "Episode ID",
-					"04": "Episode ID",
+					"04": "Music ID",
 					"06": "Episode ID",
 					"07": "Episode ID",
 					"08": "Episode ID",
@@ -3786,34 +3795,38 @@ sap.ui.define([
 
 				}, {
 					ind: 1,
+					label: "Description",
+					property: "Epinm"
+				}, {
+					ind: 2,
 					label: "IPR Rights",
 					property: "IPRRights"
 				}, {
-					ind: 2,
+					ind: 3,
 					label: "Platform",
 					property: "Platform"
 				}, {
-					ind: 3,
+					ind: 4,
 					label: "Rights Start Date(YYYY-MM-dd)",
 					property: "RightsStartDate"
 				}, {
-					ind: 4,
+					ind: 5,
 					label: "Rights End Date(YYYY-MM-dd)",
 					property: "RightsEndDate"
 				}, {
-					ind: 5,
+					ind: 6,
 					label: "No. of Run",
 					property: "NoofRun"
 				}, {
-					ind: 6,
+					ind: 7,
 					label: "Leading Amort Pattern",
 					property: "LeadingAmortPattern"
 				}, {
-					ind: 7,
+					ind: 8,
 					label: "Non Leading Amort Pattern",
 					property: "NonLeadingAmortPattern"
 				}, {
-					ind: 8,
+					ind: 9,
 					label: "Territory",
 					property: "Territory"
 				}];
@@ -3825,6 +3838,7 @@ sap.ui.define([
 						aData.push({
 
 							Epiid: obj.Epiid,
+							Epinm: obj.Epinm,
 							IPRRights: "",
 							Platform: "",
 							RightsStartDate: "",
@@ -3874,18 +3888,20 @@ sap.ui.define([
 					label: "Platform",
 					property: "Platform",
 
-				}, {
-					ind: 2,
-					label: "Territory",
-					property: "Territory",
+				},
+				// {
+				// 	ind: 2,
+				// 	label: "Territory",
+				// 	property: "Territory",
 
-				}, {
-					ind: 3,
+				// },
+				{
+					ind: 2,
 					label: "Leading Amort Pattern",
 					property: "LeadingAmort",
 
 				}, {
-					ind: 4,
+					ind: 3,
 					label: "Non Leading Amort Pattern",
 					property: "NonLeadingAmort",
 
@@ -3905,9 +3921,9 @@ sap.ui.define([
 					if (platformList.length) {
 						Platform = platformList[0].Mstcd + " - " + platformList[0].Mstcdnm;
 					}
-					if (territoryList.length) {
-						Territory = territoryList[0].Mstcd + " - " + territoryList[0].Mstcdnm;
-					}
+					// if (territoryList.length) {
+					// 	Territory = territoryList[0].Mstcd + " - " + territoryList[0].Mstcdnm;
+					// }
 					if (amortPatternList.length) {
 						LeadingAmort = amortPatternList[0].Mstcd + " - " + amortPatternList[0].Mstcdnm;
 					}
@@ -3917,7 +3933,7 @@ sap.ui.define([
 					var oDataObj = {
 						IPRRight: IPRRight,
 						Platform: Platform,
-						Territory: Territory,
+						// Territory: Territory,
 						LeadingAmort: LeadingAmort,
 						NonLeadingAmort: NonLeadingAmort
 					};
@@ -3928,16 +3944,16 @@ sap.ui.define([
 					if (platformList.length) {
 						platformList.splice(0, 1);
 					}
-					if (territoryList.length) {
-						territoryList.splice(0, 1);
-					}
+					// if (territoryList.length) {
+					// 	territoryList.splice(0, 1);
+					// }
 					if (amortPatternList.length) {
 						amortPatternList.splice(0, 1);
 					}
 					if (nonmortPatternList.length) {
 						nonmortPatternList.splice(0, 1);
 					}
-					if (IPRRightsList.length === 0 && platformList.length === 0 && territoryList.length === 0 && amortPatternList.length === 0 &&
+					if (IPRRightsList.length === 0 && platformList.length === 0 && amortPatternList.length === 0 &&
 						nonmortPatternList.length === 0) {
 						entryPush = false;
 					}
@@ -4066,7 +4082,7 @@ sap.ui.define([
 					var IPRPayload = $.extend(true, {}, this.getIPRPayload());
 					var aKeys = Object.keys(epiObj);
 
-					if (aKeys.indexOf("Episode ID") === -1 && vendorContractDetailInfo.Cnttp === "01" || aKeys.indexOf("Movie ID") === -1 &&
+					if (aKeys.indexOf("Episode ID") === -1 && vendorContractDetailInfo.Cnttp === "01" || aKeys.indexOf("Music ID") === -1 && vendorContractDetailInfo.Cnttp === "04" || aKeys.indexOf("Movie ID") === -1 &&
 						vendorContractDetailInfo.Cnttp === "02" || aKeys.indexOf("Match ID") === -1 && (vendorContractDetailInfo.Cnttp === "05" || vendorContractDetailInfo.Cnttp === "09")) {
 						statusFlag = false;
 						oMsg = oSourceBundle.getText("msgMovIdNonBlank" + vendorContractDetailInfo.Cnttp);
@@ -4103,15 +4119,15 @@ sap.ui.define([
 					// 	oMsg = oSourceBundle.getText("msgNonLeadingAmrtNonBlank");
 					// 	break;
 					// } 
-					else if (aKeys.indexOf("Territory") === -1) {
-						statusFlag = false;
-						oMsg = oSourceBundle.getText("msgTerritoryNonBlank");
-						break;
-					}
+					// else if (aKeys.indexOf("Territory") === -1) {
+					// 	statusFlag = false;
+					// 	oMsg = oSourceBundle.getText("msgTerritoryNonBlank");
+					// 	break;
+					// }
 
 					for (var cnt = 0; cnt < aKeys.length; cnt++) {
 						var aKey = aKeys[cnt];
-						if (aKey === "Episode ID" || aKey === "Movie ID" || aKey === "Match ID") {
+						if (aKey === "Episode ID" || aKey === "Movie ID" || aKey === "Match ID" || aKey === "Music ID") {
 							if (epiObj[aKey] === "" || epiObj[aKey] === null) {
 								statusFlag = false;
 								oMsg = oSourceBundle.getText("msgMovIdNonBlank" + vendorContractDetailInfo.Cnttp);
@@ -4188,15 +4204,21 @@ sap.ui.define([
 						}
 
 						if (aKey === "Rights Start Date(YYYY-MM-dd)") {
+							var fstFisYear = new Date("04-01" + "-" + vendorContractDetailInfo.FromYr);
+							var toFisYear = new Date("03-31" + "-" + (parseInt(vendorContractDetailInfo.ToYr) + 1));
 							if (epiObj[aKey] === "" || epiObj[aKey] === null) {
 								statusFlag = false;
 								oMsg = oSourceBundle.getText("msgRightStrtDateNonBlank");
 								break;
-							} else {
+							}  else {
 								var strtDt = new Date(epiObj[aKey]);
 								if (oDateFormatter.parse(epiObj[aKey]) === null) {
 									statusFlag = false;
 									oMsg = oSourceBundle.getText("msgInvalidRightStartDt");
+									break;
+								} else if (strtDt < fstFisYear || strtDt > toFisYear){
+									statusFlag = false;
+									oMsg = oSourceBundle.getText("ficalyeariprchk");
 									break;
 								} else {
 									IPRPayload.Rhtfrdt = strtDt;
@@ -4391,14 +4413,14 @@ sap.ui.define([
 
 
 						if (aKey === "Territory") {
-							if (epiObj[aKey] === "" || epiObj[aKey] === null) {
-								statusFlag = false;
-								oMsg = oSourceBundle.getText("msgTerritoryNonBlank");
-								break;
-							} else {
+							if (epiObj[aKey] !== "" || epiObj[aKey] !== null) {
+								// 	statusFlag = false;
+								// 	oMsg = oSourceBundle.getText("msgTerritoryNonBlank");
+								// 	break;
+								// } else {
 
-								IPRPayload.Territory = epiObj[aKey].split("-")[0].trim();
-								IPRPayload.Tertnm = epiObj[aKey].split("-")[1].trim();
+								IPRPayload.Territory = epiObj[aKey];
+								// IPRPayload.Tertnm = epiObj[aKey].split("-")[1].trim();
 
 							}
 						}
