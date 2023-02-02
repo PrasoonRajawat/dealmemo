@@ -2732,7 +2732,7 @@ sap.ui.define([
 					}
 				})
 				} else {
-					onCreateAdditionalEpisode();
+					this.onCreateAdditionalEpisode();
 				}
 			},
 			onCreateAdditionalEpisode: function () {

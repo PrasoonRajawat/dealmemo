@@ -17,6 +17,9 @@
 			<Column minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
 				<ObjectIdentifier title="{i18n>lblMilestoneCode}"></ObjectIdentifier>
 			</Column>
+			<!-- <Column minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
+				<ObjectIdentifier title="{i18n>lblMilestoneName}"></ObjectIdentifier>
+			</Column> -->
 			<Column minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
 				<ObjectIdentifier title="{i18n>lblVersion}"></ObjectIdentifier>
 			</Column>
@@ -42,6 +45,7 @@
 			<ColumnListItem mergeDuplicates="true">
 				<cells>
 					<!--<ObjectIdentifier title="{vendorContractModel>Epinm}"></ObjectIdentifier>-->
+					<!-- <ObjectIdentifier text="{vendorContractModel>Msid}"></ObjectIdentifier> -->
 					<ObjectIdentifier text="{vendorContractModel>Msidnm}"></ObjectIdentifier>
 					<Label text="{vendorContractModel>Dmver}"></Label>
 					 <Text text="{vendorContractModel>Epiid}" class="sapUiSizeCompact"/>

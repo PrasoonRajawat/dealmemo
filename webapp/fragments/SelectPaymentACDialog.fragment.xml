@@ -141,7 +141,8 @@
                         <items>
                             <ColumnListItem>
                                 <cells>
-                                    <ObjectIdentifier title="{artistContractModel>Mstcdnm}" />
+                                    <!-- <ObjectIdentifier title="{artistContractModel>Mstcdnm}" /> -->
+                                    <Input value="{artistContractModel>Mstcdnm}"  editable="{artistContractModel>MstcdnmEdit}" />
                                     <!-- <Text text="{artistContractModel>payee}"/> -->
                                     <!-- <Input value="{artistContractModel>payeeKey}" showValueHelp="true" valueHelpRequest="onValueHelpAlternatePayee" /> -->
                                      <Input value="{artistContractModel>Hsncd}" showValueHelp="true" valueHelpRequest="onValueHelpHsnCode" />
