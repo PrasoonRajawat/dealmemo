@@ -1921,7 +1921,8 @@ sap.ui.define([
 							"estDate": null,
 							"Retepi": false,
 							"Hsncd": artistContractDetailInfo.Hsncode,
-							"retMileEnable": false
+							"retMileEnable": false,
+							"MstcdnmEdit": true,
 
 						});
 						if (artistContractDetailInfo.Retenaplty == "02") {
@@ -1931,7 +1932,14 @@ sap.ui.define([
 							var payList = artistContractDetailInfo.DmCoSet.DmCmSet.results;
 							if (payList.find(t => t.Msid == oMLObj.Mstcd) != undefined) {
 								artistContractDetailInfo.mileStonesForEpi[i].Hsncd = payList.find(t => t.Msid == oMLObj.Mstcd).Hsncd;
+								artistContractDetailInfo.mileStonesForEpi[i].Mstcdnm = payList.find(t => t.Msid == oMLObj.Mstcd).Msidnm;
+								if(parseInt(artistContractDetailInfo.Contver) != 1 ) {
+									artistContractDetailInfo.mileStonesForEpi[i].MstcdnmEdit = false;
+								}
 							}
+						}
+						if (oMLObj.Mstcd == "02"){
+							artistContractDetailInfo.mileStonesForEpi[i].MstcdnmEdit = false;
 						}
 
 					});
@@ -2151,6 +2159,10 @@ sap.ui.define([
 						} else {
 							totPerc += parseInt(mlObj.Dueamt);
 						}
+						if (mlObj.Mstcdnm == "" || mlObj.Mstcdnm == undefined ) {
+							statusFlag = false;
+							oMsg = "msgEnterMileNm";
+						}
 					}
 					if (statusFlag) {
 						if (totPerc !== 100 && oAmtType === 0) {
@@ -2164,12 +2176,7 @@ sap.ui.define([
 							oMsg = "msgTermNotSame";
 						}
 					}
-					if (statusFlag) {
-						if (mlObj.Mstcdnm == "" || mlObj.Mstcdnm == undefined ) {
-							statusFlag = false;
-							oMsg = "msgEnterMileNm";
-						}
-					}
+					
 				}
 				if (oMsg !== "") {
 					var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();

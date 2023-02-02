@@ -1998,7 +1998,8 @@ sap.ui.define([
 							"estDate": null,
 							"Retepi": false,
 							"Hsncd": vendorContractDetailInfo.Hsncode,
-							"retMileEnable": false
+							"retMileEnable": false,
+							"MstcdnmEdit": true,
 						});
 						if (vendorContractDetailInfo.Retenaplty == "02") {
 							vendorContractDetailInfo.mileStonesForEpi[i].retMileEnable = true;
@@ -2007,7 +2008,14 @@ sap.ui.define([
 							var payList = vendorContractDetailInfo.DmCmSet.results;
 							if (payList.find(t => t.Msid == oMLObj.Mstcd) != undefined) {
 								vendorContractDetailInfo.mileStonesForEpi[i].Hsncd = payList.find(t => t.Msid == oMLObj.Mstcd).Hsncd;
+								vendorContractDetailInfo.mileStonesForEpi[i].Mstcdnm = payList.find(t => t.Msid == oMLObj.Mstcd).Msidnm;
+								if (parseInt(vendorContractDetailInfo.Contver) != 1) {
+									vendorContractDetailInfo.mileStonesForEpi[i].MstcdnmEdit = false;
+								}
 							}
+						}
+						if (oMLObj.Mstcd == "02") {
+							vendorContractDetailInfo.mileStonesForEpi[i].MstcdnmEdit = false;
 						}
 					});
 					if (selectedMLCntxts.length) {
@@ -2287,6 +2295,10 @@ sap.ui.define([
 						} else {
 							totPerc += parseInt(mlObj.Dueamt);
 						}
+						if (mlObj.Mstcdnm == "" || mlObj.Mstcdnm == undefined) {
+							statusFlag = false;
+							oMsg = "msgEnterMileNm";
+						}
 					}
 					if (statusFlag) {
 						if (totPerc !== 100 && oAmtType === 0) {
@@ -2300,12 +2312,7 @@ sap.ui.define([
 							oMsg = "msgTermNotSame";
 						}
 					}
-					if (statusFlag) {
-						if (mlObj.Mstcdnm == "" || mlObj.Mstcdnm == undefined) {
-							statusFlag = false;
-							oMsg = "msgEnterMileNm";
-						}
-					}
+
 				}
 				if (oMsg !== "") {
 					var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
@@ -4210,13 +4217,13 @@ sap.ui.define([
 								statusFlag = false;
 								oMsg = oSourceBundle.getText("msgRightStrtDateNonBlank");
 								break;
-							}  else {
+							} else {
 								var strtDt = new Date(epiObj[aKey]);
 								if (oDateFormatter.parse(epiObj[aKey]) === null) {
 									statusFlag = false;
 									oMsg = oSourceBundle.getText("msgInvalidRightStartDt");
 									break;
-								} else if (strtDt < fstFisYear || strtDt > toFisYear){
+								} else if (strtDt < fstFisYear || strtDt > toFisYear) {
 									statusFlag = false;
 									oMsg = oSourceBundle.getText("ficalyeariprchk");
 									break;
