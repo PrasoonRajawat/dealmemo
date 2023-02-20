@@ -45,13 +45,13 @@
                     </layoutData>
                     <items>
                         <VBox>
-                            <Label text="{parts:[{value:'lblSelectEpiFrom'},{path:'artistContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" required="true" width="100%" />
+                            <Label text="{parts:[{value:'lblSelectseriesFrom'},{path:'artistContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" required="true" width="100%" />
                             <ComboBox width="95%" items="{artistContractModel>/epPaymentList}" selectedKey="{artistContractModel>/epiPaymentFromId}">
                                 <c:Item text="{artistContractModel>Mpml2nm}" key="{artistContractModel>Mpml2}" />
                             </ComboBox>
                         </VBox>
                         <VBox>
-                            <Label text="{parts:[{value:'lblSelectEpiTo'},{path:'artistContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" required="true" width="100%" />
+                            <Label text="{parts:[{value:'lblSelectseriesTo'},{path:'artistContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" required="true" width="100%" />
                             <ComboBox width="95%" items="{artistContractModel>/epPaymentList}" selectedKey="{artistContractModel>/epiPaymentToId}">
                                 <c:Item text="{artistContractModel>Mpml2nm}" key="{artistContractModel>Mpml2}" />
                             </ComboBox>
