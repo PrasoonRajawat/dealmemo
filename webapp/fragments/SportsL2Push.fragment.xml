@@ -1,6 +1,12 @@
 <c:FragmentDefinition xmlns="sap.m" xmlns:u="sap.ui.unified" xmlns:l="sap.ui.layout" xmlns:c="sap.ui.core">
-    <Dialog type="Message" title="Enter {parts:[{value:'lblVCContent'},{path:'dealMemoDetailModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'} Details" contentWidth="70%">
-        <Table id="oTable_epiDetail" visible="true" itemPress="" items="{dealMemoDetailModel>/mpml2PushList}" mode="{= ${dealMemoDetailModel>/tableMode} === true ? 'MultiSelect' : 'None'}" selectionChange="handleEpiRowSelection">
+    <Dialog  type="Message" title="Enter {parts:[{value:'lblVCContent'},{path:'dealMemoDetailModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'} Details" contentWidth="70%">
+     <Toolbar visible="{dealMemoDetailModel>/pushMpm}">
+		<HBox>
+		<Label text="{i18n>lblFiscalYr} : "  design="Bold" />
+		<Label text="{dealMemoDetailModel>/FromYr} - {dealMemoDetailModel>/ToYr}" />
+		</HBox>
+        </Toolbar>
+        <Table id="oTable_epiDetail" items="{dealMemoDetailModel>/mpml2PushList}" mode="{= ${dealMemoDetailModel>/tableMode} === true ? 'MultiSelect' : 'None'}" itemPress="onChangeCostLine" visible="{dealMemoDetailModel>/pushMpm}" selectionChange="handleEpiRowSelection">
             <columns>
                 <Column width="40%" mergeDuplicates="">
                     <ObjectIdentifier title="{parts:[{value:'lblVCContent'},{path:'dealMemoDetailModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" />
@@ -8,47 +14,110 @@
                 <Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" visible="{= ${dealMemoDetailModel>/Cnttp} === '09'  ? true : false }" width="15%">
                     <ObjectIdentifier title="Match Type" />
                 </Column>
-                <Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline"  width="10%">
+                <Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" width="10%">
                     <ObjectIdentifier title="{parts:[{value:'lblNoOfEp'},{path:'dealMemoDetailModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" />
                 </Column>
                 <Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" width="10%">
                     <ObjectIdentifier title="{i18n>ObjIden_Year}" />
                 </Column>
+                <Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" width="20%">
+                <ObjectIdentifier title="{parts:[{value:'lblTblColTotEpiCost'},{path:'dealMemoDetailModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" />
+            </Column>
                 <Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" visible="{= ${dealMemoDetailModel>/Cnttp} === '09' || ${dealMemoDetailModel>/Cnttp} === '06' ? true : false }" width="20%">
                     <ObjectIdentifier title="{i18n>ObjIden_LeadingValue}" />
                 </Column>
                 <Column width="5%">
                     <Text text="" />
                 </Column>
-				 <Column width="5%">
+                <Column width="5%">
                     <Text text="" />
                 </Column>
             </columns>
             <items>
-                <ColumnListItem type="">
+                <ColumnListItem type="Navigation">
                     <cells>
                         <Input showValueHelp="true" valueHelpRequest="onValuHelpMpml2" editable="{dealMemoDetailModel>epiDescEditable}" change="" value="{dealMemoDetailModel>Epinm}" tooltip="{Epinm}" />
                         <Input value="{dealMemoDetailModel>Matyp}" editable="{dealMemoDetailModel>epiDescEditable}" showValueHelp="true" valueHelpRequest="onValueHelpMatchTy" />
                         <Input value="{dealMemoDetailModel>Nomatch}" editable="{dealMemoDetailModel>epiDescEditable}" />
                         <Input value="{dealMemoDetailModel>Gjahr}" editable="{dealMemoDetailModel>epiDescEditable}" change="handleYearChange" />
+                         <Input value="{ parts: [ {path: 'dealMemoDetailModel>Totepiamt'}, {path: 'dealMemoDetailModel>Waers'} ], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false,minFractionDigits: 2, maxFractionDigits: 2 } }" textAlign="Right" editable="false" />
                         <Input
                             value="{ parts: [ {path: 'dealMemoDetailModel>Leadcost'}, {path: 'dealMemoDetailModel>Waers'} ], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false,minFractionDigits: 2, maxFractionDigits: 2 } }"
                             textAlign="Right"
-                            change=""
+                            change="onLeadingValueChange"
                             editable="{dealMemoDetailModel>epiDescEditable}"
                         />
                         <Button icon="sap-icon://add" press="onAddRowMpml2" tooltip="Add Row" type="Transparent" />
-							<Button icon="sap-icon://delete"  press="onDeleteRowMpml2" tooltip="Delete Row" type="Transparent"/>
+                        <Button icon="sap-icon://delete" press="onDeleteRowMpml2" tooltip="Delete Row" type="Transparent" />
                     </cells>
                 </ColumnListItem>
             </items>
         </Table>
 
-        <beginButton>
-            <Button text="Push" press="onpushMpmL2" />
-        </beginButton>
-        <endButton>
-            <Button text="{i18n>Cancel}" press="launchPushMpml2Cancel" />
-        </endButton>
+        <Table id="oTable_detailEpisodeCost" items="{dealMemoDetailModel>/mpmCostSheet}" visible="{dealMemoDetailModel>/changeCostLine}">
+            <layoutData>
+                <l:SplitterLayoutData size="70%" />
+            </layoutData>
+            <infoToolbar>
+                <Toolbar>
+                    <Label text="{parts:[{value:'lbl_BudgetDtlschange'},{path:'dealMemoDetailModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" />
+                </Toolbar>
+            </infoToolbar>
+            <columns>
+                <Column width="200px" mergeDuplicates="true">
+                    <Label text="{i18n>lblColHeadBudgetHead}" design="Bold" />
+                </Column>
+                <Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" hAlign="Right" width="200px">
+                    <Label text="{i18n>lblColHeadAcqBudget}" design="Bold" />
+                </Column>
+                <Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" hAlign="Right" width="200px">
+                    <Label text="{i18n>lblColHeadExtBudget}" design="Bold" />
+                </Column>
+                <Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" hAlign="Right" width="200px">
+                    <Label text="{i18n>lblColHeadInhBudget}" design="Bold" />
+                </Column>
+                <Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" hAlign="Right" width="200px">
+                    <Label text="{i18n>lblColHeadTotBudget}" design="Bold" />
+                </Column>
+            </columns>
+            <items>
+                <ColumnListItem visible="true" unread="false" selected="true" counter="0">
+                    <HBox>
+                        <c:Icon src="{= ${dealMemoDetailModel>isExpanded} === true ? 'sap-icon://navigation-down-arrow' : 'sap-icon://navigation-right-arrow'}" visible="{dealMemoDetailModel>hasChild}" press="onNodeExpandMpmEpiCost" />
+                        <ObjectIdentifier title="{dealMemoDetailModel>Costdesc}" class="sapUiSmallMarginBegin" />
+                        <ObjectIdentifier title="{dealMemoDetailModel>Scostdesc}" class="sapUiMediumMarginBegin" />
+                    </HBox>
+                    <Input
+                        textAlign="Right"
+                        change="onChangeAcquisitionAmount"
+                        enabled="{dealMemoDetailModel>enableAcquisition}"
+                        value="{ parts: [ {path: 'dealMemoDetailModel>Prdhsamt'}, {path: 'dealMemoDetailModel>Waers'} ], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false,minFractionDigits: 2, maxFractionDigits: 2 } }"
+                    />
+                    <Input
+                        textAlign="Right"
+                        change="onChangeExternalAmount"
+                        enabled="{dealMemoDetailModel>enableExternal}"
+                        value="{parts: [ { path:'dealMemoDetailModel>Inhsamt'},{path: 'dealMemoDetailModel>Waers'}],type: 'sap.ui.model.type.Currency',formatOptions: { showMeasure: false,minFractionDigits: 2, maxFractionDigits: 2 }}"
+                    />
+                    <Input
+                        textAlign="Right"
+                        change="onChangeInHouseAmount"
+                        enabled="{dealMemoDetailModel>enableInhouse}"
+                        value="{parts: [ { path:'dealMemoDetailModel>Inhouseamt'},{path: 'dealMemoDetailModel>Waers'}],type: 'sap.ui.model.type.Currency',formatOptions: { showMeasure: false,minFractionDigits: 2, maxFractionDigits: 2 }}"
+                    />
+                    <Input
+                        textAlign="Right"
+                        enabled="{dealMemoDetailModel>enableTotal}"
+                        value="{parts: [ { path:'dealMemoDetailModel>Totcostamt'},{path: 'dealMemoDetailModel>Waers'}],type: 'sap.ui.model.type.Currency',formatOptions: { showMeasure: false,minFractionDigits: 2, maxFractionDigits: 2 }}"
+                    />
+                </ColumnListItem>
+            </items>
+        </Table>
+        <buttons>
+            <Button id="pushMpml2" text="Push" visible="{dealMemoDetailModel>/pushMpm}" press="onpushMpmL2" />
+            <Button id="cancel" text="{i18n>Cancel}" visible="{dealMemoDetailModel>/pushMpm}" press="launchPushMpml2Cancel" />
+            <Button id="btnBack" visible="{dealMemoDetailModel>/changeCostLine}" text="{i18n>Back}" press="onBackMpm" />
+            <Button id="btnOk" text="{i18n>btnOk}" visible="{dealMemoDetailModel>/changeCostLine}" press="onChangeMpmCost" />
+        </buttons>
     </Dialog>
 </c:FragmentDefinition>

@@ -1869,7 +1869,7 @@ sap.ui.define([
 
 					}
 				});
-				if (vendorContractDetailInfo.Cnttp == "09" || vendorContractDetailInfo.Cnttp == "06") {
+				if (vendorContractDetailInfo.Cnttp == "09" ) {
 					var mpmIds = [];
 					var distMpml2 = [];
 					vendorContractDetailInfo.epiVCTabData.map(function (obj) {
@@ -1943,7 +1943,7 @@ sap.ui.define([
 				vendorContractDetailInfo.episodeRangeVisiblePayment = false;
 				vendorContractDetailInfo.SeriesRangeVisiblePayment = false;
 				if (vendorContractDetailInfo.episodeModePayment === 1) {
-					if (vendorContractDetailInfo.Cnttp == "09" || vendorContractDetailInfo.Cnttp == "06") {
+					if (vendorContractDetailInfo.Cnttp == "09" ) {
 						vendorContractDetailInfo.SeriesRangeVisiblePayment = true;
 					} else {
 						vendorContractDetailInfo.episodeRangeVisiblePayment = true;
@@ -2078,14 +2078,14 @@ sap.ui.define([
 				var initalMpm = 0;
 				var lastMpm = 0;
 				if (oselIndex == 0) {
-					if (vendorContractDetailInfo.Cnttp != "09" && vendorContractDetailInfo.Cnttp != "06") {
+					if (vendorContractDetailInfo.Cnttp != "09" ) {
 						selectedEpisodeList = vendorContractDetailInfo.epPaymentList;
 					} else {
 						selectedEpisodeList = vendorContractDetailInfo.epMpml2List;
 					}
 				} else {
 					selectedEpisodeList = [];
-					if (vendorContractDetailInfo.Cnttp != "09" && vendorContractDetailInfo.Cnttp != "06") {
+					if (vendorContractDetailInfo.Cnttp != "09" ) {
 						vendorContractDetailInfo
 							.epPaymentList.map(function (epVCObj) {
 								if (epVCObj.Epiid >= vendorContractDetailInfo.epiPaymentFromId && epVCObj.Epiid <= vendorContractDetailInfo.epiPaymentToId) {
@@ -2649,6 +2649,321 @@ sap.ui.define([
 					}.bind(this));
 				}
 			},
+
+			prepareDeliverypayload: function (oSelDelvCodeObj) {
+				var vendorContractModel = this.getView().getModel("vendorContractModel");
+				var vendorContractDetailInfo = vendorContractModel.getData();
+				var showLinkPaymentMsg = false;
+				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
+				var selectedEpisodeList = [];
+				var oselIndex = vendorContractDetailInfo.episodeModeDelivery;
+				var deliveryPayloadArr = [];
+				if (oselIndex == 0) {
+					selectedEpisodeList = vendorContractDetailInfo.epDeliveryList;
+				} else {
+					selectedEpisodeList = [];
+					vendorContractDetailInfo.epDeliveryList.map(function (epVCObj) {
+						if (epVCObj.Epiid >= vendorContractDetailInfo.epiDeliveryFromId && epVCObj.Epiid <= vendorContractDetailInfo.epiDeliveryToId) {
+							selectedEpisodeList.push(epVCObj);
+						}
+
+					});
+				}
+
+				selectedEpisodeList.map(function (selEpObj) {
+
+					var oContentReceiptPayObjs = vendorContractDetailInfo.vcPaymentData.filter(function (epPayObj) {
+						return epPayObj.Epiid === selEpObj.Epiid && epPayObj.Msid === "02"
+					});
+					if (oContentReceiptPayObjs.length && oSelDelvCodeObj.Delvpay) {
+						// showLinkPaymentMsg = true;
+
+						selEpObj.Delvpay = true;
+					} else {
+						selEpObj.Delvpay = false;
+					}
+
+				});
+				selectedEpisodeList.map(function (selEpObj) {
+					deliveryPayloadArr.push({
+
+						Contno: vendorContractDetailInfo.Contno,
+						Conttp: "01",
+						Contver: vendorContractDetailInfo.Contver,
+						Delvcd: oSelDelvCodeObj.Mstcd,
+						Delvcdnm: oSelDelvCodeObj.Mstcdnm,
+						Delvdoc: "",
+						Delvdt: null,
+						Delvpay: selEpObj.Delvpay,
+						Delvtm: null,
+						Dmno: vendorContractDetailInfo.Dmno,
+						Dmver: vendorContractDetailInfo.Dmver,
+						Epiid: selEpObj.Epiid,
+						Epinm: selEpObj.Epinm,
+						Invtind: "",
+						Mscompdt: null,
+						Remarks: "",
+						Spras: "",
+						Tecost: "",
+						Telest: "",
+						Tentid: "IBS",
+						flag: "Cr"
+					});
+				}.bind(this));
+
+				// if (showLinkPaymentMsg) {
+				// 	MessageBox.confirm(oSourceBundle.getText("msgisPaymentLinked"), {
+				// 		actions: [oSourceBundle.getText("lblYes"), oSourceBundle.getText("lblNo")],
+				// 		emphasizedAction: "Yes",
+				// 		onClose: function (sAction) {
+				// 			if (sAction === oSourceBundle.getText("lblYes")) {
+
+				// 				var oResp = this.updateDeliveryData(deliveryPayloadArr, $.extend(true, [], vendorContractDetailInfo.vcDeliveryData));
+				// 				if (oResp.flag) {
+				// 					vendorContractDetailInfo.vcDeliveryData = oResp.oResTable;
+				// 					vendorContractModel.refresh(true);
+				// 				} else {
+
+				// 					var epiIds = oResp.oResTable.join(",");
+				// 					var oMsg = oSourceBundle.getText("lblForEpisodes" + vendorContractDetailInfo.Cnttp) + " " + epiIds + "Delivery Code" +
+				// 						oSelDelvCodeObj.Mstcdnm + " is already pushed";
+				// 					MessageBox.error(Msg);
+				// 				}
+
+				// 			} else if (sAction === oSourceBundle.getText("lblNo")) {
+				// 				deliveryPayloadArr.map(function (delPayloadObj) {
+				// 					delPayloadObj.Delvpay = false;
+				// 				});
+				// 				var oResp = this.updateDeliveryData(deliveryPayloadArr, $.extend(true, [], vendorContractDetailInfo.vcDeliveryData));
+				// 				if (oResp.flag) {
+				// 					vendorContractDetailInfo.vcDeliveryData = oResp.oResTable;
+				// 					vendorContractModel.refresh(true);
+				// 				} else {
+
+				// 					var epiIds = oResp.oResTable.join(",");
+				// 					var oMsg = oSourceBundle.getText("lblForEpisodes" + vendorContractDetailInfo.Cnttp) + " " + epiIds + "Delivery Code" +
+				// 						oSelDelvCodeObj.Mstcdnm + " is already pushed";
+				// 					MessageBox.error(Msg);
+				// 				}
+				// 			}
+				// 		}.bind(this)
+				// 	});
+
+				// } else {}
+
+
+				var oResp = this.updateDeliveryData(deliveryPayloadArr, $.extend(true, [], vendorContractDetailInfo.vcDeliveryData));
+				if (oResp.flag) {
+					vendorContractDetailInfo.vcDeliveryData = oResp.oResTable;
+					vendorContractModel.refresh(true);
+				} else {
+
+					var epiIds = oResp.oResTable.join(",");
+					var oMsg = oSourceBundle.getText("lblForEpisodes" + vendorContractDetailInfo.Cnttp) + " " + epiIds + "Delivery Code" +
+						oSelDelvCodeObj.Mstcdnm + " is already pushed";
+					MessageBox.error(oMsg)
+				}
+
+
+
+			},
+
+			updateDeliveryData: function (deliveryPayloadArr, delvTableData) {
+
+				var oResponse = {
+					flag: true,
+					oResTable: delvTableData
+				};
+				var alreadyPushedEpisodes = [];
+				deliveryPayloadArr.map(function (obj) {
+					var flagNewEntry = true;
+					obj.flag = "Cr";
+
+					for (var oInd = 0; oInd < delvTableData.length; oInd++) {
+						var vcEpiObj = delvTableData[oInd];
+						if (vcEpiObj.Epiid === obj.Epiid && vcEpiObj.Delvcd === obj.Delvcd && vcEpiObj.Contver === obj.Contver) {
+							alreadyPushedEpisodes.push(obj.Epiid);
+							flagNewEntry = false;
+							break;
+						}
+					}
+					if (flagNewEntry) {
+						delvTableData.push(obj);
+					} else {
+						if (delvTableData[oInd].episodeSaveFlag) {
+							obj.flag = "Ch";
+						}
+						//	delvTableData[oInd] = obj;
+					}
+				});
+				if (alreadyPushedEpisodes.length > 0) {
+					oResponse.flag = false;
+					oResponse.oResTable = alreadyPushedEpisodes;
+				} else {
+					oResponse.flag = true;
+					oResponse.oResTable = delvTableData;
+				}
+				return oResponse;
+			},
+
+			onConfirmDeliverySelection: function (oEvent) {
+
+				var vendorContractModel = this.getView().getModel("vendorContractModel");
+				var vendorContractDetailInfo = vendorContractModel.getData();
+				var count = 0;
+				var pushStatus = true;
+				var pushMsg = "";
+				// for (var sel = 0; sel < oEvent.getParameters()['selectedItems'].length; sel++) { //added by Dhiraj On 19/05/2022 for selecting multiple deliverables
+				var oContentReceiptPayObjs = vendorContractDetailInfo.vcPaymentData.filter(function (epPayObj) {
+					return epPayObj.Msid === "02"
+				});
+				var linkCount = oEvent.getParameters()['selectedItems'].filter(function (linkObj) {
+					return linkObj.getBindingContext("vendorContractModel").getObject().Delvpay == true;
+				});
+				var selectedEpisodeList = [];
+				var oselIndex = vendorContractDetailInfo.episodeModeDelivery;
+				if (oselIndex == 0) {
+					selectedEpisodeList = vendorContractDetailInfo.epDeliveryList;
+				} else {
+					selectedEpisodeList = [];
+					vendorContractDetailInfo.epDeliveryList.map(function (epVCObj) {
+						if (epVCObj.Epiid >= vendorContractDetailInfo.epiDeliveryFromId && epVCObj.Epiid <= vendorContractDetailInfo.epiDeliveryToId) {
+							selectedEpisodeList.push(epVCObj);
+						}
+					});
+				}
+				var delvTableData = $.extend(true, [], vendorContractDetailInfo.vcDeliveryData);
+				var delvTabvalid = delvTableData.filter(function (obj) {
+					return obj.Delvpay == true;
+				});
+				if (!delvTabvalid.length) {
+					if (delvTableData.length) {
+						selectedEpisodeList.map(function (obj) {
+							if (pushStatus == true) {
+								for (var i = 0; i < oEvent.getParameters()['selectedItems'].length; i++) {
+									if (pushStatus == true) {
+										var selDelv = oEvent.getParameters()['selectedItems'][i].getBindingContext("vendorContractModel").getObject();
+										for (var oInd = 0; oInd < delvTableData.length; oInd++) {
+											var vcEpiObj = delvTableData[oInd];
+											if (vcEpiObj.Epiid === obj.Epiid && vcEpiObj.Delvcd !== selDelv.Mstcd) {
+												if (oContentReceiptPayObjs.length) {
+													if (linkCount.length == 0) {
+														pushStatus = false;
+														pushMsg = "Atleast one Deliverable should be Linked to Payment"
+														break;
+													} else if (linkCount.length > 1) {
+														pushStatus = false
+														pushMsg = "Only one Deliverable should be Linked to Payment"
+														break;
+													}
+												}
+											}
+										}
+									} else {
+										break;
+									}
+								}
+							}
+						});
+					} else {
+						if (oContentReceiptPayObjs.length) {
+							selectedEpisodeList.map(function (obj) {
+								for (var n = 0; n < oContentReceiptPayObjs.length; n++) {
+									var contRecpObj = oContentReceiptPayObjs[n]
+									if (obj.Epiid == contRecpObj.Epiid) {
+										if (linkCount.length == 0) {
+											pushStatus = false;
+											pushMsg = "Atleast one Deliverable should be Linked to Payment"
+										} else if (linkCount.length > 1) {
+											pushStatus = false
+											pushMsg = "Only one Deliverable should be Linked to Payment"
+										}
+									}
+								}
+							});
+						}
+					}
+				} else {
+					if (oContentReceiptPayObjs.length) {
+						selectedEpisodeList.map(function (obj) { 
+							for ( var x = 0 ; x < delvTabvalid.length ; x++ ) {
+								var delvValidobj = delvTabvalid[x]
+								if (delvValidobj.Epiid == obj.Epiid && delvValidobj.Delvpay)
+							for (var n = 0; n < oContentReceiptPayObjs.length; n++) {
+								var contRecpObj = oContentReceiptPayObjs[n]
+								if (obj.Epiid == contRecpObj.Epiid) {
+									if (linkCount.length != 0) {
+										pushStatus = false;
+										pushMsg = "Link To Payment is already pushed for Selected Episode/s"
+									} 
+								}
+							}
+						}
+						});
+					}
+				}
+
+
+				if (pushStatus) {
+					for (var sel = oEvent.getParameters()['selectedItems'].length - 1; sel >= 0; sel--) {	//added by Mandar On 20/09/2022 for selecting multiple deliverables
+						var oSelDelvCodeObj = oEvent.getParameters()['selectedItems'][sel].getBindingContext("vendorContractModel").getObject();
+						this.prepareDeliverypayload(oSelDelvCodeObj);
+					}
+
+				} else {
+					MessageBox.error(pushMsg)
+				}
+				// var oSelDelvCodeObj = oEvent.getParameters()['selectedItem'].getBindingContext("vendorContractModel").getObject();   			
+				// 	this.prepareDeliverypayload(oSelDelvCodeObj);  //ComMented by Dhiraj On 19/05/2022 for selecting multiple deliverables
+			},
+			onSelectionDialogDeliveryClose: function () {
+				this._oSelectDeliveryCodeDialog.close();
+			},
+
+			saveDeliveryTabVC: function () {
+				var vendorContractModel = this.getView().getModel("vendorContractModel");
+				var vendorContractDetailInfo = vendorContractModel.getData();
+				var epiDeliverytabData = vendorContractDetailInfo.vcDeliveryData;
+				var alreadySavedflag = true;
+				var oModel = this.getView().getModel();
+				oModel.setUseBatch(true);
+				oModel.setDeferredGroups(oModel.getDeferredGroups().concat(["epiDeliveryVCChanges"]));
+				var mParameters = {
+					groupId: "epiDeliveryVCChanges",
+					success: function (data, resp) {
+
+						var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
+						MessageToast.show(oSourceBundle.getText("msgepiVCDeliverySave"));
+						this.reloadVendorContractTabs();
+
+					}.bind(this),
+					error: function (oError) {
+						var oErrorResponse = JSON.parse(oError.responseText);
+						var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
+						MessageBox.error(oMsg);
+					}
+				};
+
+				epiDeliverytabData.map(function (oEpiDeliveryObj) {
+					var epiDeliveryObj = $.extend(true, {}, oEpiDeliveryObj);
+					if (epiDeliveryObj.flag === "Cr") {
+						alreadySavedflag = false;
+						delete epiDeliveryObj.flag;
+						delete epiDeliveryObj.episodeSaveFlag;
+						oModel.create("/DmVdSet", epiDeliveryObj, {
+							groupId: "epiDeliveryVCChanges"
+						});
+					}
+				}.bind(this));
+
+				if (alreadySavedflag) {
+					var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
+					MessageBox.information(oSourceBundle.getText("msgAlreadysave"));
+				} else {
+					oModel.submitChanges(mParameters);
+				}
+			},
+
 			onSeletDelTblVC: function () {
 				var vendorContractModel = this.getView().getModel("vendorContractModel");
 				var vendorContractDetailInfo = vendorContractModel.getData();
@@ -3001,246 +3316,7 @@ sap.ui.define([
 				oModel.submitChanges(mParameters);
 				sap.ui.core.BusyIndicator.hide();
 			},
-			prepareDeliverypayload: function (oSelDelvCodeObj) {
-				var vendorContractModel = this.getView().getModel("vendorContractModel");
-				var vendorContractDetailInfo = vendorContractModel.getData();
-				var showLinkPaymentMsg = false;
-				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
-				var selectedEpisodeList = [];
-				var oselIndex = vendorContractDetailInfo.episodeModeDelivery;
-				var deliveryPayloadArr = [];
-				if (oselIndex == 0) {
-					selectedEpisodeList = vendorContractDetailInfo.epDeliveryList;
-				} else {
-					selectedEpisodeList = [];
-					vendorContractDetailInfo.epDeliveryList.map(function (epVCObj) {
-						if (epVCObj.Epiid >= vendorContractDetailInfo.epiDeliveryFromId && epVCObj.Epiid <= vendorContractDetailInfo.epiDeliveryToId) {
-							selectedEpisodeList.push(epVCObj);
-						}
 
-					});
-				}
-
-				selectedEpisodeList.map(function (selEpObj) {
-
-					var oContentReceiptPayObjs = vendorContractDetailInfo.vcPaymentData.filter(function (epPayObj) {
-						return epPayObj.Epiid === selEpObj.Epiid && epPayObj.Msid === "02"
-					});
-					if (oContentReceiptPayObjs.length && oSelDelvCodeObj.Delvpay) {
-						// showLinkPaymentMsg = true;
-
-						selEpObj.Delvpay = true;
-					} else {
-						selEpObj.Delvpay = false;
-					}
-
-				});
-				selectedEpisodeList.map(function (selEpObj) {
-					deliveryPayloadArr.push({
-
-						Contno: vendorContractDetailInfo.Contno,
-						Conttp: "01",
-						Contver: vendorContractDetailInfo.Contver,
-						Delvcd: oSelDelvCodeObj.Mstcd,
-						Delvcdnm: oSelDelvCodeObj.Mstcdnm,
-						Delvdoc: "",
-						Delvdt: null,
-						Delvpay: selEpObj.Delvpay,
-						Delvtm: null,
-						Dmno: vendorContractDetailInfo.Dmno,
-						Dmver: vendorContractDetailInfo.Dmver,
-						Epiid: selEpObj.Epiid,
-						Epinm: selEpObj.Epinm,
-						Invtind: "",
-						Mscompdt: null,
-						Remarks: "",
-						Spras: "",
-						Tecost: "",
-						Telest: "",
-						Tentid: "IBS",
-						flag: "Cr"
-					});
-				}.bind(this));
-
-				// if (showLinkPaymentMsg) {
-				// 	MessageBox.confirm(oSourceBundle.getText("msgisPaymentLinked"), {
-				// 		actions: [oSourceBundle.getText("lblYes"), oSourceBundle.getText("lblNo")],
-				// 		emphasizedAction: "Yes",
-				// 		onClose: function (sAction) {
-				// 			if (sAction === oSourceBundle.getText("lblYes")) {
-
-				// 				var oResp = this.updateDeliveryData(deliveryPayloadArr, $.extend(true, [], vendorContractDetailInfo.vcDeliveryData));
-				// 				if (oResp.flag) {
-				// 					vendorContractDetailInfo.vcDeliveryData = oResp.oResTable;
-				// 					vendorContractModel.refresh(true);
-				// 				} else {
-
-				// 					var epiIds = oResp.oResTable.join(",");
-				// 					var oMsg = oSourceBundle.getText("lblForEpisodes" + vendorContractDetailInfo.Cnttp) + " " + epiIds + "Delivery Code" +
-				// 						oSelDelvCodeObj.Mstcdnm + " is already pushed";
-				// 					MessageBox.error(Msg);
-				// 				}
-
-				// 			} else if (sAction === oSourceBundle.getText("lblNo")) {
-				// 				deliveryPayloadArr.map(function (delPayloadObj) {
-				// 					delPayloadObj.Delvpay = false;
-				// 				});
-				// 				var oResp = this.updateDeliveryData(deliveryPayloadArr, $.extend(true, [], vendorContractDetailInfo.vcDeliveryData));
-				// 				if (oResp.flag) {
-				// 					vendorContractDetailInfo.vcDeliveryData = oResp.oResTable;
-				// 					vendorContractModel.refresh(true);
-				// 				} else {
-
-				// 					var epiIds = oResp.oResTable.join(",");
-				// 					var oMsg = oSourceBundle.getText("lblForEpisodes" + vendorContractDetailInfo.Cnttp) + " " + epiIds + "Delivery Code" +
-				// 						oSelDelvCodeObj.Mstcdnm + " is already pushed";
-				// 					MessageBox.error(Msg);
-				// 				}
-				// 			}
-				// 		}.bind(this)
-				// 	});
-
-				// } else {}
-
-
-				var oResp = this.updateDeliveryData(deliveryPayloadArr, $.extend(true, [], vendorContractDetailInfo.vcDeliveryData));
-				if (oResp.flag) {
-					vendorContractDetailInfo.vcDeliveryData = oResp.oResTable;
-					vendorContractModel.refresh(true);
-				} else {
-
-					var epiIds = oResp.oResTable.join(",");
-					var oMsg = oSourceBundle.getText("lblForEpisodes" + vendorContractDetailInfo.Cnttp) + " " + epiIds + "Delivery Code" +
-						oSelDelvCodeObj.Mstcdnm + " is already pushed";
-					MessageBox.error(oMsg)
-				}
-
-
-
-			},
-
-			updateDeliveryData: function (deliveryPayloadArr, delvTableData) {
-
-				var oResponse = {
-					flag: true,
-					oResTable: delvTableData
-				};
-				var alreadyPushedEpisodes = [];
-				deliveryPayloadArr.map(function (obj) {
-					var flagNewEntry = true;
-					obj.flag = "Cr";
-
-					for (var oInd = 0; oInd < delvTableData.length; oInd++) {
-						var vcEpiObj = delvTableData[oInd];
-						if (vcEpiObj.Epiid === obj.Epiid && vcEpiObj.Delvcd === obj.Delvcd && vcEpiObj.Contver === obj.Contver) {
-							alreadyPushedEpisodes.push(obj.Epiid);
-							flagNewEntry = false;
-							break;
-						}
-					}
-					if (flagNewEntry) {
-						delvTableData.push(obj);
-					} else {
-						if (delvTableData[oInd].episodeSaveFlag) {
-							obj.flag = "Ch";
-						}
-						//	delvTableData[oInd] = obj;
-					}
-				});
-				if (alreadyPushedEpisodes.length > 0) {
-					oResponse.flag = false;
-					oResponse.oResTable = alreadyPushedEpisodes;
-				} else {
-					oResponse.flag = true;
-					oResponse.oResTable = delvTableData;
-				}
-				return oResponse;
-			},
-
-			onConfirmDeliverySelection: function (oEvent) {
-
-				var vendorContractModel = this.getView().getModel("vendorContractModel");
-				var vendorContractDetailInfo = vendorContractModel.getData();
-				var count = 0;
-				var pushStatus = true;
-				var pushMsg = "";
-				// for (var sel = 0; sel < oEvent.getParameters()['selectedItems'].length; sel++) { //added by Dhiraj On 19/05/2022 for selecting multiple deliverables
-				var oContentReceiptPayObjs = vendorContractDetailInfo.vcPaymentData.filter(function (epPayObj) {
-					return epPayObj.Msid === "02"
-				});
-
-				var linkCount = oEvent.getParameters()['selectedItems'].filter(function (linkObj) {
-					return linkObj.getBindingContext("vendorContractModel").getObject().Delvpay == true;
-				});
-
-				if (oContentReceiptPayObjs.length) {
-					if (linkCount.length == 0) {
-						pushStatus = false;
-						pushMsg = "Atleast one Deliverable should be Linked to Payment"
-					} else if (linkCount.length > 1) {
-						pushStatus = false
-						pushMsg = "Only one Deliverable should be Linked to Payment"
-					}
-				}
-				if (pushStatus) {
-					for (var sel = oEvent.getParameters()['selectedItems'].length - 1; sel >= 0; sel--) {	//added by Mandar On 20/09/2022 for selecting multiple deliverables
-						var oSelDelvCodeObj = oEvent.getParameters()['selectedItems'][sel].getBindingContext("vendorContractModel").getObject();
-						this.prepareDeliverypayload(oSelDelvCodeObj);
-					}
-
-				} else {
-					MessageBox.error(pushMsg)
-				}
-				// var oSelDelvCodeObj = oEvent.getParameters()['selectedItem'].getBindingContext("vendorContractModel").getObject();   			
-				// 	this.prepareDeliverypayload(oSelDelvCodeObj);  //ComMented by Dhiraj On 19/05/2022 for selecting multiple deliverables
-			},
-			onSelectionDialogDeliveryClose: function () {
-				this._oSelectDeliveryCodeDialog.close();
-			},
-
-			saveDeliveryTabVC: function () {
-				var vendorContractModel = this.getView().getModel("vendorContractModel");
-				var vendorContractDetailInfo = vendorContractModel.getData();
-				var epiDeliverytabData = vendorContractDetailInfo.vcDeliveryData;
-				var alreadySavedflag = true;
-				var oModel = this.getView().getModel();
-				oModel.setUseBatch(true);
-				oModel.setDeferredGroups(oModel.getDeferredGroups().concat(["epiDeliveryVCChanges"]));
-				var mParameters = {
-					groupId: "epiDeliveryVCChanges",
-					success: function (data, resp) {
-
-						var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
-						MessageToast.show(oSourceBundle.getText("msgepiVCDeliverySave"));
-						this.reloadVendorContractTabs();
-
-					}.bind(this),
-					error: function (oError) {
-						var oErrorResponse = JSON.parse(oError.responseText);
-						var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
-						MessageBox.error(oMsg);
-					}
-				};
-
-				epiDeliverytabData.map(function (oEpiDeliveryObj) {
-					var epiDeliveryObj = $.extend(true, {}, oEpiDeliveryObj);
-					if (epiDeliveryObj.flag === "Cr") {
-						alreadySavedflag = false;
-						delete epiDeliveryObj.flag;
-						delete epiDeliveryObj.episodeSaveFlag;
-						oModel.create("/DmVdSet", epiDeliveryObj, {
-							groupId: "epiDeliveryVCChanges"
-						});
-					}
-				}.bind(this));
-
-				if (alreadySavedflag) {
-					var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
-					MessageBox.information(oSourceBundle.getText("msgAlreadysave"));
-				} else {
-					oModel.submitChanges(mParameters);
-				}
-			},
 
 			//IPR Rights Tab
 			onEnterIPR: function () {
