@@ -67,7 +67,11 @@
 													<Text class="sapUiSmallMarginBegin"  id="marketingTotal"/>
 														<Label text="OAP:" design="Bold" class="sapUiSmallMarginBegin"  />
 													<Text text="{dealMemoDetailModel>/OapCosts}" class="sapUiSmallMarginBegin" />
-												</HBox>                          
+												</HBox>  
+												<HBox>
+													<Label text="{i18n>lbl_RefFormatDmAmt}" design="Bold"/>
+													<Text text="{parts:[{path:'dealMemoDetailModel>/Refformatdmamt'},{path:'dealMemoDetailModel>/Waers'}], type: 'sap.ui.model.type.Currency', formatOptions: {showMeasure: false}}" class="sapUiTinyMarginBegin"/>
+												</HBox>                        
 											</VBox>
 											</content>
 								</HeaderContainer>				

@@ -1679,7 +1679,8 @@ sap.ui.define([
 					"R2quoamt": vendorContractDetailInfo.R2quoamt.toString(),
 					"Finalquoamt": vendorContractDetailInfo.Finalquoamt.toString(),
 					"Skiprfpreason": vendorContractDetailInfo.Skiprfpreason,
-					"Retenaplty": vendorContractDetailInfo.Retenaplty
+					"Retenaplty": vendorContractDetailInfo.Retenaplty,
+					"Waers": vendorContractDetailInfo.Waers
 
 
 				};

@@ -86,7 +86,7 @@ sap.ui.define([
 				var artistContractDetailInfo = artistContractModel.getData();
 				var responseFlag = this.checkForUnsavedData();
 				if (responseFlag) {
-					if (artistContractDetailInfo.App != "") {
+					if (artistContractDetailInfo.App != "" && artistContractDetailInfo.App != undefined ) {
 						this.navToContApp();
 					} else {
 						this.navToDealMemo();
@@ -98,7 +98,7 @@ sap.ui.define([
 						emphasizedAction: "Yes",
 						onClose: function (sAction) {
 							if (sAction === oSourceBundle.getText("lblYes")) {
-								if (artistContractDetailInfo.App != "") {
+								if (artistContractDetailInfo.App != "" && artistContractDetailInfo.App != undefined) {
 									this.navToContApp();
 								} else {
 									this.navToDealMemo();
@@ -347,6 +347,17 @@ sap.ui.define([
 
 					}
 				});
+				oModel.read("/F4WaersSet", {
+					success: function (oData) {
+						this.storeCurrencyInfo(oData);
+					}.bind(this),
+					error: function (oError) {
+						var oErrorResponse = JSON.parse(oError.responseText);
+						var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
+						MessageBox.error(oMsg);
+					}
+
+				});
 			},
 			loadVendors: function () {
 				var oModel = this.getView().getModel();
@@ -408,6 +419,11 @@ sap.ui.define([
 
 					}
 				});
+			},
+			storeCurrencyInfo: function (oData) {
+				var artistContractModel = this.getView().getModel("artistContractModel");
+				artistContractModel.setProperty("/currencyList", oData.results);
+				artistContractModel.refresh(true);
 			},
 			onVendorSelection: function () {
 				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
@@ -956,6 +972,21 @@ sap.ui.define([
 				artistContractModel.refresh(true);
 
 			},
+			onValuHelpCurrency: function () {
+				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
+				this.oValueHelpSelectionParams = {
+					"bindPathName": "artistContractModel>/currencyList",
+					"bindPropName": "artistContractModel>Waers",
+					"propName": "Waers",
+					"keyName": "Waers",
+					"keyPath": "/Waers",
+					"valuePath": "/Waers",
+					"valueModel": "artistContractModel",
+					"dialogTitle": oSourceBundle.getText("titleCurrency"),
+					"callBackFunction": this.mapExchrt
+				};
+				this.openSelectionDialog();
+			},
 			onvaluHelpTaxcode: function () {
 				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
 				this.oValueHelpSelectionParams = {
@@ -1365,8 +1396,9 @@ sap.ui.define([
 					"Finalquoamt": artistContractDetailInfo.Finalquoamt.toString(),
 					"Skiprfpreason": artistContractDetailInfo.Skiprfpreason,
 					"Retenaplty": artistContractDetailInfo.Retenaplty,
-					"MiscFlag": artistContractDetailInfo.App == "Spike" ? true : false
-				};
+					"MiscFlag": artistContractDetailInfo.App == "Spike" ? true : false,
+					"Waers": artistContractDetailInfo.Waers
+				};	
 				return oPayload;
 
 			},
