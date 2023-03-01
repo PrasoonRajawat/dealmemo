@@ -9,7 +9,7 @@
 											<Toolbar>
 												<Label text="{parts:[{value:'lblEpisodeData'},{path:'artistContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}"/>
 											<ToolbarSpacer></ToolbarSpacer>
-												<Button id="idBdel" press="onDeleteEpi" text="{i18n>lblDelete}" enabled="true" visible="{artistContractModel>/saveVisible}"/>
+												<Button id="idBdel" press="onDeleteEpi" text="{i18n>lblDelete}" enabled="{artistContractModel>/epiDeleteEnable}" visible="{artistContractModel>/saveVisible}"/>
 											</Toolbar>
 										</infoToolbar>
 										<columns>

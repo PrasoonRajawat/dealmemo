@@ -55,9 +55,9 @@
                     </items>
                 </List>
             </VBox>
-            <VBox class="sapUiTinyMarginTopBottom">
-                <Label text="{i18n>lblCurrency}" design="Bold" class="sapUiTinyMarginTop" required="true" />
-                <Input width="50%" value="{artistContractModel>/Waers}" showValueHelp="true" valueHelpRequest="onValuHelpCurrency" maxLength='4' visible="{= ${artistContractModel>/Contno} ===  'new' ? true : false }" />
+            <VBox class="sapUiTinyMarginTopBottom"  visible="{artistContractModel>/currVisible}">
+                <Label text="{i18n>lblCurrency}" design="Bold" class="sapUiTinyMarginTop" required="true"  />
+                <Input width="50%" value="{artistContractModel>/Waers}" showValueHelp="true" valueHelpRequest="onValuHelpCurrency" maxLength='4' />
             </VBox>
 
             <VBox class="sapUiTinyMarginTopBottom" visible="{artistContractModel>/retEpi}">

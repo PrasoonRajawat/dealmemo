@@ -86,7 +86,7 @@ sap.ui.define([
 				var artistContractDetailInfo = artistContractModel.getData();
 				var responseFlag = this.checkForUnsavedData();
 				if (responseFlag) {
-					if (artistContractDetailInfo.App != "" && artistContractDetailInfo.App != undefined ) {
+					if (artistContractDetailInfo.App == "App" || artistContractDetailInfo.App == "Spike") {
 						this.navToContApp();
 					} else {
 						this.navToDealMemo();
@@ -98,7 +98,7 @@ sap.ui.define([
 						emphasizedAction: "Yes",
 						onClose: function (sAction) {
 							if (sAction === oSourceBundle.getText("lblYes")) {
-								if (artistContractDetailInfo.App != "" && artistContractDetailInfo.App != undefined) {
+								if (artistContractDetailInfo.App == "App" || artistContractDetailInfo.App == "Spike") {
 									this.navToContApp();
 								} else {
 									this.navToDealMemo();
@@ -422,7 +422,27 @@ sap.ui.define([
 			},
 			storeCurrencyInfo: function (oData) {
 				var artistContractModel = this.getView().getModel("artistContractModel");
+				var artistContractDetailInfo = artistContractModel.getData();
 				artistContractModel.setProperty("/currencyList", oData.results);
+				if(artistContractDetailInfo.Waers == "INR") {
+					artistContractDetailInfo.currencyList = [
+						{
+							"key": "01",
+							"Waers":"INR"
+						}
+					]
+				} else {
+					artistContractDetailInfo.currencyList = [
+						{
+							"key": "01",
+							"Waers":"INR"
+						},
+						{
+							"key": "02",
+							"Waers":artistContractDetailInfo.Waers
+						}
+					]
+				}
 				artistContractModel.refresh(true);
 			},
 			onVendorSelection: function () {
@@ -847,15 +867,24 @@ sap.ui.define([
 						return obj.Contno == artistContractDetailInfo.Contno && obj.Contver == artistContractDetailInfo.Contver
 					});
 					if (contractItem[0].MiscFlag == true) {
-						artistContractDetailInfo.App = "Spike";
+						artistContractDetailInfo.Spike  = "Spike";
 					}
 				}
+				if (artistContractDetailInfo.App == "Spike") {
+					artistContractDetailInfo.Spike = "Spike";
+				}
+				if  (artistContractDetailInfo.Contno == "new" && artistContractDetailInfo.Spike != "Spike") {
+					artistContractModel.setProperty("/currVisible", true);
+				} else {
+					artistContractModel.setProperty("/currVisible", false);
+				}
+				artistContractModel.refresh(true);
 
 				var paramObj = {
 					"IV_TENTID": "IBS",
 					"IV_DMNO": artistContractDetailInfo.Dmno,
 					"IV_DMVER": artistContractDetailInfo.Dmver,
-					"IV_CONTTP": artistContractDetailInfo.App == "Spike" ? "03" : "02"
+					"IV_CONTTP": artistContractDetailInfo.Spike == "Spike" ? "03" : "02"
 
 				};
 				oModel.callFunction("/GetContractCostCode", {
@@ -973,6 +1002,8 @@ sap.ui.define([
 
 			},
 			onValuHelpCurrency: function () {
+				var artistContractModel = this.getView().getModel("artistContractModel");
+				var artistContractDetailInfo = artistContractModel.getData();
 				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
 				this.oValueHelpSelectionParams = {
 					"bindPathName": "artistContractModel>/currencyList",
@@ -982,8 +1013,7 @@ sap.ui.define([
 					"keyPath": "/Waers",
 					"valuePath": "/Waers",
 					"valueModel": "artistContractModel",
-					"dialogTitle": oSourceBundle.getText("titleCurrency"),
-					"callBackFunction": this.mapExchrt
+					"dialogTitle": oSourceBundle.getText("titleCurrency")
 				};
 				this.openSelectionDialog();
 			},
@@ -1110,6 +1140,12 @@ sap.ui.define([
 					artistContractModel.refresh(true);
 					return false;
 				}
+				if(artistContractDetailInfo.Waers === "") {
+					artistContractDetailInfo.acEpiDataMsgVisible = true;
+					artistContractDetailInfo.acEpiDataErrorMsg = "Enter Valid Currency";
+					artistContractModel.refresh(true);
+					return false;
+				}
 				if (selectedCostCodeContexts.length === 0) {
 					//	MessageBox.error(oSourceBundle.getText("msgSelectCostCode"));
 					artistContractDetailInfo.acEpiDataMsgVisible = true;
@@ -1117,18 +1153,18 @@ sap.ui.define([
 					artistContractModel.refresh(true);
 					return false;
 				}
-				// for (var oInd = 0; oInd < selectedCostCodeContexts.length; oInd++) {
-				// 	var oCostObj = selectedCostCodeContexts[oInd].getObject();
+				for (var oInd = 0; oInd < selectedCostCodeContexts.length; oInd++) {
+					var oCostObj = selectedCostCodeContexts[oInd].getObject();
 
-				// 	if (parseInt(oCostObj.costCodeValue) <= 0) {
-				// 		//MessageBox.error(oSourceBundle.getText("msgtotCostCodeCostNonZero"));
-				// 		artistContractDetailInfo.acEpiDataMsgVisible = true;
-				// 		artistContractDetailInfo.acEpiDataErrorMsg = oSourceBundle.getText("msgtotCostCodeCostNonZero");
-				// 		artistContractModel.refresh(true);
-				// 		return false;
-				// 		break;
-				// 	}
-				// }
+					if (parseInt(oCostObj.costCodeValue) == 0) {
+						//MessageBox.error(oSourceBundle.getText("msgtotCostCodeCostNonZero"));
+						artistContractDetailInfo.acEpiDataMsgVisible = true;
+						artistContractDetailInfo.acEpiDataErrorMsg = oSourceBundle.getText("msgtotCostCodeCostNonZero");
+						artistContractModel.refresh(true);
+						return false;
+						break;
+					}
+				}
 				return true;
 			},
 			validateMilestoneAchievementDate: function () {
@@ -1597,6 +1633,7 @@ sap.ui.define([
 						artistContractDetailInfo.epiDeleteEnable = false;
 						if (oData.DmCeSet.results.length) {
 							artistContractDetailInfo.EpiDataColor = "Positive";
+							artistContractDetailInfo.epiDeleteEnable = true;
 						}
 						oData.retEpi = false;
 						if (oData.Retenaplty == "01") {
@@ -1604,7 +1641,6 @@ sap.ui.define([
 						}
 						oData.DmCeBalAmtSet.results.map(function (obj) {
 							obj.episodeSaveFlag = true;
-							//	obj.Diff = ((parseFloat(obj.Coepiamt) + parseFloat(obj.Wmwst)) - (obj.Baseamt)).toFixed(2);
 						});
 						artistContractDetailInfo.EpiNonCostCdDataColor = "Critical";
 						artistContractDetailInfo.enableEpiNonCostCdTab = false;
@@ -1640,6 +1676,11 @@ sap.ui.define([
 						} else {
 							artistContractModel.setProperty("/releaseTabVisible", false);
 						}
+						if  (artistContractDetailInfo.Contno == "new") {
+							artistContractModel.setProperty("/currVisible", true);
+						} else {
+							artistContractModel.setProperty("/currVisible", false);
+						}
 						if (oData.Contstat === "04") {
 							artistContractModel.setProperty("/changeVisible", true);
 						} else {
@@ -1650,7 +1691,7 @@ sap.ui.define([
 							artistContractDetailInfo.acTabEnable = false;
 						}
 						if (artistContractDetailInfo.MiscFlag == true) {
-							artistContractDetailInfo.App = "Spike";
+							artistContractDetailInfo.Spike = "Spike";
 						}
 						artistContractModel.setProperty("/DmCoSet", oData);
 						Object.assign(artistContractDetailInfo, oData);
@@ -2656,7 +2697,7 @@ sap.ui.define([
 					emphasizedAction: "Yes",
 					onClose: function (sAction) {
 						if (sAction === oSourceBundle.getText("lblYes")) {
-							if (artistContractDetailInfo.App == "Spike") {
+							if (artistContractDetailInfo.Spike  == "Spike") {
 								this.onChangeSpikeAC();
 							} else {
 								this.onChangeAC();
@@ -2736,7 +2777,17 @@ sap.ui.define([
 							if (dealList[0].Dmst == '01') {
 								this.onChangeAC();
 							} else if (dealList[0].Dmst == '04') {
-								this.changeSpikeDeal()
+								var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
+								MessageBox.confirm("Do you want to create Deal version?", {
+									actions: [oSourceBundle.getText("lblYes"), oSourceBundle.getText("lblNo")],
+									emphasizedAction: "Yes",
+									onClose: function (sAction) {
+										if (sAction === oSourceBundle.getText("lblYes")) {
+											this.changeSpikeDeal()
+										} else if (sAction === oSourceBundle.getText("lblNo")) {
+										}
+									}.bind(this)
+								});
 							} else {
 								var oMsg = "DealMemo is still processing";
 								MessageBox.error(oMsg);
