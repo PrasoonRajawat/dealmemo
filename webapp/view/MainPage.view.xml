@@ -104,7 +104,7 @@
 
 									
 									
-									<IconTabFilter id="idRev30" key="rev30" text="{i18n>IcnTbFlt_Revper30min}" icon="sap-icon://history" class="sapMITBHead" 
+									<IconTabFilter id="idRev30" key="rev30" text="Revenue Tab" icon="sap-icon://history" class="sapMITBHead" 
 									enabled="{dealMemoDetailModel>/revenueTabEnable}"	iconColor="{path:'dealMemoDetailModel>/revenueTabColor'}" design="Horizontal" visible="{= ${dealMemoDetailModel>/Dmno} !== '' ? true : false }" >
 									<content>
 								<core:Fragment fragmentName="com.ui.dealmemolocal.fragments.RevenueTab" type="XML" />

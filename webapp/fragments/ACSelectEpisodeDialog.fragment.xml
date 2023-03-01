@@ -1,98 +1,90 @@
 <c:FragmentDefinition xmlns="sap.m" xmlns:u="sap.ui.unified" xmlns:l="sap.ui.layout" xmlns:c="sap.ui.core">
-<Dialog type="Message"  title="{parts:[{value:'lblSelEpisode'},{path:'artistContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" contentWidth="30%">
+    <Dialog type="Message" title="{parts:[{value:'lblSelEpisode'},{path:'artistContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" contentWidth="30%">
+        <content>
+            <MessageStrip type="Error" text="{artistContractModel>/acEpiDataErrorMsg}" showCloseButton="true" visible="{artistContractModel>/acEpiDataMsgVisible}" class="sapUiSmallMarginBottom" />
+            <HBox>
+                <items>
+                    <RadioButtonGroup id="rbEpisideMode" columns="2" selectedIndex="{artistContractModel>/episodeMode}" select="onSelectEpisodeMode">
+                        <RadioButton text="{parts:[{value:'lblAllEpisode'},{path:'artistContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" />
+                        <RadioButton text="{i18n>lblSelectFromRange}" />
+                    </RadioButtonGroup>
+                </items>
+            </HBox>
+            <HBox visible="{artistContractModel>/episodeRangeVisible}">
+                <items>
+                    <VBox>
+                        <Label required="true" text="{parts:[{value:'lblSelectEpiFrom'},{path:'artistContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" width="100%" />
+                        <ComboBox width="95%" items="{artistContractModel>/episodeList}" selectedKey="{artistContractModel>/epiFromId}">
+                            <c:Item text="{artistContractModel>Epinm}" key="{artistContractModel>Epiid}" />
+                        </ComboBox>
+                    </VBox>
+                    <VBox>
+                        <Label required="true" text="{parts:[{value:'lblSelectEpiTo'},{path:'artistContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" width="100%" />
+                        <ComboBox width="95%" items="{artistContractModel>/episodeList}" selectedKey="{artistContractModel>/epiToId}">
+                            <c:Item text="{artistContractModel>Epinm}" key="{artistContractModel>Epiid}" />
+                        </ComboBox>
+                    </VBox>
+                </items>
+            </HBox>
+            <VBox class="sapUiTinyMarginTopBottom">
+                <Label text="{i18n>lblSelectTaxCode}" width="100%" required="true" />
+                <Input width="99%" showValueHelp="true" value="{artistContractModel>/taxCodeName}" valueHelpRequest="onvaluHelpTaxcode" />
+            </VBox>
+            <VBox class="sapUiTinyMarginTopBottom">
+                <Label text="{parts:[{value:'lblSelectCostCode'},{path:'artistContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" width="100%" required="true" />
+                <List id="list_costCodes" mode="{artistContractModel>/SelectMode}" width="99%" class="classBoxBorder" items="{artistContractModel>/costCodes}" selectionChange="onSelectionACostCodes">
+                    <items>
+                        <CustomListItem>
+                            <l:Grid vSpacing="0" hSpacing="0.5">
+                                <Text text="{artistContractModel>Costdesc}" class="sapUiTinyMarginTop">
+                                    <layoutData>
+                                        <l:GridData span="XL4 L4 M6 S12" />
+                                    </layoutData>
+                                </Text>
+                                <Input
+                                    textAlign="Right"
+                                    editable="{artistContractModel>costValueEditable}"
+                                    value="{ parts: [ {path: 'artistContractModel>costCodeValue'}, {path: 'artistContractModel>Waers'} ], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false,minFractionDigits: 2, maxFractionDigits: 2 } }"
+                                >
+                                    <layoutData>
+                                        <l:GridData span="XL8 L8 M6 S12" />
+                                    </layoutData>
+                                </Input>
+                            </l:Grid>
+                        </CustomListItem>
+                    </items>
+                </List>
+            </VBox>
+            <VBox class="sapUiTinyMarginTopBottom"  visible="{artistContractModel>/currVisible}">
+                <Label text="{i18n>lblCurrency}" design="Bold" class="sapUiTinyMarginTop" required="true"  />
+                <Input width="50%" value="{artistContractModel>/Waers}" showValueHelp="true" valueHelpRequest="onValuHelpCurrency" maxLength='4' />
+            </VBox>
 
-	<content>
-	<MessageStrip
-				type="Error"
-                text="{artistContractModel>/acEpiDataErrorMsg}"
-				showCloseButton="true"
-                visible="{artistContractModel>/acEpiDataMsgVisible}"
-				class="sapUiSmallMarginBottom">
-               
-	    </MessageStrip>
-		<HBox>
-			<items>
-				<RadioButtonGroup id="rbEpisideMode" columns="2" selectedIndex="{artistContractModel>/episodeMode}" select="onSelectEpisodeMode">
-					<RadioButton  text="{parts:[{value:'lblAllEpisode'},{path:'artistContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}"  />
-					<RadioButton text="{i18n>lblSelectFromRange}" />
-				</RadioButtonGroup>
-			</items>
-		</HBox>
-		<HBox visible="{artistContractModel>/episodeRangeVisible}">
-			<items>
-				<VBox>
-					<Label required="true" text="{parts:[{value:'lblSelectEpiFrom'},{path:'artistContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" width="100%"/>
-					<ComboBox width="95%" items="{artistContractModel>/episodeList}" selectedKey="{artistContractModel>/epiFromId}">
-						<c:Item text="{artistContractModel>Epinm}" key="{artistContractModel>Epiid}"/>
-					</ComboBox>
-				</VBox>
-				<VBox>
-					<Label required="true" text="{parts:[{value:'lblSelectEpiTo'},{path:'artistContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" width="100%"/>
-					<ComboBox width="95%" items="{artistContractModel>/episodeList}" selectedKey="{artistContractModel>/epiToId}">
-						<c:Item text="{artistContractModel>Epinm}" key="{artistContractModel>Epiid}"/>
-					</ComboBox>
-				</VBox>
-			</items>
-		
-		</HBox>
-		<VBox class="sapUiTinyMarginTopBottom">
-			<Label text="{i18n>lblSelectTaxCode}" width="100%" required="true"/>
-			<Input width="99%" showValueHelp="true" value="{artistContractModel>/taxCodeName}" valueHelpRequest="onvaluHelpTaxcode"/>
-		</VBox>
-		<VBox class="sapUiTinyMarginTopBottom">
-			<Label text="{parts:[{value:'lblSelectCostCode'},{path:'artistContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" width="100%" required="true"/>
-			<List id="list_costCodes" mode="{artistContractModel>/SelectMode}" width="99%" class="classBoxBorder" items="{artistContractModel>/costCodes}" selectionChange="onSelectionACostCodes">
-				<items>
-				
-					<CustomListItem>
-						<l:Grid vSpacing="0" hSpacing="0.5">
-							<Text text="{artistContractModel>Costdesc}" class="sapUiTinyMarginTop">
-								<layoutData>
-									<l:GridData span="XL4 L4 M6 S12"/>
-								</layoutData>
-							</Text>
-							<Input textAlign="Right" editable="{artistContractModel>costValueEditable}" value="{ parts: [ {path: 'artistContractModel>costCodeValue'}, {path: 'artistContractModel>Waers'} ], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false,minFractionDigits: 2, maxFractionDigits: 2 } }">
-								<layoutData>
-									<l:GridData span="XL8 L8 M6 S12"/>
-								</layoutData>
-							</Input>
-						</l:Grid>
-					</CustomListItem>
-				</items>
-			</List>
-			
-		</VBox>
-
-		<VBox class="sapUiTinyMarginTopBottom" visible = "{artistContractModel>/retEpi}" >
-		<Label text="Select Retention Applicability:" width="100%"/>
-		</VBox>
-		<HBox class = "classBoxBorder" visible = "{artistContractModel>/retEpi}">
-			<items>
-				<VBox class = "sapUiTinyMarginBeginEnd">
-					<Label  text="{parts:[{value:'lblSelectEpiFrom'},{path:'artistContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" width="100%"/>
-					<ComboBox width="95%" items="{artistContractModel>/episodeList}" >
-						<c:Item text="{artistContractModel>Epinm}" key="{artistContractModel>Epiid}"/>
-					</ComboBox>
-				</VBox>
-				<VBox class = "sapUiTinyMarginBeginEnd">
-					<Label  text="{parts:[{value:'lblSelectEpiTo'},{path:'artistContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" width="100%"/>
-					<ComboBox width="95%" items="{artistContractModel>/episodeList}">
-						<c:Item text="{artistContractModel>Epinm}" key="{artistContractModel>Epiid}"/>
-					</ComboBox>
-				</VBox>
-			</items>
-		
-		</HBox>
-
-
-	</content>
-	<beginButton>
-		<Button text="{i18n>btnOk}" press="onPushEpiDataTab"/>
-	</beginButton>
-	<endButton>
-		<Button  text="{i18n>btnCancel}" press="onCancelSelectEpisode" />
-	</endButton>
-
-</Dialog>
-
+            <VBox class="sapUiTinyMarginTopBottom" visible="{artistContractModel>/retEpi}">
+                <Label text="Select Retention Applicability:" width="100%" />
+            </VBox>
+            <HBox class="classBoxBorder" visible="{artistContractModel>/retEpi}">
+                <items>
+                    <VBox class="sapUiTinyMarginBeginEnd">
+                        <Label text="{parts:[{value:'lblSelectEpiFrom'},{path:'artistContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" width="100%" />
+                        <ComboBox width="95%" items="{artistContractModel>/episodeList}">
+                            <c:Item text="{artistContractModel>Epinm}" key="{artistContractModel>Epiid}" />
+                        </ComboBox>
+                    </VBox>
+                    <VBox class="sapUiTinyMarginBeginEnd">
+                        <Label text="{parts:[{value:'lblSelectEpiTo'},{path:'artistContractModel>/Cnttp'}],formatter:'.Formatter.formatLabelContentBased'}" width="100%" />
+                        <ComboBox width="95%" items="{artistContractModel>/episodeList}">
+                            <c:Item text="{artistContractModel>Epinm}" key="{artistContractModel>Epiid}" />
+                        </ComboBox>
+                    </VBox>
+                </items>
+            </HBox>
+        </content>
+        <beginButton>
+            <Button text="{i18n>btnOk}" press="onPushEpiDataTab" />
+        </beginButton>
+        <endButton>
+            <Button text="{i18n>btnCancel}" press="onCancelSelectEpisode" />
+        </endButton>
+    </Dialog>
 </c:FragmentDefinition>

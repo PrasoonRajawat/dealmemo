@@ -56,6 +56,12 @@
                     visible="{dealMemoDetailModel>/AddEpiVisibility}"
                     enabled="{path:'dealMemoDetailModel>/Dmst',formatter:'.Formatter.formatEditableStatus'}"
                 />
+                <!-- <Button
+                    press="onCreateAdditionalEpisode"
+                    text="Create Additional Match"
+                    visible="{dealMemoDetailModel>/AddMatchVisibility}"
+                    enabled="{path:'dealMemoDetailModel>/Dmst',formatter:'.Formatter.formatEditableStatus'}"
+                /> -->
             </Toolbar>
         </infoToolbar>
         <columns>

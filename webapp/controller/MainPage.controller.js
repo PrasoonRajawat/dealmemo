@@ -720,9 +720,15 @@ sap.ui.define([
 				var dealMemoInfo = dealMemoModel.getData();
 				var dmList = dealMemoInfo.dealmemolist;
 				var filterDmList = [];
+				var deals = [];
 				filterDmList = dmList.filter(function (obj) {
-					return obj.Dmst == "04" && obj.Recst == "A" && obj.Cntnt == "05";
-				});
+					if (deals.indexOf(obj.Dmno) === -1) {
+						if(obj.Dmst == "04" && obj.Recst == "A" && obj.Cntnt == "05" ) {
+						deals.push(obj.Dmno);
+						return obj;
+						}
+					}
+				});	
 				dealMemoInfo.filterDmList = filterDmList;
 				dealMemoModel.refresh(true);
 
@@ -730,11 +736,11 @@ sap.ui.define([
 					"bindPathName": "dealMemoModel>/filterDmList",
 					"bindPropName": "dealMemoModel>Dmno",
 					"bindPropName2": "dealMemoModel>Dmver",
-					"propName": "Dmno",
+					"propName": "Dmver",
 					"bindPropDescName": "dealMemoModel>Cntnm",
 					"keyName": "Dmno",
 					"keyPath": "/createParams/Refformatdmno",
-					"valuePath": "/createParams/RefFormDmno",
+					"valuePath": "/createParams/RefFormDmver",
 					"valueModel": "dealMemoModel",
 					"dialogTitle": "Reference Format Deal Memo No."
 				};
@@ -1086,7 +1092,8 @@ sap.ui.define([
 					"fisYrEnableFlag": true,
 					"secChanelEnableFlag": true,
 					"secChannelList": this.getSecChannelList(dealMemoModel.getProperty("/createParams/Chnlid")),
-					"Refformatdmno": dealMemoModel.getProperty("/createParams/Refformatdmno")
+					"Refformatdmno": dealMemoModel.getProperty("/createParams/Refformatdmno"),
+					"Refformatdmver": dealMemoModel.getProperty("/createParams/RefFormDmver")
 				};
 
 				this.selectedDealMemoObj = dealmemoDetObj;
@@ -1286,7 +1293,10 @@ sap.ui.define([
 						};
 						this.calculateInvestmentDetails(oData);
 						// oData.Totdmamt = (parseFloat(oData.OapCosts) + parseFloat(oData.Dmaf.Mediacosts) + parseFloat(oData.Dmaf.Digitalcosts) + parseFloat(oData.Dmaf.Othercosts) + parseFloat(oData.Totdmamt)).toFixed(2);
-						this.getView().byId("marketingTotal").setText((parseFloat(oData.Dmaf.Mediacosts) + parseFloat(oData.Dmaf.Digitalcosts) + parseFloat(oData.Dmaf.Othercosts)).toFixed(2).toString())
+						var marketingTotal = (parseFloat(oData.Dmaf.Mediacosts) + parseFloat(oData.Dmaf.Digitalcosts) + parseFloat(oData.Dmaf.Othercosts)).toFixed(2).toString();
+						var dollarIndianLocale = Intl.NumberFormat('en-IN');
+						var marketingTotal = dollarIndianLocale.format(marketingTotal)
+						this.getView().byId("marketingTotal").setText(marketingTotal + " " + oData.Waers)
 					}.bind(this),
 					error: function (oError) {
 						sap.ui.core.BusyIndicator.hide();
@@ -1598,6 +1608,9 @@ sap.ui.define([
 				var dealMemoDetailInfo = dealMemoDetailModel.getData();
 				var oMsg = "";
 				var statusFlag = true;
+				if(dealMemoDetailInfo.Refformatdmno !="") {
+				this.chekRefDmAttributes();
+				}
 				var oSourceBundle = this.getView().getModel("i18n").getResourceBundle();
 				if (dealMemoDetailInfo.Noofepi === "" || dealMemoDetailInfo.Noofepi === "0" || dealMemoDetailInfo.Waers === "" ||
 					dealMemoDetailInfo.FiscalYrFromTo === "" || dealMemoDetailInfo.Cntstp === "") {
@@ -1730,7 +1743,8 @@ sap.ui.define([
 					NbocBudget: dealMemoDetailInfo.NbocBudget,
 					NbocBudgetRemarks: dealMemoDetailInfo.NbocBudgetRemarks,
 					OapCosts: dealMemoDetailInfo.OapCosts,
-					Refformatdmno: dealMemoDetailInfo.Refformatdmno
+					Refformatdmno: dealMemoDetailInfo.Refformatdmno,
+					Refformatdmver:dealMemoDetailInfo.Refformatdmver
 				}
 
 				return payload;
@@ -3344,6 +3358,7 @@ sap.ui.define([
 						detailModelData.deleteEpiVisibility = false;
 						detailModelData.ChangeEpiVisibility = false;
 						detailModelData.AddEpiVisibility = false;
+						detailModelData.AddMatchVisibility = false;
 						detailModelData.msgVisible = false;
 						detailModelData.UploadBtnVisibility = false;
 						detailModel.refresh(true);
@@ -3382,9 +3397,12 @@ sap.ui.define([
 						}
 						detailModelData.ChangeEpiVisibility = true;
 						detailModelData.AddEpiVisibility = false;
-
+						detailModelData.AddMatchVisibility = false;
 						if (detailModelData.episodeData.length > 0) {
 							detailModelData.AddEpiVisibility = true;
+							if (detailModelData.Cnttp == "09") {
+								detailModelData.AddMatchVisibility = true;
+							}
 						}
 						detailModel.refresh(true);
 						this.byId(sap.ui.core.Fragment.createId("epiDetailTab", "oTable_epiDetail")).removeSelections();
@@ -5575,6 +5593,30 @@ sap.ui.define([
 					}
 				});
 			},
+			chekRefDmAttributes: function () {
+				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
+				var dealMemoDetailInfo = dealMemoDetailModel.getData();
+				var odetailEntityPath = "/DmHeaderSet(Tentid='IBS',Dmno='" + dealMemoDetailInfo.Refformatdmno + "',Dmver='" + dealMemoDetailInfo.Refformatdmver +
+					"',Transtp='D')";
+				var oModel = this.getView().getModel();
+				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
+				sap.ui.core.BusyIndicator.show(0);
+				oModel.read(odetailEntityPath, {
+					success: function (oData) {
+						sap.ui.core.BusyIndicator.hide();
+						if(oData.Noofepi != dealMemoDetailInfo.Noofepi) {
+							var oMsg = "Refrence Format Deal Memo has diffrent Number of Episode";
+						MessageBox.information(oMsg);
+						}
+					}.bind(this),
+					error: function (oError) {
+						sap.ui.core.BusyIndicator.hide();
+						var oErrorResponse = JSON.parse(oError.responseText);
+						var oMsg = oErrorResponse.error.innererror.errordetails[0].message;
+						MessageBox.error(oMsg);
+					}
+				});
+			},
 			onConfirmChangeDm: function () {
 				var oModel = this.getView().getModel();
 				var dealMemoDetailModel = this.getView().getModel("dealMemoDetailModel");
@@ -7450,16 +7492,16 @@ sap.ui.define([
 				dealMemoDetailInfo.pnl.OapCosts = parseFloat(dealMemoDetailInfo.OapCosts).toFixed(2);
 				dealMemoDetailInfo.pnl.MarketingCosts = (parseFloat(dealMemoDetailInfo.Dmaf.Mediacosts) + parseFloat(dealMemoDetailInfo.Dmaf.Digitalcosts) + parseFloat(dealMemoDetailInfo.Dmaf.Othercosts)).toFixed(2);
 				dealMemoDetailInfo.pnl.AdRevenueTitle = parseFloat(dealMemoDetailInfo.pnl.NoOfTitles != 0 ? dealMemoDetailInfo.Dmaf.Adsales / dealMemoDetailInfo.pnl.NoOfTitles : 0).toFixed(2);
-				dealMemoDetailInfo.pnl.TotalCosts = parseFloat(dealMemoDetailInfo.pnl.TotalContentCosts).toFixed(2);
+				dealMemoDetailInfo.pnl.TotalCosts = (parseFloat(dealMemoDetailInfo.pnl.TotalContentCosts) + parseFloat(dealMemoDetailInfo.pnl.MarketingCosts) + parseFloat(dealMemoDetailInfo.pnl.OapCosts)).toFixed(2);
 				dealMemoDetailInfo.pnl.TotalAdRevenue = parseFloat(dealMemoDetailInfo.Dmaf.Adsales).toFixed(2);
 				dealMemoDetailInfo.pnl.DigitalRevenue = parseFloat(parseFloat(dealMemoDetailInfo.Dmaf.Sonylivadrevenue) + parseFloat(dealMemoDetailInfo.Dmaf.Youtuberevenue) + parseFloat(dealMemoDetailInfo.Dmaf.Digitalsyndication)).toFixed(2);
 				dealMemoDetailInfo.pnl.SyndicationRevenue = parseFloat(dealMemoDetailInfo.Dmaf.Linearsyndication).toFixed(2);
 				dealMemoDetailInfo.pnl.OtherRevenue = "0.00";
 				dealMemoDetailInfo.pnl.TotalRevenue = (parseFloat(dealMemoDetailInfo.pnl.DigitalRevenue) + parseFloat(dealMemoDetailInfo.Dmaf.Linearsyndication) + parseFloat(dealMemoDetailInfo.Dmaf.Adsales)).toFixed(2);
 				dealMemoDetailInfo.pnl.Profit = (parseFloat(dealMemoDetailInfo.pnl.TotalRevenue) - parseFloat(dealMemoDetailInfo.pnl.TotalCosts)).toFixed(2);
-				dealMemoDetailInfo.pnl.ProfitMargin = parseFloat((dealMemoDetailInfo.pnl.Profit / dealMemoDetailInfo.pnl.TotalCosts) * 100).toFixed(2);
+				dealMemoDetailInfo.pnl.ProfitMargin = parseFloat((dealMemoDetailInfo.pnl.TotalCosts != 0 ? dealMemoDetailInfo.pnl.Profit / dealMemoDetailInfo.pnl.TotalCosts : 0) * 100).toFixed(2);
 				var costSales = parseFloat(dealMemoDetailInfo.pnl.TotalCosts != 0 ? dealMemoDetailInfo.Dmaf.Adsales / dealMemoDetailInfo.pnl.TotalCosts : 0).toFixed(2);
-				var costRevenue = parseFloat(dealMemoDetailInfo.pnl.TotalCosts != 0 ? dealMemoDetailInfo.Dmaf.Adsales / dealMemoDetailInfo.pnl.TotalAdRevenue : 0).toFixed(2);
+				var costRevenue = parseFloat(dealMemoDetailInfo.pnl.TotalAdRevenue != 0 ? dealMemoDetailInfo.Dmaf.Adsales / dealMemoDetailInfo.pnl.TotalAdRevenue : 0).toFixed(2);
 				dealMemoDetailInfo.pnl.RatioCostSales = "1 : " + costSales;
 				dealMemoDetailInfo.pnl.RatioCostRevenue = "1 : " + costRevenue;
 				dealMemoDetailInfo.pnl.PerTitleCost = parseFloat(dealMemoDetailInfo.pnl.TotalCosts / dealMemoDetailInfo.pnl.NoOfTitles).toFixed(2);
